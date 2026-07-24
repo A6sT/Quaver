@@ -1022,7 +1022,7 @@ Si la map n'a pas été terminée, le graphique affiche également la performanc
     <value>Continuer à Jouer malgré l'Echec</value>
   </data>
   <data name="Screen_Options_NormaliseScrollVelocityByRatePercentage" xml:space="preserve">
-    <value>Normaliser l'Effet de Défilement par le Pourcentage de Vitesse</value>
+    <value>Normaliser la Vélocité de Défilement par le Pourcentage de Vitesse</value>
   </data>
   <data name="Screen_Options_Display1v1TournamentOverlay" xml:space="preserve">
     <value>Afficher l'Aperçu du Tournoi 1v1</value>
@@ -2276,7 +2276,7 @@ Vous pouvez utiliser les filtres ci-dessous pour cibler votre recherche.</value>
     <value>Aimanter les Notes lors du Mapping en Direct</value>
   </data>
   <data name="Screen_Editor_SetLiveMappingOffset" xml:space="preserve">
-    <value>Set Offset For Notes Placed During Live Mapping</value>
+    <value>Décalage des Notes Placées Pendant le Mapping en Direct</value>
   </data>
   <data name="Screen_Editor_PlaceLongNotesWhenLiveMapping" xml:space="preserve">
     <value>Place Long Notes When Live Mapping</value>
@@ -2475,7 +2475,7 @@ Vous pouvez utiliser les filtres ci-dessous pour cibler votre recherche.</value>
 Voulez-vous recharger l'éditeur ?</value>
   </data>
   <data name="Screen_Editor_ApplyOffsetToMapMessage" xml:space="preserve">
-    <value>Entrez une valeur pour appliquer un décalage à tous les objets de votre carte, les points de timing et les vitesses de défilement...</value>
+    <value>Entrez une valeur pour appliquer un décalage à tous les objets, les points de timing et les vitesses de défilement de votre map...</value>
   </data>
   <data name="Screen_Editor_ApplyOffsetPlaceholder" xml:space="preserve">
     <value>Entrez un décalage à appliquer à votre carte...</value>
@@ -2514,13 +2514,13 @@ Voulez-vous recharger l'éditeur ?</value>
     <value>Enter a beat snap value or range (max 48, e.g. "7" or "5-9")</value>
   </data>
   <data name="Screen_Editor_SetLiveMapOffset" xml:space="preserve">
-    <value>SET LIVEMAP OFFSET</value>
+    <value>CHANGER LE DÉCALAGE DU MAPPING EN DIRECT</value>
   </data>
   <data name="Screen_Editor_SetLiveMapOffsetMessage" xml:space="preserve">
-    <value>Enter a value to apply an offset to notes placed during live-mapping...</value>
+    <value>Entrez une valeur pour appliquer un décalage aux notes placées pendant le mapping en direct...</value>
   </data>
   <data name="Screen_Editor_SetLiveMapOffsetPlaceholder" xml:space="preserve">
-    <value>Enter an offset for live-mapping...</value>
+    <value>Entrez un décalage pour le mapping en direct...</value>
   </data>
   <data name="Screen_Editor_SetLiveMapLongNoteThreshold" xml:space="preserve">
     <value>SET LIVEMAP LN THRESHOLD</value>
@@ -2625,10 +2625,10 @@ Voulez-vous recharger l'éditeur ?</value>
     <value>An error occurred while submitting your mapset for rank.</value>
   </data>
   <data name="Screen_Editor_BpmAffectsSvTooltip" xml:space="preserve">
-    <value>When set to ON, A BPM change will also change the Scroll Velocity.&#xA;For instance, going from 120BPM to 240BPM effectively creates&#xA;an implicit 2x Scroll Velocity multiplier starting from the beginning&#xA;of that BPM change until the next. Scroll Velocity is still applied.</value>
+    <value>Quand activé, un changement de BPM changera aussi la Vélocité de Défilement. Exemple : passer de 120 à 240BPM crée un multiplicateur de Vélocité de Défilement implicite de 2x du début de ce changement de BPM jusqu'au prochain. Les Vélocités de Défilement sont quand mêmes appliqués.</value>
   </data>
   <data name="Screen_Editor_LegacyLnRenderingTooltip" xml:space="preserve">
-    <value>When set to ON, forces the use of the old LN renderer. If your map has no Scroll&#xA;Velocity changes, you can safely ignore this option. The current LN renderer places&#xA;the head and tail to the earliest and latest positions reached, respectively. The old LN&#xA;renderer instead places them both wherever the playfield happens to be at the time.</value>
+    <value>Quand activé, force l'utilisation de l'ancien moteur de rendu des LN. Si votre map n'a pas de changement de vélocité de défilement (SV), vous pouvez ignorer cette option. Le moteur de rendu des LN actuel place le début et la fin aux positions atteintes les plus anciennes et les plus récentes, respectivement. En revanche, l'ancien moteur de rendu des LN place les deux là où la piste se trouve à l'instant T. </value>
   </data>
   <data name="Screen_Editor_SyncMetadataTooltip" xml:space="preserve">
     <value>Copier les métadonnées de cette difficulté sur toutes les difficultés de cette collection de map</value>
@@ -2682,7 +2682,7 @@ Voulez-vous recharger l'éditeur ?</value>
     <value>SCRATCH KEY:</value>
   </data>
   <data name="Screen_Editor_LegacyLnRendering" xml:space="preserve">
-    <value>LEGACY LN RENDERING:</value>
+    <value>ANCIEN MOTEUR DE RENDU DES LN :</value>
   </data>
   <data name="Screen_Editor_SyncMetadata" xml:space="preserve">
     <value>SYNCHRONISER LES METADONNEES</value>
@@ -2808,10 +2808,10 @@ Voulez-vous recharger l'éditeur ?</value>
     <value>Timing Point Editor</value>
   </data>
   <data name="Screen_Editor_TimingPointHelp" xml:space="preserve">
-    <value>Timing Points are individual BPM sections within your map. This will allow you to place objects at the correct times in the song.</value>
+    <value>Les Points de Timing sont des sections individuelles de BPM dans votre map, ce qui vous permet de placer les objets avec précision sur la musique.</value>
   </data>
   <data name="Screen_Editor_TimingPointInteractionHelp" xml:space="preserve">
-    <value>You can click on an individual Timing Point to edit it or double-click to go to its position in time.</value>
+    <value>Vous pouvez cliquer sur un point de timing en particulier pour le modifier et double-cliquer pour aller à sa position dans le temps.</value>
   </data>
   <data name="Screen_Editor_Add" xml:space="preserve">
     <value>Ajouter</value>
@@ -2841,37 +2841,37 @@ Voulez-vous recharger l'éditeur ?</value>
     <value>Masquer les lignes</value>
   </data>
   <data name="Screen_Editor_ScrollVelocityEditor" xml:space="preserve">
-    <value>Scroll Velocity Editor</value>
+    <value>Éditeur de Vélocité de Défilement</value>
   </data>
   <data name="Screen_Editor_ScrollVelocityHelp" xml:space="preserve">
-    <value>Scroll Velocities (SV) allow you to dynamically change the speed and direction at which the objects fall.</value>
+    <value>La Vélocité de Défilement (SV) vous permet de changer dynamiquement la vitesse et la direction à laquelle les objets tombent.</value>
   </data>
   <data name="Screen_Editor_ScrollVelocityInteractionHelp" xml:space="preserve">
-    <value>You can click on an individual SV point to edit it and double-click to go to its position in time.</value>
+    <value>Vous pouvez cliquer sur un point SV en particulier pour le modifier et double-cliquer pour aller à sa position dans le temps.</value>
   </data>
   <data name="Screen_Editor_DifferenceFromSf" xml:space="preserve">
     <value>(Difference from SF)</value>
   </data>
   <data name="Screen_Editor_SelectCurrentSv" xml:space="preserve">
-    <value>Select current SV</value>
+    <value>Sélectionner le SV actuel</value>
   </data>
   <data name="Screen_Editor_Multiplier" xml:space="preserve">
     <value>Multiplicateur</value>
   </data>
   <data name="Screen_Editor_ScrollSpeedFactorEditor" xml:space="preserve">
-    <value>Scroll Speed Factor Editor</value>
+    <value>Éditeur de Facteurs de Vitesse de Défilement</value>
   </data>
   <data name="Screen_Editor_HelpLink" xml:space="preserve">
     <value>(Aide)</value>
   </data>
   <data name="Screen_Editor_DifferenceFromSv" xml:space="preserve">
-    <value>(Difference from SV)</value>
+    <value>(Différence avec les SV)</value>
   </data>
   <data name="Screen_Editor_SelectCurrentSsf" xml:space="preserve">
-    <value>Select current SSF</value>
+    <value>Sélectionner le SSF actuel</value>
   </data>
   <data name="Screen_Editor_TimingGroupEditor" xml:space="preserve">
-    <value>Timing Group Editor</value>
+    <value>Éditeur de groupes de timings</value>
   </data>
   <data name="Screen_Editor_ColorObjectsByTimingGroup" xml:space="preserve">
     <value>Color Objects By Timing Group</value>
@@ -2907,7 +2907,7 @@ Voulez-vous recharger l'éditeur ?</value>
     <value>Timing Groups allow you to change the visuals of a group of notes.</value>
   </data>
   <data name="Screen_Editor_TimingGroupInteractionHelp" xml:space="preserve">
-    <value>You can click on an individual timing group to edit it and double-click to go to the first note in the group.</value>
+    <value>Vous pouvez cliquer sur un groupe de timings en particulier pour le modifier et double-cliquer pour aller à la première note du groupe.</value>
   </data>
   <data name="Screen_Editor_EditInSvEditor" xml:space="preserve">
     <value>Modifier dans l'éditeur SV</value>
@@ -2988,16 +2988,16 @@ Voulez-vous recharger l'éditeur ?</value>
     <value>Clear</value>
   </data>
   <data name="Screen_Editor_SvVsSfTooltip" xml:space="preserve">
-    <value>SV will not move the notes but only change its speed, whereas SF will directly change both their position and speed</value>
+    <value>Les SV ne bougeront pas les notes et changent seulement leur vitesse, tandis que les SSF changeront directement à la fois leur position et leur vitesse</value>
   </data>
   <data name="Screen_Editor_ScrollSpeedFactorHelp" xml:space="preserve">
-    <value>Scroll Speed Factors (SSF) allow you to scale the distance from the notes to the receptor directly</value>
+    <value>Le Facteur de Vitesse de Défilement (SSF) vous permet d'ajuster la distance entre les notes et le récepteur directement.</value>
   </data>
   <data name="Screen_Editor_ScrollSpeedFactorMultiplierHelp" xml:space="preserve">
-    <value>SSF is a multiplier to your current scroll speed. The entries you add will be linearly transformed from one to another, like keyframes.</value>
+    <value>Le SSF est un multiplicateur de votre vitesse de défilement actuel. Les saisies que vous ajoutez changeront de façon linéaire d'un point à un autre, comme des images clés. </value>
   </data>
   <data name="Screen_Editor_ScrollSpeedFactorInteractionHelp" xml:space="preserve">
-    <value>You can click on an individual SSF point to edit it and double-click to go to its position in time.</value>
+    <value>Vous pouvez cliquer sur un point SSF en particulier pour le modifier et double-cliquer pour aller à sa position dans le temps.</value>
   </data>
   <data name="Screen_Editor_SvVsSsfTooltip" xml:space="preserve">
     <value>SV will not move the notes but only change its speed, whereas SSF will directly change both their position and speed</value>
@@ -3174,7 +3174,7 @@ Voulez-vous recharger l'éditeur ?</value>
     <value>You cannot edit the default layer!</value>
   </data>
   <data name="Screen_Editor_DetectBpmAndOffsetError" xml:space="preserve">
-    <value>Failed to detect BPM and offset!</value>
+    <value>Échec de la détection du BPM et du décalage !</value>
   </data>
   <data name="Screen_Editor_NoNotesResnapped" xml:space="preserve">
     <value>No notes resnapped</value>
@@ -3210,13 +3210,13 @@ Voulez-vous recharger l'éditeur ?</value>
     <value>Applied to all notes that are not in a timing group.</value>
   </data>
   <data name="Screen_Editor_GlobalTimingGroupTooltip" xml:space="preserve">
-    <value>The SVs in this group are interlaced to every other scroll groups.</value>
+    <value>Les SV dans ce groupe sont entrelacés avec tous les autres groupes.</value>
   </data>
   <data name="Screen_Editor_SelectCurrentSsfTooltip" xml:space="preserve">
     <value>This will select the SSF at the current editor timestamp. If Ctrl is held, it will add it to your selection instead. If Shift is held, it will select all SSFs up to that range, if one is selected already.</value>
   </data>
   <data name="Screen_Editor_ScrollSpeedFactorsSelected" xml:space="preserve">
-    <value>{0} scroll speed factors selected</value>
+    <value>{0} facteur(s) de vitesse de défilement sélectionné(s)</value>
   </data>
   <data name="Screen_Editor_SelectCurrentSvTooltip" xml:space="preserve">
     <value>This will select the SV at the current editor timestamp. If Ctrl is held, it will add it to your selection instead. If Shift is held, it will select all SVs up to that range, if one is selected already.</value>
