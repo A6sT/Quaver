@@ -887,7 +887,7 @@ Wenn die Map nicht fertig gespielt wurde, dann wird zusätzlich die Genauigkeit 
     <value>Skin exportieren</value>
   </data>
   <data name="Screen_Options_UploadSkinToSteamWorkshop" xml:space="preserve">
-    <value>Skin zum Steam Workshop hochladen</value>
+    <value>Skin in den Steam Workshop hochladen</value>
   </data>
   <data name="Screen_Options_NoteReceptorSizeScale" xml:space="preserve">
     <value>Note &amp; Rezeptoren Größenskalierung</value>
@@ -2187,43 +2187,43 @@ hochladen, damit andere Spieler es herunterladen können?</value>
     <value>Zum aktuellen ausgewählten Snap neu einrasten (1/{0})</value>
   </data>
   <data name="Screen_Editor_ResnapToCommonSnaps" xml:space="preserve">
-    <value>Resnap to 1/16 and 1/12 snaps</value>
+    <value>Einrasten zu 1/16 und 1/12 Snaps</value>
   </data>
   <data name="Screen_Editor_ResnapToCustomDivisions" xml:space="preserve">
-    <value>Resnap to custom divisions</value>
+    <value>An benutzerdefinierte Divisionen einrasten</value>
   </data>
   <data name="Screen_Editor_Resnap" xml:space="preserve">
-    <value>Resnap</value>
+    <value>Einrasten</value>
   </data>
   <data name="Screen_Editor_ResnapSelectedNotes" xml:space="preserve">
-    <value>Resnap Selected Notes</value>
+    <value>Ausgewählte Notizen einrasten</value>
   </data>
   <data name="Screen_Editor_ApplyModifierToMap" xml:space="preserve">
-    <value>Apply Modifier To Map</value>
+    <value>Modifikator auf Map anwenden</value>
   </data>
   <data name="Screen_Editor_Mirror" xml:space="preserve">
-    <value>Mirror</value>
+    <value>Spiegeln</value>
   </data>
   <data name="Screen_Editor_NoLongNotes" xml:space="preserve">
-    <value>No Long Notes</value>
+    <value>Keine Long Notes</value>
   </data>
   <data name="Screen_Editor_FullLongNotes" xml:space="preserve">
-    <value>Full Long Notes</value>
+    <value>Komplette Long Notes</value>
   </data>
   <data name="Screen_Editor_Inverse" xml:space="preserve">
-    <value>Inverse</value>
+    <value>Invertieren</value>
   </data>
   <data name="Screen_Editor_View" xml:space="preserve">
-    <value>View</value>
+    <value>Ansicht</value>
   </data>
   <data name="Screen_Editor_Panels" xml:space="preserve">
-    <value>Panels</value>
+    <value>Paneele</value>
   </data>
   <data name="Screen_Editor_Details" xml:space="preserve">
     <value>Details</value>
   </data>
   <data name="Screen_Editor_CompositionTools" xml:space="preserve">
-    <value>Composition Tools</value>
+    <value>Kompositionstools</value>
   </data>
   <data name="Screen_Editor_Layers" xml:space="preserve">
     <value>Ebenen</value>
@@ -2277,13 +2277,13 @@ hochladen, damit andere Spieler es herunterladen können?</value>
     <value>Snap Notes während Live Mapping</value>
   </data>
   <data name="Screen_Editor_SetLiveMappingOffset" xml:space="preserve">
-    <value>Set Offset For Notes Placed During Live Mapping</value>
+    <value>Offset für Notes während Live Mapping setzen</value>
   </data>
   <data name="Screen_Editor_PlaceLongNotesWhenLiveMapping" xml:space="preserve">
-    <value>Place Long Notes When Live Mapping</value>
+    <value>Long Notes während Live Mapping platzieren</value>
   </data>
   <data name="Screen_Editor_SetLiveMappingLongNoteMinimumLength" xml:space="preserve">
-    <value>Set Minimum Length Of Long Notes Placed During Live Mapping</value>
+    <value>Lege Mindestlänge für Long Notes während Live Mapping fest</value>
   </data>
   <data name="Screen_Editor_Waveform" xml:space="preserve">
     <value>Wellenform</value>
@@ -2328,193 +2328,193 @@ hochladen, damit andere Spieler es herunterladen können?</value>
     <value>Höchstfrequenz</value>
   </data>
   <data name="Screen_Editor_LongNoteOpacity" xml:space="preserve">
-    <value>Long Note Opacity</value>
+    <value>Long Note Opazität</value>
   </data>
   <data name="Screen_Editor_CenterObjects" xml:space="preserve">
-    <value>Center Objects</value>
+    <value>Objekte zentrieren</value>
   </data>
   <data name="Screen_Editor_ViewLayers" xml:space="preserve">
-    <value>View Layers</value>
+    <value>Ebenen anzeigen</value>
   </data>
   <data name="Screen_Editor_ViewTimingGroups" xml:space="preserve">
-    <value>View Timing Groups</value>
+    <value>Timinggruppen anzeigen</value>
   </data>
   <data name="Screen_Editor_ColorSvLinesByTimingGroup" xml:space="preserve">
-    <value>Color SV Lines By Timing Group</value>
+    <value>Färbe SV Linien nach Timinggruppe</value>
   </data>
   <data name="Screen_Editor_TestPlayModifiers" xml:space="preserve">
-    <value>Test Play Modifiers</value>
+    <value>Spieltest Modifikatoren</value>
   </data>
   <data name="Screen_Editor_Tools" xml:space="preserve">
     <value>Tools</value>
   </data>
   <data name="Screen_Editor_ResetWindowLayout" xml:space="preserve">
-    <value>Reset Window Layout</value>
+    <value>Fensterlayout zurücksetzen</value>
   </data>
   <data name="Screen_Editor_WindowLayoutResetOnNextOpen" xml:space="preserve">
-    <value>The window layout will be reset the next time you open the editor!</value>
+    <value>Das Fensterlayout wird bei der nächsten Öffnung des Editors zurückgesetzt!</value>
   </data>
   <data name="Screen_Editor_Plugins" xml:space="preserve">
     <value>Plugins</value>
   </data>
   <data name="Screen_Editor_Local" xml:space="preserve">
-    <value>Local</value>
+    <value>Lokal</value>
   </data>
   <data name="Screen_Editor_Enabled" xml:space="preserve">
-    <value>Enabled</value>
+    <value>Aktiviert</value>
   </data>
   <data name="Screen_Editor_UploadToWorkshop" xml:space="preserve">
-    <value>Upload To Workshop</value>
+    <value>Im Workshop Hochladen</value>
   </data>
   <data name="Screen_Editor_UploadingPluginToWorkshop" xml:space="preserve">
-    <value>Uploading plugin to the Steam Workshop...</value>
+    <value>Plugin wird in den Steam Workshop hochgeladen...</value>
   </data>
   <data name="Screen_Editor_PluginUploadedToWorkshop" xml:space="preserve">
-    <value>Successfully uploaded plugin to the workshop!</value>
+    <value>Plugin wurde erfolgreich in den Workshop hochgeladen!</value>
   </data>
   <data name="Screen_Editor_OpenFolder" xml:space="preserve">
-    <value>Open Folder</value>
+    <value>Ordner öffnen</value>
   </data>
   <data name="Screen_Editor_NoPluginsInstalled" xml:space="preserve">
-    <value>No Plugins Installed</value>
+    <value>Keine Plugins installiert</value>
   </data>
   <data name="Screen_Editor_SteamWorkshop" xml:space="preserve">
     <value>Steam Workshop</value>
   </data>
   <data name="Screen_Editor_Help" xml:space="preserve">
-    <value>Help</value>
+    <value>Hilfe</value>
   </data>
   <data name="Screen_Editor_Wiki" xml:space="preserve">
     <value>Wiki</value>
   </data>
   <data name="Screen_Editor_GettingStarted" xml:space="preserve">
-    <value>Getting Started</value>
+    <value>Erste Schritte</value>
   </data>
   <data name="Screen_Editor_EditorFunctions" xml:space="preserve">
-    <value>Editor Functions</value>
+    <value>Editor Funktionen</value>
   </data>
   <data name="Screen_Editor_RankingCriteria" xml:space="preserve">
-    <value>Ranking Criteria</value>
+    <value>Ranking Kriterien</value>
   </data>
   <data name="Screen_Editor_RankingProcess" xml:space="preserve">
-    <value>Ranking Process</value>
+    <value>Ranking Prozess</value>
   </data>
   <data name="Screen_Editor_Web" xml:space="preserve">
     <value>Web</value>
   </data>
   <data name="Screen_Editor_ViewOnlineListing" xml:space="preserve">
-    <value>View Online Listing</value>
+    <value>Online Auflistung ansehen</value>
   </data>
   <data name="Screen_Editor_ModdingDiscussion" xml:space="preserve">
-    <value>Modding Discussion</value>
+    <value>Modding Diskussion</value>
   </data>
   <data name="Screen_Editor_Audio" xml:space="preserve">
     <value>Audio</value>
   </data>
   <data name="Screen_Editor_PlaybackSpeed" xml:space="preserve">
-    <value>Playback Speed</value>
+    <value>Wiedergabegeschwindigkeit</value>
   </data>
   <data name="Screen_Editor_Enable" xml:space="preserve">
-    <value>Enable</value>
+    <value>Aktivieren</value>
   </data>
   <data name="Screen_Editor_Volume" xml:space="preserve">
-    <value>Volume</value>
+    <value>Lautstärke</value>
   </data>
   <data name="Screen_Editor_DefaultPercentage" xml:space="preserve">
-    <value>Default ({0}%)</value>
+    <value>Standard ({0})</value>
   </data>
   <data name="Screen_Editor_Metronome" xml:space="preserve">
-    <value>Metronome</value>
+    <value>Metronom</value>
   </data>
   <data name="Screen_Editor_PlayHalfBeats" xml:space="preserve">
-    <value>Play Half Beats</value>
+    <value>Spiele Halbe Beats</value>
   </data>
   <data name="Screen_Editor_Keybinds" xml:space="preserve">
-    <value>Keybinds</value>
+    <value>Tastenbelegung</value>
   </data>
   <data name="Screen_Editor_InvertBeatSnapScroll" xml:space="preserve">
-    <value>Invert Beat Snap Scroll</value>
+    <value>Invertiere Beat Snap Scrollrichtung</value>
   </data>
   <data name="Screen_Editor_InvertScrolling" xml:space="preserve">
-    <value>Invert Scrolling</value>
+    <value>Scrollen invertieren</value>
   </data>
   <data name="Screen_Editor_FillMissingActions" xml:space="preserve">
-    <value>Fill Missing Actions</value>
+    <value>Fehlende Aktionen ausfüllen</value>
   </data>
   <data name="Screen_Editor_FilledMissingActions" xml:space="preserve">
-    <value>Filled {0} missing actions!</value>
+    <value>{0} fehlende Aktionen ausgefüllt!</value>
   </data>
   <data name="Screen_Editor_ResetAllKeybinds" xml:space="preserve">
-    <value>Reset All Keybinds</value>
+    <value>Alle Tastaturkürzel zurücksetzen</value>
   </data>
   <data name="Screen_Editor_AllKeybindsReset" xml:space="preserve">
-    <value>All keybinds have been reset!</value>
+    <value>Alle Tastaturkürzel wurden zurückgesetzt!</value>
   </data>
   <data name="Screen_Editor_AddBookmark" xml:space="preserve">
-    <value>ADD BOOKMARK</value>
+    <value>LESEZEICHEN HINZUFÜGEN</value>
   </data>
   <data name="Screen_Editor_EditBookmark" xml:space="preserve">
-    <value>EDIT BOOKMARK</value>
+    <value>LESEZEICHEN BEARBEITEN</value>
   </data>
   <data name="Screen_Editor_BookmarkDialogMessage" xml:space="preserve">
-    <value>Add a custom note for your bookmark...</value>
+    <value>Füge eine benutzerdefinierte Notiz für dein Lesezeichen hinzu...</value>
   </data>
   <data name="Screen_Editor_BookmarkNotePlaceholder" xml:space="preserve">
-    <value>Add a bookmark note...</value>
+    <value>Lesezeichen Notiz hinzufügen...</value>
   </data>
   <data name="Screen_Editor_CreateNewMapset" xml:space="preserve">
-    <value>CREATE NEW MAPSET</value>
+    <value>NEUES MAPSET ERSTELLEN</value>
   </data>
   <data name="Screen_Editor_CreateNewMapsetMessage" xml:space="preserve">
-    <value>To create a new mapset, drag a .mp3 file into the game window...</value>
+    <value>Um ein neues Mapset zu erstellen, zieh eine .mp3 Datei in das Spielfenster...</value>
   </data>
   <data name="Screen_Editor_DetectedManualFileChanges" xml:space="preserve">
-    <value>DETECTED MANUAL FILE CHANGES</value>
+    <value>ERKENNE MANUELLE DATEI VERÄNDERUNGEN</value>
   </data>
   <data name="Screen_Editor_DetectedManualFileChangesMessage" xml:space="preserve">
-    <value>There were manual changes detected to the .qua file.&#xA;Would you like to reload the editor?</value>
+    <value>Es wurden manuelle Änderungen an der .qua Datei erkannt.&#xA; Möchtest du den Editor neu laden?</value>
   </data>
   <data name="Screen_Editor_ApplyOffsetToMapMessage" xml:space="preserve">
-    <value>Enter a value to apply an offset to all of your map's objects, timing points,&#xA; and scroll velocities...</value>
+    <value>Gib einen Wert ein, um ein Offset auf alle Objekte, Timing Punkte, und Scroll Velocities deiner Map anzuwenden...</value>
   </data>
   <data name="Screen_Editor_ApplyOffsetPlaceholder" xml:space="preserve">
-    <value>Enter an offset to apply to your map...</value>
+    <value>Gebe ein Offset ein, welches auf die Map angewendet werden soll... </value>
   </data>
   <data name="Screen_Editor_SaveChanges" xml:space="preserve">
-    <value>SAVE CHANGES</value>
+    <value>ÄNDERUNGEN SPEICHERN</value>
   </data>
   <data name="Screen_Editor_SaveBeforeCreatingDifficulty" xml:space="preserve">
-    <value>You have unsaved changes. Would you like to save&#xA;before creating a new difficulty?</value>
+    <value>Du hast ungespeicherte Änderungen. Möchtest du&#xA; speichern, bevor du eine neue Schwierigkeit erstellt?</value>
   </data>
   <data name="Screen_Editor_SaveBeforeSwitchingDifficulty" xml:space="preserve">
-    <value>You have unsaved changes. Would you like to save&#xA;before switching to another difficulty?</value>
+    <value>Du hast ungespeicherte Änderungen. Möchtest du&#xA; speichern, bevor du zu einer anderen Schwierigkeit wechselst?</value>
   </data>
   <data name="Screen_Editor_MapSavedSuccessfully" xml:space="preserve">
-    <value>Your map has been successfully saved!</value>
+    <value>Deine Map wurde erfolgreich gespeichert!</value>
   </data>
   <data name="Screen_Editor_ExitEditor" xml:space="preserve">
-    <value>EXIT EDITOR</value>
+    <value>EDITOR VERLASSEN</value>
   </data>
   <data name="Screen_Editor_SaveBeforeExit" xml:space="preserve">
-    <value>You have unsaved changes. Would you like to save?</value>
+    <value>Du hast ungespeicherte Änderungen. Möchtest du speichern?</value>
   </data>
   <data name="Screen_Editor_No" xml:space="preserve">
-    <value>NO</value>
+    <value>NEIN</value>
   </data>
   <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve">
-    <value>Are you sure you would like to submit your mapset for rank?&#xA;Note: It must follow the ranking criteria in order to be accepted.</value>
+    <value>Bist du sicher, dass du deine Map fürs Ranking einreichen möchtest?&#xA; Hinweis: Es muss den Ranking-Kriterien folgen, um akzeptiert zu werden.</value>
   </data>
   <data name="Screen_Editor_CustomBeatSnap" xml:space="preserve">
-    <value>CUSTOM BEAT SNAP</value>
+    <value>BENUTZERDEFINIERTER BEAT SNAP</value>
   </data>
   <data name="Screen_Editor_CustomBeatSnapMessage" xml:space="preserve">
-    <value>Enter a value or range of values for the custom beat snap divisor (1/?)...</value>
+    <value>Gebe einen Wert oder Wertebereich für den benutzerdefinierten Beat Snap Divisor (1/?) ein...</value>
   </data>
   <data name="Screen_Editor_CustomBeatSnapPlaceholder" xml:space="preserve">
-    <value>Enter a beat snap value or range (max 48, e.g. "7" or "5-9")</value>
+    <value>Gebe einen Beat Snap Wert oder Bereich ein (max. 48, z. B. "7" oder "5-9")</value>
   </data>
   <data name="Screen_Editor_SetLiveMapOffset" xml:space="preserve">
-    <value>SET LIVEMAP OFFSET</value>
+    <value>LIVEMAP OFFSET SETZEN</value>
   </data>
   <data name="Screen_Editor_SetLiveMapOffsetMessage" xml:space="preserve">
     <value>Enter a value to apply an offset to notes placed during live-mapping...</value>
@@ -2637,19 +2637,19 @@ hochladen, damit andere Spieler es herunterladen können?</value>
     <value>Edit the values to change the metadata...</value>
   </data>
   <data name="Screen_Editor_ArtistName" xml:space="preserve">
-    <value>Artist Name</value>
+    <value>Künstlername</value>
   </data>
   <data name="Screen_Editor_ArtistNamePlaceholder" xml:space="preserve">
-    <value>Name of the artist</value>
+    <value>Name des Künstlers</value>
   </data>
   <data name="Screen_Editor_SongTitle" xml:space="preserve">
-    <value>Song Title</value>
+    <value>Songtitel</value>
   </data>
   <data name="Screen_Editor_SongTitlePlaceholder" xml:space="preserve">
-    <value>Title of the song</value>
+    <value>Titel des Songs</value>
   </data>
   <data name="Screen_Editor_DifficultyName" xml:space="preserve">
-    <value>Difficulty Name</value>
+    <value>Schwierigkeitsname</value>
   </data>
   <data name="Screen_Editor_DifficultyNamePlaceholder" xml:space="preserve">
     <value>Name of the difficulty</value>
@@ -2682,34 +2682,34 @@ hochladen, damit andere Spieler es herunterladen können?</value>
     <value>SCRATCH KEY:</value>
   </data>
   <data name="Screen_Editor_LegacyLnRendering" xml:space="preserve">
-    <value>LEGACY LN RENDERING:</value>
+    <value>LEGACY LN RENDERUNG:</value>
   </data>
   <data name="Screen_Editor_SyncMetadata" xml:space="preserve">
-    <value>SYNC METADATA</value>
+    <value>SYNC METADATEN</value>
   </data>
   <data name="Screen_Editor_CannotEditImportedMapMetadata" xml:space="preserve">
-    <value>You cannot edit the metadata for a map loaded from another game.</value>
+    <value>Du kannst die Metadaten für eine Map, die aus einem anderen Spiel geladen wird, nicht bearbeiten.</value>
   </data>
   <data name="Screen_Editor_MetadataSynced" xml:space="preserve">
-    <value>Metadata synced to {0} map(s)!</value>
+    <value>Metadaten mit {0} map(s) synchronisiert!</value>
   </data>
   <data name="Screen_Editor_CannotDeleteDefaultLayer" xml:space="preserve">
     <value>You cannot delete the default layer!</value>
   </data>
   <data name="Screen_Editor_DeletedLayer" xml:space="preserve">
-    <value>Deleted layer '{0}'</value>
+    <value>Ebene '{0}' gelöscht</value>
   </data>
   <data name="Screen_Editor_CannotRenameDefaultLayer" xml:space="preserve">
-    <value>You cannot rename the default layer!</value>
+    <value>Du kannst nicht die Standardebene umbenennen!</value>
   </data>
   <data name="Screen_Editor_CannotRecolorDefaultLayer" xml:space="preserve">
-    <value>You cannot recolor the default layer!</value>
+    <value>Du kannst nicht die Standardebene umfärben!</value>
   </data>
   <data name="Screen_Editor_CannotDeleteDefaultTimingGroups" xml:space="preserve">
-    <value>You cannot delete the default timing groups!</value>
+    <value>Du kannst nicht die Standard Timinggruppe löschen!</value>
   </data>
   <data name="Screen_Editor_DeletedTimingGroup" xml:space="preserve">
-    <value>Deleted timing group '{0}'</value>
+    <value>Timinggruppe '{0}' gelöscht</value>
   </data>
   <data name="Screen_Editor_CannotSaveImportedMap" xml:space="preserve">
     <value>You cannot save a map loaded from another game!</value>
@@ -2775,7 +2775,7 @@ hochladen, damit andere Spieler es herunterladen können?</value>
     <value>You must be logged in to submit your mapset for rank!</value>
   </data>
   <data name="Screen_Editor_SaveAndUploadBeforeSubmitForRank" xml:space="preserve">
-    <value>Your map has unsaved changes. Please save &amp; upload before submitting for rank.</value>
+    <value>Deine Map hat ungespeicherte Änderungen. Bitte speichere &amp; lade sie hoch, bevor du sie fürs Ranking einreichst.</value>
   </data>
   <data name="Screen_Editor_CannotSetImportedMapBackground" xml:space="preserve">
     <value>You cannot set a new background for a map loaded from another game.</value>
