@@ -76,7 +76,7 @@
     <value>Change screens to update the language.</value>
   </data>
   <data name="Chat_SendAMessage" xml:space="preserve">
-    <value>メッセージを送信...</value>
+    <value>メッセージを入力...</value>
   </data>
   <data name="Screen_Main_Menu_Home" xml:space="preserve">
     <value>ホーム</value>
@@ -151,7 +151,7 @@
     <value>ゲームを終了しますか？</value>
   </data>
   <data name="Screen_Main_SinglePlayerDescription" xml:space="preserve">
-    <value>Compete for leaderboard ranks</value>
+    <value>リーダーボードのランクを競うする</value>
   </data>
   <data name="Screen_Main_MultiplayerDescription" xml:space="preserve">
     <value>Play custom matches online with others</value>
@@ -166,7 +166,7 @@
     <value>Find new songs from the community to play</value>
   </data>
   <data name="Screen_Main_TipLabel" xml:space="preserve">
-    <value>TIP:</value>
+    <value>ヒント：</value>
   </data>
   <data name="Screen_Main_TipOpenOptions" xml:space="preserve">
     <value>Pressing CTRL+O will open the options menu.</value>
@@ -286,13 +286,13 @@
     <value>Length:</value>
   </data>
   <data name="Screen_Selection_Local" xml:space="preserve">
-    <value>Local</value>
+    <value>ローカル</value>
   </data>
   <data name="Screen_Selection_LocalProfile" xml:space="preserve">
-    <value>Local Profile</value>
+    <value>ローカルプロフィール</value>
   </data>
   <data name="Screen_Selection_LongNote" xml:space="preserve">
-    <value>Long Note %</value>
+    <value>ロングノーツ ％</value>
   </data>
   <data name="Screen_Selection_MapFound" xml:space="preserve">
     <value>Map Found</value>
@@ -310,10 +310,10 @@
     <value>モード：</value>
   </data>
   <data name="Screen_Selection_Modifiers" xml:space="preserve">
-    <value>Modifiers</value>
+    <value>MOD</value>
   </data>
   <data name="Screen_Selection_Mods" xml:space="preserve">
-    <value>Mods</value>
+    <value>MOD</value>
   </data>
   <data name="Screen_Selection_NeverPlayed" xml:space="preserve">
     <value>Never Played</value>
@@ -331,7 +331,7 @@
     <value>Notes Per Sec.</value>
   </data>
   <data name="Screen_Selection_Online" xml:space="preserve">
-    <value>Online</value>
+    <value>オンライン</value>
   </data>
   <data name="Screen_Selection_OnlineGrade" xml:space="preserve">
     <value>Online Grade</value>
@@ -340,7 +340,7 @@
     <value>Online Listing</value>
   </data>
   <data name="Screen_Selection_OnlineProfile" xml:space="preserve">
-    <value>Online Profile</value>
+    <value>オンラインプロフィール</value>
   </data>
   <data name="Screen_Selection_Options" xml:space="preserve">
     <value>Options</value>
@@ -466,7 +466,7 @@
     <value>入力</value>
   </data>
   <data name="Screen_Options_Gamemodespecific" xml:space="preserve">
-    <value>Game mode specific</value>
+    <value>ゲームモード別設定</value>
   </data>
   <data name="Screen_Options_Miscellaneous" xml:space="preserve">
     <value>Miscellaneous</value>
@@ -702,7 +702,7 @@ Marvelous instead.</value>
     <value>Match played on {0} @ {1}</value>
   </data>
   <data name="Screen_Results_FreeForAll" xml:space="preserve">
-    <value>Free For All</value>
+    <value>個人戦</value>
   </data>
   <data name="Screen_Results_BattleRoyale" xml:space="preserve">
     <value>バトルロイヤル</value>
@@ -747,10 +747,10 @@ Marvelous instead.</value>
     <value>Okay</value>
   </data>
   <data name="Screen_Results_Miss" xml:space="preserve">
-    <value>ミス</value>
+    <value>Miss</value>
   </data>
   <data name="Screen_Results_Mods" xml:space="preserve">
-    <value>Mods</value>
+    <value>MOD</value>
   </data>
   <data name="Screen_Results_Loadingresults" xml:space="preserve">
     <value>Loading results</value>
@@ -876,7 +876,7 @@ Marvelous instead.</value>
     <value>Display Receptors Over Lane Covers</value>
   </data>
   <data name="Screen_Options_CustomSkin" xml:space="preserve">
-    <value>カスタム スキン</value>
+    <value>カスタムスキン</value>
   </data>
   <data name="Screen_Options_CoopPlayer2Skin" xml:space="preserve">
     <value>Co-op Player 2 Skin</value>
@@ -891,7 +891,7 @@ Marvelous instead.</value>
     <value>スキンのエクスポート</value>
   </data>
   <data name="Screen_Options_UploadSkinToSteamWorkshop" xml:space="preserve">
-    <value>Steamワークショップにスキンをアップロード</value>
+    <value>Steam ワークショップにスキンをアップロード</value>
   </data>
   <data name="Screen_Options_NoteReceptorSizeScale" xml:space="preserve">
     <value>Note &amp; Receptor Size Scale</value>
@@ -942,13 +942,13 @@ Marvelous instead.</value>
     <value>Increase Gameplay Rate</value>
   </data>
   <data name="Screen_Options_ToggleMirrorMod" xml:space="preserve">
-    <value>Toggle Mirror Mod</value>
+    <value>ミラーMODを切り替える</value>
   </data>
   <data name="Screen_Options_TogglePitch" xml:space="preserve">
     <value>Toggle Pitch</value>
   </data>
   <data name="Screen_Options_RemoveAllMods" xml:space="preserve">
-    <value>Remove All Mods</value>
+    <value>すべてのMODを削除する</value>
   </data>
   <data name="Screen_Options_PausePlayTrack" xml:space="preserve">
     <value>Pause/Play Track</value>
@@ -1119,7 +1119,7 @@ Marvelous instead.</value>
     <value>Prioritized 1K Difficulty</value>
   </data>
   <data name="Screen_Options_1Keys" xml:space="preserve">
-    <value>1 キー</value>
+    <value>1K</value>
   </data>
   <data name="Screen_Options_2KGameplayLayout" xml:space="preserve">
     <value>2K Gameplay Layout</value>
@@ -1143,7 +1143,7 @@ Marvelous instead.</value>
     <value>Prioritized 2K Difficulty</value>
   </data>
   <data name="Screen_Options_2Keys" xml:space="preserve">
-    <value>2 キー</value>
+    <value>2K</value>
   </data>
   <data name="Screen_Options_3KGameplayLayout" xml:space="preserve">
     <value>3K Gameplay Layout</value>
@@ -1167,7 +1167,7 @@ Marvelous instead.</value>
     <value>Prioritized 3K Difficulty</value>
   </data>
   <data name="Screen_Options_3Keys" xml:space="preserve">
-    <value>3 キー</value>
+    <value>3K</value>
   </data>
   <data name="Screen_Options_4KGameplayLayout" xml:space="preserve">
     <value>4K Gameplay Layout</value>
@@ -1191,7 +1191,7 @@ Marvelous instead.</value>
     <value>Prioritized 4K Difficulty</value>
   </data>
   <data name="Screen_Options_4Keys" xml:space="preserve">
-    <value>4 キー</value>
+    <value>4K</value>
   </data>
   <data name="Screen_Options_5KGameplayLayout" xml:space="preserve">
     <value>5K Gameplay Layout</value>
@@ -1215,7 +1215,7 @@ Marvelous instead.</value>
     <value>Prioritized 5K Difficulty</value>
   </data>
   <data name="Screen_Options_5Keys" xml:space="preserve">
-    <value>5 キー</value>
+    <value>5K</value>
   </data>
   <data name="Screen_Options_6KGameplayLayout" xml:space="preserve">
     <value>6K Gameplay Layout</value>
@@ -1239,7 +1239,7 @@ Marvelous instead.</value>
     <value>Prioritized 6K Difficulty</value>
   </data>
   <data name="Screen_Options_6Keys" xml:space="preserve">
-    <value>6 キー</value>
+    <value>6K</value>
   </data>
   <data name="Screen_Options_7KGameplayLayout" xml:space="preserve">
     <value>7K Gameplay Layout</value>
@@ -1263,7 +1263,7 @@ Marvelous instead.</value>
     <value>Prioritized 7K Difficulty</value>
   </data>
   <data name="Screen_Options_7Keys" xml:space="preserve">
-    <value>7 キー</value>
+    <value>7K</value>
   </data>
   <data name="Screen_Options_8KGameplayLayout" xml:space="preserve">
     <value>8K Gameplay Layout</value>
@@ -1287,7 +1287,7 @@ Marvelous instead.</value>
     <value>Prioritized 8K Difficulty</value>
   </data>
   <data name="Screen_Options_8Keys" xml:space="preserve">
-    <value>8 キー</value>
+    <value>8K</value>
   </data>
   <data name="Screen_Options_9KGameplayLayout" xml:space="preserve">
     <value>9K Gameplay Layout</value>
@@ -1311,7 +1311,7 @@ Marvelous instead.</value>
     <value>Prioritized 9K Difficulty</value>
   </data>
   <data name="Screen_Options_9Keys" xml:space="preserve">
-    <value>9 キー</value>
+    <value>9K</value>
   </data>
   <data name="Screen_Options_10KGameplayLayout" xml:space="preserve">
     <value>10K Gameplay Layout</value>
@@ -1335,7 +1335,7 @@ Marvelous instead.</value>
     <value>Prioritized 10K Difficulty</value>
   </data>
   <data name="Screen_Options_10Keys" xml:space="preserve">
-    <value>10 キー</value>
+    <value>10K</value>
   </data>
   <data name="Screen_Options_VideoSettings" xml:space="preserve">
     <value>Video Settings</value>
@@ -1435,7 +1435,7 @@ for the selected game mode?</value>
     <value>Expert</value>
   </data>
   <data name="Screen_Download_MODE" xml:space="preserve">
-    <value>MODE: </value>
+    <value>モード：</value>
   </data>
   <data name="Screen_Download_SORTBY" xml:space="preserve">
     <value>SORT BY: </value>
@@ -1584,34 +1584,34 @@ You can use the filters below to narrow down your search.</value>
     <value>Online Listing</value>
   </data>
   <data name="Screen_Download_1Keys" xml:space="preserve">
-    <value>1 キー</value>
+    <value>1K</value>
   </data>
   <data name="Screen_Download_2Keys" xml:space="preserve">
-    <value>2 キー</value>
+    <value>2K</value>
   </data>
   <data name="Screen_Download_3Keys" xml:space="preserve">
-    <value>3 キー</value>
+    <value>3K</value>
   </data>
   <data name="Screen_Download_4Keys" xml:space="preserve">
-    <value>4 キー</value>
+    <value>4K</value>
   </data>
   <data name="Screen_Download_5Keys" xml:space="preserve">
-    <value>5 キー</value>
+    <value>5K</value>
   </data>
   <data name="Screen_Download_6Keys" xml:space="preserve">
-    <value>6 キー</value>
+    <value>6K</value>
   </data>
   <data name="Screen_Download_7Keys" xml:space="preserve">
-    <value>7 キー</value>
+    <value>7K</value>
   </data>
   <data name="Screen_Download_8Keys" xml:space="preserve">
-    <value>8 キー</value>
+    <value>8K</value>
   </data>
   <data name="Screen_Download_9Keys" xml:space="preserve">
-    <value>9 キー</value>
+    <value>9K</value>
   </data>
   <data name="Screen_Download_10Keys" xml:space="preserve">
-    <value>10 キー</value>
+    <value>10K</value>
   </data>
   <data name="Screen_Multi_ConfirmReadyTitle" xml:space="preserve">
     <value>CONFIRM READY</value>
@@ -1636,7 +1636,7 @@ sure you would like to start without all players ready?</value>
     <value>Select Map</value>
   </data>
   <data name="Screen_Multi_Modifiers" xml:space="preserve">
-    <value>Modifiers</value>
+    <value>MOD</value>
   </data>
   <data name="Screen_Multi_Leaderboard" xml:space="preserve">
     <value>ランキング</value>
@@ -1645,7 +1645,7 @@ sure you would like to start without all players ready?</value>
     <value>履歴</value>
   </data>
   <data name="Screen_Multi_SwitchTeams" xml:space="preserve">
-    <value>チームの切り替え</value>
+    <value>チーム変更</value>
   </data>
   <data name="Screen_Multi_NotReady" xml:space="preserve">
     <value>準備不足</value>
@@ -1724,7 +1724,7 @@ for other players to download?</value>
     <value>commands</value>
   </data>
   <data name="Screen_Multiplayer_GameMode" xml:space="preserve">
-    <value>Game Mode</value>
+    <value>ゲームモード</value>
   </data>
   <data name="Screen_Multiplayer_MaxPlayers" xml:space="preserve">
     <value>Max Players</value>
@@ -1733,7 +1733,7 @@ for other players to download?</value>
     <value>Auto Host Rotation</value>
   </data>
   <data name="Screen_Multiplayer_FreeMod" xml:space="preserve">
-    <value>Free Mod</value>
+    <value>フリーMOD</value>
   </data>
   <data name="Screen_Multiplayer_FreeRate" xml:space="preserve">
     <value>Free Rate</value>
@@ -1796,10 +1796,10 @@ for other players to download?</value>
     <value>CANCEL MATCH START</value>
   </data>
   <data name="Screen_Multiplayer_Modifiers" xml:space="preserve">
-    <value>Modifiers</value>
+    <value>MOD</value>
   </data>
   <data name="Screen_Multiplayer_WaitUntilMatchFinishesBeforeSelectingMods" xml:space="preserve">
-    <value>Please wait until the match finishes before selecting mods.</value>
+    <value>試合が終了するまでMODを選択できません。</value>
   </data>
   <data name="Screen_Multiplayer_ChangeTeam" xml:space="preserve">
     <value>Change Team</value>
@@ -1808,13 +1808,13 @@ for other players to download?</value>
     <value>You must unready in order to switch teams!</value>
   </data>
   <data name="Screen_Multiplayer_CannotSwitchTeamsDuringCountdown" xml:space="preserve">
-    <value>You cannot switch teams when the countdown timer is active</value>
+    <value>カウントダウン中はチームを変更できません</value>
   </data>
   <data name="Screen_Multiplayer_ViewProfile" xml:space="preserve">
-    <value>View Profile</value>
+    <value>プロフィールを表示</value>
   </data>
   <data name="Screen_Multiplayer_SteamProfile" xml:space="preserve">
-    <value>Steam Profile</value>
+    <value>Steam プロフィール</value>
   </data>
   <data name="Screen_Multiplayer_KickPlayer" xml:space="preserve">
     <value>Kick Player</value>
@@ -1865,7 +1865,7 @@ for other players to download?</value>
     <value>Match in progress. Please wait until the next one!</value>
   </data>
   <data name="Screen_Multiplayer_ModsNone" xml:space="preserve">
-    <value>Mods: None</value>
+    <value>MOD：なし</value>
   </data>
   <data name="Screen_Multiplayer_HostSelectingMap" xml:space="preserve">
     <value>Host is currently selecting a map!</value>
@@ -1913,19 +1913,19 @@ for other players to download?</value>
     <value>All</value>
   </data>
   <data name="Screen_MultiplayerLobby_FreeForAll" xml:space="preserve">
-    <value>Free-For-All</value>
+    <value>個人戦</value>
   </data>
   <data name="Screen_MultiplayerLobby_Team" xml:space="preserve">
-    <value>Team</value>
+    <value>チーム</value>
   </data>
   <data name="Screen_MultiplayerLobby_ModeLabel" xml:space="preserve">
-    <value>MODE: </value>
+    <value>モード：</value>
   </data>
   <data name="Screen_MultiplayerLobby_4Keys" xml:space="preserve">
-    <value>4 Keys</value>
+    <value>4K</value>
   </data>
   <data name="Screen_MultiplayerLobby_7Keys" xml:space="preserve">
-    <value>7 Keys</value>
+    <value>7K</value>
   </data>
   <data name="Screen_MultiplayerLobby_MapStatusLabel" xml:space="preserve">
     <value>MAP STATUS: </value>
@@ -2012,7 +2012,7 @@ for other players to download?</value>
     <value>No</value>
   </data>
   <data name="Screen_MultiplayerLobby_FreeMod" xml:space="preserve">
-    <value>Free Mod</value>
+    <value>フリーMOD</value>
   </data>
   <data name="Screen_MultiplayerLobby_FreeRate" xml:space="preserve">
     <value>Free Rate</value>
@@ -2372,7 +2372,7 @@ for other players to download?</value>
     <value>Upload To Workshop</value>
   </data>
   <data name="Screen_Editor_UploadingPluginToWorkshop" xml:space="preserve">
-    <value>Uploading plugin to the Steam Workshop...</value>
+    <value>Steam ワークショップにプラグインをアップロード中...</value>
   </data>
   <data name="Screen_Editor_PluginUploadedToWorkshop" xml:space="preserve">
     <value>Successfully uploaded plugin to the workshop!</value>
@@ -2384,7 +2384,7 @@ for other players to download?</value>
     <value>No Plugins Installed</value>
   </data>
   <data name="Screen_Editor_SteamWorkshop" xml:space="preserve">
-    <value>Steam Workshop</value>
+    <value>Steam ワークショップ</value>
   </data>
   <data name="Screen_Editor_Help" xml:space="preserve">
     <value>Help</value>
@@ -3275,7 +3275,7 @@ for other players to download?</value>
     <value>Difficulty:</value>
   </data>
   <data name="Screen_Editor_ModeLabel" xml:space="preserve">
-    <value>Mode:</value>
+    <value>モード：</value>
   </data>
   <data name="Screen_Editor_StatusLabel" xml:space="preserve">
     <value>Status:</value>
@@ -3365,16 +3365,16 @@ for other players to download?</value>
     <value>TimingGroup</value>
   </data>
   <data name="Screen_Editor_Modifier_Mirror" xml:space="preserve">
-    <value>Mirror</value>
+    <value>ミラー</value>
   </data>
   <data name="Screen_Editor_Modifier_NoLongNotes" xml:space="preserve">
-    <value>NoLongNotes</value>
+    <value>ロングノーツなし</value>
   </data>
   <data name="Screen_Editor_Modifier_FullLN" xml:space="preserve">
-    <value>FullLN</value>
+    <value>オールロングノーツ</value>
   </data>
   <data name="Screen_Editor_Modifier_Inverse" xml:space="preserve">
-    <value>Inverse</value>
+    <value>インバース</value>
   </data>
   <data name="Screen_Editor_CreatedAt" xml:space="preserve">
     <value>Created at {0}</value>
