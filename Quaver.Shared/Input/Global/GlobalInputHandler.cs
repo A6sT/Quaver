@@ -1,6 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Quaver.Shared.Config;
+using Quaver.Shared.Database.Maps;
+using Quaver.Shared.Graphics.Notifications;
+using Quaver.Shared.Scheduling;
+using Quaver.Shared.Screens.Gameplay;
 using Wobble.Bindables;
 using Wobble.Input;
 
@@ -8,6 +13,15 @@ namespace Quaver.Shared.Input.Global;
 
 public class GlobalInputHandler : IInputHandler<GlobalKeybindActions>
 {
+
+    /// <summary>
+    /// </summary>
+    private const string VISUAL_OFFSET_NOTIFICATION_KEY = "gameplay-visual-offset";
+
+    /// <summary>
+    /// </summary>
+    private const string LOCAL_MAP_OFFSET_NOTIFICATION_KEY = "gameplay-local-map-offset";
+
     private readonly Dictionary<GlobalKeybindActions, Bindable<bool>> _invertScrollingActions = [];
 
     private static readonly HashSet<GlobalKeybindActions> HoldRepeatActions = [];
@@ -78,4 +92,47 @@ public class GlobalInputHandler : IInputHandler<GlobalKeybindActions>
 
     /// <inheritdoc />
     public bool InFocus => false;
+
+    public static void HandleOffsetAction(GlobalKeybindActions action)
+    {
+        var change = action.HasFlag(GlobalKeybindActions.Small) ? 1 : 5;
+        if (action.HasFlag(GlobalKeybindActions.Reverse))
+            change *= -1;
+                
+        if ((action & GlobalKeybindActions.BaseActionMask) == GlobalKeybindActions.ResetOffset)
+        {
+            if (action.HasFlag(GlobalKeybindActions.Visual))
+            {
+                ConfigManager.VisualOffset.Value = 0;
+                NotificationManager.ShowOrUpdate(VISUAL_OFFSET_NOTIFICATION_KEY, NotificationLevel.Success,
+                    $"Visual offset has been reset to: {ConfigManager.VisualOffset.Value} ms", null, true);
+            }
+            else
+            {
+                MapManager.Selected.Value.LocalOffset = 0;
+                NotificationManager.ShowOrUpdate(LOCAL_MAP_OFFSET_NOTIFICATION_KEY, NotificationLevel.Success,
+                    $"Local map audio offset has been reset to: {MapManager.Selected.Value.LocalOffset} ms", null, true);
+
+                ThreadScheduler.Run(() => MapDatabaseCache.UpdateMap(MapManager.Selected.Value));
+            }
+        }
+
+        if ((action & GlobalKeybindActions.BaseActionMask) == GlobalKeybindActions.IncreaseOffset)
+        {
+            if (action.HasFlag(GlobalKeybindActions.Visual))
+            {
+                ConfigManager.VisualOffset.Value += change;
+                NotificationManager.ShowOrUpdate(VISUAL_OFFSET_NOTIFICATION_KEY, NotificationLevel.Success,
+                    $"Visual offset has been changed to: {ConfigManager.VisualOffset.Value} ms", null, true);
+            }
+            else
+            {
+                MapManager.Selected.Value.LocalOffset += change;
+                NotificationManager.ShowOrUpdate(LOCAL_MAP_OFFSET_NOTIFICATION_KEY, NotificationLevel.Success,
+                    $"Local map audio offset is now: {MapManager.Selected.Value.LocalOffset} ms", null, true);
+
+                ThreadScheduler.Run(() => MapDatabaseCache.UpdateMap(MapManager.Selected.Value));
+            }
+        }
+    }
 }

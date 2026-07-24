@@ -280,20 +280,17 @@ namespace Quaver.Shared.Screens.Multi
             if (Exiting || DialogManager.Dialogs.Count != 0 || !isKeyPress || isRelease)
                 return GlobalInputHandleResult.Pass;
 
-            if (action is GlobalKeybindActions.IncreaseRate or GlobalKeybindActions.DecreaseRate &&
-                !KeyboardManager.IsAltDown() &&
+            if ((action & GlobalKeybindActions.BaseActionMask) is GlobalKeybindActions.IncreaseRate &&
                 (Game.Value.HostId == OnlineManager.Self?.OnlineUser?.Id || Game.Value.FreeModType.HasFlag(MultiplayerFreeModType.Rate)))
             {
-                if (action == GlobalKeybindActions.IncreaseRate)
-                    ModManager.AddSpeedMods(SelectionScreen.GetNextRate(true, KeyboardManager.IsShiftDown()));
-                else
-                    ModManager.AddSpeedMods(SelectionScreen.GetNextRate(false, KeyboardManager.IsShiftDown()));
+                ModManager.AddSpeedMods(SelectionScreen.GetNextRate(
+                    !action.HasFlag(GlobalKeybindActions.Reverse),
+                    action.HasFlag(GlobalKeybindActions.Small)));
 
                 return GlobalInputHandleResult.Consumed;
             }
 
             if (action == GlobalKeybindActions.ToggleMirror &&
-                !KeyboardManager.IsAltDown() &&
                 (Game.Value.HostId == OnlineManager.Self?.OnlineUser?.Id || Game.Value.FreeModType.HasFlag(MultiplayerFreeModType.Regular)))
             {
                 if (ModManager.IsActivated(ModIdentifier.Mirror))
@@ -304,18 +301,10 @@ namespace Quaver.Shared.Screens.Multi
                 return GlobalInputHandleResult.Consumed;
             }
 
-            if (action is GlobalKeybindActions.IncreaseOffset or GlobalKeybindActions.DecreaseOffset &&
-                KeyboardManager.IsAltDown() &&
+            if ((action & GlobalKeybindActions.BaseActionMask) == GlobalKeybindActions.IncreaseOffset &&
                 MapManager.Selected.Value != null)
             {
-                var offsetChange = KeyboardManager.IsCtrlDown() ? 1 : 5;
-
-                if (action == GlobalKeybindActions.IncreaseOffset)
-                    MapManager.Selected.Value.LocalOffset += offsetChange;
-                else
-                    MapManager.Selected.Value.LocalOffset -= offsetChange;
-
-                HandleOffsetChange();
+                GlobalInputHandler.HandleOffsetAction(action);
                 return GlobalInputHandleResult.Consumed;
             }
 
@@ -365,19 +354,6 @@ namespace Quaver.Shared.Screens.Multi
                 ActiveLeftPanel.Value = SelectContainerPanel.UserProfile;
             else
                 ActiveLeftPanel.Value = SelectContainerPanel.MatchSettings;
-        }
-
-        /// <summary>
-        /// </summary>
-        private void HandleOffsetChange()
-        {
-            var map = MapManager.Selected.Value;
-
-            if (map == null)
-                return;
-
-            NotificationManager.Show(NotificationLevel.Info, $"Local map offset changed to: {map.LocalOffset} ms");
-            MapDatabaseCache.UpdateMap(map);
         }
 
         /// <summary>

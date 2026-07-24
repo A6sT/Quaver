@@ -173,25 +173,35 @@ namespace Quaver.Shared.Input.Global
             Logger.Debug("Reset global keybind config file", LogType.Runtime);
         }
 
+#pragma warning disable format // @formatter:off
         private static KeybindList LegacyOrDefaultKeybindsFor(GlobalKeybindActions action)
         {
             KeybindList? keybinds = action switch
             {
                 GlobalKeybindActions.Screenshot => Keybinds(ConfigManager.KeyScreenshot.Value),
-                GlobalKeybindActions.IncreaseRate => Keybinds([KeyModifiers.Ctrl, KeyModifiers.Free],
-                    ConfigManager.KeyIncreaseGameplayAudioRate.Value),
-                GlobalKeybindActions.DecreaseRate => Keybinds([KeyModifiers.Ctrl, KeyModifiers.Free],
-                    ConfigManager.KeyDecreaseGameplayAudioRate.Value),
-                GlobalKeybindActions.TogglePitch => Keybinds([KeyModifiers.Ctrl, KeyModifiers.Free],
-                    ConfigManager.KeyTogglePitch.Value),
-                GlobalKeybindActions.RemoveMods => Keybinds([KeyModifiers.Ctrl, KeyModifiers.Free],
-                    ConfigManager.KeyRemoveAllMods.Value),
-                GlobalKeybindActions.ToggleMirror => Keybinds([KeyModifiers.Ctrl, KeyModifiers.Free],
-                    ConfigManager.KeyToggleMirror.Value),
-                GlobalKeybindActions.IncreaseLocalScrollSpeed => Keybinds(ConfigManager.KeyIncreaseScrollSpeed.Value),
-                GlobalKeybindActions.DecreaseLocalScrollSpeed => Keybinds(ConfigManager.KeyDecreaseScrollSpeed.Value),
+                GlobalKeybindActions.IncreaseRate => Keybinds(KeyModifiers.Ctrl, ConfigManager.KeyIncreaseGameplayAudioRate.Value),
+                GlobalKeybindActions.DecreaseRate => Keybinds(KeyModifiers.Ctrl, ConfigManager.KeyDecreaseGameplayAudioRate.Value),
+                GlobalKeybindActions.IncreaseRateSmall => Keybinds([KeyModifiers.Ctrl, KeyModifiers.Shift], ConfigManager.KeyIncreaseGameplayAudioRate.Value),
+                GlobalKeybindActions.DecreaseRateSmall => Keybinds([KeyModifiers.Ctrl, KeyModifiers.Shift], ConfigManager.KeyDecreaseGameplayAudioRate.Value),
+                GlobalKeybindActions.TogglePitch => Keybinds([KeyModifiers.Ctrl, KeyModifiers.Free], ConfigManager.KeyTogglePitch.Value),
+                GlobalKeybindActions.RemoveMods => Keybinds([KeyModifiers.Ctrl, KeyModifiers.Free], ConfigManager.KeyRemoveAllMods.Value),
+                GlobalKeybindActions.ToggleMirror => Keybinds([KeyModifiers.Ctrl, KeyModifiers.Free], ConfigManager.KeyToggleMirror.Value),
+                GlobalKeybindActions.IncreaseScrollSpeed => Keybinds(ConfigManager.KeyIncreaseScrollSpeed.Value),
+                GlobalKeybindActions.DecreaseScrollSpeed => Keybinds(ConfigManager.KeyDecreaseScrollSpeed.Value),
+                GlobalKeybindActions.IncreaseLocalScrollSpeed => Keybinds(KeyModifiers.Shift, ConfigManager.KeyIncreaseScrollSpeed.Value),
+                GlobalKeybindActions.DecreaseLocalScrollSpeed => Keybinds(KeyModifiers.Shift, ConfigManager.KeyDecreaseScrollSpeed.Value),
+                GlobalKeybindActions.IncreaseScrollSpeedSmall => Keybinds(KeyModifiers.Ctrl, ConfigManager.KeyIncreaseScrollSpeed.Value),
+                GlobalKeybindActions.DecreaseScrollSpeedSmall => Keybinds(KeyModifiers.Ctrl, ConfigManager.KeyDecreaseScrollSpeed.Value),
+                GlobalKeybindActions.IncreaseLocalScrollSpeedSmall => Keybinds([KeyModifiers.Ctrl, KeyModifiers.Shift], ConfigManager.KeyIncreaseScrollSpeed.Value),
+                GlobalKeybindActions.DecreaseLocalScrollSpeedSmall => Keybinds([KeyModifiers.Ctrl, KeyModifiers.Shift], ConfigManager.KeyDecreaseScrollSpeed.Value),
                 GlobalKeybindActions.IncreaseOffset => Keybinds(ConfigManager.KeyIncreaseMapOffset.Value),
                 GlobalKeybindActions.DecreaseOffset => Keybinds(ConfigManager.KeyDecreaseMapOffset.Value),
+                GlobalKeybindActions.IncreaseOffsetSmall => Keybinds(KeyModifiers.Ctrl, ConfigManager.KeyIncreaseMapOffset.Value),
+                GlobalKeybindActions.DecreaseOffsetSmall => Keybinds(KeyModifiers.Ctrl, ConfigManager.KeyDecreaseMapOffset.Value),
+                GlobalKeybindActions.IncreaseVisualOffset => Keybinds(KeyModifiers.Alt, ConfigManager.KeyIncreaseMapOffset.Value),
+                GlobalKeybindActions.DecreaseVisualOffset => Keybinds(KeyModifiers.Alt, ConfigManager.KeyDecreaseMapOffset.Value),
+                GlobalKeybindActions.IncreaseVisualOffsetSmall => Keybinds([KeyModifiers.Alt, KeyModifiers.Ctrl], ConfigManager.KeyIncreaseMapOffset.Value),
+                GlobalKeybindActions.DecreaseVisualOffsetSmall => Keybinds([KeyModifiers.Alt, KeyModifiers.Ctrl], ConfigManager.KeyDecreaseMapOffset.Value),
                 GlobalKeybindActions.GameplayPause => Keybinds(ConfigManager.KeyPause.Value),
                 GlobalKeybindActions.GameplayPauseUp => Keybinds(ConfigManager.KeyPause.Value),
                 GlobalKeybindActions.GameplayPauseDown => Keybinds(ConfigManager.KeyPause.Value),
@@ -201,9 +211,8 @@ namespace Quaver.Shared.Input.Global
                 GlobalKeybindActions.GameplayQuickExit => Keybinds(ConfigManager.KeyQuickExit.Value),
                 GlobalKeybindActions.GameplaySkipIntro => Keybinds(ConfigManager.KeySkipIntro.Value),
                 GlobalKeybindActions.GameplayTogglePlaytestAutoplay => Keybinds(ConfigManager.KeyTogglePlaytestAutoplay.Value),
-                GlobalKeybindActions.GameplayIncreaseOffset => Keybinds(ConfigManager.KeyIncreaseMapOffset.Value),
-                GlobalKeybindActions.GameplayDecreaseOffset => Keybinds(ConfigManager.KeyDecreaseMapOffset.Value),
-                GlobalKeybindActions.GameplayResetOffset => Keybinds(ConfigManager.KeyResetMapOffset.Value),
+                GlobalKeybindActions.ResetOffset => Keybinds(ConfigManager.KeyResetMapOffset.Value),
+                GlobalKeybindActions.ResetVisualOffset => Keybinds(KeyModifiers.Alt, ConfigManager.KeyResetMapOffset.Value),
                 GlobalKeybindActions.NavigateLeft => Keybinds(ConfigManager.KeyNavigateLeft.Value),
                 GlobalKeybindActions.NavigateRight => Keybinds(ConfigManager.KeyNavigateRight.Value),
                 GlobalKeybindActions.NavigateUp => Keybinds(ConfigManager.KeyNavigateUp.Value),
@@ -221,12 +230,16 @@ namespace Quaver.Shared.Input.Global
 
             return keybinds ?? new KeybindList(s_defaultKeybinds[action].Select(k => k.Clone()));
         }
+#pragma warning enable format // @formatter:on
 
         private static KeybindList Keybinds(Keys key) =>
-            new(new Keybind(KeyModifiers.Free, key));
+            new(new Keybind(key));
+
+        private static KeybindList Keybinds(KeyModifiers mods, Keys key) =>
+            new(new Keybind(mods, key));
 
         private static KeybindList Keybinds(GenericKey key) =>
-            new(new Keybind([KeyModifiers.Free], key));
+            new(new Keybind([], key));
 
         private static KeybindList Keybinds(ICollection<KeyModifiers> modifiers, Keys key) =>
             new(new Keybind(modifiers, key));
@@ -287,31 +300,40 @@ namespace Quaver.Shared.Input.Global
             ]),
             [GlobalKeybindActions.ReloadSkin] = new KeybindList(new Keybind([KeyModifiers.Ctrl, KeyModifiers.Free], Keys.S)),
             [GlobalKeybindActions.Back] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Escape)),
-            [GlobalKeybindActions.IncreaseRate] = new KeybindList(new Keybind([KeyModifiers.Ctrl, KeyModifiers.Free], Keys.OemPlus)),
-            [GlobalKeybindActions.DecreaseRate] = new KeybindList(new Keybind([KeyModifiers.Ctrl, KeyModifiers.Free], Keys.OemMinus)),
+            [GlobalKeybindActions.IncreaseRate] = new KeybindList(new Keybind([KeyModifiers.Ctrl], Keys.OemPlus)),
+            [GlobalKeybindActions.DecreaseRate] = new KeybindList(new Keybind([KeyModifiers.Ctrl], Keys.OemMinus)),
+            [GlobalKeybindActions.IncreaseRateSmall] = new KeybindList(new Keybind([KeyModifiers.Ctrl, KeyModifiers.Shift], Keys.OemPlus)),
+            [GlobalKeybindActions.DecreaseRateSmall] = new KeybindList(new Keybind([KeyModifiers.Ctrl, KeyModifiers.Shift], Keys.OemMinus)),
             [GlobalKeybindActions.TogglePitch] = new KeybindList(new Keybind([KeyModifiers.Ctrl, KeyModifiers.Free], Keys.OemPipe)),
             [GlobalKeybindActions.RemoveMods] = new KeybindList(new Keybind([KeyModifiers.Ctrl, KeyModifiers.Free], Keys.D0)),
             [GlobalKeybindActions.ToggleMirror] = new KeybindList(new Keybind([KeyModifiers.Ctrl, KeyModifiers.Free], Keys.H)),
-            [GlobalKeybindActions.IncreaseScrollSpeed] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.F4)),
-            [GlobalKeybindActions.DecreaseScrollSpeed] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.F3)),
-            [GlobalKeybindActions.IncreaseLocalScrollSpeed] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.F4)),
-            [GlobalKeybindActions.DecreaseLocalScrollSpeed] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.F3)),
-            [GlobalKeybindActions.IncreaseOffset] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.OemPlus)),
-            [GlobalKeybindActions.DecreaseOffset] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.OemMinus)),
-            [GlobalKeybindActions.IncreaseOffsetSmall] = new KeybindList(new Keybind([KeyModifiers.Ctrl, KeyModifiers.Free], Keys.OemPlus)),
-            [GlobalKeybindActions.DecreaseOffsetSmall] = new KeybindList(new Keybind([KeyModifiers.Ctrl, KeyModifiers.Free], Keys.OemMinus)),
+            [GlobalKeybindActions.IncreaseScrollSpeed] = new KeybindList(new Keybind(Keys.F4)),
+            [GlobalKeybindActions.DecreaseScrollSpeed] = new KeybindList(new Keybind(Keys.F3)),
+            [GlobalKeybindActions.IncreaseLocalScrollSpeed] = new KeybindList(new Keybind(KeyModifiers.Shift, Keys.F4)),
+            [GlobalKeybindActions.DecreaseLocalScrollSpeed] = new KeybindList(new Keybind(KeyModifiers.Shift, Keys.F3)),
+            [GlobalKeybindActions.IncreaseScrollSpeedSmall] = new KeybindList(new Keybind(KeyModifiers.Ctrl, Keys.F4)),
+            [GlobalKeybindActions.DecreaseScrollSpeedSmall] = new KeybindList(new Keybind(KeyModifiers.Ctrl, Keys.F3)),
+            [GlobalKeybindActions.IncreaseLocalScrollSpeedSmall] = new KeybindList(new Keybind([KeyModifiers.Shift, KeyModifiers.Ctrl], Keys.F4)),
+            [GlobalKeybindActions.DecreaseLocalScrollSpeedSmall] = new KeybindList(new Keybind([KeyModifiers.Shift, KeyModifiers.Ctrl], Keys.F3)),
+            [GlobalKeybindActions.IncreaseOffset] = new KeybindList(new Keybind(Keys.OemPlus)),
+            [GlobalKeybindActions.DecreaseOffset] = new KeybindList(new Keybind(Keys.OemMinus)),
+            [GlobalKeybindActions.IncreaseOffsetSmall] = new KeybindList(new Keybind(KeyModifiers.Ctrl, Keys.OemPlus)),
+            [GlobalKeybindActions.DecreaseOffsetSmall] = new KeybindList(new Keybind(KeyModifiers.Ctrl, Keys.OemMinus)),
+            [GlobalKeybindActions.IncreaseVisualOffset] = new KeybindList(new Keybind(KeyModifiers.Alt, Keys.OemPlus)),
+            [GlobalKeybindActions.DecreaseVisualOffset] = new KeybindList(new Keybind(KeyModifiers.Alt, Keys.OemMinus)),
+            [GlobalKeybindActions.IncreaseVisualOffsetSmall] = new KeybindList(new Keybind([KeyModifiers.Ctrl, KeyModifiers.Alt], Keys.OemPlus)),
+            [GlobalKeybindActions.DecreaseVisualOffsetSmall] = new KeybindList(new Keybind([KeyModifiers.Ctrl, KeyModifiers.Alt], Keys.OemMinus)),
             [GlobalKeybindActions.GameplayPause] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Escape)),
-            [GlobalKeybindActions.GameplayPauseUp] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Escape)),
-            [GlobalKeybindActions.GameplayPauseDown] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Escape)),
+            [GlobalKeybindActions.GameplayPauseUp] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Up)),
+            [GlobalKeybindActions.GameplayPauseDown] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Down)),
             [GlobalKeybindActions.GameplayToggleScoreboard] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Tab)),
             [GlobalKeybindActions.GameplayToggleOverlay] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.F8)),
             [GlobalKeybindActions.GameplayRetry] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.OemTilde)),
             [GlobalKeybindActions.GameplayQuickExit] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.F1)),
             [GlobalKeybindActions.GameplaySkipIntro] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Space)),
             [GlobalKeybindActions.GameplayTogglePlaytestAutoplay] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Tab)),
-            [GlobalKeybindActions.GameplayIncreaseOffset] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.OemPlus)),
-            [GlobalKeybindActions.GameplayDecreaseOffset] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.OemMinus)),
-            [GlobalKeybindActions.GameplayResetOffset] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.D0)),
+            [GlobalKeybindActions.ResetOffset] = new KeybindList(new Keybind(Keys.D0)),
+            [GlobalKeybindActions.ResetVisualOffset] = new KeybindList(new Keybind(KeyModifiers.Alt, Keys.D0)),
             [GlobalKeybindActions.NavigateLeft] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Left)),
             [GlobalKeybindActions.NavigateRight] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Right)),
             [GlobalKeybindActions.NavigateUp] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Up)),

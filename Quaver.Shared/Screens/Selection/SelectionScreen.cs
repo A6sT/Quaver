@@ -460,15 +460,12 @@ namespace Quaver.Shared.Screens.Selection
             if (Exiting || DialogManager.Dialogs.Count != 0 || !isKeyPress || isRelease)
                 return GlobalInputHandleResult.Pass;
 
-            var shiftHeld = KeyboardManager.IsShiftDown();
-
-            switch (action)
+            switch (action & GlobalKeybindActions.BaseActionMask)
             {
                 case GlobalKeybindActions.IncreaseRate:
-                    ModManager.AddSpeedMods(GetNextRate(true, shiftHeld));
-                    return GlobalInputHandleResult.Consumed;
-                case GlobalKeybindActions.DecreaseRate:
-                    ModManager.AddSpeedMods(GetNextRate(false, shiftHeld));
+                    ModManager.AddSpeedMods(GetNextRate(
+                        !action.HasFlag(GlobalKeybindActions.Reverse),
+                        action.HasFlag(GlobalKeybindActions.Small)));
                     return GlobalInputHandleResult.Consumed;
                 case GlobalKeybindActions.TogglePitch:
                     ConfigManager.Pitched.Value = !ConfigManager.Pitched.Value;
@@ -483,7 +480,6 @@ namespace Quaver.Shared.Screens.Selection
                         ModManager.AddMod(ModIdentifier.Mirror);
                     return GlobalInputHandleResult.Consumed;
                 case GlobalKeybindActions.IncreaseLocalScrollSpeed:
-                case GlobalKeybindActions.DecreaseLocalScrollSpeed:
                     ChangeScrollSpeed(action);
                     return GlobalInputHandleResult.Consumed;
                 default:
@@ -605,27 +601,14 @@ namespace Quaver.Shared.Screens.Selection
 
             var scrollSpeed = ConfigManager.ScrollSpeeds[MapManager.Selected.Value.Mode];
 
-            var changed = false;
-
-            var speedIncrease = KeyboardManager.IsShiftDown() ? 1 : 10;
+            var speedIncrease = action.HasFlag(GlobalKeybindActions.Small) ? 1 : 10;
+            if (action.HasFlag(GlobalKeybindActions.Reverse))
+                speedIncrease *= -1;
 
             // Change scroll speed down
-            if (action == GlobalKeybindActions.DecreaseLocalScrollSpeed)
-            {
-                scrollSpeed.Value -= speedIncrease;
-                changed = true;
-            }
-            else if (action == GlobalKeybindActions.IncreaseLocalScrollSpeed)
-            {
-                scrollSpeed.Value += speedIncrease;
-                changed = true;
-            }
-
-            if (changed)
-            {
-                NotificationManager.Show(NotificationLevel.Info, $"Your {ModeHelper.ToShortHand(MapManager.Selected.Value.Mode)} " +
-                                                                 $"scroll speed has been changed to: {scrollSpeed.Value / 10f:0.0}");
-            }
+            scrollSpeed.Value -= speedIncrease;
+            NotificationManager.Show(NotificationLevel.Info, $"Your {ModeHelper.ToShortHand(MapManager.Selected.Value.Mode)} " +
+                                                             $"scroll speed has been changed to: {scrollSpeed.Value / 10f:0.0}");
         }
 
         /// <summary>

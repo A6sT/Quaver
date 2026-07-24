@@ -388,14 +388,6 @@ namespace Quaver.Shared.Screens.Gameplay
 
         /// <summary>
         /// </summary>
-        private const string VISUAL_OFFSET_NOTIFICATION_KEY = "gameplay-visual-offset";
-
-        /// <summary>
-        /// </summary>
-        private const string LOCAL_MAP_OFFSET_NOTIFICATION_KEY = "gameplay-local-map-offset";
-
-        /// <summary>
-        /// </summary>
         public int FailFadeTime => HasQuit ? QUIT_FADE_TIME : FAILURE_FADE_TIME;
 
         private class Token(GameplayScreen screen) : GlobalInputScopeToken
@@ -658,7 +650,7 @@ namespace Quaver.Shared.Screens.Gameplay
             if (HandlePauseMenuGlobalInput(action))
                 return GlobalInputHandleResult.Consumed;
 
-            switch (action)
+            switch (action & GlobalKeybindActions.BaseActionMask)
             {
                 case GlobalKeybindActions.GameplayPause:
                     HandleGameplayPausePress();
@@ -703,17 +695,19 @@ namespace Quaver.Shared.Screens.Gameplay
                         return GlobalInputHandleResult.Consumed;
                     }
                     break;
-                case GlobalKeybindActions.GameplayIncreaseOffset:
-                case GlobalKeybindActions.GameplayDecreaseOffset:
-                case GlobalKeybindActions.GameplayResetOffset:
-                    if (!IsSongSelectPreview && !IsPlayComplete && !IsCalibratingOffset)
+                case GlobalKeybindActions.IncreaseOffset:
+                case GlobalKeybindActions.ResetOffset:
+                    // Only allow offset changes if the map hasn't started or if we're on a break
+                    if (!IsSongSelectPreview && !IsPlayComplete && !IsCalibratingOffset
+                        && ((!IsSongSelectPreview && Ruleset.Screen.Timing.Time <= 5000) ||
+                            Ruleset.Screen.EligibleToSkip))
                     {
-                        HandleGameplayOffsetAction(action);
+                        GlobalInputHandler.HandleOffsetAction(action);
                         return GlobalInputHandleResult.Consumed;
                     }
+
                     break;
-                case GlobalKeybindActions.IncreaseLocalScrollSpeed:
-                case GlobalKeybindActions.DecreaseLocalScrollSpeed:
+                case GlobalKeybindActions.IncreaseScrollSpeed:
                     if (Ruleset?.InputManager is KeysInputManager inputManager)
                     {
                         inputManager.ChangeScrollSpeed(action);
@@ -1798,73 +1792,6 @@ namespace Quaver.Shared.Screens.Gameplay
             }
 
             NotificationManager.Show(NotificationLevel.Info, $"Autoplay has been turned {(InReplayMode ? "on" : "off")}.", null, true);
-        }
-
-        private void HandleGameplayOffsetAction(GlobalKeybindActions action)
-        {
-            // Only allow offset changes if the map hasn't started or if we're on a break
-            if (!IsSongSelectPreview && Ruleset.Screen.Timing.Time <= 5000 || Ruleset.Screen.EligibleToSkip)
-            {
-                var change = 5;
-                if (KeyboardManager.IsCtrlDown())
-                {
-                    change = 1;
-                }
-
-                if (action == GlobalKeybindActions.GameplayIncreaseOffset)
-                {
-                    if (KeyboardManager.IsAltDown())
-                    {
-                        ConfigManager.VisualOffset.Value += change;
-                        NotificationManager.ShowOrUpdate(VISUAL_OFFSET_NOTIFICATION_KEY, NotificationLevel.Success,
-                            $"Visual offset has been changed to: {ConfigManager.VisualOffset.Value} ms", null, true);
-                    }
-                    else
-                    {
-                        MapManager.Selected.Value.LocalOffset += change;
-                        NotificationManager.ShowOrUpdate(LOCAL_MAP_OFFSET_NOTIFICATION_KEY, NotificationLevel.Success,
-                            $"Local map audio offset is now: {MapManager.Selected.Value.LocalOffset} ms", null, true);
-
-                        ThreadScheduler.Run(() => MapDatabaseCache.UpdateMap(MapManager.Selected.Value));
-                    }
-                }
-
-                if (action == GlobalKeybindActions.GameplayDecreaseOffset)
-                {
-                    if (KeyboardManager.IsAltDown())
-                    {
-                        ConfigManager.VisualOffset.Value -= change;
-                        NotificationManager.ShowOrUpdate(VISUAL_OFFSET_NOTIFICATION_KEY, NotificationLevel.Success,
-                            $"Visual offset has been changed to: {ConfigManager.VisualOffset.Value} ms", null, true);
-                    }
-                    else
-                    {
-                        MapManager.Selected.Value.LocalOffset -= change;
-                        NotificationManager.ShowOrUpdate(LOCAL_MAP_OFFSET_NOTIFICATION_KEY, NotificationLevel.Success,
-                            $"Local map audio offset is now: {MapManager.Selected.Value.LocalOffset} ms", null, true);
-
-                        ThreadScheduler.Run(() => MapDatabaseCache.UpdateMap(MapManager.Selected.Value));
-                    }
-                }
-                
-                if (action == GlobalKeybindActions.GameplayResetOffset)
-                {
-                    if (KeyboardManager.IsAltDown())
-                    {
-                        ConfigManager.VisualOffset.Value = 0;
-                        NotificationManager.ShowOrUpdate(VISUAL_OFFSET_NOTIFICATION_KEY, NotificationLevel.Success,
-                            $"Visual offset has been reset to: {ConfigManager.VisualOffset.Value} ms", null, true);
-                    }
-                    else
-                    {
-                        MapManager.Selected.Value.LocalOffset = 0;
-                        NotificationManager.ShowOrUpdate(LOCAL_MAP_OFFSET_NOTIFICATION_KEY, NotificationLevel.Success,
-                            $"Local map audio offset has been reset to: {MapManager.Selected.Value.LocalOffset} ms", null, true);
-
-                        ThreadScheduler.Run(() => MapDatabaseCache.UpdateMap(MapManager.Selected.Value));
-                    }
-                }
-            }
         }
 
         private void HandleOverlayToggleInput(GameTime gameTime)
