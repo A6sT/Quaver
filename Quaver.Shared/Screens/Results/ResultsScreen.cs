@@ -489,7 +489,7 @@ namespace Quaver.Shared.Screens.Results
                 case GlobalKeybindActions.ResultsTab:
                     HandleKeyPressTab();
                     return GlobalInputHandleResult.Consumed;
-                case GlobalKeybindActions.ResultsRetry:
+                case GlobalKeybindActions.GameplayRetry:
                     HandleKeyPressRetry();
                     return GlobalInputHandleResult.Consumed;
                 default:
