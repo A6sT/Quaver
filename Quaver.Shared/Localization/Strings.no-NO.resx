@@ -1702,7 +1702,7 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
     <value>SPILL</value>
   </data>
   <data name="Screen_Multiplayer_HeaderDescription" xml:space="preserve">
-    <value>spill en kamp i sanntid med andre</value>
+    <value>spill en kamp i sann-tid med andre</value>
   </data>
   <data name="Screen_Multiplayer_Leave" xml:space="preserve">
     <value>dra</value>
