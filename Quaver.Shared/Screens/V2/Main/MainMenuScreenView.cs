@@ -262,13 +262,13 @@ namespace Quaver.Shared.Screens.V2.Main
             {
                 Skin.LoadTexture(icons.Primary,
                     TextureManager.Load(
-                        "Quaver.Resources/Textures/UI/Screens/Main/background-shapes/shape-primary.png")),
+                        "Quaver.Resources/Textures/UI/Screens/Main/BackgroundShapes/shape-primary.png")),
                 Skin.LoadTexture(icons.Secondary,
                     TextureManager.Load(
-                        "Quaver.Resources/Textures/UI/Screens/Main/background-shapes/shape-secondary.png")),
+                        "Quaver.Resources/Textures/UI/Screens/Main/BackgroundShapes/shape-secondary.png")),
                 Skin.LoadTexture(icons.Tertiary,
                     TextureManager.Load(
-                        "Quaver.Resources/Textures/UI/Screens/Main/background-shapes/shape-tertiary.png"))
+                        "Quaver.Resources/Textures/UI/Screens/Main/BackgroundShapes/shape-tertiary.png"))
             };
         }
 
