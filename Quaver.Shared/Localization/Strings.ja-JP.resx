@@ -82,7 +82,7 @@
     <value>ホーム</value>
   </data>
   <data name="Screen_Main_Menu_Maps" xml:space="preserve">
-    <value>マップ</value>
+    <value>譜面</value>
   </data>
   <data name="Screen_Main_Menu_Clans" xml:space="preserve">
     <value>クラン</value>
@@ -127,10 +127,10 @@
     <value>Competitive</value>
   </data>
   <data name="Screen_Main_MapEditor" xml:space="preserve">
-    <value>マップエディター</value>
+    <value>譜面エディター</value>
   </data>
   <data name="Screen_Main_DownloadMaps" xml:space="preserve">
-    <value>マップをダウンロード</value>
+    <value>譜面をダウンロード</value>
   </data>
   <data name="Screen_Main_DownloadSongs" xml:space="preserve">
     <value>曲をダウンロードする</value>
@@ -154,58 +154,58 @@
     <value>リーダーボードのランクを競うする</value>
   </data>
   <data name="Screen_Main_MultiplayerDescription" xml:space="preserve">
-    <value>Play custom matches online with others</value>
+    <value>他のプレイヤーとカスタムマッチをプレイする</value>
   </data>
   <data name="Screen_Main_CompetitiveDescription" xml:space="preserve">
     <value>Compete against players all over the world</value>
   </data>
   <data name="Screen_Main_MapEditorDescription" xml:space="preserve">
-    <value>Create or edit a map to any song you'd like</value>
+    <value>好きな曲の譜面を作成・編集する</value>
   </data>
   <data name="Screen_Main_DownloadMapsDescription" xml:space="preserve">
-    <value>Find new songs from the community to play</value>
+    <value>コミュニティから新しい譜面を見つける</value>
   </data>
   <data name="Screen_Main_TipLabel" xml:space="preserve">
     <value>ヒント：</value>
   </data>
   <data name="Screen_Main_TipOpenOptions" xml:space="preserve">
-    <value>Pressing CTRL+O will open the options menu.</value>
+    <value>CTRL+O で設定のメニューが開きます。</value>
   </data>
   <data name="Screen_Main_TipImportMapFiles" xml:space="preserve">
-    <value>Drag map files (.qp) into the game to import them.</value>
+    <value>譜面ファイル（.qp）をゲーム内にドラッグするとインポートできます。</value>
   </data>
   <data name="Screen_Main_TipMapPreview" xml:space="preserve">
-    <value>Pressing F3 in song select displays a map preview.</value>
+    <value>選曲画面で F3 を押すと譜面のプレビューが表示されます。</value>
   </data>
   <data name="Screen_Main_TipPauseSubmission" xml:space="preserve">
-    <value>Pausing in gameplay prevents score submission.</value>
+    <value>プレイ中に一時停止するとスコアが送信されなくなります。</value>
   </data>
   <data name="Screen_Main_TipReportBug" xml:space="preserve">
     <value>バグは GitHub のチケットを開くことで報告できます。</value>
   </data>
   <data name="Screen_Main_TipRequestFeatures" xml:space="preserve">
-    <value>Request new features by opening GitHub issues!</value>
+    <value>GitHub の Issue を作成して新機能をリクエストしよう！</value>
   </data>
   <data name="Screen_Main_TipCreateMap" xml:space="preserve">
-    <value>Drag a .mp3 file in the game to create a new map!</value>
+    <value>.mp3 ファイルをゲーム内にドラッグすると新しい譜面を作成できます！</value>
   </data>
   <data name="Screen_Main_TipRandomSong" xml:space="preserve">
-    <value>Pressing F2 in song select chooses a random song.</value>
+    <value>選曲画面でF2を押すとランダムな曲が選ばれます。</value>
   </data>
   <data name="Screen_Main_TipPlayercard" xml:space="preserve">
-    <value>Pressing F10 in the menu opens your playercard.</value>
+    <value>メニューで F10 を押すとプレイヤーカードが開きます。</value>
   </data>
   <data name="Screen_Main_TipScrollSpeed" xml:space="preserve">
-    <value>Pressing F3/F4 in gameplay changes scroll speed.</value>
+    <value>プレイ中に F3/F4 を押すとスクロール速度が変わります。</value>
   </data>
   <data name="Screen_Main_TipCalibrateOffset" xml:space="preserve">
-    <value>Your offset can be calibrated in the options menu.</value>
+    <value>オフセットは設定のメニューで調整できます。</value>
   </data>
   <data name="Screen_Main_TipDefaultJudgement" xml:space="preserve">
-    <value>Standard* is the default judgement window preset.</value>
+    <value>Standard* がデフォルトの判定ウィンドウプリセットです。</value>
   </data>
   <data name="Screen_Main_TipPlaybackRate" xml:space="preserve">
-    <value>CTRL+ +/- changes the playback rate of the song.</value>
+    <value>選曲画面で CTRL+ +/-を押すと曲の再生速度が変わります。</value>
   </data>
   <data name="Screen_Main_NowPlaying" xml:space="preserve">
     <value>再生中</value>
