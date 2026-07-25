@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -10,6 +11,7 @@ using Quaver.Shared.Screens.Menu.UI.Jukebox;
 using Wobble;
 using Wobble.Bindables;
 using Wobble.Graphics;
+using Wobble.Graphics.Buttons;
 using Wobble.Graphics.Sprites.Text;
 using Wobble.Input;
 using Wobble.Managers;
@@ -76,11 +78,35 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
         /// </summary>
         private void CreateContent()
         {
-            Button = new IconButton(UserInterface.DropdownClosed)
+            ResetButton = new RoundedButton
             {
                 Parent = this,
                 Alignment = Alignment.MidRight,
                 X = -Name.X,
+                Size = new ScalableVector2(20, 20),
+                PerformHoverFade = false,
+                Tint = ColorHelper.HexToColor("#ffffff"),
+                Alpha = 0f
+            };
+
+            ResetButton.SetIcon(UserInterface.HubDownloadRetry, new Vector2(20, 20));
+            ResetButton.SetChildrenAlpha = false;
+
+            ResetButton.Clicked += (sender, args) =>
+            {
+                if (!Action.HasValue)
+                    return;
+
+                GlobalInputConfig.SetKeybindsForAction(Action.Value, GlobalInputConfig.DefaultKeybindsFor(Action.Value));
+                GlobalInputConfig.SaveToConfig();
+                InitializeText();
+            };
+
+            Button = new IconButton(UserInterface.DropdownClosed)
+            {
+                Parent = this,
+                Alignment = Alignment.MidRight,
+                X = -(Name.X * 2 + ResetButton.Width),
                 Size = new ScalableVector2(250, 35),
                 Tint = ColorHelper.HexToColor("#181818"),
                 UsePreviousSpriteBatchOptions = true
@@ -93,7 +119,7 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
                 ClearFocusedState();
             };
 
-            Text = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "", 22)
+            Text = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "", 18)
             {
                 Parent = Button,
                 UsePreviousSpriteBatchOptions = true,
@@ -105,6 +131,8 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
             InitializeText();
         }
 
+        public RoundedButton ResetButton { get; set; }
+
         /// <summary>
         /// </summary>
         /// <param name="gameTime"></param>
@@ -112,6 +140,10 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
         {
             HandleKeySelect();
             ReleaseGlobalInputBlockWhenKeysClear();
+
+            var dt = gameTime.ElapsedGameTime.TotalMilliseconds;
+            ResetButton.Alpha = MathHelper.Lerp(ResetButton.Alpha, ResetButton.IsHovered ? 0.55f : 0f, (float) Math.Min(dt / 60, 1));
+
             base.Update(gameTime);
         }
 
