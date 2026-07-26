@@ -5,42 +5,51 @@ namespace Quaver.Shared.Input.Global;
 [Flags]
 public enum GlobalKeybindActions : ulong
 {
-    Screenshot,
-    OpenOptions,
-    ToggleFullscreen,
-    TogglePause,
-    CycleFpsLimiter,
-    ToggleOnlineHub,
-    ReloadSkin,
-    Back,
-    IncreaseRate,
-    TogglePitch,
-    RemoveMods,
-    ToggleMirror,
-    IncreaseScrollSpeed,
-    IncreaseOffset,
-    GameplayPause,
-    GameplayToggleScoreboard,
-    GameplayToggleOverlay,
-    GameplayRetry,
-    GameplayQuickExit,
-    GameplaySkipIntro,
-    GameplayTogglePlaytestAutoplay,
-    ResetOffset,
-    NavigateRight,
-    NavigateUp,
-    NavigateSelect,
-    ResultsTab,
-    DialogConfirm,
-    DialogCancel,
-    SelectionToggleModifiers,
-    SelectionSelectRandomMap,
-    SelectionToggleMapPreview,
-    SelectionToggleUserProfile,
-    SelectionRefresh,
+#pragma warning disable format // @formatter:off
+    Screenshot                       = 0  | LayerGlobal,
+    OpenOptions                      = 1  | LayerGlobal,
+    ToggleFullscreen                 = 2  | LayerGlobal,
+    TogglePause                      = 3  | LayerExceptGameplay,
+    CycleFpsLimiter                  = 4  | LayerGlobal,
+    ToggleOnlineHub                  = 5  | LayerGlobal,
+    ReloadSkin                       = 6  | LayerGlobal,
+    Back                             = 7  | LayerExceptGameplay,
+    IncreaseRate                     = 8  | LayerExceptGameplay,
+    TogglePitch                      = 9  | LayerExceptGameplay,
+    RemoveMods                       = 10 | LayerExceptGameplay,
+    ToggleMirror                     = 11 | LayerExceptGameplay,
+    IncreaseScrollSpeed              = 12 | LayerGlobal,
+    IncreaseOffset                   = 13 | LayerGlobal,
+    GameplayPause                    = 14 | LayerGameplay,
+    GameplayToggleScoreboard         = 15 | LayerGameplay,
+    GameplayToggleOverlay            = 16 | LayerGameplay,
+    GameplayRetry                    = 17 | LayerGameplay,
+    GameplayQuickExit                = 18 | LayerGameplay,
+    GameplaySkipIntro                = 19 | LayerGameplay,
+    GameplayTogglePlaytestAutoplay   = 20 | LayerGameplay,
+    ResetOffset                      = 21 | LayerGlobal,
+    NavigateRight                    = 22 | LayerGlobal,
+    NavigateUp                       = 23 | LayerGlobal,
+    NavigateSelect                   = 24 | LayerGlobal,
+    ResultsTab                       = 25 | LayerGlobal,
+    SelectionToggleModifiers         = 26 | LayerSelection,
+    SelectionSelectRandomMap         = 27 | LayerSelection,
+    SelectionToggleMapPreview        = 28 | LayerSelection,
+    SelectionToggleUserProfile       = 29 | LayerSelection,
+    SelectionRefresh                 = 30 | LayerSelection,
+#pragma warning enable format // @formatter:on
 
-    BaseActionMask = (1 << 16) - 1,
+    BaseActionMask = (1 << 16) - 1, // bit 15-0
+    LayerMask = ((1ul << 16) - 1) << 16, // bit 31-16
+    ModifierMask = ((1ul << 16) - 1) << 48, // bit 63-48
 
+    // Conflict Detection
+    LayerGlobal = LayerMask,
+    LayerGameplay = 1 << 16,
+    LayerSelection = 1 << 17,
+    LayerExceptGameplay = LayerGlobal & ~LayerGameplay,
+
+    // Modifiers
     Reverse = 1ul << 60,
     Visual = 1ul << 61,
     Local = 1ul << 62,
@@ -67,4 +76,13 @@ public enum GlobalKeybindActions : ulong
     NavigateDown = NavigateUp | Reverse,
     NavigateLeft = NavigateRight | Reverse,
     SelectionSelectPreviousRandomMap = SelectionSelectRandomMap | Reverse,
+}
+
+public static class GlobalKeybindActionsExtensions
+{
+    public static GlobalKeybindActions Base(this GlobalKeybindActions value) =>
+        value & GlobalKeybindActions.BaseActionMask;
+
+    public static GlobalKeybindActions Layer(this GlobalKeybindActions value) =>
+        value & GlobalKeybindActions.LayerMask;
 }

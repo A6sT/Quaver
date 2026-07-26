@@ -69,8 +69,24 @@ namespace Quaver.Shared.Input.Global
             return true;
         }
 
-        public HashSet<GlobalKeybindActions> CalculateConflictingActions() =>
-            _keybinds.CalculateConflictingActions();
+        public HashSet<GlobalKeybindActions> CalculateConflictingActions()
+        {
+            var actionSets = _keybinds.CalculateConflictingActionSets();
+            HashSet<GlobalKeybindActions> conflicts = [];
+            foreach (var (keybind, actions) in actionSets)
+            {
+                foreach (var (action1, action2) in from action1 in actions
+                         from action2 in actions
+                         where (action1.Layer() & action2.Layer()) != 0 && action1 != action2
+                         select (action1, action2))
+                {
+                    Logger.Error($"{keybind} has both {action1} and {action2} in layer {action1.Layer() | action2.Layer()}", LogType.Runtime);
+                    conflicts.Add(action1);
+                }
+            }
+
+            return conflicts;
+        }
 
         /// <inheritdoc />
         public KeybindList? SetKeybindsForAction(GlobalKeybindActions action,
@@ -234,8 +250,6 @@ namespace Quaver.Shared.Input.Global
                 GlobalKeybindActions.NavigateDown => Keybinds(ConfigManager.KeyNavigateDown.Value),
                 GlobalKeybindActions.NavigateSelect => Keybinds(ConfigManager.KeyNavigateSelect.Value),
                 GlobalKeybindActions.ResultsTab => Keybinds(new Keybind(KeyModifiers.Free, Keys.Tab)),
-                GlobalKeybindActions.DialogConfirm => Keybinds(ConfigManager.KeyNavigateSelect.Value),
-                GlobalKeybindActions.DialogCancel => Keybinds(ConfigManager.KeyNavigateBack.Value),
                 GlobalKeybindActions.SelectionToggleModifiers => Keybinds(Keys.F1),
                 GlobalKeybindActions.SelectionSelectRandomMap => Keybinds(Keys.F2),
                 GlobalKeybindActions.SelectionSelectPreviousRandomMap => Keybinds(KeyModifiers.Shift, Keys.F2),
@@ -382,8 +396,6 @@ namespace Quaver.Shared.Input.Global
             [GlobalKeybindActions.NavigateDown] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Down)),
             [GlobalKeybindActions.NavigateSelect] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Enter)),
             [GlobalKeybindActions.ResultsTab] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Tab)),
-            [GlobalKeybindActions.DialogConfirm] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Enter)),
-            [GlobalKeybindActions.DialogCancel] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Escape)),
             [GlobalKeybindActions.SelectionToggleModifiers] = new KeybindList(new Keybind(Keys.F1)),
             [GlobalKeybindActions.SelectionSelectRandomMap] = new KeybindList(new Keybind(Keys.F2)),
             [GlobalKeybindActions.SelectionSelectPreviousRandomMap] = new KeybindList(new Keybind(KeyModifiers.Shift, Keys.F2)),
