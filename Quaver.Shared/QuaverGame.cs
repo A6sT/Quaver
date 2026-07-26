@@ -82,6 +82,7 @@ using Quaver.Shared.Screens.Tests.MapScrollContainers;
 using Quaver.Shared.Screens.Tests.ModifierSelectors;
 using Quaver.Shared.Screens.Tests.YesNoDialog;
 using Quaver.Shared.Screens.Tests.Footer;
+using Quaver.Shared.Screens.Tests.GlobalIcons;
 using Quaver.Shared.Screens.Tests.ListenerLists;
 using Quaver.Shared.Screens.Tests.Luas;
 using Quaver.Shared.Screens.Tests.MenuJukebox;
@@ -259,6 +260,7 @@ namespace Quaver.Shared
         private Dictionary<string, Type> VisualTests { get; } = new Dictionary<string, Type>()
         {
             {"AutoMod", typeof(AutoModTestScreen)},
+            {"Global Icons", typeof(GlobalIconsTestScreen)},
             {"Main Menu", typeof(MainMenuScreen)},
             {"ResultsScreen (Multi)", typeof(TestResultsMultiScreen)},
             {"ResultsScreen", typeof(TestResultsScreen)},
@@ -385,6 +387,7 @@ namespace Quaver.Shared
         protected override void LoadContent()
         {
             base.LoadContent();
+            GlobalIcons.Load();
 
             Logger.Important($"Currently running Quaver version: `{Version}`", LogType.Runtime);
             IsReadyToUpdate = true;
@@ -411,6 +414,7 @@ namespace Quaver.Shared
             Transitioner.Dispose();
             DiscordHelper.Shutdown();
             TooltipManager.TargetEligibilityFilter = null;
+            GlobalIcons.Dispose();
             base.UnloadContent();
 
             if (SteamManager.IsInitialized)
