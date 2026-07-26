@@ -479,8 +479,8 @@ namespace Quaver.Shared.Screens.Selection
                     else
                         ModManager.AddMod(ModIdentifier.Mirror);
                     return GlobalInputHandleResult.Consumed;
-                case GlobalKeybindActions.IncreaseLocalScrollSpeed:
-                    ChangeScrollSpeed(action);
+                case GlobalKeybindActions.IncreaseScrollSpeed:
+                    GlobalInputHandler.ChangeScrollSpeed(action);
                     return GlobalInputHandleResult.Consumed;
                 default:
                     return GlobalInputHandleResult.Pass;
@@ -587,28 +587,6 @@ namespace Quaver.Shared.Screens.Selection
 
             if (AudioEngine.Track != null && AudioEngine.Track.IsPlaying)
                 AudioEngine.Track?.Fade(100, 300);
-        }
-
-        /// <summary>
-        ///     Changes the user's scroll speed for the selected game mode
-        ///     CTRL+F3/CTRL+F4
-        /// </summary>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        private void ChangeScrollSpeed(GlobalKeybindActions action)
-        {
-            if (MapManager.Selected.Value == null)
-                return;
-
-            var scrollSpeed = ConfigManager.ScrollSpeeds[MapManager.Selected.Value.Mode];
-
-            var speedIncrease = action.HasFlag(GlobalKeybindActions.Small) ? 1 : 10;
-            if (action.HasFlag(GlobalKeybindActions.Reverse))
-                speedIncrease *= -1;
-
-            // Change scroll speed down
-            scrollSpeed.Value -= speedIncrease;
-            NotificationManager.Show(NotificationLevel.Info, $"Your {ModeHelper.ToShortHand(MapManager.Selected.Value.Mode)} " +
-                                                             $"scroll speed has been changed to: {scrollSpeed.Value / 10f:0.0}");
         }
 
         /// <summary>

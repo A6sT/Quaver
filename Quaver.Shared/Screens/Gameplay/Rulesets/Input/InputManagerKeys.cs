@@ -436,59 +436,6 @@ namespace Quaver.Shared.Screens.Gameplay.Rulesets.Input
         }
 
         /// <summary>
-        ///     Handles scroll speed changes.
-        /// </summary>
-        internal void ChangeScrollSpeed(GlobalKeybindActions action)
-        {
-            // Only allow scroll speed changes if the map hasn't started or if we're on a break
-            if (Ruleset.Screen.IsSongSelectPreview || Ruleset.Screen.Timing.Time >= 5000 && !Ruleset.Screen.EligibleToSkip && !(Ruleset.Screen is TournamentGameplayScreen) && !Ruleset.Screen.InReplayMode)
-                return;
-
-            var speedIncrease = KeyboardManager.IsCtrlDown() ? 1 : 10;
-            if (action.HasFlag(GlobalKeybindActions.Reverse))
-                speedIncrease *= -1;
-
-            var scrollSpeed = ConfigManager.ScrollSpeeds[Ruleset.Screen.Map.Mode];
-
-            if (action.HasFlag(GlobalKeybindActions.Local))
-            {
-                // Handle local scroll speed changes with <shift> key held.
-                var targetScrollSpeed = MapManager.CustomScrollSpeed ?? scrollSpeed.Value;
-                targetScrollSpeed += speedIncrease;
-
-                if (targetScrollSpeed == scrollSpeed.Value)
-                {
-                    // Reset to global if the target speed is the same as global
-                    MapManager.CustomScrollSpeed = null;
-
-                    NotificationManager.ShowOrUpdate("gameplay-scroll-speed", NotificationLevel.Info,
-                        $"Scroll speed (local) has been reset to global: {scrollSpeed.Value / 10f:0.0}",
-                        null, true);
-                }
-                else
-                {
-                    // Set custom local scroll speed
-                    MapManager.CustomScrollSpeed = targetScrollSpeed;
-
-                    NotificationManager.ShowOrUpdate("gameplay-scroll-speed", NotificationLevel.Info,
-                        $"Scroll speed (local) has been changed to: {targetScrollSpeed / 10f:0.0}",
-                        null, true);
-                }
-            }
-            else
-            {
-                // Update the global scroll speed.
-                // If there is a custom local scroll speed set, this would not have any
-                // visual effect right away.
-                scrollSpeed.Value += speedIncrease;
-
-                NotificationManager.ShowOrUpdate("gameplay-scroll-speed", NotificationLevel.Info,
-                    $"Scroll speed (global) has been changed to: {scrollSpeed.Value / 10f:0.0}",
-                    null, true);
-            }
-        }
-
-        /// <summary>
         ///     Sets input keybinds based on which player is playing
         /// </summary>
         /// <param name="mode"></param>

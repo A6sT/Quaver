@@ -710,7 +710,11 @@ namespace Quaver.Shared.Screens.Gameplay
                 case GlobalKeybindActions.IncreaseScrollSpeed:
                     if (Ruleset?.InputManager is KeysInputManager inputManager)
                     {
-                        inputManager.ChangeScrollSpeed(action);
+                        // Only allow scroll speed changes if the map hasn't started or if we're on a break
+                        if (Ruleset.Screen.IsSongSelectPreview || Ruleset.Screen.Timing.Time >= 5000 && !Ruleset.Screen.EligibleToSkip && !(Ruleset.Screen is TournamentGameplayScreen) && !Ruleset.Screen.InReplayMode)
+                            return GlobalInputHandleResult.Consumed;
+
+                        GlobalInputHandler.ChangeScrollSpeed(action);
                         return GlobalInputHandleResult.Consumed;
                     }
                     break;
