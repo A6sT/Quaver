@@ -71,6 +71,17 @@ namespace Quaver.Shared.Skinning.V2
         public bool TrySaveEditableConfig(out IReadOnlyList<string> errors) =>
             Source.TrySaveMain(Config, out errors);
 
+        /// <summary>
+        ///     Returns a detached configuration suitable for an in-game editing session.
+        /// </summary>
+        public SkinV2Config CreateEditableSnapshot() => Source.GetSnapshot();
+
+        /// <summary>
+        ///     Validates and writes an edited snapshot using the restricted Skin V2 YAML contract.
+        /// </summary>
+        public bool TrySaveEditableConfig(SkinV2Config editedConfig, out IReadOnlyList<string> errors) =>
+            Source.TrySaveMain(editedConfig, out errors);
+
         internal Texture2D LoadTexture(string relativePath, Texture2D fallback)
         {
             if (string.IsNullOrWhiteSpace(relativePath))

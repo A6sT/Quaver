@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,6 +14,7 @@ using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
 using Quaver.Shared.Screens.Main.UI;
 using Quaver.Shared.Screens.Options;
+using Quaver.Shared.Screens.V2.SkinEditor;
 using Quaver.Shared.Skinning;
 using Quaver.Shared.Skinning.V2;
 using Steamworks;
@@ -58,10 +60,12 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private OnlineHub SubscribedOnlineHub { get; set; }
 
-        private ScreenNavigation()
+        private List<Drawable> NavigationButtons { get; } = new List<Drawable>();
+
+        private ScreenNavigation(SkinV2Config previewConfig = null)
         {
             Skin = SkinManager.AcquireV2();
-            Config = Skin.Config.Shared.Navigation;
+            Config = (previewConfig ?? Skin.Config).Shared.Navigation;
             Size = new ScalableVector2(WindowManager.Width, WindowManager.Height);
 
             TopBar = CreateBar(Alignment.TopLeft, Config.Bar);
@@ -108,12 +112,15 @@ namespace Quaver.Shared.Screens.V2.UI
 
         }
 
-        public static ScreenNavigation EnsureAttached(Container parent)
+        public static ScreenNavigation EnsureAttached(Container parent, SkinV2Config previewConfig = null)
         {
             if (ScreenManager.TryGetElement<ScreenNavigation>(ElementKey, out var navigation))
             {
-                if (navigation.Skin.Generation == SkinManager.SkinV2?.Generation)
+                if (previewConfig == null &&
+                    navigation.Skin.Generation == SkinManager.SkinV2?.Generation)
                 {
+                    if (navigation.Parent != parent)
+                        navigation.Parent = parent;
                     navigation.ResetTransientState();
                     navigation.ResizeToWindow();
                     return navigation;
@@ -122,10 +129,32 @@ namespace Quaver.Shared.Screens.V2.UI
                 ScreenManager.RemoveElement(ElementKey);
             }
 
-            navigation = new ScreenNavigation { Parent = parent };
+            navigation = new ScreenNavigation(previewConfig) { Parent = parent };
             ScreenManager.RegisterElement(ElementKey, navigation);
             return navigation;
         }
+
+        public static ScreenNavigation ReplaceAttached(Container parent, SkinV2Config previewConfig)
+        {
+            ScreenManager.RemoveElement(ElementKey);
+            return EnsureAttached(parent, previewConfig);
+        }
+
+        public IReadOnlyList<SkinEditorTarget> GetSkinEditorTargets() => new[]
+        {
+            new SkinEditorTarget("navigation-top",
+                LocalizationManager.Get("SkinEditor_Component_TopNavigation"),
+                "Shared.Navigation.Bar", TopBar),
+            new SkinEditorTarget("navigation-bottom",
+                LocalizationManager.Get("SkinEditor_Component_BottomNavigation"),
+                "Shared.Navigation.Footer", BottomBar),
+            new SkinEditorTarget("navigation-buttons",
+                LocalizationManager.Get("SkinEditor_Component_NavigationButtons"),
+                "Shared.Navigation.Button", NavigationButtons.ToArray()),
+            new SkinEditorTarget("navigation-profile",
+                LocalizationManager.Get("SkinEditor_Component_Profile"),
+                "Shared.Navigation.Profile", ProfileButton)
+        };
 
         public override void Update(GameTime gameTime)
         {
@@ -175,6 +204,7 @@ namespace Quaver.Shared.Screens.V2.UI
                 MaximumWidth = 240
             });
 
+            NavigationButtons.Add(button);
             return button;
         }
 

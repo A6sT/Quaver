@@ -6,6 +6,7 @@ using Quaver.Shared.Assets;
 using Quaver.Shared.Graphics.Backgrounds;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Screens.V2.Main.UI;
+using Quaver.Shared.Screens.V2.SkinEditor;
 using Quaver.Shared.Screens.V2.UI;
 using Quaver.Shared.Skinning;
 using Quaver.Shared.Skinning.V2;
@@ -23,31 +24,53 @@ namespace Quaver.Shared.Screens.V2.Main
     /// <summary>
     ///     View for the rewritten main menu.
     /// </summary>
-    public sealed class MainMenuScreenView : ScreenView
+    internal sealed class MainMenuScreenView : ScreenView, ISkinV2EditorHost
     {
         private SkinStoreV2Lease Skin { get; }
 
-        private SkinV2MainConfig Config { get; }
+        private SkinV2Config RootConfig { get; set; }
 
-        private SkinV2NavigationConfig NavigationConfig { get; }
+        private SkinV2MainConfig Config => RootConfig.Screens.Main;
 
-        private Color BackgroundClearColor { get; }
+        private SkinV2NavigationConfig NavigationConfig => RootConfig.Shared.Navigation;
 
-        private NavigationBar Background { get; }
+        private Color BackgroundClearColor { get; set; }
 
-        private Sprite BackgroundEffect { get; }
+        private NavigationBar Background { get; set; }
 
-        private FlexContainer Content { get; }
+        private Sprite BackgroundEffect { get; set; }
 
-        private Sprite Logo { get; }
+        private FlexContainer Content { get; set; }
 
-        private FlexItemOptions LogoOptions { get; }
+        private Sprite Logo { get; set; }
 
-        private FlexContainer ActionRow { get; }
+        private FlexItemOptions LogoOptions { get; set; }
+
+        private FlexContainer ActionRow { get; set; }
 
         private List<FlexItemOptions> ActionOptions { get; } = new List<FlexItemOptions>();
 
-        private MainMenuNewsCard News { get; }
+        private List<Drawable> ActionButtons { get; } = new List<Drawable>();
+
+        private MainMenuNewsCard News { get; set; }
+
+        private Container ContentRoot { get; set; }
+
+        public Container PreviewRoot { get; }
+
+        public Container EditorRoot { get; }
+
+        public IReadOnlyList<SkinEditorTarget> EditorTargets => editorTargets;
+
+        private List<SkinEditorTarget> editorTargets = new List<SkinEditorTarget>();
+
+        private bool EditorLayoutActive { get; set; }
+
+        private float EditorLeftWidth { get; set; }
+
+        private float EditorRightWidth { get; set; }
+
+        private float EditorBottomHeight { get; set; }
 
         private float LastWindowWidth { get; set; } = -1;
 
@@ -58,24 +81,52 @@ namespace Quaver.Shared.Screens.V2.Main
         public MainMenuScreenView(MainMenuScreen screen) : base(screen)
         {
             Skin = SkinManager.AcquireV2();
-            Config = Skin.Config.Screens.Main;
-            NavigationConfig = Skin.Config.Shared.Navigation;
+            RootConfig = Skin.Config;
+
+            Container.Size = new ScalableVector2(WindowManager.Width, WindowManager.Height);
+            PreviewRoot = new Container
+            {
+                Parent = Container,
+                Size = new ScalableVector2(WindowManager.Width, WindowManager.Height),
+                Pivot = Vector2.Zero
+            };
+            EditorRoot = new Container
+            {
+                Parent = Container,
+                Size = new ScalableVector2(WindowManager.Width, WindowManager.Height),
+                Visible = false
+            };
+
+            BuildContent();
+        }
+
+        private void BuildContent()
+        {
+            ContentRoot?.Destroy();
+            ContentRoot = new Container
+            {
+                Parent = PreviewRoot,
+                Size = new ScalableVector2(WindowManager.Width, WindowManager.Height)
+            };
+
+            ActionOptions.Clear();
+            ActionButtons.Clear();
             BackgroundClearColor = SkinV2Color.Parse(Config.Background.SolidColor);
 
             Background = new NavigationBar(WindowManager.Width, WindowManager.Height)
             {
-                Parent = Container,
+                Parent = ContentRoot,
                 Background = SkinV2Background.Create(Skin, Config.Background,
                     TextureManager.Load("Quaver.Resources/Textures/UI/Screens/Main/background.jpg"))
             };
 
             BackgroundEffect = CreateBackgroundEffect(Config.BackgroundEffects.Effect);
             if (BackgroundEffect != null)
-                BackgroundEffect.Parent = Container;
+                BackgroundEffect.Parent = ContentRoot;
 
             Content = new FlexContainer
             {
-                Parent = Container,
+                Parent = ContentRoot,
                 Position = new ScalableVector2(Config.Layout.HorizontalPadding, NavigationBarHeight),
                 Size = new ScalableVector2(WindowManager.Width - Config.Layout.HorizontalPadding * 2,
                     WindowManager.Height - NavigationBarHeight * 2),
@@ -110,6 +161,7 @@ namespace Quaver.Shared.Screens.V2.Main
             Content.SetItemOptions(ActionRow,
                 new FlexItemOptions { Basis = Config.Actions.SingleRowHeight, Shrink = 0 });
 
+            var screen = (MainMenuScreen) Screen;
             CreateAction(GlobalIcons.Get(GlobalIcon.SinglePlayer), "Screen_Main_SinglePlayer",
                 screen.ExitToSinglePlayer);
             CreateAction(GlobalIcons.Get(GlobalIcon.Multiplayer), "Screen_Main_Multiplayer",
@@ -120,11 +172,32 @@ namespace Quaver.Shared.Screens.V2.Main
 
             News = new MainMenuNewsCard(Config.News.MaximumWidth, Skin, Config.News)
             {
-                Parent = Container,
+                Parent = ContentRoot,
                 Alignment = Alignment.BotCenter,
                 Y = Config.News.BottomOffset
             };
 
+            editorTargets = new List<SkinEditorTarget>
+            {
+                new SkinEditorTarget("main-background",
+                    LocalizationManager.Get("SkinEditor_Component_Background"),
+                    "Screens.Main.Background", Background),
+                new SkinEditorTarget("main-effects",
+                    LocalizationManager.Get("SkinEditor_Component_BackgroundEffects"),
+                    "Screens.Main.BackgroundEffects", BackgroundEffect ?? Background),
+                new SkinEditorTarget("main-logo",
+                    LocalizationManager.Get("SkinEditor_Component_Logo"),
+                    "Screens.Main.Logo", Logo),
+                new SkinEditorTarget("main-actions",
+                    LocalizationManager.Get("SkinEditor_Component_Actions"),
+                    "Screens.Main.Actions", ActionButtons.ToArray()),
+                new SkinEditorTarget("main-news",
+                    LocalizationManager.Get("SkinEditor_Component_News"),
+                    "Screens.Main.News", News)
+            };
+
+            LastWindowWidth = -1;
+            LastWindowHeight = -1;
             UpdateResponsiveLayout(true);
         }
 
@@ -146,6 +219,62 @@ namespace Quaver.Shared.Screens.V2.Main
             Skin.Dispose();
         }
 
+        public void EnsureNavigation()
+        {
+            var navigation = ScreenNavigation.EnsureAttached(PreviewRoot);
+            AddNavigationTargets(navigation);
+        }
+
+        public void ApplySkinEditorPreview(SkinV2Config config)
+        {
+            RootConfig = config;
+            BuildContent();
+            var navigation = ScreenNavigation.ReplaceAttached(PreviewRoot, RootConfig);
+            AddNavigationTargets(navigation);
+            UpdateEditorLayout();
+        }
+
+        public void SetSkinEditorLayout(bool active, float leftPanelWidth = 0, float rightPanelWidth = 0,
+            float assetPanelHeight = 0)
+        {
+            EditorLayoutActive = active;
+            EditorLeftWidth = leftPanelWidth;
+            EditorRightWidth = rightPanelWidth;
+            EditorBottomHeight = assetPanelHeight;
+            EditorRoot.Visible = active;
+            UpdateEditorLayout();
+        }
+
+        private void AddNavigationTargets(ScreenNavigation navigation)
+        {
+            editorTargets.AddRange(navigation.GetSkinEditorTargets());
+        }
+
+        private void UpdateEditorLayout()
+        {
+            Container.Size = new ScalableVector2(WindowManager.Width, WindowManager.Height);
+            EditorRoot.Size = Container.Size;
+
+            if (!EditorLayoutActive)
+            {
+                PreviewRoot.Position = new ScalableVector2(0, 0);
+                PreviewRoot.Scale = Vector2.One;
+                return;
+            }
+
+            const float margin = 16;
+            var availableWidth = Math.Max(1,
+                WindowManager.Width - EditorLeftWidth - EditorRightWidth - margin * 2);
+            var availableHeight = Math.Max(1,
+                WindowManager.Height - EditorBottomHeight - margin * 2);
+            var scale = Math.Min(availableWidth / WindowManager.Width,
+                availableHeight / WindowManager.Height);
+            PreviewRoot.Scale = new Vector2(scale);
+            PreviewRoot.Position = new ScalableVector2(
+                EditorLeftWidth + margin + (availableWidth - WindowManager.Width * scale) / 2f,
+                margin + (availableHeight - WindowManager.Height * scale) / 2f);
+        }
+
         private void CreateAction(Texture2D icon, string localizationKey, Action action)
         {
             var button = new MainActionButton(action, Config.Actions)
@@ -165,6 +294,7 @@ namespace Quaver.Shared.Screens.V2.Main
 
             var options = new FlexItemOptions { Basis = Config.Actions.ButtonWidth, Grow = 1, Shrink = 1 };
             ActionOptions.Add(options);
+            ActionButtons.Add(button);
             ActionRow.SetItemOptions(button, options);
         }
 
@@ -184,6 +314,8 @@ namespace Quaver.Shared.Screens.V2.Main
             // synchronized after resizes. Bottom-aligned children (such as the news card) are
             // recalculated when this changes.
             Container.Size = new ScalableVector2(width, height);
+            PreviewRoot.Size = new ScalableVector2(width, height);
+            ContentRoot.Size = new ScalableVector2(width, height);
             Background.Size = new ScalableVector2(width, height);
             if (BackgroundEffect != null)
                 BackgroundEffect.Size = new ScalableVector2(width, height);
@@ -224,6 +356,7 @@ namespace Quaver.Shared.Screens.V2.Main
             News.ApplyWidth(Math.Min(Config.News.MaximumWidth, contentWidth - Config.News.HorizontalMargin));
             Content.RefreshLayout();
             ActionRow.RefreshLayout();
+            UpdateEditorLayout();
         }
 
         private Sprite CreateBackgroundEffect(SkinV2MainBackgroundEffect effect)

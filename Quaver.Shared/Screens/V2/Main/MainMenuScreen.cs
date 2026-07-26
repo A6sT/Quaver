@@ -19,6 +19,7 @@ using Quaver.Shared.Screens.Main.Cheats;
 using Quaver.Shared.Screens.Main.UI;
 using Quaver.Shared.Screens.Selection.UI.Dialogs;
 using Quaver.Shared.Screens.V2.Main.UI;
+using Quaver.Shared.Screens.V2.SkinEditor;
 using Quaver.Shared.Screens.V2.UI;
 using Quaver.Shared.Skinning;
 using Wobble;
@@ -33,7 +34,7 @@ namespace Quaver.Shared.Screens.V2.Main
     /// <summary>
     ///     Rewritten main menu screen. Its behavior is intentionally independent from the legacy main menu.
     /// </summary>
-    public sealed class MainMenuScreen : QuaverScreen, IPersistentScreen
+    internal sealed class MainMenuScreen : SkinV2Screen, IPersistentScreen
     {
         public override QuaverScreenType Type { get; } = QuaverScreenType.Menu;
 
@@ -46,6 +47,8 @@ namespace Quaver.Shared.Screens.V2.Main
         private CheatCodeTheater TheaterCheat { get; }
 
         private MainMenuJukeboxController Jukebox { get; }
+
+        protected override ISkinV2EditorHost SkinEditorHost => (MainMenuScreenView) View;
 
         IReadOnlyCollection<string> IPersistentScreen.PersistentElementKeys { get; } =
             new[] { ScreenNavigation.ElementKey };
@@ -69,7 +72,7 @@ namespace Quaver.Shared.Screens.V2.Main
         public override void OnActivated()
         {
             base.OnActivated();
-            ScreenNavigation.EnsureAttached(View.Container);
+            ((MainMenuScreenView) View).EnsureNavigation();
         }
 
         public override void OnFirstUpdate()
@@ -104,7 +107,8 @@ namespace Quaver.Shared.Screens.V2.Main
         public override void Update(GameTime gameTime)
         {
             Jukebox.Update();
-            HandleInput(gameTime);
+            if (!IsSkinEditorActive)
+                HandleInput(gameTime);
             base.Update(gameTime);
         }
 
