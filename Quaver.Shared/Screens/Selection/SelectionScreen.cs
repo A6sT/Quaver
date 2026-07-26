@@ -128,7 +128,6 @@ namespace Quaver.Shared.Screens.Selection
         public SelectionScreen(SelectScrollContainerType? activeScrollContainer = null,
             SelectContainerPanel activeLeftPanel = SelectContainerPanel.Leaderboard)
         {
-            GlobalInputToken = new Token(this);
             InitialActiveScrollContainer = activeScrollContainer;
             InitialActiveLeftPanel = activeLeftPanel;
             IsMultiplayer = OnlineManager.CurrentGame != null;
@@ -170,6 +169,7 @@ namespace Quaver.Shared.Screens.Selection
             MapLoadingScreen.QueueStreamerFilesWrite(MapManager.Selected.Value);
 
             View = new SelectionScreenView(this);
+            GlobalInputToken = new Token(this);
         }
 
         /// <inheritdoc />
@@ -475,9 +475,6 @@ namespace Quaver.Shared.Screens.Selection
                         ModManager.RemoveMod(ModIdentifier.Mirror);
                     else
                         ModManager.AddMod(ModIdentifier.Mirror);
-                    return GlobalInputHandleResult.Consumed;
-                case GlobalKeybindActions.IncreaseScrollSpeed:
-                    GlobalInputHandler.ChangeScrollSpeed(action);
                     return GlobalInputHandleResult.Consumed;
                 default:
                     return GlobalInputHandleResult.Pass;

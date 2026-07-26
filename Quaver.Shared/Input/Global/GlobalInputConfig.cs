@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
@@ -26,15 +27,18 @@ namespace Quaver.Shared.Input.Global
 
         public ulong Version { get; private set; }
 
-        public event ConfigUpdated OnConfigUpdated;
+        public event ConfigUpdated? OnConfigUpdated;
 
         public delegate void ConfigUpdated();
+
+        public FrozenSet<GlobalKeybindActions> ConflictingActions { get; private set; }
 
         public GlobalInputConfig(GlobalInputConfigModel model)
         {
             _model = model;
             _keybinds = new InputActionMap<GlobalKeybindActions>(model.Keybinds);
             Version++;
+            CalculateConflictingActions();
         }
 
         /// <inheritdoc />
@@ -50,51 +54,53 @@ namespace Quaver.Shared.Input.Global
         /// <inheritdoc />
         public void AddKeybindToAction(GlobalKeybindActions action, Keybind keybind)
         {
-            Version++;
             _keybinds.AddKeybindToAction(action, keybind);
-            OnConfigUpdated.Invoke();
+            NotifyUpdate();
         }
 
         /// <inheritdoc />
         public bool RemoveKeybindFromAction(GlobalKeybindActions action, Keybind keybind)
         {
             if (!_keybinds.RemoveKeybindFromAction(action, keybind))
-            {
-                OnConfigUpdated.Invoke();
                 return false;
-            }
-
-            Version++;
-            OnConfigUpdated.Invoke();
+            NotifyUpdate();
             return true;
         }
 
-        public HashSet<GlobalKeybindActions> CalculateConflictingActions()
+        public void CalculateConflictingActions()
         {
             var actionSets = _keybinds.CalculateConflictingActionSets();
-            HashSet<GlobalKeybindActions> conflicts = [];
+            HashSet<GlobalKeybindActions> result = [];
             foreach (var (keybind, actions) in actionSets)
             {
                 foreach (var (action1, action2) in from action1 in actions
                          from action2 in actions
-                         where (action1.Layer() & action2.Layer()) != 0 && action1 != action2
+                         where (action1.Layer() & action2.Layer()) != 0 && action1 < action2
                          select (action1, action2))
                 {
-                    Logger.Error($"{keybind} has both {action1} and {action2} in layer {action1.Layer() & action2.Layer()}", LogType.Runtime);
-                    conflicts.Add(action1);
+                    if (action1 < action2)
+                        Logger.Error($"{keybind} has both {action1} and {action2} in layer {action1.Layer() & action2.Layer()}", LogType.Runtime);
+                    result.Add(action1);
+                    result.Add(action2);
                 }
             }
 
-            return conflicts;
+            ConflictingActions = result.ToFrozenSet();
+        }
+
+        private void NotifyUpdate()
+        {
+            Version++;
+            CalculateConflictingActions();
+            OnConfigUpdated?.Invoke();
         }
 
         /// <inheritdoc />
         public KeybindList? SetKeybindsForAction(GlobalKeybindActions action,
             KeybindList keybindList)
         {
-            Version++;
             var result = _keybinds.SetKeybindsForAction(action, keybindList);
-            OnConfigUpdated.Invoke();
+            NotifyUpdate();
             return result;
         }
 
@@ -188,7 +194,7 @@ namespace Quaver.Shared.Input.Global
                     LogType.Runtime);
             }
 
-            Version++;
+            NotifyUpdate();
             return count;
         }
 
@@ -201,8 +207,7 @@ namespace Quaver.Shared.Input.Global
             _model.Keybinds = CloneDefaultKeybinds();
             _keybinds = new InputActionMap<GlobalKeybindActions>(_model.Keybinds);
             SaveToConfig();
-            Version++;
-            OnConfigUpdated.Invoke();
+            NotifyUpdate();
             Logger.Debug("Reset global keybind config file", LogType.Runtime);
         }
 
@@ -394,7 +399,7 @@ namespace Quaver.Shared.Input.Global
             [GlobalKeybindActions.NavigateRight] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Right)),
             [GlobalKeybindActions.NavigateUp] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Up)),
             [GlobalKeybindActions.NavigateDown] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Down)),
-            [GlobalKeybindActions.NavigateSelect] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Enter)),
+            [GlobalKeybindActions.NavigateSelect] = new KeybindList(new Keybind(Keys.Enter)),
             [GlobalKeybindActions.ResultsTab] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Tab)),
             [GlobalKeybindActions.SelectionToggleModifiers] = new KeybindList(new Keybind(Keys.F1)),
             [GlobalKeybindActions.SelectionSelectRandomMap] = new KeybindList(new Keybind(Keys.F2)),

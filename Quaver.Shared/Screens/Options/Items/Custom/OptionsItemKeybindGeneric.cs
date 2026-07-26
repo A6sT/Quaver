@@ -150,7 +150,7 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
             if (string.IsNullOrWhiteSpace(Text.Text))
                 Text.Text = "None";
             // Obvious room for performance improvement, but really not needed
-            Text.Tint = GlobalInputConfig.CalculateConflictingActions().Contains(Action)
+            Text.Tint = GlobalInputConfig.ConflictingActions.Contains(Action)
                 ? Color.Crimson
                 : Colors.MainAccent;
         }
