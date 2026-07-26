@@ -328,6 +328,11 @@ namespace Quaver.Shared.Screens.Options
                         new OptionsItemKeybindGeneric(containerRect, "Toggle Mirror Mod", GlobalKeybindActions.ToggleMirror),
                         new OptionsItemKeybindGeneric(containerRect, "Toggle Pitch", GlobalKeybindActions.TogglePitch),
                         new OptionsItemKeybindGeneric(containerRect, "Remove All Mods", GlobalKeybindActions.RemoveMods),
+                        new OptionsItemKeybindGeneric(containerRect, "Toggle Modifiers Panel", GlobalKeybindActions.SelectionToggleModifiers),
+                        new OptionsItemKeybindGeneric(containerRect, "Select Random Map", GlobalKeybindActions.SelectionSelectRandomMap),
+                        new OptionsItemKeybindGeneric(containerRect, "Toggle Map Preview Panel", GlobalKeybindActions.SelectionToggleMapPreview),
+                        new OptionsItemKeybindGeneric(containerRect, "Toggle User Profile Panel", GlobalKeybindActions.SelectionToggleUserProfile),
+                        new OptionsItemKeybindGeneric(containerRect, "Refresh Songs", GlobalKeybindActions.SelectionRefresh),
                     }),
                     new OptionsSubcategory("Misc", new List<OptionsItem>()
                     {

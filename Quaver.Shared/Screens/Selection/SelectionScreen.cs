@@ -295,13 +295,6 @@ namespace Quaver.Shared.Screens.Selection
             if (DialogManager.Dialogs.Count != 0)
                 return;
 
-            HandleKeyPressEscape();
-            HandleKeyPressF1();
-            HandleKeyPressF2();
-            HandleKeyPressF3();
-            HandleKeyPressF4();
-            HandleKeyPressF5();
-            HandleKeyPressEnter();
             HandleThumb1MouseButtonClick();
 
             if (ActiveLeftPanel.Value == SelectContainerPanel.Leaderboard)
@@ -309,24 +302,10 @@ namespace Quaver.Shared.Screens.Selection
         }
 
         /// <summary>
-        ///     Handles when the user presses escape
+        ///     Toggles the modifier panel.
         /// </summary>
-        private void HandleKeyPressEscape()
+        private void ToggleModifiersPanel()
         {
-            if (!KeyboardManager.IsUniqueKeyPress(Keys.Escape))
-                return;
-
-            HandleBackAction();
-        }
-
-        /// <summary>
-        ///     Handles when the user presses F1
-        /// </summary>
-        private void HandleKeyPressF1()
-        {
-            if (!KeyboardManager.IsUniqueKeyPress(Keys.F1))
-                return;
-
             if (ActiveLeftPanel.Value == SelectContainerPanel.Modifiers)
                 ActiveLeftPanel.Value = SelectContainerPanel.Leaderboard;
             else
@@ -334,28 +313,30 @@ namespace Quaver.Shared.Screens.Selection
         }
 
         /// <summary>
-        ///     Handles random map selection through key press
+        ///     Selects a random map or the previous random map.
         /// </summary>
-        private void HandleKeyPressF2()
+        /// <param name="action"></param>
+        private void HandleSelectRandomMapAction(GlobalKeybindActions action)
         {
-            if (!KeyboardManager.IsUniqueKeyPress(Keys.F2))
-                return;
-
-            if (KeyboardManager.IsShiftDown())
-                SelectPrevRandomMap();
-            else
-                SelectRandomMap();
+            switch (action)
+            {
+                case GlobalKeybindActions.SelectionSelectPreviousRandomMap:
+                    SelectPrevRandomMap();
+                    break;
+                case GlobalKeybindActions.SelectionSelectRandomMap:
+                    SelectRandomMap();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(action), action, null);
+            }
         }
 
         /// <summary>
-        ///    Handles exporting mapsets through F3 key press
+        ///    Toggles the map preview panel.
         /// </summary>
-        private void HandleKeyPressF3()
+        private void ToggleMapPreviewPanel()
         {
             if (KeyboardManager.IsCtrlDown())
-                return;
-
-            if (!KeyboardManager.IsUniqueKeyPress(Keys.F3))
                 return;
 
             if (ActiveLeftPanel.Value == SelectContainerPanel.MapPreview)
@@ -366,12 +347,9 @@ namespace Quaver.Shared.Screens.Selection
 
         /// <summary>
         /// </summary>
-        private void HandleKeyPressF4()
+        private void ToggleUserProfilePanel()
         {
             if (KeyboardManager.IsCtrlDown())
-                return;
-
-            if (!KeyboardManager.IsUniqueKeyPress(Keys.F4))
                 return;
 
             if (ActiveLeftPanel.Value == SelectContainerPanel.UserProfile)
@@ -383,25 +361,19 @@ namespace Quaver.Shared.Screens.Selection
         /// <summary>
         ///		Prompts the user to begin a force refresh for mapsets.
         ///	</summary>
-        private void HandleKeyPressF5()
+        private void HandleRefreshAction()
         {
             if (KeyboardManager.IsCtrlDown())
-                return;
-
-            if (!KeyboardManager.IsUniqueKeyPress(Keys.F5))
                 return;
 
             DialogManager.Show(new RefreshDialog());
         }
 
         /// <summary>
-        ///     Handles when the user presses the enter key
+        ///     Handles song selection confirmation.
         /// </summary>
-        private void HandleKeyPressEnter()
+        private void HandleNavigateSelectAction()
         {
-            if (!KeyboardManager.IsUniqueKeyPress(Keys.Enter))
-                return;
-
             if (KeyboardManager.IsAltDown())
                 return;
 
@@ -462,6 +434,27 @@ namespace Quaver.Shared.Screens.Selection
 
             switch (action & GlobalKeybindActions.BaseActionMask)
             {
+                case GlobalKeybindActions.Back:
+                    HandleBackAction();
+                    return GlobalInputHandleResult.Consumed;
+                case GlobalKeybindActions.NavigateSelect:
+                    HandleNavigateSelectAction();
+                    return GlobalInputHandleResult.Consumed;
+                case GlobalKeybindActions.SelectionToggleModifiers:
+                    ToggleModifiersPanel();
+                    return GlobalInputHandleResult.Consumed;
+                case GlobalKeybindActions.SelectionSelectRandomMap:
+                    HandleSelectRandomMapAction(action);
+                    return GlobalInputHandleResult.Consumed;
+                case GlobalKeybindActions.SelectionToggleMapPreview:
+                    ToggleMapPreviewPanel();
+                    return GlobalInputHandleResult.Consumed;
+                case GlobalKeybindActions.SelectionToggleUserProfile:
+                    ToggleUserProfilePanel();
+                    return GlobalInputHandleResult.Consumed;
+                case GlobalKeybindActions.SelectionRefresh:
+                    HandleRefreshAction();
+                    return GlobalInputHandleResult.Consumed;
                 case GlobalKeybindActions.IncreaseRate:
                     ModManager.AddSpeedMods(GetNextRate(
                         !action.HasFlag(GlobalKeybindActions.Reverse),

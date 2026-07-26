@@ -33,6 +33,11 @@ public enum GlobalKeybindActions : ulong
     ResultsTab,
     DialogConfirm,
     DialogCancel,
+    SelectionToggleModifiers,
+    SelectionSelectRandomMap,
+    SelectionToggleMapPreview,
+    SelectionToggleUserProfile,
+    SelectionRefresh,
 
     BaseActionMask = (1 << 16) - 1,
 
@@ -61,4 +66,5 @@ public enum GlobalKeybindActions : ulong
     ResetVisualOffset = ResetOffset | Visual,
     NavigateDown = NavigateUp | Reverse,
     NavigateLeft = NavigateRight | Reverse,
+    SelectionSelectPreviousRandomMap = SelectionSelectRandomMap | Reverse,
 }

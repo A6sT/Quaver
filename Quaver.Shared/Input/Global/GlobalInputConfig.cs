@@ -236,6 +236,12 @@ namespace Quaver.Shared.Input.Global
                 GlobalKeybindActions.ResultsTab => Keybinds(new Keybind(KeyModifiers.Free, Keys.Tab)),
                 GlobalKeybindActions.DialogConfirm => Keybinds(ConfigManager.KeyNavigateSelect.Value),
                 GlobalKeybindActions.DialogCancel => Keybinds(ConfigManager.KeyNavigateBack.Value),
+                GlobalKeybindActions.SelectionToggleModifiers => Keybinds(Keys.F1),
+                GlobalKeybindActions.SelectionSelectRandomMap => Keybinds(Keys.F2),
+                GlobalKeybindActions.SelectionSelectPreviousRandomMap => Keybinds(KeyModifiers.Shift, Keys.F2),
+                GlobalKeybindActions.SelectionToggleMapPreview => Keybinds(Keys.F3),
+                GlobalKeybindActions.SelectionToggleUserProfile => Keybinds(Keys.F4),
+                GlobalKeybindActions.SelectionRefresh => Keybinds(KeyModifiers.Free, Keys.F5),
                 _ => null
             };
 
@@ -378,6 +384,12 @@ namespace Quaver.Shared.Input.Global
             [GlobalKeybindActions.ResultsTab] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Tab)),
             [GlobalKeybindActions.DialogConfirm] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Enter)),
             [GlobalKeybindActions.DialogCancel] = new KeybindList(new Keybind(KeyModifiers.Free, Keys.Escape)),
+            [GlobalKeybindActions.SelectionToggleModifiers] = new KeybindList(new Keybind(Keys.F1)),
+            [GlobalKeybindActions.SelectionSelectRandomMap] = new KeybindList(new Keybind(Keys.F2)),
+            [GlobalKeybindActions.SelectionSelectPreviousRandomMap] = new KeybindList(new Keybind(KeyModifiers.Shift, Keys.F2)),
+            [GlobalKeybindActions.SelectionToggleMapPreview] = new KeybindList(new Keybind(Keys.F3)),
+            [GlobalKeybindActions.SelectionToggleUserProfile] = new KeybindList(new Keybind(Keys.F4)),
+            [GlobalKeybindActions.SelectionRefresh] = new KeybindList(new Keybind(Keys.F5)),
         };
 #pragma warning restore format // @formatter:on
     }
