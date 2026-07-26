@@ -26,6 +26,10 @@ namespace Quaver.Shared.Input.Global
 
         public ulong Version { get; private set; }
 
+        public event ConfigUpdated OnConfigUpdated;
+
+        public delegate void ConfigUpdated();
+
         public GlobalInputConfig(GlobalInputConfigModel model)
         {
             _model = model;
@@ -48,24 +52,34 @@ namespace Quaver.Shared.Input.Global
         {
             Version++;
             _keybinds.AddKeybindToAction(action, keybind);
+            OnConfigUpdated.Invoke();
         }
 
         /// <inheritdoc />
         public bool RemoveKeybindFromAction(GlobalKeybindActions action, Keybind keybind)
         {
             if (!_keybinds.RemoveKeybindFromAction(action, keybind))
+            {
+                OnConfigUpdated.Invoke();
                 return false;
+            }
 
             Version++;
+            OnConfigUpdated.Invoke();
             return true;
         }
+
+        public HashSet<GlobalKeybindActions> CalculateConflictingActions() =>
+            _keybinds.CalculateConflictingActions();
 
         /// <inheritdoc />
         public KeybindList? SetKeybindsForAction(GlobalKeybindActions action,
             KeybindList keybindList)
         {
             Version++;
-            return _keybinds.SetKeybindsForAction(action, keybindList);
+            var result = _keybinds.SetKeybindsForAction(action, keybindList);
+            OnConfigUpdated.Invoke();
+            return result;
         }
 
         /// <inheritdoc />
@@ -78,7 +92,8 @@ namespace Quaver.Shared.Input.Global
             new(new GlobalInputConfigModel(CloneDefaultKeybinds()));
 
         private static Dictionary<GlobalKeybindActions, KeybindList> CloneDefaultKeybinds() =>
-            s_defaultKeybinds.ToDictionary(x => x.Key, x => new KeybindList(x.Value.Select(k => k.Clone())));
+            s_defaultKeybinds.ToDictionary(x => x.Key,
+                x => new KeybindList(x.Value.Select(k => k.Clone())));
 
         public static GlobalInputConfig LoadFromConfig()
         {
@@ -171,6 +186,7 @@ namespace Quaver.Shared.Input.Global
             _keybinds = new InputActionMap<GlobalKeybindActions>(_model.Keybinds);
             SaveToConfig();
             Version++;
+            OnConfigUpdated.Invoke();
             Logger.Debug("Reset global keybind config file", LogType.Runtime);
         }
 

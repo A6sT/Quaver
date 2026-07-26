@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
@@ -14,6 +15,7 @@ using Wobble.Graphics;
 using Wobble.Graphics.Buttons;
 using Wobble.Graphics.Sprites.Text;
 using Wobble.Input;
+using Wobble.Logging;
 using Wobble.Managers;
 using ColorHelper = Quaver.Shared.Helpers.ColorHelper;
 
@@ -31,7 +33,7 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
 
         /// <summary>
         /// </summary>
-        private GlobalKeybindActions? Action { get; }
+        private GlobalKeybindActions Action { get; }
 
         /// <summary>
         /// </summary>
@@ -49,19 +51,6 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
         /// <summary>
         /// </summary>
         private GlobalInputConfig GlobalInputConfig => ((QuaverGame) GameBase.Game).InputManager.InputConfig;
-
-        /// <summary>
-        /// </summary>
-        /// <param name="containerRect"></param>
-        /// <param name="name"></param>
-        /// <param name="bindedKeys"></param>
-        /// <param name="bindedKey"></param>
-        /// <param name="isOptionFocused"></param>
-        public OptionsItemKeybindGeneric(RectangleF containerRect, string name, Bindable<GenericKey> bindedKey) : base(containerRect, name)
-        {
-            BindedKey = bindedKey;
-            CreateContent();
-        }
 
         /// <summary>
         /// </summary>
@@ -94,10 +83,8 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
 
             ResetButton.Clicked += (sender, args) =>
             {
-                if (!Action.HasValue)
-                    return;
 
-                GlobalInputConfig.SetKeybindsForAction(Action.Value, GlobalInputConfig.DefaultKeybindsFor(Action.Value));
+                GlobalInputConfig.SetKeybindsForAction(Action, GlobalInputConfig.DefaultKeybindsFor(Action));
                 GlobalInputConfig.SaveToConfig();
                 InitializeText();
             };
@@ -129,6 +116,13 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
             };
 
             InitializeText();
+
+            GlobalInputConfig.OnConfigUpdated += GlobalInputConfigOnOnConfigUpdated;
+        }
+
+        private void GlobalInputConfigOnOnConfigUpdated()
+        {
+            InitializeText();
         }
 
         public RoundedButton ResetButton { get; set; }
@@ -142,7 +136,7 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
             ReleaseGlobalInputBlockWhenKeysClear();
 
             var dt = gameTime.ElapsedGameTime.TotalMilliseconds;
-            ResetButton.Alpha = MathHelper.Lerp(ResetButton.Alpha, ResetButton.IsHovered ? 0.55f : 0f, (float) Math.Min(dt / 60, 1));
+            ResetButton.Alpha = MathHelper.Lerp(ResetButton.Alpha, ResetButton.IsHovered ? 0.55f : 0f, (float)Math.Min(dt / 60, 1));
 
             base.Update(gameTime);
         }
@@ -151,10 +145,17 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
         /// </summary>
         private void InitializeText()
         {
-            Text.Text = Action.HasValue ? GlobalInputConfig.GetOrDefault(Action.Value).ToString() : BindedKey.Value.GetName();
+            Text.Text = GlobalInputConfig.GetOrDefault(Action).ToString();
 
             if (string.IsNullOrWhiteSpace(Text.Text))
                 Text.Text = "None";
+            Logger.Debug(
+                $"{Action}: {string.Join(", ", GlobalInputConfig.CalculateConflictingActions().Select(x => x.ToString()))}",
+                LogType.Runtime);
+            // Obvious room for performance improvement, but really not needed
+            Text.Tint = GlobalInputConfig.CalculateConflictingActions().Contains(Action)
+                ? Color.Crimson
+                : Colors.MainAccent;
         }
 
         /// <summary>
@@ -181,14 +182,14 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
             }
 
             InitializeText();
-            Text.Tint = Colors.MainAccent;
         }
 
         /// <summary>
         /// </summary>
         private void ReleaseGlobalInputBlockWhenKeysClear()
         {
-            if (Focused || BlockGlobalInputToken == null || GenericKeyManager.GetPressedKeys().Count != 0)
+            if (Focused || BlockGlobalInputToken == null ||
+                GenericKeyManager.GetPressedKeys().Count != 0)
                 return;
 
             BlockGlobalInputToken.Dispose();
@@ -210,15 +211,8 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
                 return;
 
             var keybind = keys.First();
-            if (Action.HasValue)
-            {
-                GlobalInputConfig.SetKeybindsForAction(Action.Value, new KeybindList(keybind));
-                GlobalInputConfig.SaveToConfig();
-            }
-            else
-            {
-                BindedKey.Value = keybind.Key;
-            }
+            GlobalInputConfig.SetKeybindsForAction(Action, new KeybindList(keybind));
+            GlobalInputConfig.SaveToConfig();
 
             ClearFocusedState(true);
         }
@@ -228,6 +222,7 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
         {
             BlockGlobalInputToken?.Dispose();
             BlockGlobalInputToken = null;
+            GlobalInputConfig.OnConfigUpdated -= GlobalInputConfigOnOnConfigUpdated;
             base.Destroy();
         }
 
@@ -237,7 +232,8 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
             public override GlobalInputScope Scope => GlobalInputScope.Options;
 
             /// <inheritdoc />
-            public override GlobalInputHandleResult Handle(GlobalKeybindActions action, bool isKeyPress = true,
+            public override GlobalInputHandleResult Handle(GlobalKeybindActions action,
+                bool isKeyPress = true,
                 bool isRelease = false) => GlobalInputHandleResult.Consumed;
         }
     }

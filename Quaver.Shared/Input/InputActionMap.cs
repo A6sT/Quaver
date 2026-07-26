@@ -112,6 +112,20 @@ public class InputActionMap<TKeybindActions> where TKeybindActions : notnull
         }
     }
 
+    public HashSet<TKeybindActions> CalculateConflictingActions()
+    {
+        HashSet<TKeybindActions> result = [];
+        foreach (var (_, actions) in _keybindActions)
+        {
+            if (actions.Count > 1)
+            {
+                result.UnionWith(actions);
+            }
+        }
+
+        return result;
+    }
+
     public bool TryGetActionsFor(Keybind keybind, out HashSet<TKeybindActions>? set) =>
         _keybindActions.TryGetValue(keybind, out set);
 }
