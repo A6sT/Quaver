@@ -14,11 +14,9 @@ namespace Quaver.Shared.Screens.V2.UI
         ///     Shared inset around navbar buttons. This controls horizontal edge padding and,
         ///     together with the configured button size, the vertical bar padding.
         /// </summary>
-        [ConfigEditable]
         [Range(0, 2048)]
         public float EdgePadding { get; set; } = SkinV2Spacing.SpacingXs;
 
-        [ConfigEditable]
         [Range(0, 2048)]
         public float ItemSpacing { get; set; } = SkinV2Spacing.SpacingXs;
 
@@ -36,11 +34,9 @@ namespace Quaver.Shared.Screens.V2.UI
         public SkinV2NavigationButtonConfig Button { get; set; } = new SkinV2NavigationButtonConfig();
 
         [Required]
-        [ConfigEditable]
         public SkinV2ProfileConfig Profile { get; set; } = new SkinV2ProfileConfig();
 
         [Required]
-        [ConfigEditable]
         public SkinV2AccountDropdownConfig AccountDropdown { get; set; } = new SkinV2AccountDropdownConfig();
     }
 
@@ -63,9 +59,11 @@ namespace Quaver.Shared.Screens.V2.UI
         [Range(1, 8192)]
         public float IconSize { get; set; } = 40;
 
+        [ConfigEditable]
         [SkinColor]
         public string BackgroundColor { get; set; } = "#1F88FF26";
 
+        [ConfigEditable]
         [SkinColor]
         public string ForegroundColor { get; set; } = "#D9E3F4";
     }
@@ -106,9 +104,11 @@ namespace Quaver.Shared.Screens.V2.UI
         public int UsernameFontSize { get; set; } = 18;
 
         [SkinColor]
+        [ConfigEditable]
         public string TextColor { get; set; } = "#FFFFFFFF";
 
         [SkinColor]
+        [ConfigEditable]
         public string OfflineStatusColor { get; set; } = "#828E99FF";
     }
 

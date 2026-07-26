@@ -32,11 +32,9 @@ namespace Quaver.Shared.Screens.V2.Main
         public SkinV2MainLogoConfig Logo { get; set; } = new SkinV2MainLogoConfig();
 
         [Required]
-        [ConfigEditable]
         public SkinV2MainActionsConfig Actions { get; set; } = new SkinV2MainActionsConfig();
 
         [Required]
-        [ConfigEditable]
         public SkinV2MainNewsConfig News { get; set; } = new SkinV2MainNewsConfig();
     }
 
@@ -139,15 +137,19 @@ namespace Quaver.Shared.Screens.V2.Main
         public float CornerRadius { get; set; } = SkinV2BorderRadiusConfig.Normal;
 
         [SkinColor]
+        [ConfigEditable]
         public string Color { get; set; } = "#1F88FF26";
 
         [SkinColor]
+        [ConfigEditable]
         public string HoverColor { get; set; } = "#1F88FF0F";
 
         [SkinColor]
+        [ConfigEditable]
         public string AccentColor { get; set; } = "#1FBBFFFF";
 
         [SkinColor]
+        [ConfigEditable]
         public string TextColor { get; set; } = "#D9E3F4";
 
         [SkinFont]
@@ -170,18 +172,6 @@ namespace Quaver.Shared.Screens.V2.Main
 
         [Range(0d, 1d)]
         public float IndicatorIdleOpacity { get; set; } = 0.45f;
-
-        [SkinAssetPath]
-        public string SinglePlayerIcon { get; set; } = "";
-
-        [SkinAssetPath]
-        public string MultiplayerIcon { get; set; } = "";
-
-        [SkinAssetPath]
-        public string EditorIcon { get; set; } = "";
-
-        [SkinAssetPath]
-        public string DownloadIcon { get; set; } = "";
     }
 
     public sealed class SkinV2MainNewsConfig
@@ -199,6 +189,7 @@ namespace Quaver.Shared.Screens.V2.Main
         ///     Vertical offset from the bottom edge of the window. Negative values move the banner up.
         /// </summary>
         [Range(-8192, 8192)]
+        [ConfigEditable]
         public float BottomOffset { get; set; } = -SkinV2Spacing.SpacingXs;
 
         [Range(1, 8192)]

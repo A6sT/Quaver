@@ -110,16 +110,12 @@ namespace Quaver.Shared.Screens.V2.Main
             Content.SetItemOptions(ActionRow,
                 new FlexItemOptions { Basis = Config.Actions.SingleRowHeight, Shrink = 0 });
 
-            CreateAction(GlobalIcons.Get(GlobalIcon.SinglePlayer), Config.Actions.SinglePlayerIcon,
-                "Screen_Main_SinglePlayer",
+            CreateAction(GlobalIcons.Get(GlobalIcon.SinglePlayer), "Screen_Main_SinglePlayer",
                 screen.ExitToSinglePlayer);
-            CreateAction(GlobalIcons.Get(GlobalIcon.Multiplayer), Config.Actions.MultiplayerIcon,
-                "Screen_Main_Multiplayer",
+            CreateAction(GlobalIcons.Get(GlobalIcon.Multiplayer), "Screen_Main_Multiplayer",
                 screen.ExitToMultiplayer);
-            CreateAction(GlobalIcons.Get(GlobalIcon.Edit), Config.Actions.EditorIcon,
-                "Screen_Main_Editor", screen.ExitToEditor);
-            CreateAction(GlobalIcons.Get(GlobalIcon.Download), Config.Actions.DownloadIcon,
-                "Screen_Main_DownloadSongs",
+            CreateAction(GlobalIcons.Get(GlobalIcon.Edit), "Screen_Main_Editor", screen.ExitToEditor);
+            CreateAction(GlobalIcons.Get(GlobalIcon.Download), "Screen_Main_DownloadSongs",
                 screen.ExitToDownload);
 
             News = new MainMenuNewsCard(Config.News.MaximumWidth, Skin, Config.News)
@@ -150,7 +146,7 @@ namespace Quaver.Shared.Screens.V2.Main
             Skin.Dispose();
         }
 
-        private void CreateAction(Texture2D fallbackIcon, string iconPath, string localizationKey, Action action)
+        private void CreateAction(Texture2D icon, string localizationKey, Action action)
         {
             var button = new MainActionButton(action, Config.Actions)
             {
@@ -163,8 +159,7 @@ namespace Quaver.Shared.Screens.V2.Main
                 HoverColor = SkinV2Color.Parse(Config.Actions.HoverColor),
                 AccentColor = SkinV2Color.Parse(Config.Actions.AccentColor)
             };
-            button.SetIcon(Skin.LoadTexture(iconPath, fallbackIcon),
-                new Vector2(Config.Actions.IconSize, Config.Actions.IconSize));
+            button.SetIcon(icon, new Vector2(Config.Actions.IconSize, Config.Actions.IconSize));
             button.SetLabel(FontManager.GetWobbleFont(Config.Actions.Font), LocalizationManager.Get(localizationKey),
                 Config.Actions.FontSize, SkinV2Color.Parse(Config.Actions.TextColor));
 
