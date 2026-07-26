@@ -265,6 +265,12 @@ namespace Quaver.Shared.Input.Global
             return new GlobalInputConfig(new GlobalInputConfigModel(keybinds));
         }
 
+        private sealed class SerializedGlobalInputConfigModel
+        {
+            public Dictionary<string, KeybindList> Keybinds { get; set; } = [];
+        }
+
+
         private static GlobalInputConfig Deserialize(StreamReader file)
         {
             var ds = new DeserializerBuilder()
@@ -272,15 +278,36 @@ namespace Quaver.Shared.Input.Global
                 .IgnoreUnmatchedProperties()
                 .Build();
 
-            var config = ds.Deserialize<GlobalInputConfigModel>(file);
+            // This is here to handle entries that have been removed
+            var serialized = ds.Deserialize<SerializedGlobalInputConfigModel>(file);
 
-            if (config == null)
+            if (serialized == null)
             {
                 Logger.Debug("Config file was empty, creating new default", LogType.Runtime);
                 return Default();
             }
 
-            return new(config);
+            var keybinds = new Dictionary<GlobalKeybindActions, KeybindList>();
+
+            foreach (var (name, binds) in serialized.Keybinds)
+            {
+                if (!Enum.TryParse(name, out GlobalKeybindActions action))
+                {
+                    Logger.Debug($"Ignoring unknown global keybind action: {name}", LogType.Runtime);
+                    continue;
+                }
+
+                if (!s_defaultKeybinds.ContainsKey(action))
+                {
+                    Logger.Debug($"Ignoring unsupported global keybind action: {name}", LogType.Runtime);
+                    continue;
+                }
+
+                keybinds[action] = binds;
+            }
+
+
+            return new GlobalInputConfig(new GlobalInputConfigModel(keybinds));
         }
 
         private string Serialize()
