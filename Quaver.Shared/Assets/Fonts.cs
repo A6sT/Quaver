@@ -84,19 +84,19 @@ namespace Quaver.Shared.Assets
             CacheInterFont(InterMedium, FontWeight.Medium);
             CacheInterFont(InterSemiBold, FontWeight.SemiBold);
             CacheInterFont(InterBold, FontWeight.Bold);
-            // CacheInterFont(InterLight, FontWeight.Light);
-            // CacheInterFont(InterHeavy, FontWeight.ExtraBold);
-            // CacheInterFont(InterBlack, FontWeight.Black);
+            CacheInterFont(InterLight, FontWeight.Light);
+            CacheInterFont(InterHeavy, FontWeight.ExtraBold);
+            CacheInterFont(InterBlack, FontWeight.Black);
 
             TooltipManager.Theme.Fonts = new Dictionary<int, WobbleFontStore>
             {
                 { FontWeight.Regular, FontManager.GetWobbleFont(InterRegular) },
-                // { FontWeight.Light, FontManager.GetWobbleFont(InterLight) },
+                { FontWeight.Light, FontManager.GetWobbleFont(InterLight) },
                 { FontWeight.Medium, FontManager.GetWobbleFont(InterMedium) },
                 { FontWeight.SemiBold, FontManager.GetWobbleFont(InterSemiBold) },
                 { FontWeight.Bold, FontManager.GetWobbleFont(InterBold) },
-                // { FontWeight.ExtraBold, FontManager.GetWobbleFont(InterHeavy) },
-                // { FontWeight.Black, FontManager.GetWobbleFont(InterBlack) }
+                { FontWeight.ExtraBold, FontManager.GetWobbleFont(InterHeavy) },
+                { FontWeight.Black, FontManager.GetWobbleFont(InterBlack) }
             };
 
             var dir = $"{WobbleGame.WorkingDirectory}/Fonts";
@@ -118,9 +118,9 @@ namespace Quaver.Shared.Assets
             ReloadInterFont(InterMedium, FontWeight.Medium, interFont, fallbacks);
             ReloadInterFont(InterSemiBold, FontWeight.SemiBold, interFont, fallbacks);
             ReloadInterFont(InterBold, FontWeight.Bold, interFont, fallbacks);
-            // ReloadInterFont(InterLight, FontWeight.Light, interFont, fallbacks);
-            // ReloadInterFont(InterHeavy, FontWeight.ExtraBold, interFont, fallbacks);
-            // ReloadInterFont(InterBlack, FontWeight.Black, interFont, fallbacks);
+            ReloadInterFont(InterLight, FontWeight.Light, interFont, fallbacks);
+            ReloadInterFont(InterHeavy, FontWeight.ExtraBold, interFont, fallbacks);
+            ReloadInterFont(InterBlack, FontWeight.Black, interFont, fallbacks);
         }
 
         private static void ReloadInterFont(string name, int weight, byte[] interFont,
