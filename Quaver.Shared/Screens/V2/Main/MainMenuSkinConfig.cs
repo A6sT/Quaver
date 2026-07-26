@@ -157,7 +157,7 @@ namespace Quaver.Shared.Screens.V2.Main
         public int FontSize { get; set; } = SkinV2FontSizesConfig.Text2Xl;
 
         [Range(1, 8192)]
-        public float IconSize { get; set; } = 24;
+        public float IconSize { get; set; } = 40;
 
         [Range(1, 8192)]
         public float IndicatorWidth { get; set; } = 60;

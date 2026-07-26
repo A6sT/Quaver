@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Quaver.API.Enums;
@@ -134,8 +133,6 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private LoadingWheel LoginWheel { get; }
 
-        private List<Texture2D> OwnedIcons { get; } = new List<Texture2D>();
-
         private User User { get; set; }
 
         private OnlineClient SubscribedClient { get; set; }
@@ -266,10 +263,10 @@ namespace Quaver.Shared.Screens.V2.UI
             ActionsLayout.SetItemOptions(ActionButtonsLayout, FixedBasis(Config.ActionButtonSize));
             CreateSpacer(ActionButtonsLayout, Config.ActionLeftSpacer, Config.ActionButtonSize);
             ProfileButton = CreateActionButton(ActionButtonsLayout,
-                LoadIcon(0, 280), OpenProfile);
+                GlobalIcons.Get(GlobalIcon.ViewProfile), OpenProfile);
             CreateSpacer(ActionButtonsLayout, Config.ActionSpacing, Config.ActionButtonSize);
             LogoutButton = CreateActionButton(ActionButtonsLayout,
-                LoadIcon(40, 280), Logout);
+                GlobalIcons.Get(GlobalIcon.LogOut), Logout);
             CreateSpacer(ActionButtonsLayout, Config.ActionSpacing, Config.ActionButtonSize);
             CreateSpacer(ActionsLayout, Config.ActionsWidth, Config.ContentPadding);
 
@@ -277,12 +274,14 @@ namespace Quaver.Shared.Screens.V2.UI
                 FlexJustifyContent.FlexStart, FlexAlignItems.Center);
             ConnectedLayout.SetItemOptions(StatsLayout, FixedBasis(Config.StatsHeight));
             CreateSpacer(StatsLayout, Config.ContentPadding, Config.StatsHeight);
-            RankPill = CreateStatPill(StatsLayout, Config.RankWidth, LoadIcon(0, 0));
+            RankPill = CreateStatPill(StatsLayout, Config.RankWidth,
+                GlobalIcons.Get(GlobalIcon.ReverseSortDescending));
             CreateSpacer(StatsLayout, Config.ContentPadding, Config.StatsHeight);
-            RatingPill = CreateStatPill(StatsLayout, Config.RatingWidth, LoadIcon(0, 120));
+            RatingPill = CreateStatPill(StatsLayout, Config.RatingWidth,
+                GlobalIcons.Get(GlobalIcon.InProgress));
             CreateSpacer(StatsLayout, Config.ContentPadding, Config.StatsHeight);
             AccuracyPill = CreateStatPill(StatsLayout, Config.AccuracyWidth,
-                LoadIcon(40, 240));
+                GlobalIcons.Get(GlobalIcon.Random));
             var statsSpacer = CreateSpacer(StatsLayout, 1, Config.StatsHeight);
             StatsLayout.SetItemOptions(statsSpacer, new FlexItemOptions { Basis = 1, Grow = 1, Shrink = 1 });
 
@@ -346,7 +345,7 @@ namespace Quaver.Shared.Screens.V2.UI
                 Tint = SkinV2Color.Parse(Config.ActionButtonColor),
                 UsePreviousSpriteBatchOptions = true
             };
-            LoginButton.SetIcon(LoadIcon(0, 320),
+            LoginButton.SetIcon(GlobalIcons.Get(GlobalIcon.LogIn),
                 new Vector2(Config.LoginIconSize, Config.LoginIconSize));
             LoginButtonOptions = FixedBasis(Config.LoginButtonSize);
             OfflineActionLayout.SetItemOptions(LoginButton, LoginButtonOptions);
@@ -418,10 +417,6 @@ namespace Quaver.Shared.Screens.V2.UI
 
             base.Destroy();
 
-            foreach (var icon in OwnedIcons)
-                icon?.Dispose();
-
-            OwnedIcons.Clear();
             Skin.Dispose();
         }
 
@@ -506,7 +501,7 @@ namespace Quaver.Shared.Screens.V2.UI
                 IsInteractionEnabled = false,
                 UsePreviousSpriteBatchOptions = true
             };
-            pill.SetIcon(LoadIcon(40, 360),
+            pill.SetIcon(GlobalIcons.Get(GlobalIcon.Heart),
                 new Vector2(Config.RoleIconSize, Config.RoleIconSize));
             pill.SetLabel(FontManager.GetWobbleFont(Config.PrimaryFont), string.Empty, Config.RoleFontSize,
                 SkinV2Color.Parse(Config.TextColor));
@@ -598,19 +593,6 @@ namespace Quaver.Shared.Screens.V2.UI
             OfflineLayout.RefreshLayout();
             OfflineInfoLayout.RefreshLayout();
             OfflineActionLayout.RefreshLayout();
-        }
-
-        private Texture2D LoadIcon(int x, int y)
-        {
-            var source = TextureManager.Load("Quaver.Resources/Textures/UI/Screens/Main/Icons2.png");
-            var sourceRectangle = new Rectangle(x, y, Config.IconCellSize, Config.IconCellSize);
-            var pixels = new Color[Config.IconCellSize * Config.IconCellSize];
-            source.GetData(0, sourceRectangle, pixels, 0, pixels.Length);
-
-            var texture = new Texture2D(GameBase.Game.GraphicsDevice, Config.IconCellSize, Config.IconCellSize);
-            texture.SetData(pixels);
-            OwnedIcons.Add(texture);
-            return texture;
         }
 
         private void RefreshState()

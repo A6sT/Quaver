@@ -55,16 +55,13 @@ namespace Quaver.Shared.Screens.V2.UI
     public sealed class SkinV2NavigationButtonConfig
     {
         [Range(1, 8192)]
-        public float Size { get; set; } = 46;
+        public float Size { get; set; } = 50;
 
         [Range(0, 4096)]
         public float CornerRadius { get; set; } = SkinV2BorderRadiusConfig.Normal;
 
         [Range(1, 8192)]
-        public float IconWidth { get; set; } = 30;
-
-        [Range(1, 8192)]
-        public float IconHeight { get; set; } = 25;
+        public float IconSize { get; set; } = 40;
 
         [SkinColor]
         public string BackgroundColor { get; set; } = "#1F88FF26";
@@ -125,9 +122,6 @@ namespace Quaver.Shared.Screens.V2.UI
 
         [Range(1, 8192)]
         public float OfflineHeight { get; set; } = 68;
-
-        [Range(1, 8192)]
-        public int IconCellSize { get; set; } = 40;
 
         [Range(0, 2048)]
         public float PanelGap { get; set; } = 5;

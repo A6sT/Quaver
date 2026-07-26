@@ -66,7 +66,7 @@ namespace Quaver.Shared.Screens.V2.Main
             {
                 Parent = Container,
                 Background = SkinV2Background.Create(Skin, Config.Background,
-                    TextureManager.Load("Quaver.Resources/Textures/UI/Screens/Main/background.png"))
+                    TextureManager.Load("Quaver.Resources/Textures/UI/Screens/Main/background.jpg"))
             };
 
             BackgroundEffect = CreateBackgroundEffect(Config.BackgroundEffects.Effect);
@@ -110,15 +110,15 @@ namespace Quaver.Shared.Screens.V2.Main
             Content.SetItemOptions(ActionRow,
                 new FlexItemOptions { Basis = Config.Actions.SingleRowHeight, Shrink = 0 });
 
-            CreateAction(FontAwesome.Get(FontAwesomeIcon.fa_gamepad_console), Config.Actions.SinglePlayerIcon,
+            CreateAction(GlobalIcons.Get(GlobalIcon.SinglePlayer), Config.Actions.SinglePlayerIcon,
                 "Screen_Main_SinglePlayer",
                 screen.ExitToSinglePlayer);
-            CreateAction(FontAwesome.Get(FontAwesomeIcon.fa_group_profile_users), Config.Actions.MultiplayerIcon,
+            CreateAction(GlobalIcons.Get(GlobalIcon.Multiplayer), Config.Actions.MultiplayerIcon,
                 "Screen_Main_Multiplayer",
                 screen.ExitToMultiplayer);
-            CreateAction(FontAwesome.Get(FontAwesomeIcon.fa_pencil), Config.Actions.EditorIcon,
+            CreateAction(GlobalIcons.Get(GlobalIcon.Edit), Config.Actions.EditorIcon,
                 "Screen_Main_Editor", screen.ExitToEditor);
-            CreateAction(FontAwesome.Get(FontAwesomeIcon.fa_download_to_storage_drive), Config.Actions.DownloadIcon,
+            CreateAction(GlobalIcons.Get(GlobalIcon.Download), Config.Actions.DownloadIcon,
                 "Screen_Main_DownloadSongs",
                 screen.ExitToDownload);
 

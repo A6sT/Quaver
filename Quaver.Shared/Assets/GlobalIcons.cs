@@ -29,6 +29,12 @@ namespace Quaver.Shared.Assets
         Chat,
         Heart,
         Player,
+        BurgerRedDot,
+        Burger,
+        Website,
+        Discord,
+        GitHub,
+        
         Back,
         Play,
         Options,
@@ -94,6 +100,11 @@ namespace Quaver.Shared.Assets
                 { GlobalIcon.Chat, new Point(0, 7) },
                 { GlobalIcon.Heart, new Point(0, 8) },
                 { GlobalIcon.Player, new Point(0, 9) },
+                { GlobalIcon.BurgerRedDot, new Point(0, 10) },
+                { GlobalIcon.Burger, new Point(0, 11) },
+                { GlobalIcon.Website, new Point(0, 12) },
+                { GlobalIcon.Discord, new Point(0, 13) },
+                { GlobalIcon.GitHub, new Point(0, 14) },
                 
                 { GlobalIcon.Back, new Point(1, 0) },
                 { GlobalIcon.Play, new Point(1, 1) },
@@ -141,7 +152,7 @@ namespace Quaver.Shared.Assets
         /// <exception cref="InvalidOperationException">The icon grid is unavailable or has invalid dimensions.</exception>
         public static Texture2D Get(GlobalIcon icon)
         {
-            if (!Coordinates.TryGetValue(icon, out var coordinate))
+            if (!Coordinates.ContainsKey(icon))
                 throw new ArgumentOutOfRangeException(nameof(icon), icon, "The global icon is not mapped.");
 
             var sheet = Sheet;
@@ -152,34 +163,52 @@ namespace Quaver.Shared.Assets
             if (Textures.TryGetValue(icon, out var cachedTexture))
                 return cachedTexture;
 
-            var sourceRectangle = CreateSourceRectangle(coordinate);
-            ValidateSourceRectangle(icon, sheet, sourceRectangle);
-
-            var pixels = new Color[IconSize * IconSize];
-            sheet.GetData(0, sourceRectangle, pixels, 0, pixels.Length);
-
-            var texture = new Texture2D(GameBase.Game.GraphicsDevice, IconSize, IconSize);
-            texture.SetData(pixels);
-            Textures.Add(icon, texture);
-            return texture;
+            throw new InvalidOperationException($"The global icon {icon} was not loaded.");
         }
 
         /// <summary>
-        ///     Loads and validates the globally shared icon grid.
+        ///     Loads, validates, and crops the globally shared icon grid on the UI thread.
         /// </summary>
         internal static void Load()
         {
-            Sheet = UserInterface.IconsGrid;
+            if (Sheet != null && !Sheet.IsDisposed && Textures.Count == Coordinates.Count)
+                return;
 
-            if (Sheet.Width % ColumnStride != 0 || Sheet.Height % RowStride != 0)
+            var sheet = UserInterface.IconsGrid;
+
+            if (sheet.Width % ColumnStride != 0 || sheet.Height % RowStride != 0)
             {
                 throw new InvalidOperationException(
                     $"The global icon grid dimensions must be multiples of {ColumnStride}x{RowStride}, " +
-                    $"but were {Sheet.Width}x{Sheet.Height}.");
+                    $"but were {sheet.Width}x{sheet.Height}.");
             }
 
-            foreach (var mapping in Coordinates)
-                ValidateSourceRectangle(mapping.Key, Sheet, CreateSourceRectangle(mapping.Value));
+            try
+            {
+                foreach (var mapping in Coordinates)
+                {
+                    var sourceRectangle = CreateSourceRectangle(mapping.Value);
+                    ValidateSourceRectangle(mapping.Key, sheet, sourceRectangle);
+
+                    var pixels = new Color[IconSize * IconSize];
+                    sheet.GetData(0, sourceRectangle, pixels, 0, pixels.Length);
+
+                    var texture = new Texture2D(GameBase.Game.GraphicsDevice, IconSize, IconSize);
+                    Textures.Add(mapping.Key, texture);
+                    texture.SetData(pixels);
+                }
+
+                Sheet = sheet;
+            }
+            catch
+            {
+                foreach (var texture in Textures.Values)
+                    texture?.Dispose();
+
+                Textures.Clear();
+                Sheet = null;
+                throw;
+            }
         }
 
         /// <summary>

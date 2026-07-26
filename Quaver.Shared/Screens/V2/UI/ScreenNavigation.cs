@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -34,32 +33,12 @@ using Wobble.Window;
 
 namespace Quaver.Shared.Screens.V2.UI
 {
-    internal enum NavigationIcon
-    {
-        Volume = 0,
-        Power = 1,
-        Donate = 2,
-        Settings = 3,
-        List = 4,
-        Menu = 5,
-        Chat = 6,
-        Tools = 7,
-        Music = 8,
-        Website = 9,
-        Discord = 10,
-        GitHub = 11
-    }
-
     /// <summary>
     ///     Shared top and bottom chrome for replacement screens.
     /// </summary>
     internal sealed class ScreenNavigation : Container
     {
         public const string ElementKey = "quaver-screen-navigation";
-
-        private const int IconPitch = 39;
-        private const int IconWidth = 32;
-        private const int IconHeight = 25;
 
         private SkinStoreV2Lease Skin { get; }
 
@@ -79,8 +58,6 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private OnlineHub SubscribedOnlineHub { get; set; }
 
-        private List<Texture2D> OwnedIcons { get; } = new List<Texture2D>();
-
         private ScreenNavigation()
         {
             Skin = SkinManager.AcquireV2();
@@ -90,13 +67,13 @@ namespace Quaver.Shared.Screens.V2.UI
             TopBar = CreateBar(Alignment.TopLeft, Config.Bar);
             BottomBar = CreateBar(Alignment.BotLeft, Config.Footer);
 
-            AddIconButton(TopBar, NavigationBarRegion.Left, NavigationIcon.Music,
+            AddIconButton(TopBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Jukebox),
                 LocalizationManager.Get("Screen_Main_Menu_Jukebox"), OpenMusicPlayer,
                 TooltipAnchor.BottomCenter);
-            AddIconButton(TopBar, NavigationBarRegion.Left, NavigationIcon.Chat,
+            AddIconButton(TopBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Chat),
                 LocalizationManager.Get("Screen_Options_ToggleChatOverlay"), ToggleChat,
                 TooltipAnchor.BottomCenter);
-            AddIconButton(TopBar, NavigationBarRegion.Left, NavigationIcon.Donate,
+            AddIconButton(TopBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Heart),
                 LocalizationManager.Get("Screen_Main_Menu_Donate"), ShowDonateMessage,
                 TooltipAnchor.BottomCenter);
 
@@ -105,27 +82,27 @@ namespace Quaver.Shared.Screens.V2.UI
                 UserInterface.OfflineAvatar,
                 Config.Button.Size);
             TopBar.Add(NavigationBarRegion.Right, ProfileButton);
-            HubListIcon = LoadIcon(NavigationIcon.List);
-            HubMenuIcon = LoadIcon(NavigationIcon.Menu);
+            HubListIcon = GlobalIcons.Get(GlobalIcon.BurgerRedDot);
+            HubMenuIcon = GlobalIcons.Get(GlobalIcon.Burger);
             HubButton = AddIconButton(TopBar, NavigationBarRegion.Right, HubMenuIcon,
                 "Online Hub", ToggleOnlineHub, TooltipAnchor.BottomCenter);
 
-            AddIconButton(BottomBar, NavigationBarRegion.Left, NavigationIcon.Website,
+            AddIconButton(BottomBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Website),
                 LocalizationManager.Get("Screen_Main_Menu_Website"),
                 () => BrowserHelper.OpenURL("https://quavergame.com"), TooltipAnchor.TopCenter);
-            AddIconButton(BottomBar, NavigationBarRegion.Left, NavigationIcon.Discord,
+            AddIconButton(BottomBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Discord),
                 LocalizationManager.Get("Screen_Main_Menu_Discord"),
                 () => BrowserHelper.OpenURL("https://discord.gg/quaver", true), TooltipAnchor.TopCenter);
-            AddIconButton(BottomBar, NavigationBarRegion.Left, NavigationIcon.GitHub,
+            AddIconButton(BottomBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.GitHub),
                 LocalizationManager.Get("Screen_Main_Menu_GitHub"),
                 () => BrowserHelper.OpenURL("https://github.com/Quaver"), TooltipAnchor.TopCenter);
 
-            AddIconButton(BottomBar, NavigationBarRegion.Right, NavigationIcon.Volume,
+            AddIconButton(BottomBar, NavigationBarRegion.Right, GlobalIcons.Get(GlobalIcon.Volume),
                 LocalizationManager.Get("Screen_Options_Volume"), ShowVolume, TooltipAnchor.TopCenter);
-            AddIconButton(BottomBar, NavigationBarRegion.Right, NavigationIcon.Settings,
+            AddIconButton(BottomBar, NavigationBarRegion.Right, GlobalIcons.Get(GlobalIcon.Options),
                 LocalizationManager.Get("Screen_Main_Options"),
                 () => DialogManager.Show(new OptionsDialog()), TooltipAnchor.TopCenter);
-            AddIconButton(BottomBar, NavigationBarRegion.Right, NavigationIcon.Power,
+            AddIconButton(BottomBar, NavigationBarRegion.Right, GlobalIcons.Get(GlobalIcon.Quit),
                 LocalizationManager.Get("Screen_Main_QuitGame"),
                 () => DialogManager.Show(new QuitDialog()), TooltipAnchor.TopCenter);
 
@@ -164,10 +141,6 @@ namespace Quaver.Shared.Screens.V2.UI
 
             base.Destroy();
 
-            foreach (var icon in OwnedIcons)
-                icon?.Dispose();
-
-            OwnedIcons.Clear();
             Skin.Dispose();
         }
 
@@ -182,16 +155,12 @@ namespace Quaver.Shared.Screens.V2.UI
         };
 
         private RoundedButton AddIconButton(NavigationBar bar, NavigationBarRegion region,
-            NavigationIcon icon, string tooltip, Action action, TooltipAnchor tooltipAnchor)
-            => AddIconButton(bar, region, LoadIcon(icon), tooltip, action, tooltipAnchor);
-
-        private RoundedButton AddIconButton(NavigationBar bar, NavigationBarRegion region,
             Texture2D icon, string tooltip, Action action, TooltipAnchor tooltipAnchor)
         {
             var button = bar.AddRoundedButton(region, new NavigationBarButtonOptions
             {
                 Icon = icon,
-                IconSize = new Vector2(Config.Button.IconWidth, Config.Button.IconHeight),
+                IconSize = new Vector2(Config.Button.IconSize, Config.Button.IconSize),
                 Width = Config.Button.Size,
                 Height = Config.Button.Size,
                 CornerRadius = Config.Button.CornerRadius,
@@ -232,19 +201,6 @@ namespace Quaver.Shared.Screens.V2.UI
             var icon = SubscribedOnlineHub?.HasUnreadSections == true ? HubListIcon : HubMenuIcon;
             if (HubButton.Icon.Image != icon)
                 HubButton.Icon.Image = icon;
-        }
-
-        private Texture2D LoadIcon(NavigationIcon icon)
-        {
-            var source = TextureManager.Load("Quaver.Resources/Textures/UI/Screens/Main/icons.png");
-            var sourceRectangle = new Rectangle(0, (int) icon * IconPitch, IconWidth, IconHeight);
-            var pixels = new Color[IconWidth * IconHeight];
-            source.GetData(0, sourceRectangle, pixels, 0, pixels.Length);
-
-            var texture = new Texture2D(GameBase.Game.GraphicsDevice, IconWidth, IconHeight);
-            texture.SetData(pixels);
-            OwnedIcons.Add(texture);
-            return texture;
         }
 
         private void ResizeToWindow()
