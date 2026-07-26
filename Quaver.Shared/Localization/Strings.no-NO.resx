@@ -213,6 +213,30 @@
   <data name="Screen_Main_Published" xml:space="preserve">
     <value>Publisert {0}</value>
   </data>
+  <data name="Screen_Main_NewsLoading" xml:space="preserve">
+    <value>Loading news…</value>
+  </data>
+  <data name="Screen_Main_NewsUnavailable" xml:space="preserve">
+    <value>News is currently unavailable</value>
+  </data>
+  <data name="Screen_Main_AutoLoginFailed" xml:space="preserve">
+    <value>Failed to automatically login!</value>
+  </data>
+  <data name="Screen_Main_NoMapsLoaded" xml:space="preserve">
+    <value>You have no maps loaded. Try importing some!</value>
+  </data>
+  <data name="Screen_Main_NotImplemented" xml:space="preserve">
+    <value>Not implemented yet!</value>
+  </data>
+  <data name="Screen_Main_MultiplayerLoginRequired" xml:space="preserve">
+    <value>You must be logged in to play multiplayer.</value>
+  </data>
+  <data name="Screen_Main_EditorMapRequired" xml:space="preserve">
+    <value>You cannot edit without a map selected.</value>
+  </data>
+  <data name="Screen_Main_MapReadFailed" xml:space="preserve">
+    <value>Unable to read map file!</value>
+  </data>
   <data name="Screen_Selection_All" xml:space="preserve">
     <value>Alle</value>
   </data>
@@ -1525,7 +1549,7 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
     <value>Rangerte Antall Avspillinger</value>
   </data>
   <data name="Screen_Download_MaxPlays" xml:space="preserve">
-    <value>Maks spilleforsøk</value>
+    <value>Maks Spilleforsøk</value>
   </data>
   <data name="Screen_Download_MinPlays" xml:space="preserve">
     <value>Min spilleforsøk</value>
@@ -2197,7 +2221,7 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
     <value>Resnapp valgte notater</value>
   </data>
   <data name="Screen_Editor_ApplyModifierToMap" xml:space="preserve">
-    <value>Bruk modifikatorer på map</value>
+    <value>Sett modifikatorer på map</value>
   </data>
   <data name="Screen_Editor_Mirror" xml:space="preserve">
     <value>Speil</value>
@@ -2461,10 +2485,10 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
     <value>Legg til et bokmerke-notat...</value>
   </data>
   <data name="Screen_Editor_CreateNewMapset" xml:space="preserve">
-    <value>OPPRETT NY MAPSET</value>
+    <value>OPPRETT NY MAPSETT</value>
   </data>
   <data name="Screen_Editor_CreateNewMapsetMessage" xml:space="preserve">
-    <value>For å opprette et nytt mapset, dra en .mp3 fil inn i spillvinduet...</value>
+    <value>For å opprette et nytt mapsett, dra en .mp3 fil inn i spillvinduet...</value>
   </data>
   <data name="Screen_Editor_DetectedManualFileChanges" xml:space="preserve">
     <value>MANUELL FILENDRINGER OPPDAGET</value>
@@ -2569,7 +2593,7 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
     <value>Denne mapsetten tilhører ikke deg! Brukernavnene til skaperene på hvert map samsvarer ikke med din.</value>
   </data>
   <data name="Screen_Editor_ApplyModifier" xml:space="preserve">
-    <value>BRUK MODIFIKATOR</value>
+    <value>SETT MODIFIKATOR</value>
   </data>
   <data name="Screen_Editor_ApplyModifierConfirmation" xml:space="preserve">
     <value>Ønsker du å bruke modifikatoren: "{0}" på din map?&#xA;&#xA;Denne handlingen er IKKE reversibel! Velg smart.</value>
@@ -2761,7 +2785,7 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
     <value>Den bufrede dataen for denne filen vil bli oppdatert når du forlater editoren.</value>
   </data>
   <data name="Screen_Editor_NoHitObjectsPastThisPoint" xml:space="preserve">
-    <value>Det er ingen objekter til å spille forbi dette punktet!</value>
+    <value>Det er ingen treff-objekter til å spille forbi dette punktet!</value>
   </data>
   <data name="Screen_Editor_TimingPointRequiredForTestPlay" xml:space="preserve">
     <value>Et tidspunkt må legges til mappen før du prøvespiller!</value>
