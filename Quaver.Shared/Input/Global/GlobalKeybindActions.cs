@@ -20,7 +20,6 @@ public enum GlobalKeybindActions : ulong
     IncreaseScrollSpeed,
     IncreaseOffset,
     GameplayPause,
-    GameplayPauseUp,
     GameplayToggleScoreboard,
     GameplayToggleOverlay,
     GameplayRetry,
@@ -62,5 +61,4 @@ public enum GlobalKeybindActions : ulong
     ResetVisualOffset = ResetOffset | Visual,
     NavigateDown = NavigateUp | Reverse,
     NavigateLeft = NavigateRight | Reverse,
-    GameplayPauseDown = GameplayPauseUp | Reverse,
 }

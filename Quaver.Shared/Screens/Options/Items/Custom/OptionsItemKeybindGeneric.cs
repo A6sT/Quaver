@@ -149,9 +149,6 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
 
             if (string.IsNullOrWhiteSpace(Text.Text))
                 Text.Text = "None";
-            Logger.Debug(
-                $"{Action}: {string.Join(", ", GlobalInputConfig.CalculateConflictingActions().Select(x => x.ToString()))}",
-                LogType.Runtime);
             // Obvious room for performance improvement, but really not needed
             Text.Tint = GlobalInputConfig.CalculateConflictingActions().Contains(Action)
                 ? Color.Crimson
