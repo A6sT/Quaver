@@ -73,7 +73,7 @@
     <value>中国語（繁体字）</value>
   </data>
   <data name="Notification_LanguageChangeRequiresScreenChange" xml:space="preserve">
-    <value>Change screens to update the language.</value>
+    <value>設定を閉じると言語が更新されます</value>
   </data>
   <data name="Chat_SendAMessage" xml:space="preserve">
     <value>メッセージを入力...</value>
@@ -212,6 +212,30 @@
   </data>
   <data name="Screen_Main_Published" xml:space="preserve">
     <value>{0} が公開済み</value>
+  </data>
+  <data name="Screen_Main_NewsLoading" xml:space="preserve">
+    <value>Loading news…</value>
+  </data>
+  <data name="Screen_Main_NewsUnavailable" xml:space="preserve">
+    <value>News is currently unavailable</value>
+  </data>
+  <data name="Screen_Main_AutoLoginFailed" xml:space="preserve">
+    <value>Failed to automatically login!</value>
+  </data>
+  <data name="Screen_Main_NoMapsLoaded" xml:space="preserve">
+    <value>You have no maps loaded. Try importing some!</value>
+  </data>
+  <data name="Screen_Main_NotImplemented" xml:space="preserve">
+    <value>Not implemented yet!</value>
+  </data>
+  <data name="Screen_Main_MultiplayerLoginRequired" xml:space="preserve">
+    <value>You must be logged in to play multiplayer.</value>
+  </data>
+  <data name="Screen_Main_EditorMapRequired" xml:space="preserve">
+    <value>You cannot edit without a map selected.</value>
+  </data>
+  <data name="Screen_Main_MapReadFailed" xml:space="preserve">
+    <value>Unable to read map file!</value>
   </data>
   <data name="Screen_Selection_All" xml:space="preserve">
     <value>All</value>
@@ -373,7 +397,7 @@
     <value>Preview is disabled in this game!</value>
   </data>
   <data name="Screen_Selection_Profile" xml:space="preserve">
-    <value>プロファイル</value>
+    <value>プロフィール</value>
   </data>
   <data name="Screen_Selection_Random" xml:space="preserve">
     <value>ランダム</value>
@@ -418,22 +442,22 @@
     <value>This map is not submitted online!</value>
   </data>
   <data name="Screen_Selection_TimesPlayed" xml:space="preserve">
-    <value>Times Played</value>
+    <value>プレイ回数</value>
   </data>
   <data name="Screen_Selection_Title" xml:space="preserve">
     <value>タイトル</value>
   </data>
   <data name="Screen_Selection_TotalHits" xml:space="preserve">
-    <value>Total Hits</value>
+    <value>ヒット回数</value>
   </data>
   <data name="Screen_Selection_TotalPauses" xml:space="preserve">
-    <value>Total Pauses</value>
+    <value>一時停止回数</value>
   </data>
   <data name="Screen_Selection_TotalScore" xml:space="preserve">
-    <value>Total Score</value>
+    <value>合計スコア</value>
   </data>
   <data name="Screen_Selection_ViewMap" xml:space="preserve">
-    <value>View Map</value>
+    <value>譜面表示</value>
   </data>
   <data name="Screen_Selection_Youmustbeadonatortoaccessthisleaderboard" xml:space="preserve">
     <value>You must be a donator to access this leaderboard!</value>
