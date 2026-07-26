@@ -1261,7 +1261,9 @@ namespace Quaver.Shared
                 if (ConfigManager.AudioOutputDevice.Value != Bass.GetDeviceInfo(i).Name)
                     continue;
 
-                AudioManager.Initialize(ConfigManager.DevicePeriod.Value, ConfigManager.DeviceBufferLengthMultiplier.Value, i);
+                var deviceBufferLength =
+                    ConfigManager.DevicePeriod.Value * ConfigManager.DeviceBufferLengthMultiplier.Value;
+                AudioManager.Initialize(ConfigManager.DevicePeriod.Value, deviceBufferLength, i);
                 break;
             }
 
