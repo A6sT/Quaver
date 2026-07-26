@@ -18,7 +18,7 @@ public enum GlobalKeybindActions : ulong
     TogglePitch                      = 9  | LayerExceptGameplay,
     RemoveMods                       = 10 | LayerExceptGameplay,
     ToggleMirror                     = 11 | LayerExceptGameplay,
-    IncreaseScrollSpeed              = 12 | LayerGlobal,
+    IncreaseScrollSpeed              = 12 | LayerGameplay,
     IncreaseOffset                   = 13 | LayerGlobal,
     GameplayPause                    = 14 | LayerGameplay,
     GameplayToggleScoreboard         = 15 | LayerGameplay,
@@ -80,8 +80,8 @@ public enum GlobalKeybindActions : ulong
 
 public static class GlobalKeybindActionsExtensions
 {
-    public static GlobalKeybindActions Base(this GlobalKeybindActions value) =>
-        value & GlobalKeybindActions.BaseActionMask;
+    public static GlobalKeybindActions BaseWithLayer(this GlobalKeybindActions value) =>
+        value & (GlobalKeybindActions.BaseActionMask | GlobalKeybindActions.LayerMask);
 
     public static GlobalKeybindActions Layer(this GlobalKeybindActions value) =>
         value & GlobalKeybindActions.LayerMask;

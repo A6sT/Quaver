@@ -80,7 +80,7 @@ namespace Quaver.Shared.Input.Global
                          where (action1.Layer() & action2.Layer()) != 0 && action1 != action2
                          select (action1, action2))
                 {
-                    Logger.Error($"{keybind} has both {action1} and {action2} in layer {action1.Layer() | action2.Layer()}", LogType.Runtime);
+                    Logger.Error($"{keybind} has both {action1} and {action2} in layer {action1.Layer() & action2.Layer()}", LogType.Runtime);
                     conflicts.Add(action1);
                 }
             }

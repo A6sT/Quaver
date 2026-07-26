@@ -436,7 +436,7 @@ namespace Quaver.Shared.Screens.Selection
             if (Exiting || DialogManager.Dialogs.Count != 0 || !isKeyPress || isRelease)
                 return GlobalInputHandleResult.Pass;
 
-            switch (action & GlobalKeybindActions.BaseActionMask)
+            switch (action.BaseWithLayer())
             {
                 case GlobalKeybindActions.Back:
                     HandleBackAction();

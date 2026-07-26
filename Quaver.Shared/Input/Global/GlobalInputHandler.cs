@@ -8,6 +8,7 @@ using Quaver.Shared.Scheduling;
 using Quaver.Shared.Screens.Gameplay;
 using Wobble.Bindables;
 using Wobble.Input;
+using Wobble.Logging;
 
 namespace Quaver.Shared.Input.Global;
 
@@ -46,13 +47,14 @@ public class GlobalInputHandler : IInputHandler<GlobalKeybindActions>
         bool isRelease = false)
     {
         var scopes = GlobalInputManager.ScopeTokens.AsEnumerable().Reverse().ToList();
+        var consumed = false;
         foreach (var scope in scopes)
         {
-            var shouldBreak = false;
             switch (scope.Handle(action, isKeyPress, isRelease))
             {
                 case GlobalInputHandleResult.Consumed:
-                    shouldBreak = true;
+                    Logger.Debug($"Action {action} is consumed by {scope.GetType().FullName}", LogType.Runtime);
+                    consumed = true;
                     break;
                 case GlobalInputHandleResult.Pass:
                     break;
@@ -60,8 +62,13 @@ public class GlobalInputHandler : IInputHandler<GlobalKeybindActions>
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (shouldBreak)
+            if (consumed)
                 break;
+        }
+
+        if (!consumed)
+        {
+            Logger.Debug($"Action {action} is not consumed by any scope", LogType.Runtime);
         }
     }
 
@@ -99,7 +106,7 @@ public class GlobalInputHandler : IInputHandler<GlobalKeybindActions>
         if (action.HasFlag(GlobalKeybindActions.Reverse))
             change *= -1;
                 
-        if ((action & GlobalKeybindActions.BaseActionMask) == GlobalKeybindActions.ResetOffset)
+        if ((action.BaseWithLayer()) == GlobalKeybindActions.ResetOffset)
         {
             if (action.HasFlag(GlobalKeybindActions.Visual))
             {
@@ -117,7 +124,7 @@ public class GlobalInputHandler : IInputHandler<GlobalKeybindActions>
             }
         }
 
-        if ((action & GlobalKeybindActions.BaseActionMask) == GlobalKeybindActions.IncreaseOffset)
+        if ((action.BaseWithLayer()) == GlobalKeybindActions.IncreaseOffset)
         {
             if (action.HasFlag(GlobalKeybindActions.Visual))
             {

@@ -280,7 +280,7 @@ namespace Quaver.Shared.Screens.Multi
             if (Exiting || DialogManager.Dialogs.Count != 0 || !isKeyPress || isRelease)
                 return GlobalInputHandleResult.Pass;
 
-            if ((action & GlobalKeybindActions.BaseActionMask) is GlobalKeybindActions.IncreaseRate &&
+            if ((action.BaseWithLayer()) is GlobalKeybindActions.IncreaseRate &&
                 (Game.Value.HostId == OnlineManager.Self?.OnlineUser?.Id || Game.Value.FreeModType.HasFlag(MultiplayerFreeModType.Rate)))
             {
                 ModManager.AddSpeedMods(SelectionScreen.GetNextRate(
@@ -301,7 +301,7 @@ namespace Quaver.Shared.Screens.Multi
                 return GlobalInputHandleResult.Consumed;
             }
 
-            if ((action & GlobalKeybindActions.BaseActionMask) == GlobalKeybindActions.IncreaseOffset &&
+            if ((action.BaseWithLayer()) == GlobalKeybindActions.IncreaseOffset &&
                 MapManager.Selected.Value != null)
             {
                 GlobalInputHandler.HandleOffsetAction(action);

@@ -624,6 +624,15 @@ namespace Quaver.Shared.Screens.Gameplay
             if (Exiting)
                 return GlobalInputHandleResult.Pass;
 
+            if (action.BaseWithLayer() is GlobalKeybindActions.GameplayTogglePlaytestAutoplay && !IsPlayComplete && !IsCalibratingOffset)
+            {
+                HandleTogglePlaytestAutoplay();
+                return GlobalInputHandleResult.Consumed;
+            }
+
+            if (IsSongSelectPreview)
+                return GlobalInputHandleResult.Pass;
+
             if (isRelease)
             {
                 if (action == GlobalKeybindActions.GameplayPause)
@@ -650,7 +659,7 @@ namespace Quaver.Shared.Screens.Gameplay
             if (HandlePauseMenuGlobalInput(action))
                 return GlobalInputHandleResult.Consumed;
 
-            switch (action & GlobalKeybindActions.BaseActionMask)
+            switch (action.BaseWithLayer())
             {
                 case GlobalKeybindActions.GameplayPause:
                     HandleGameplayPausePress();
@@ -685,13 +694,6 @@ namespace Quaver.Shared.Screens.Gameplay
                     if (!IsPlayComplete && !IsCalibratingOffset)
                     {
                         SkipToNextObject();
-                        return GlobalInputHandleResult.Consumed;
-                    }
-                    break;
-                case GlobalKeybindActions.GameplayTogglePlaytestAutoplay:
-                    if (!IsPlayComplete && !IsCalibratingOffset)
-                    {
-                        HandleTogglePlaytestAutoplay();
                         return GlobalInputHandleResult.Consumed;
                     }
                     break;
@@ -753,8 +755,6 @@ namespace Quaver.Shared.Screens.Gameplay
 
         private void HandleGameplayPausePress()
         {
-            if (OnlineManager.CurrentGame != null || Failed || IsPlayComplete || IsSongSelectPreview)
-                return;
 
             if (IsPlayTesting)
             {
