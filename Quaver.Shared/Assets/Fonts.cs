@@ -32,6 +32,7 @@ namespace Quaver.Shared.Assets
         #region NEW_FONTS
 
         public static string InterRegular { get; } = "Inter-Regular";
+        public static string InterMedium { get; } = "Inter-Medium";
         public static string InterSemiBold { get; } = "Inter-Semibold";
         public static string InterBold { get; } = "Inter-Bold";
         public static string InterLight { get; } = "Inter-Light";
@@ -80,6 +81,7 @@ namespace Quaver.Shared.Assets
             }
 
             CacheInterFont(InterRegular, FontWeight.Regular);
+            CacheInterFont(InterMedium, FontWeight.Medium);
             CacheInterFont(InterSemiBold, FontWeight.SemiBold);
             CacheInterFont(InterBold, FontWeight.Bold);
             CacheInterFont(InterLight, FontWeight.Light);
@@ -90,6 +92,7 @@ namespace Quaver.Shared.Assets
             {
                 { FontWeight.Regular, FontManager.GetWobbleFont(InterRegular) },
                 { FontWeight.Light, FontManager.GetWobbleFont(InterLight) },
+                { FontWeight.Medium, FontManager.GetWobbleFont(InterMedium) },
                 { FontWeight.SemiBold, FontManager.GetWobbleFont(InterSemiBold) },
                 { FontWeight.Bold, FontManager.GetWobbleFont(InterBold) },
                 { FontWeight.ExtraBold, FontManager.GetWobbleFont(InterHeavy) },
@@ -112,6 +115,7 @@ namespace Quaver.Shared.Assets
             var fallbacks = CreateFallbacks(cultureName);
 
             ReloadInterFont(InterRegular, FontWeight.Regular, interFont, fallbacks);
+            ReloadInterFont(InterMedium, FontWeight.Medium, interFont, fallbacks);
             ReloadInterFont(InterSemiBold, FontWeight.SemiBold, interFont, fallbacks);
             ReloadInterFont(InterBold, FontWeight.Bold, interFont, fallbacks);
             ReloadInterFont(InterLight, FontWeight.Light, interFont, fallbacks);

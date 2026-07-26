@@ -957,7 +957,7 @@ namespace Quaver.Shared.Screens.Gameplay
                     if (!HasStarted)
                         AudioEngine.Track?.Dispose();
 
-                    Exit(() => new SelectionScreen());
+                    Exit(() => QuaverScreenFactory.CreateSelection());
 
                     return;
                 }
@@ -1068,7 +1068,7 @@ namespace Quaver.Shared.Screens.Gameplay
                         Exit(() =>
                         {
                             OnlineManager.LeaveGame();
-                            return new MultiplayerLobbyScreen();
+                            return QuaverScreenFactory.CreateMultiplayerLobby();
                         });
 
                         return;

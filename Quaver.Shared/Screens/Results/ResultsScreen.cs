@@ -290,7 +290,7 @@ namespace Quaver.Shared.Screens.Results
             if (OnlineManager.CurrentGame != null)
                 Exit(() => new MultiplayerGameScreen());
             else
-                Exit(() => new SelectionScreen());
+                Exit(() => QuaverScreenFactory.CreateSelection());
         }
 
         /// <summary>
