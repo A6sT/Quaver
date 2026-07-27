@@ -196,7 +196,13 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
         public bool HasInvalidInput { get; set; }
 
-        public bool IsDirty => initialSerialized != Serializer.Serialize(Working);
+        public string StagedWorkshopPreviewPath { get; set; }
+
+        public bool HasStagedWorkshopPreview =>
+            !string.IsNullOrWhiteSpace(StagedWorkshopPreviewPath);
+
+        public bool IsDirty => HasStagedWorkshopPreview ||
+                               initialSerialized != Serializer.Serialize(Working);
 
         public SkinEditorSession(SkinStoreV2 store)
         {
@@ -217,6 +223,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 .Build();
             Working = deserializer.Deserialize<SkinV2Config>(initialSerialized);
             FocusedAssetProperty = null;
+            StagedWorkshopPreviewPath = null;
             HasInvalidInput = false;
         }
 
@@ -227,6 +234,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 .WithNamingConvention(new PascalCaseNamingConvention())
                 .Build();
             Initial = deserializer.Deserialize<SkinV2Config>(initialSerialized);
+            StagedWorkshopPreviewPath = null;
         }
     }
 }

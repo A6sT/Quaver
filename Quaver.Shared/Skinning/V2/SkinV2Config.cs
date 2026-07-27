@@ -15,11 +15,30 @@ namespace Quaver.Shared.Skinning.V2
         [Range(2, 2)]
         public int FormatVersion { get; set; } = 2;
 
+        [ConfigRequired]
+        [Required]
+        public SkinV2MetadataConfig Metadata { get; set; } = new SkinV2MetadataConfig();
+
         [Required]
         public SkinV2SharedConfig Shared { get; set; } = new SkinV2SharedConfig();
 
         [Required]
         public SkinV2ScreensConfig Screens { get; set; } = new SkinV2ScreensConfig();
+    }
+
+    public sealed class SkinV2MetadataConfig
+    {
+        [ConfigRequired]
+        [Required]
+        public string Name { get; set; } = "Default Quaver Skin";
+
+        [ConfigRequired]
+        [Required]
+        public string Author { get; set; } = "Quaver Team";
+
+        [ConfigRequired]
+        [Required]
+        public string Version { get; set; } = "v0.1";
     }
 
     public sealed class SkinV2SharedConfig

@@ -17,5 +17,8 @@ namespace Quaver.Shared.Skinning.V2
                 : byte.MaxValue;
             return new Color(red, green, blue, alpha);
         }
+
+        public static string ToHexAlpha(Color color) =>
+            $"#{color.R:X2}{color.G:X2}{color.B:X2}{color.A:X2}";
     }
 }

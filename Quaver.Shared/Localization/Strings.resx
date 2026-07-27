@@ -2607,4 +2607,17 @@ for other players to download?</value>
   <data name="SkinEditor_Property_BackgroundColor" xml:space="preserve"><value>Background Color</value></data>
   <data name="SkinEditor_Property_ForegroundColor" xml:space="preserve"><value>Foreground Color</value></data>
   <data name="SkinEditor_Property_OfflineStatusColor" xml:space="preserve"><value>Offline Status Color</value></data>
+  <data name="SkinEditor_Metadata" xml:space="preserve"><value>Metadata</value></data>
+  <data name="SkinEditor_MetadataTitle" xml:space="preserve"><value>Edit Skin Metadata</value></data>
+  <data name="SkinEditor_MetadataName" xml:space="preserve"><value>Skin Name</value></data>
+  <data name="SkinEditor_MetadataAuthor" xml:space="preserve"><value>Author</value></data>
+  <data name="SkinEditor_MetadataVersion" xml:space="preserve"><value>Version</value></data>
+  <data name="SkinEditor_MetadataApply" xml:space="preserve"><value>Apply</value></data>
+  <data name="SkinEditor_MetadataRequired" xml:space="preserve"><value>Name, author, and version are required.</value></data>
+  <data name="SkinEditor_PreviewDrop" xml:space="preserve"><value>Drop an image here for the Workshop preview</value></data>
+  <data name="SkinEditor_PreviewDropHint" xml:space="preserve"><value>PNG, JPG, or JPEG; saved as steam_workshop_preview.png</value></data>
+  <data name="SkinEditor_PreviewInvalid" xml:space="preserve"><value>Choose a valid PNG, JPG, or JPEG image.</value></data>
+  <data name="SkinEditor_PreviewFileMissing" xml:space="preserve"><value>The selected preview image no longer exists.</value></data>
+  <data name="SkinEditor_PreviewTooLarge" xml:space="preserve"><value>The converted Workshop preview must be smaller than 1 MB.</value></data>
+  <data name="SkinEditor_PreviewSaveFailed" xml:space="preserve"><value>Could not save the Workshop preview: {0}</value></data>
 </root>

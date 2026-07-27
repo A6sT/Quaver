@@ -7,6 +7,7 @@ using Quaver.Shared.Graphics.Notifications;
 using Quaver.Shared.Skinning;
 using Quaver.Shared.Skinning.V2;
 using Wobble;
+using Wobble.Assets;
 using Wobble.Graphics.UI.Dialogs;
 using Wobble.Managers;
 
@@ -45,8 +46,8 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 session = new SkinEditorSession(SkinManager.SkinV2);
                 fingerprint = SkinEditorFileFingerprint.Capture(SkinManager.SkinV2.ConfigPath);
                 host.SetSkinEditorLayout(true, LeftPanelWidth, RightPanelWidth, AssetPanelHeight);
-                overlay = new SkinEditorOverlay(host, session, Save, RequestClose, CopyWorkshopSkin,
-                    ConfigManager.UseSteamWorkshopSkin.Value)
+                overlay = new SkinEditorOverlay(host, session, Save, RequestClose, EditMetadata,
+                    CopyWorkshopSkin, ConfigManager.UseSteamWorkshopSkin.Value)
                 {
                     Parent = host.EditorRoot
                 };
@@ -132,10 +133,34 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
         private bool SaveIgnoringConflict()
         {
+            string preparedPreview = null;
+            if (session.HasStagedWorkshopPreview &&
+                !TryPrepareWorkshopPreview(session.StagedWorkshopPreviewPath, out preparedPreview))
+                return false;
+
             if (!SkinManager.TryPublishV2Config(session.Working, out var errors))
             {
+                DeletePreparedPreview(preparedPreview);
                 ShowErrors(errors);
                 return false;
+            }
+
+            if (preparedPreview != null)
+            {
+                try
+                {
+                    var destination = Path.Combine(SkinManager.SkinV2.RootDirectory,
+                        "steam_workshop_preview.png");
+                    File.Move(preparedPreview, destination, true);
+                }
+                catch (Exception e)
+                {
+                    DeletePreparedPreview(preparedPreview);
+                    fingerprint = SkinEditorFileFingerprint.Capture(SkinManager.SkinV2.ConfigPath);
+                    NotificationManager.Show(NotificationLevel.Error,
+                        LocalizationManager.Get("SkinEditor_PreviewSaveFailed", e.Message));
+                    return false;
+                }
             }
 
             session.AcceptWorkingAsBaseline();
@@ -144,6 +169,74 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             NotificationManager.Show(NotificationLevel.Success,
                 LocalizationManager.Get("SkinEditor_SaveSuccess"));
             return true;
+        }
+
+        private void EditMetadata()
+        {
+            if (!IsOpen || ConfigManager.UseSteamWorkshopSkin.Value)
+                return;
+
+            var currentPreview = session.HasStagedWorkshopPreview
+                ? session.StagedWorkshopPreviewPath
+                : Path.Combine(SkinManager.SkinV2.RootDirectory, "steam_workshop_preview.png");
+            DialogManager.Show(new SkinEditorMetadataDialog(session.Working.Metadata,
+                currentPreview, (name, author, version, previewPath) =>
+                {
+                    session.Working.Metadata.Name = name;
+                    session.Working.Metadata.Author = author;
+                    session.Working.Metadata.Version = version;
+                    if (!string.IsNullOrWhiteSpace(previewPath))
+                        session.StagedWorkshopPreviewPath = previewPath;
+                    overlay?.RefreshSaveState();
+                }));
+        }
+
+        private static bool TryPrepareWorkshopPreview(string sourcePath, out string preparedPath)
+        {
+            preparedPath = null;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(sourcePath) || !File.Exists(sourcePath))
+                    throw new FileNotFoundException(LocalizationManager.Get(
+                        "SkinEditor_PreviewFileMissing"));
+
+                preparedPath = Path.Combine(SkinManager.SkinV2.RootDirectory,
+                    ".skin-editor-preview-" + Guid.NewGuid().ToString("N") + ".png");
+                using (var texture = AssetLoader.LoadTexture2DFromFile(sourcePath))
+                using (var stream = File.Create(preparedPath))
+                    texture.SaveAsPng(stream, texture.Width, texture.Height);
+
+                const long maximumWorkshopPreviewBytes = 1024 * 1024;
+                if (new FileInfo(preparedPath).Length >= maximumWorkshopPreviewBytes)
+                    throw new InvalidDataException(LocalizationManager.Get(
+                        "SkinEditor_PreviewTooLarge"));
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                DeletePreparedPreview(preparedPath);
+                preparedPath = null;
+                NotificationManager.Show(NotificationLevel.Error,
+                    LocalizationManager.Get("SkinEditor_PreviewSaveFailed", e.Message));
+                return false;
+            }
+        }
+
+        private static void DeletePreparedPreview(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+                return;
+
+            try
+            {
+                if (File.Exists(path))
+                    File.Delete(path);
+            }
+            catch
+            {
+                // A failed cleanup should not hide the original save error.
+            }
         }
 
         private void ReloadFromDisk()

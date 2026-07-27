@@ -47,6 +47,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         private readonly SkinEditorSession session;
         private readonly Func<bool> save;
         private readonly Action close;
+        private readonly Action editMetadata;
         private readonly Action copyWorkshop;
         private readonly bool readOnly;
         private readonly SkinStoreV2Lease skin;
@@ -57,6 +58,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             new Dictionary<RoundedButton, Drawable>();
         private readonly Queue<SkinEditorAssetButton> thumbnailLoadQueue =
             new Queue<SkinEditorAssetButton>();
+        private readonly SkinEditorColorPicker colorPicker = new SkinEditorColorPicker();
 
         private Sprite leftPanel;
         private Sprite rightPanel;
@@ -88,14 +90,16 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         private float lastHeight = -1;
         private float inspectorOffset;
         private bool previewPending;
+        private bool? clickabilityBeforeColorPicker;
 
         public SkinEditorOverlay(ISkinV2EditorHost host, SkinEditorSession session,
-            Func<bool> save, Action close, Action copyWorkshop, bool readOnly)
+            Func<bool> save, Action close, Action editMetadata, Action copyWorkshop, bool readOnly)
         {
             this.host = host;
             this.session = session;
             this.save = save;
             this.close = close;
+            this.editMetadata = editMetadata;
             this.copyWorkshop = copyWorkshop;
             this.readOnly = readOnly;
             skin = SkinManager.AcquireV2();
@@ -108,6 +112,8 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
         public override void Update(GameTime gameTime)
         {
+            UpdateColorPickerInputCapture();
+            colorPicker.Update(gameTime);
             CompleteAssetRefresh();
             Resize();
             BuildNextAssetButtons();
@@ -133,6 +139,12 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             LoadNextAssetThumbnail();
         }
 
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+            colorPicker.Draw(gameTime);
+        }
+
         public override void Destroy()
         {
             assetScanCancellation?.Cancel();
@@ -140,8 +152,40 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             assetScanCancellation = null;
             assetScanTask = null;
             thumbnailLoadQueue.Clear();
+            RestoreButtonClickability();
+            colorPicker.Destroy();
             skin.Dispose();
             base.Destroy();
+        }
+
+        private void UpdateColorPickerInputCapture()
+        {
+            if (colorPicker.IsOpen)
+            {
+                CaptureButtonClickability();
+                return;
+            }
+
+            RestoreButtonClickability();
+        }
+
+        private void CaptureButtonClickability()
+        {
+            if (!clickabilityBeforeColorPicker.HasValue)
+                clickabilityBeforeColorPicker =
+                    Wobble.Graphics.UI.Buttons.Button.IsGloballyClickable;
+
+            Wobble.Graphics.UI.Buttons.Button.IsGloballyClickable = false;
+        }
+
+        private void RestoreButtonClickability()
+        {
+            if (!clickabilityBeforeColorPicker.HasValue)
+                return;
+
+            Wobble.Graphics.UI.Buttons.Button.IsGloballyClickable =
+                clickabilityBeforeColorPicker.Value;
+            clickabilityBeforeColorPicker = null;
         }
 
         public void RefreshSaveState()
@@ -183,6 +227,13 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     18, 88, SkinEditorController.RightPanelWidth - 36, 36,
                     copyWorkshop, AccentColor);
             }
+
+            var metadataButton = CreateButton(rightPanel,
+                LocalizationManager.Get("SkinEditor_Metadata"), 18, readOnly ? 136 : 60,
+                SkinEditorController.RightPanelWidth - 36, 36, editMetadata, AccentColor);
+            metadataButton.IsClickable = !readOnly;
+            metadataButton.PerformHoverFade = !readOnly;
+            metadataButton.Alpha = readOnly ? 0.45f : 1;
 
             BuildTargetList();
             BuildAssetBrowser();
@@ -264,9 +315,10 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
         private void BuildInspector()
         {
+            colorPicker.Close();
             inspectorRoot.Destroy();
             inspectorRoot = new Container { Parent = rightPanel };
-            var top = readOnly ? 136 : 60;
+            var top = readOnly ? 184 : 108;
             var viewportHeight = Math.Max(1,
                 WindowManager.Height - SkinEditorController.AssetPanelHeight - top - 12);
             inspectorDrawables.Clear();
@@ -466,7 +518,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 : Convert.ToString(value, CultureInfo.InvariantCulture) ?? string.Empty;
             if (invalidPaths.Contains(property.Path))
                 errorText.Text = LocalizeValidationError(property);
-            Sprite swatch = null;
+            RoundedButton swatch = null;
             var fieldWidth = property.IsAssetPath
                 ? SkinEditorController.RightPanelWidth - 190
                 : SkinEditorController.RightPanelWidth - 92;
@@ -478,7 +530,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 {
                     CommitText(property, text, errorText);
                     if (swatch != null && !invalidPaths.Contains(property.Path))
-                        swatch.Tint = SkinV2Color.Parse(text);
+                        SetColorSwatchValue(swatch, SkinV2Color.Parse(text));
                 })
             {
                 Parent = inspectorContent,
@@ -499,14 +551,15 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
             if (property.IsColor)
             {
-                swatch = new Sprite
-                {
-                    Parent = textbox,
-                    Alignment = Alignment.MidRight,
-                    X = -8,
-                    Size = new ScalableVector2(22, 22),
-                    Tint = SkinV2Color.Parse(Convert.ToString(value, CultureInfo.InvariantCulture))
-                };
+                swatch = CreateColorSwatch(textbox,
+                    SkinV2Color.Parse(Convert.ToString(value, CultureInfo.InvariantCulture)),
+                    picked =>
+                    {
+                        textbox.SetAppliedText(picked);
+                        CommitText(property, picked, errorText);
+                        if (!invalidPaths.Contains(property.Path))
+                            SetColorSwatchValue(swatch, SkinV2Color.Parse(picked));
+                    });
             }
 
             if (property.IsAssetPath)
@@ -589,6 +642,15 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 color.Button.IsInteractionEnabled = !readOnly;
                 inspectorDrawables.Add(color);
 
+                var colorSwatch = CreateColorSwatch(color, SkinV2Color.Parse(stop.Color), picked =>
+                {
+                    color.SetAppliedText(picked);
+                    var edited = CurrentStops(property);
+                    edited[index].Color = picked;
+                    CommitGradientValue(property, edited, colorPath, picked, gradientError);
+                });
+                colorSwatch.IsClickable = !readOnly;
+
                 var remove = CreateInspectorButton("−", y, () =>
                 {
                     var edited = CurrentStops(property);
@@ -627,6 +689,44 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         private static List<SkinV2GradientStopConfig> CloneStops(
             IEnumerable<SkinV2GradientStopConfig> stops) =>
             stops.Select(x => new SkinV2GradientStopConfig(x.Position, x.Color)).ToList();
+
+        private RoundedButton CreateColorSwatch(Drawable parent, Color value, Action<string> changed)
+        {
+            RoundedButton swatch = null;
+            swatch = new RoundedButton((sender, args) =>
+            {
+                CaptureButtonClickability();
+                colorPicker.Open(swatch.Tint, picked =>
+                {
+                    SetColorSwatchValue(swatch, SkinV2Color.Parse(picked));
+                    changed(picked);
+                });
+            })
+            {
+                Parent = parent,
+                Alignment = Alignment.MidRight,
+                X = -8,
+                Size = new ScalableVector2(22, 22),
+                Tint = value,
+                CornerRadius = 4,
+                IsClickable = !readOnly
+            };
+            swatch.SetIcon(GlobalIcons.Get(GlobalIcon.Edit), new Vector2(14, 14));
+            SetColorSwatchValue(swatch, value);
+            return swatch;
+        }
+
+        private static void SetColorSwatchValue(RoundedButton swatch, Color value)
+        {
+            swatch.Tint = value;
+
+            var alpha = value.A / 255f;
+            var red = value.R * alpha + FieldColor.R * (1 - alpha);
+            var green = value.G * alpha + FieldColor.G * (1 - alpha);
+            var blue = value.B * alpha + FieldColor.B * (1 - alpha);
+            var luminance = red * 0.2126f + green * 0.7152f + blue * 0.0722f;
+            swatch.Icon.Tint = luminance >= 150 ? Color.Black : Color.White;
+        }
 
         private List<SkinV2GradientStopConfig> CurrentStops(SkinEditorProperty property) =>
             CloneStops((IEnumerable<SkinV2GradientStopConfig>) property.GetValue(session.Working));
@@ -1140,6 +1240,14 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 lastObservedText = RawText;
                 lastAppliedText = RawText;
                 AllowSubmission = false;
+            }
+
+            public void SetAppliedText(string text)
+            {
+                RawText = text;
+                lastObservedText = text;
+                lastAppliedText = text;
+                timeSinceChange = 0;
             }
 
             public override void Update(GameTime gameTime)
