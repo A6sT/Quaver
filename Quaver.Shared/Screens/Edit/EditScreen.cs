@@ -1550,6 +1550,19 @@ namespace Quaver.Shared.Screens.Edit
         /// </summary>
         public void RefreshEditorFromQuaFile()
         {
+            if (ActionManager.HasUnsavedChanges)
+            {
+                DialogManager.Show(new YesNoDialog(
+                    LocalizationManager.Get("Screen_Editor_UnsavedChanges"),
+                    LocalizationManager.Get("Screen_Editor_RefreshFromQuaUnsavedWarning"), ReloadEditorFromQuaFile));
+                return;
+            }
+
+            ReloadEditorFromQuaFile();
+        }
+
+        private void ReloadEditorFromQuaFile()
+        {
             RefreshFileCache();
             Exit(() => new EditScreen(Map, true));
         }
