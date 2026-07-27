@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Quaver.Shared.Assets;
 using Quaver.Shared.Graphics;
+using Quaver.Shared.Graphics.Form;
 using Quaver.Shared.Input;
 using Quaver.Shared.Input.Global;
 using Quaver.Shared.Screens.Menu.UI.Jukebox;
@@ -26,6 +27,18 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
         /// <summary>
         /// </summary>
         private IconButton Button { get; set; }
+
+        /// <summary>
+        /// </summary>
+        private QuaverCheckbox FreeModifierToggle { get; set; }
+
+        /// <summary>
+        /// </summary>
+        private SpriteTextPlus FreeModifierText { get; set; }
+
+        /// <summary>
+        /// </summary>
+        private bool IsSyncingFreeModifierToggle { get; set; }
 
         /// <summary>
         /// </summary>
@@ -106,6 +119,26 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
                 ClearFocusedState();
             };
 
+            FreeModifierToggle = new QuaverCheckbox(new Bindable<bool>(false))
+            {
+                Parent = this,
+                Alignment = Alignment.MidRight,
+                X = Button.X - Button.Width - 10,
+                UsePreviousSpriteBatchOptions = true,
+                DisposeBindableOnDestroy = true
+            };
+
+            FreeModifierToggle.BindedValue.ValueChanged += OnFreeModifierToggleChanged;
+
+            FreeModifierText = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "Free", 18)
+            {
+                Parent = this,
+                UsePreviousSpriteBatchOptions = true,
+                Alignment = Alignment.MidRight,
+                X = FreeModifierToggle.X - FreeModifierToggle.Width - 8,
+                Tint = Colors.MainAccent
+            };
+
             Text = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "", 18)
             {
                 Parent = Button,
@@ -116,6 +149,7 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
             };
 
             InitializeText();
+            InitializeFreeModifierToggle();
 
             GlobalInputConfig.OnConfigUpdated += GlobalInputConfigOnOnConfigUpdated;
         }
@@ -123,6 +157,7 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
         private void GlobalInputConfigOnOnConfigUpdated()
         {
             InitializeText();
+            InitializeFreeModifierToggle();
         }
 
         public RoundedButton ResetButton { get; set; }
@@ -153,6 +188,37 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
             Text.Tint = GlobalInputConfig.ConflictingActions.Contains(Action)
                 ? Color.Crimson
                 : Colors.MainAccent;
+        }
+
+        /// <summary>
+        /// </summary>
+        private void InitializeFreeModifierToggle()
+        {
+            IsSyncingFreeModifierToggle = true;
+            FreeModifierToggle.BindedValue.Value = CurrentKeybind()?.Modifiers.Contains(KeyModifiers.Free) ?? false;
+            IsSyncingFreeModifierToggle = false;
+        }
+
+        /// <summary>
+        /// </summary>
+        private Keybind? CurrentKeybind() => GlobalInputConfig.GetOrDefault(Action)
+            .FirstOrDefault(x => !x.Equals(Keybind.None));
+
+        /// <summary>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void OnFreeModifierToggleChanged(object sender, BindableValueChangedEventArgs<bool> args)
+        {
+            if (IsSyncingFreeModifierToggle)
+                return;
+
+            var current = CurrentKeybind();
+
+            if (current == null)
+                return;
+
+            SetKeybind(current.Key, args.Value, current.Modifiers);
         }
 
         /// <summary>
@@ -208,10 +274,28 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
                 return;
 
             var keybind = keys.First();
-            GlobalInputConfig.SetKeybindsForAction(Action, new KeybindList(keybind));
-            GlobalInputConfig.SaveToConfig();
+            SetKeybind(keybind.Key, FreeModifierToggle.BindedValue.Value, keybind.Modifiers);
 
             ClearFocusedState(true);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="includeFreeModifier"></param>
+        /// <param name="existingModifiers"></param>
+        private void SetKeybind(GenericKey key, bool includeFreeModifier,
+            IEnumerable<KeyModifiers>? existingModifiers = null)
+        {
+            var modifiers = existingModifiers?.ToHashSet() ?? new HashSet<KeyModifiers>();
+
+            if (includeFreeModifier)
+                modifiers.Add(KeyModifiers.Free);
+            else
+                modifiers.Remove(KeyModifiers.Free);
+
+            GlobalInputConfig.SetKeybindsForAction(Action, new KeybindList(new Keybind(modifiers, key)));
+            GlobalInputConfig.SaveToConfig();
         }
 
         /// <inheritdoc />
@@ -219,6 +303,7 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
         {
             BlockGlobalInputToken?.Dispose();
             BlockGlobalInputToken = null;
+            FreeModifierToggle.BindedValue.ValueChanged -= OnFreeModifierToggleChanged;
             GlobalInputConfig.OnConfigUpdated -= GlobalInputConfigOnOnConfigUpdated;
             base.Destroy();
         }
