@@ -370,8 +370,7 @@ namespace Quaver.Shared.Screens.Options
                     new OptionsSubcategory("Video", CreateAdvancedVideoOptions(containerRect)),
                     new OptionsSubcategory("Audio", new List<OptionsItem>()
                     {
-                        new OptionsItemCheckbox(containerRect, "Use Smooth Audio/Frame Timing During Gameplay", ConfigManager.SmoothAudioTimingGameplay),
-                        new OptionsItemCheckbox(containerRect, "Use Smooth Audio Start Timing During Gameplay", ConfigManager.SmoothAudioStart)
+                        new OptionsItemCheckbox(containerRect, "Use Smooth Audio/Frame Timing During Gameplay", ConfigManager.SmoothAudioTimingGameplay)
                     }),
                     new OptionsSubcategory("Gameplay", new List<OptionsItem>()
                     {
