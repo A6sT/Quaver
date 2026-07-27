@@ -2490,12 +2490,6 @@
   <data name="Screen_Editor_CreateNewMapsetMessage" xml:space="preserve">
     <value>将 .mp3 文件拖入窗口以创建谱面</value>
   </data>
-  <data name="Screen_Editor_DetectedManualFileChanges" xml:space="preserve">
-    <value>检测到手动文件改动</value>
-  </data>
-  <data name="Screen_Editor_DetectedManualFileChangesMessage" xml:space="preserve">
-    <value>检测到 .qua 文件被手动更改。&#xA;要重新载入编辑器吗？</value>
-  </data>
   <data name="Screen_Editor_ApplyOffsetToMapMessage" xml:space="preserve">
     <value>输入应用给该难度所有物件、BPM、SV等等的偏移......</value>
   </data>

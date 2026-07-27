@@ -2490,12 +2490,6 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
   <data name="Screen_Editor_CreateNewMapsetMessage" xml:space="preserve">
     <value>For å opprette et nytt mapsett, dra en .mp3 fil inn i spillvinduet...</value>
   </data>
-  <data name="Screen_Editor_DetectedManualFileChanges" xml:space="preserve">
-    <value>MANUELL FILENDRINGER OPPDAGET</value>
-  </data>
-  <data name="Screen_Editor_DetectedManualFileChangesMessage" xml:space="preserve">
-    <value>Det var oppdaget manuelle endringer på .qua filen.&#xA;Vil du laste editoren på nytt?</value>
-  </data>
   <data name="Screen_Editor_ApplyOffsetToMapMessage" xml:space="preserve">
     <value>Angi en verdi til å bruke en forskyvning på alle mapobjekter, tidspunkter,&#xA; og rullehastigheter...</value>
   </data>

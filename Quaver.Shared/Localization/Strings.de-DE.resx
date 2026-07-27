@@ -2492,12 +2492,6 @@ hochladen, damit andere Spieler es herunterladen können?</value>
   <data name="Screen_Editor_CreateNewMapsetMessage" xml:space="preserve">
     <value>Um ein neues Mapset zu erstellen, zieh eine .mp3 Datei in das Spielfenster...</value>
   </data>
-  <data name="Screen_Editor_DetectedManualFileChanges" xml:space="preserve">
-    <value>ERKENNE MANUELLE DATEI VERÄNDERUNGEN</value>
-  </data>
-  <data name="Screen_Editor_DetectedManualFileChangesMessage" xml:space="preserve">
-    <value>Es wurden manuelle Änderungen an der .qua Datei erkannt.&#xA; Möchtest du den Editor neu laden?</value>
-  </data>
   <data name="Screen_Editor_ApplyOffsetToMapMessage" xml:space="preserve">
     <value>Gib einen Wert ein, um ein Offset auf alle Objekte, Timing Punkte, und Scroll Velocities deiner Map anzuwenden...</value>
   </data>
