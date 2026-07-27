@@ -2491,13 +2491,6 @@ Vous pouvez utiliser les filtres ci-dessous pour cibler votre recherche.</value>
   <data name="Screen_Editor_CreateNewMapsetMessage" xml:space="preserve">
     <value>Pour Créer une Nouvelle Collection, Glissez un Fichier .mp3 dans la Fenêtre du Jeu</value>
   </data>
-  <data name="Screen_Editor_DetectedManualFileChanges" xml:space="preserve">
-    <value>MODIFICATION DE FICHIER MANUELLE DÉTECTÉE</value>
-  </data>
-  <data name="Screen_Editor_DetectedManualFileChangesMessage" xml:space="preserve">
-    <value>Des modifications manuelles ont été détectées dans le fichier .qua.
-Voulez-vous recharger l'éditeur ?</value>
-  </data>
   <data name="Screen_Editor_ApplyOffsetToMapMessage" xml:space="preserve">
     <value>Entrez une valeur pour appliquer un décalage à tous les objets, les points de timing et les vitesses de défilement de votre map...</value>
   </data>

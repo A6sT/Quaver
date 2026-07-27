@@ -149,6 +149,9 @@ namespace Quaver.Shared.Screens.Edit.UI.Menu
             if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_RefreshFileCache"), "CTRL + R", false, Screen.Map.Game == MapGame.Quaver))
                 Screen.RefreshFileCache();
 
+            if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_RefreshEditorFromQuaFile"), "", false, Screen.Map.Game == MapGame.Quaver))
+                Screen.RefreshEditorFromQuaFile();
+
             ImGui.Separator();
 
             if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_Upload"), "CTRL + U", false, Screen.Map.Game == MapGame.Quaver))
