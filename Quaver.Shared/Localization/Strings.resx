@@ -2101,6 +2101,7 @@ for other players to download?</value>
   <data name="Screen_Editor_FromQuaFile" xml:space="preserve"><value>From .qua File</value></data>
   <data name="Screen_Editor_Save" xml:space="preserve"><value>Save</value></data>
   <data name="Screen_Editor_RefreshFileCache" xml:space="preserve"><value>Refresh File Cache</value></data>
+  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve"><value>Refresh Editor from .qua File</value></data>
   <data name="Screen_Editor_Upload" xml:space="preserve"><value>Upload</value></data>
   <data name="Screen_Editor_SubmitForRank" xml:space="preserve"><value>Submit For Rank</value></data>
   <data name="Screen_Editor_Export" xml:space="preserve"><value>Export</value></data>
@@ -2228,11 +2229,11 @@ for other players to download?</value>
   <data name="Screen_Editor_BookmarkNotePlaceholder" xml:space="preserve"><value>Add a bookmark note...</value></data>
   <data name="Screen_Editor_CreateNewMapset" xml:space="preserve"><value>CREATE NEW MAPSET</value></data>
   <data name="Screen_Editor_CreateNewMapsetMessage" xml:space="preserve"><value>To create a new mapset, drag a .mp3 file into the game window...</value></data>
-  <data name="Screen_Editor_DetectedManualFileChanges" xml:space="preserve"><value>DETECTED MANUAL FILE CHANGES</value></data>
-  <data name="Screen_Editor_DetectedManualFileChangesMessage" xml:space="preserve"><value>There were manual changes detected to the .qua file.&#xA;Would you like to reload the editor?</value></data>
   <data name="Screen_Editor_ApplyOffsetToMapMessage" xml:space="preserve"><value>Enter a value to apply an offset to all of your map's objects, timing points,&#xA; and scroll velocities...</value></data>
   <data name="Screen_Editor_ApplyOffsetPlaceholder" xml:space="preserve"><value>Enter an offset to apply to your map...</value></data>
   <data name="Screen_Editor_SaveChanges" xml:space="preserve"><value>SAVE CHANGES</value></data>
+  <data name="Screen_Editor_UnsavedChanges" xml:space="preserve"><value>UNSAVED CHANGES</value></data>
+  <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve"><value>This map hasn't been saved yet.&#xA;Refreshing from the .qua file will discard your unsaved changes.&#xA;Would you like to continue?</value></data>
   <data name="Screen_Editor_SaveBeforeCreatingDifficulty" xml:space="preserve"><value>You have unsaved changes. Would you like to save&#xA;before creating a new difficulty?</value></data>
   <data name="Screen_Editor_SaveBeforeSwitchingDifficulty" xml:space="preserve"><value>You have unsaved changes. Would you like to save&#xA;before switching to another difficulty?</value></data>
   <data name="Screen_Editor_MapSavedSuccessfully" xml:space="preserve"><value>Your map has been successfully saved!</value></data>
