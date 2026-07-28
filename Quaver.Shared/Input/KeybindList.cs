@@ -63,5 +63,8 @@ namespace Quaver.Shared.Input
 
         public override string ToString() => String.Join(", ",
             this.Where(k => !k.Equals(Keybind.None)).Select(k => k.ToString()));
+
+        public string ToDisplayString() => String.Join(", ",
+            this.Where(k => !k.Equals(Keybind.None)).Select(k => k.ToDisplayString()));
     }
 }

@@ -307,7 +307,7 @@ namespace Quaver.Shared.Screens.Options
                         new OptionsItemKeybindGeneric(containerRect, "Increase Visual Offset (+1ms)", GlobalKeybindActions.IncreaseVisualOffsetSmall),
                         new OptionsItemKeybindGeneric(containerRect, "Reset Map Offset", GlobalKeybindActions.ResetOffset),
                         new OptionsItemKeybindGeneric(containerRect, "Reset Visual Offset", GlobalKeybindActions.ResetVisualOffset),
-                    }),
+                    }, "Mod Keybind Tooltip"),
                     new OptionsSubcategory("Gameplay User Interface", new List<OptionsItem>()
                     {
                         new OptionsItemKeybindGeneric(containerRect, "Toggle Scoreboard Visibility", GlobalKeybindActions.GameplayToggleScoreboard),

@@ -130,7 +130,7 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
 
             FreeModifierToggle.BindedValue.ValueChanged += OnFreeModifierToggleChanged;
 
-            FreeModifierText = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "Free", 18)
+            FreeModifierText = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "Mod", 18)
             {
                 Parent = this,
                 UsePreviousSpriteBatchOptions = true,
@@ -180,7 +180,7 @@ namespace Quaver.Shared.Screens.Options.Items.Custom
         /// </summary>
         private void InitializeText()
         {
-            Text.Text = GlobalInputConfig.GetOrDefault(Action).ToString();
+            Text.Text = GlobalInputConfig.GetOrDefault(Action).ToDisplayString();
 
             if (string.IsNullOrWhiteSpace(Text.Text))
                 Text.Text = "None";

@@ -2986,7 +2986,7 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
     <value>Endre</value>
   </data>
   <data name="Screen_Editor_Free" xml:space="preserve">
-    <value>Free</value>
+    <value>Mod</value>
   </data>
   <data name="Screen_Editor_FreeKeybindTooltip" xml:space="preserve">
     <value>Ved å slå på Free betyr det at å trykke på tasten med ytterligere modifikatorer (ctrl, alt, ...) vil også utløse handlingen.</value>

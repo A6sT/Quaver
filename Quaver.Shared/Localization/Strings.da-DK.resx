@@ -2986,10 +2986,10 @@ Du kan bruge filtrerne nedenfor til at indsnævre din søgning.</value>
     <value>Change</value>
   </data>
   <data name="Screen_Editor_Free" xml:space="preserve">
-    <value>Free</value>
+    <value>Mod</value>
   </data>
   <data name="Screen_Editor_FreeKeybindTooltip" xml:space="preserve">
-    <value>Turning on Free means that pressing the key with additional modifiers (ctrl, alt, ...) will also trigger the action.</value>
+    <value>Turning on Mod means that pressing the key with additional modifiers (ctrl, alt, ...) will also trigger the action.</value>
   </data>
   <data name="Screen_Editor_SearchActions" xml:space="preserve">
     <value>Search Actions</value>

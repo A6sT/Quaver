@@ -189,6 +189,13 @@ namespace Quaver.Shared.Input
             return String.Join('+', keys);
         }
 
+        public string ToDisplayString()
+        {
+            var keys = Modifiers.Select(m => m == KeyModifiers.Free ? "Mod" : m.ToString()).ToList();
+            keys.Add(Key.ToString());
+            return String.Join('+', keys);
+        }
+
         protected bool Equals(Keybind other) => ToString() == other.ToString();
 
         public override bool Equals(object obj)

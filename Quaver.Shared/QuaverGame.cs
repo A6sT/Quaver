@@ -546,8 +546,9 @@ namespace Quaver.Shared
             VolumeController?.Draw(gameTime);
             GlobalUserInterface.Draw(gameTime);
 
-            // F8 chat belongs to global UI, which draws after Wobble's normal tooltip layer.
-            if (OnlineChat?.IsOpen == true)
+            // Dialogs and F8 chat draw after Wobble's normal tooltip layer, so active tooltips
+            // must be redrawn above them.
+            if (DialogManager.Dialogs.Count > 0 || OnlineChat?.IsOpen == true)
                 TooltipManager.Draw(gameTime);
 
             Transitioner.Draw(gameTime);

@@ -2986,7 +2986,7 @@
     <value>更改</value>
   </data>
   <data name="Screen_Editor_Free" xml:space="preserve">
-    <value>任意</value>
+    <value>Mod</value>
   </data>
   <data name="Screen_Editor_FreeKeybindTooltip" xml:space="preserve">
     <value>启用“任意”后会允许任意额外修饰键（Ctrl、Alt等）也能触发此操作</value>

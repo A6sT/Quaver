@@ -555,6 +555,9 @@
   <data name="Screen_Options_GameplayControls" xml:space="preserve">
     <value>Gameplay Controls</value>
   </data>
+  <data name="Screen_Options_ModKeybindTooltip" xml:space="preserve">
+    <value>Mod allows a keybind to trigger while additional modifier keys (Ctrl, Alt, or Shift) are held.</value>
+  </data>
   <data name="Screen_Options_GameplayUserInterface" xml:space="preserve">
     <value>Gameplay User Interface</value>
   </data>
@@ -2390,8 +2393,8 @@ for other players to download?</value>
   <data name="Screen_Editor_Keys" xml:space="preserve"><value>Keys</value></data>
   <data name="Screen_Editor_EnterNewKeybind" xml:space="preserve"><value>Please enter a new keybind...</value></data>
   <data name="Screen_Editor_Change" xml:space="preserve"><value>Change</value></data>
-  <data name="Screen_Editor_Free" xml:space="preserve"><value>Free</value></data>
-  <data name="Screen_Editor_FreeKeybindTooltip" xml:space="preserve"><value>Turning on Free means that pressing the key with additional modifiers (ctrl, alt, ...) will also trigger the action.</value></data>
+  <data name="Screen_Editor_Free" xml:space="preserve"><value>Mod</value></data>
+  <data name="Screen_Editor_FreeKeybindTooltip" xml:space="preserve"><value>Turning on Mod means that pressing the key with additional modifiers (ctrl, alt, ...) will also trigger the action.</value></data>
   <data name="Screen_Editor_SearchActions" xml:space="preserve"><value>Search Actions</value></data>
   <data name="Screen_Editor_Keybind" xml:space="preserve"><value>Keybind</value></data>
   <data name="Screen_Editor_InputKeybindToSearch" xml:space="preserve"><value>Input a keybind to search...</value></data>
