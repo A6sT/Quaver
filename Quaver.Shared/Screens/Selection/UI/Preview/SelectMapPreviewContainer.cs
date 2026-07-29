@@ -240,6 +240,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Preview
             e.Input.Qua = e.Result.Map;
 
             var screen = e.Result;
+            screen.IsSongSelectPreviewDisplayed = ActiveLeftPanel.Value == SelectContainerPanel.MapPreview;
             LoadedGameplayScreen = screen;
 
             AddScheduledUpdate(() =>
@@ -370,9 +371,6 @@ namespace Quaver.Shared.Screens.Selection.UI.Preview
                     LoadedGameplayScreen?.HandleReplaySeeking();
                 }
 
-                if (ActiveLeftPanel.Value == SelectContainerPanel.MapPreview)
-                    LoadedGameplayScreen?.HandleAutoplayTabInput(gameTime);
-
                 LoadedGameplayScreen?.Update(gameTime);
                 IsPlayTesting.Value = !LoadedGameplayScreen?.InReplayMode ?? false;
 
@@ -394,6 +392,9 @@ namespace Quaver.Shared.Screens.Selection.UI.Preview
         /// <param name="e"></param>
         private void OnLeftPanelChanged(object sender, BindableValueChangedEventArgs<SelectContainerPanel> e)
         {
+            if (LoadedGameplayScreen != null)
+                LoadedGameplayScreen.IsSongSelectPreviewDisplayed = e.Value == SelectContainerPanel.MapPreview;
+
             if (e.Value != SelectContainerPanel.MapPreview)
                 return;
 

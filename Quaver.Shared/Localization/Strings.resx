@@ -558,6 +558,9 @@
   <data name="Screen_Options_GameplayControls" xml:space="preserve">
     <value>Gameplay Controls</value>
   </data>
+  <data name="Screen_Options_ModKeybindTooltip" xml:space="preserve">
+    <value>Mod allows a keybind to trigger while additional modifier keys (Ctrl, Alt, or Shift) are held.</value>
+  </data>
   <data name="Screen_Options_GameplayUserInterface" xml:space="preserve">
     <value>Gameplay User Interface</value>
   </data>
@@ -1873,15 +1876,6 @@ for other players to download?</value>
   <data name="Screen_Multiplayer_WaitingToStart" xml:space="preserve">
     <value>Waiting to start</value>
   </data>
-  <data name="Screen_Multiplayer_WaitingToStartOneDot" xml:space="preserve">
-    <value>Waiting to start.</value>
-  </data>
-  <data name="Screen_Multiplayer_WaitingToStartTwoDots" xml:space="preserve">
-    <value>Waiting to start..</value>
-  </data>
-  <data name="Screen_Multiplayer_WaitingToStartThreeDots" xml:space="preserve">
-    <value>Waiting to start...</value>
-  </data>
   <data name="Screen_Multiplayer_WaitingForServer" xml:space="preserve">
     <value>Waiting for server</value>
   </data>
@@ -2101,6 +2095,7 @@ for other players to download?</value>
   <data name="Screen_Editor_FromQuaFile" xml:space="preserve"><value>From .qua File</value></data>
   <data name="Screen_Editor_Save" xml:space="preserve"><value>Save</value></data>
   <data name="Screen_Editor_RefreshFileCache" xml:space="preserve"><value>Refresh File Cache</value></data>
+  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve"><value>Refresh Editor from .qua File</value></data>
   <data name="Screen_Editor_Upload" xml:space="preserve"><value>Upload</value></data>
   <data name="Screen_Editor_SubmitForRank" xml:space="preserve"><value>Submit For Rank</value></data>
   <data name="Screen_Editor_Export" xml:space="preserve"><value>Export</value></data>
@@ -2228,11 +2223,11 @@ for other players to download?</value>
   <data name="Screen_Editor_BookmarkNotePlaceholder" xml:space="preserve"><value>Add a bookmark note...</value></data>
   <data name="Screen_Editor_CreateNewMapset" xml:space="preserve"><value>CREATE NEW MAPSET</value></data>
   <data name="Screen_Editor_CreateNewMapsetMessage" xml:space="preserve"><value>To create a new mapset, drag a .mp3 file into the game window...</value></data>
-  <data name="Screen_Editor_DetectedManualFileChanges" xml:space="preserve"><value>DETECTED MANUAL FILE CHANGES</value></data>
-  <data name="Screen_Editor_DetectedManualFileChangesMessage" xml:space="preserve"><value>There were manual changes detected to the .qua file.&#xA;Would you like to reload the editor?</value></data>
   <data name="Screen_Editor_ApplyOffsetToMapMessage" xml:space="preserve"><value>Enter a value to apply an offset to all of your map's objects, timing points,&#xA; and scroll velocities...</value></data>
   <data name="Screen_Editor_ApplyOffsetPlaceholder" xml:space="preserve"><value>Enter an offset to apply to your map...</value></data>
   <data name="Screen_Editor_SaveChanges" xml:space="preserve"><value>SAVE CHANGES</value></data>
+  <data name="Screen_Editor_UnsavedChanges" xml:space="preserve"><value>UNSAVED CHANGES</value></data>
+  <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve"><value>This map hasn't been saved yet.&#xA;Refreshing from the .qua file will discard your unsaved changes.&#xA;Would you like to continue?</value></data>
   <data name="Screen_Editor_SaveBeforeCreatingDifficulty" xml:space="preserve"><value>You have unsaved changes. Would you like to save&#xA;before creating a new difficulty?</value></data>
   <data name="Screen_Editor_SaveBeforeSwitchingDifficulty" xml:space="preserve"><value>You have unsaved changes. Would you like to save&#xA;before switching to another difficulty?</value></data>
   <data name="Screen_Editor_MapSavedSuccessfully" xml:space="preserve"><value>Your map has been successfully saved!</value></data>
@@ -2251,9 +2246,7 @@ for other players to download?</value>
   <data name="Screen_Editor_SetLiveMapLongNoteThresholdPlaceholder" xml:space="preserve"><value>Enter a threshold of LNs during livemapping...</value></data>
   <data name="Screen_Editor_InvalidValue" xml:space="preserve"><value>Invalid value: '{0}'</value></data>
   <data name="Screen_Editor_ChangeTimingGroupColor" xml:space="preserve"><value>CHANGE TIMING GROUP COLOR</value></data>
-  <data name="Screen_Editor_ChangeTimingGroupColorMessage" xml:space="preserve"><value>Enter a new RGB color for your timing group...</value></data>
   <data name="Screen_Editor_ChangeWaveformColor" xml:space="preserve"><value>CHANGE WAVEFORM COLOR</value></data>
-  <data name="Screen_Editor_ChangeWaveformColorMessage" xml:space="preserve"><value>Enter a new RGB color for your waveform... (default: 0,200,255)</value></data>
   <data name="Screen_Editor_AddDifficultyFromFile" xml:space="preserve"><value>ADD DIFFICULTY FROM FILE</value></data>
   <data name="Screen_Editor_AddDifficultyFromFileMessage" xml:space="preserve"><value>Drag a .qua file into the window to add it to the mapset.</value></data>
   <data name="Screen_Editor_InvalidQuaFile" xml:space="preserve"><value>The .qua file you have dragged in is not valid!</value></data>
@@ -2275,8 +2268,6 @@ for other players to download?</value>
   <data name="Screen_Editor_BannerChangedSuccessfully" xml:space="preserve"><value>Your banner has successfully changed!</value></data>
   <data name="Screen_Editor_ChangeBannerError" xml:space="preserve"><value>There was an issue changing your banner!</value></data>
   <data name="Screen_Editor_SelectColor" xml:space="preserve"><value>SELECT COLOR</value></data>
-  <data name="Screen_Editor_SelectColorMessage" xml:space="preserve"><value>Enter a new RGB color...</value></data>
-  <data name="Screen_Editor_RgbColorPlaceholder" xml:space="preserve"><value>Enter RGB color (ex: 255,255,255)...</value></data>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve"><value>Please wait while your map is being submitted for rank...</value></data>
   <data name="Screen_Editor_RankingIssuesFound" xml:space="preserve"><value>Your mapset has issues that prevent it from being ranked. Please review the AutoMod for each difficulty, and then try again.</value></data>
   <data name="Screen_Editor_SubmitForRankError" xml:space="preserve"><value>An error occurred while submitting your mapset for rank.</value></data>
@@ -2354,14 +2345,15 @@ for other players to download?</value>
   <data name="Screen_Editor_HideLines" xml:space="preserve"><value>Hide Lines</value></data>
   <data name="Screen_Editor_ScrollVelocityEditor" xml:space="preserve"><value>Scroll Velocity Editor</value></data>
   <data name="Screen_Editor_ScrollVelocityHelp" xml:space="preserve"><value>Scroll Velocities (SV) allow you to dynamically change the speed and direction at which the objects fall.</value></data>
-  <data name="Screen_Editor_ScrollVelocityInteractionHelp" xml:space="preserve"><value>You can click on an individual SV point to edit it and double-click to go to its position in time.</value></data>
+  <data name="Screen_Editor_ScrollPointInteractionHelp" xml:space="preserve"><value>You can click on an individual {0} point to edit it and double-click to go to its position in time.</value></data>
   <data name="Screen_Editor_DifferenceFromSf" xml:space="preserve"><value>(Difference from SF)</value></data>
-  <data name="Screen_Editor_SelectCurrentSv" xml:space="preserve"><value>Select current SV</value></data>
+  <data name="Screen_Editor_Sv" xml:space="preserve"><value>SV</value></data>
+  <data name="Screen_Editor_SelectCurrentScrollPoint" xml:space="preserve"><value>Select current {0}</value></data>
   <data name="Screen_Editor_Multiplier" xml:space="preserve"><value>Multiplier</value></data>
   <data name="Screen_Editor_ScrollSpeedFactorEditor" xml:space="preserve"><value>Scroll Speed Factor Editor</value></data>
   <data name="Screen_Editor_HelpLink" xml:space="preserve"><value>(Help)</value></data>
   <data name="Screen_Editor_DifferenceFromSv" xml:space="preserve"><value>(Difference from SV)</value></data>
-  <data name="Screen_Editor_SelectCurrentSsf" xml:space="preserve"><value>Select current SSF</value></data>
+  <data name="Screen_Editor_Ssf" xml:space="preserve"><value>SSF</value></data>
   <data name="Screen_Editor_TimingGroupEditor" xml:space="preserve"><value>Timing Group Editor</value></data>
   <data name="Screen_Editor_ColorObjectsByTimingGroup" xml:space="preserve"><value>Color Objects By Timing Group</value></data>
   <data name="Screen_Editor_MoveSelectedObjectsToGroup" xml:space="preserve"><value>Move Selected Objects To Group</value></data>
@@ -2393,8 +2385,8 @@ for other players to download?</value>
   <data name="Screen_Editor_Keys" xml:space="preserve"><value>Keys</value></data>
   <data name="Screen_Editor_EnterNewKeybind" xml:space="preserve"><value>Please enter a new keybind...</value></data>
   <data name="Screen_Editor_Change" xml:space="preserve"><value>Change</value></data>
-  <data name="Screen_Editor_Free" xml:space="preserve"><value>Free</value></data>
-  <data name="Screen_Editor_FreeKeybindTooltip" xml:space="preserve"><value>Turning on Free means that pressing the key with additional modifiers (ctrl, alt, ...) will also trigger the action.</value></data>
+  <data name="Screen_Editor_Free" xml:space="preserve"><value>Mod</value></data>
+  <data name="Screen_Editor_FreeKeybindTooltip" xml:space="preserve"><value>Turning on Mod means that pressing the key with additional modifiers (ctrl, alt, ...) will also trigger the action.</value></data>
   <data name="Screen_Editor_SearchActions" xml:space="preserve"><value>Search Actions</value></data>
   <data name="Screen_Editor_Keybind" xml:space="preserve"><value>Keybind</value></data>
   <data name="Screen_Editor_InputKeybindToSearch" xml:space="preserve"><value>Input a keybind to search...</value></data>
@@ -2404,7 +2396,6 @@ for other players to download?</value>
   <data name="Screen_Editor_SvVsSfTooltip" xml:space="preserve"><value>SV will not move the notes but only change its speed, whereas SF will directly change both their position and speed</value></data>
   <data name="Screen_Editor_ScrollSpeedFactorHelp" xml:space="preserve"><value>Scroll Speed Factors (SSF) allow you to scale the distance from the notes to the receptor directly</value></data>
   <data name="Screen_Editor_ScrollSpeedFactorMultiplierHelp" xml:space="preserve"><value>SSF is a multiplier to your current scroll speed. The entries you add will be linearly transformed from one to another, like keyframes.</value></data>
-  <data name="Screen_Editor_ScrollSpeedFactorInteractionHelp" xml:space="preserve"><value>You can click on an individual SSF point to edit it and double-click to go to its position in time.</value></data>
   <data name="Screen_Editor_SvVsSsfTooltip" xml:space="preserve"><value>SV will not move the notes but only change its speed, whereas SSF will directly change both their position and speed</value></data>
   <data name="Screen_Editor_UploadErrorInternalServer" xml:space="preserve"><value>An internal server error has occurred. Please try again!</value></data>
   <data name="Screen_Editor_UploadErrorUnauthorized" xml:space="preserve"><value>Please re-log and try again!</value></data>
@@ -2455,7 +2446,6 @@ for other players to download?</value>
   <data name="Screen_Editor_RenameLayerMessage" xml:space="preserve"><value>Enter a new name for your layer...</value></data>
   <data name="Screen_Editor_EnterNamePlaceholder" xml:space="preserve"><value>Enter name...</value></data>
   <data name="Screen_Editor_ChangeLayerColor" xml:space="preserve"><value>CHANGE LAYER COLOR</value></data>
-  <data name="Screen_Editor_ChangeLayerColorMessage" xml:space="preserve"><value>Enter a new RGB color for your layer...</value></data>
   <data name="Screen_Editor_EditName" xml:space="preserve"><value>Edit Name</value></data>
   <data name="Screen_Editor_ChangeColor" xml:space="preserve"><value>Change Color</value></data>
   <data name="Screen_Editor_MoveLayerUp" xml:space="preserve"><value>Move Layer Up</value></data>
@@ -2476,9 +2466,8 @@ for other players to download?</value>
   <data name="Screen_Editor_TimingPointsSelected" xml:space="preserve"><value>{0} timing points selected</value></data>
   <data name="Screen_Editor_DefaultTimingGroupTooltip" xml:space="preserve"><value>Applied to all notes that are not in a timing group.</value></data>
   <data name="Screen_Editor_GlobalTimingGroupTooltip" xml:space="preserve"><value>The SVs in this group are interlaced to every other scroll groups.</value></data>
-  <data name="Screen_Editor_SelectCurrentSsfTooltip" xml:space="preserve"><value>This will select the SSF at the current editor timestamp. If Ctrl is held, it will add it to your selection instead. If Shift is held, it will select all SSFs up to that range, if one is selected already.</value></data>
+  <data name="Screen_Editor_SelectCurrentScrollPointTooltip" xml:space="preserve"><value>This will select the {0} at the current editor timestamp. If Ctrl is held, it will add it to your selection instead. If Shift is held, it will select all {0}s up to that range, if one is selected already.</value></data>
   <data name="Screen_Editor_ScrollSpeedFactorsSelected" xml:space="preserve"><value>{0} scroll speed factors selected</value></data>
-  <data name="Screen_Editor_SelectCurrentSvTooltip" xml:space="preserve"><value>This will select the SV at the current editor timestamp. If Ctrl is held, it will add it to your selection instead. If Shift is held, it will select all SVs up to that range, if one is selected already.</value></data>
   <data name="Screen_Editor_ScrollVelocitiesSelected" xml:space="preserve"><value>{0} scroll velocities selected</value></data>
   <data name="Screen_Editor_BpmCalculator" xml:space="preserve"><value>BPM Calculator</value></data>
   <data name="Screen_Editor_BpmDetector" xml:space="preserve"><value>BPM Detector</value></data>

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Quaver.API.Maps.Structures;
@@ -9,8 +8,9 @@ using Quaver.Shared.Screens.Edit.Actions;
 using Quaver.Shared.Screens.Menu.UI.Jukebox;
 using Wobble.Audio.Tracks;
 using Wobble.Graphics;
+using Wobble.Graphics.Buttons;
 using Wobble.Graphics.Sprites;
-using Wobble.Graphics.UI.Buttons;
+using Wobble.Graphics.UI.Dialogs;
 using Wobble.Graphics.UI.Form;
 using Wobble.Managers;
 
@@ -19,8 +19,6 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
     public class EditorBookmarkDialog : YesNoDialog
     {
         private const int ContentHorizontalPadding = 24;
-
-        private const int ColorControlSpacing = 10;
 
         private const int ControlHeight = 50;
 
@@ -36,11 +34,9 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
 
         protected Textbox Textbox { get; set; }
 
-        private Textbox ColorTextbox { get; set; }
+        private RoundedButton ColorButton { get; set; }
 
-        private ImageButton ColorBox { get; set; }
-
-        private Random RNG { get; } = new Random();
+        private Sprite ColorSwatch { get; set; }
 
         private Color BookmarkColor { get; set; }
 
@@ -58,17 +54,14 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
                 : ColorHelper.ToXnaColor(EditingBookmark.GetColor());
 
             CreateTextbox();
-            CreateColorTextbox();
-            CreateColorBox();
-            CreateRandomButton();
+            CreateColorButton();
             UpdateColor(BookmarkColor);
 
             Panel.Height += 110;
             YesButton.Y = -30;
             NoButton.Y = YesButton.Y;
 
-            YesAction += () => OnSubmit(Textbox.RawText, ColorTextbox.RawText);
-            ValidateBeforeClosing = () => ParseColor(ColorTextbox.RawText).HasValue;
+            YesAction += () => OnSubmit(Textbox.RawText);
         }
 
         /// <inheritdoc />
@@ -77,8 +70,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
         public override void Close()
         {
             Textbox.Visible = false;
-            ColorTextbox.Visible = false;
-            ColorBox.Visible = false;
+            ColorButton.Visible = false;
             base.Close();
         }
 
@@ -87,7 +79,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
             Textbox = new Textbox(new ScalableVector2(Panel.Width - ContentHorizontalPadding * 2, ControlHeight),
                 FontManager.GetWobbleFont(Fonts.InterBold),
                 20, EditingBookmark?.Note ?? "", LocalizationManager.Get("Screen_Editor_BookmarkNotePlaceholder"),
-                note => OnSubmit(note, ColorTextbox.RawText))
+                OnSubmit)
             {
                 Parent = Panel,
                 Alignment = Alignment.BotLeft,
@@ -101,97 +93,51 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
             Textbox.AddBorder(ColorHelper.HexToColor("#363636"), 2);
         }
 
-        private void CreateColorTextbox()
+        private void CreateColorButton()
         {
-            var width = Panel.Width - ContentHorizontalPadding * 2 - ColorControlSpacing - ControlHeight;
-
-            ColorTextbox = new Textbox(new ScalableVector2(width, ControlHeight),
-                FontManager.GetWobbleFont(Fonts.InterBold), 20, "",
-                LocalizationManager.Get("Screen_Editor_RgbColorPlaceholder"), null)
+            ColorButton = new RoundedButton((sender, args) =>
+            {
+                DialogManager.Show(new BookmarkColorDialog(BookmarkColor, UpdateColor));
+            })
             {
                 Parent = Panel,
                 Alignment = Alignment.BotLeft,
-                Y = -100,
-                X = ContentHorizontalPadding,
+                Position = new ScalableVector2(ContentHorizontalPadding, -100),
+                Size = new ScalableVector2(Panel.Width - ContentHorizontalPadding * 2, ControlHeight),
                 Tint = ColorHelper.HexToColor("#2F2F2F"),
-                StoppedTypingActionCalltime = 100,
-                AllowSubmission = false
+                CornerRadius = 6
             };
 
-            ColorTextbox.OnStoppedTyping += value =>
+            ColorButton.SetLabel(FontManager.GetWobbleFont(Fonts.InterBold),
+                LocalizationManager.Get("Screen_Editor_ChangeColor"), 20, Color.White);
+
+            ColorSwatch = new Sprite
             {
-                var color = ParseColor(value);
-                if (color.HasValue)
-                    UpdateColor(color.Value);
-            };
-
-            ColorTextbox.AddBorder(ColorHelper.HexToColor("#363636"), 2);
-        }
-
-        private void CreateColorBox()
-        {
-            ColorBox = new IconButton(UserInterface.BlankBox)
-            {
-                Parent = Panel,
-                Alignment = Alignment.BotRight,
-                Y = ColorTextbox.Y,
-                X = -ContentHorizontalPadding,
-                Tint = BookmarkColor,
-                Size = new ScalableVector2(ControlHeight, ControlHeight)
-            };
-
-            ColorBox.Clicked += (sender, args) => UpdateColor(new Color(
-                RNG.Next(byte.MaxValue), RNG.Next(byte.MaxValue), RNG.Next(byte.MaxValue)));
-        }
-
-        private void CreateRandomButton()
-        {
-            new Sprite
-            {
-                Parent = ColorBox,
-                Alignment = Alignment.MidCenter,
-                Size = new ScalableVector2(0, 0, 0.45f, 0.45f),
-                Image = FontAwesome.Get(FontAwesomeIcon.fa_refresh_arrow),
-                Tint = Color.Black
+                Parent = ColorButton,
+                Alignment = Alignment.MidRight,
+                X = -12,
+                Size = new ScalableVector2(30, 30),
+                Image = UserInterface.BlankBox,
+                Tint = BookmarkColor
             };
         }
 
         private void UpdateColor(Color color)
         {
             BookmarkColor = color;
-            ColorBox.Tint = color;
-            ColorTextbox.RawText = $"{color.R},{color.G},{color.B}";
-            ColorTextbox.InputText.Text = ColorTextbox.RawText;
+            ColorSwatch.Tint = color;
         }
 
-        private static Color? ParseColor(string value)
+        private void OnSubmit(string note)
         {
-            var split = value.Split(',');
-
-            try
-            {
-                return new Color(byte.Parse(split[0]), byte.Parse(split[1]), byte.Parse(split[2]));
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        private void OnSubmit(string note, string colorRgb)
-        {
-            var color = ParseColor(colorRgb);
-            if (!color.HasValue)
-                return;
-
-            var normalizedColorRgb = $"{color.Value.R},{color.Value.G},{color.Value.B}";
+            var normalizedColorRgb = $"{BookmarkColor.R},{BookmarkColor.G},{BookmarkColor.B}";
 
             if (EditingBookmark != null)
             {
                 ActionManager.EditBookmark(EditingBookmark, note);
 
                 if (EditingBookmark.ColorRgb != normalizedColorRgb)
-                    ActionManager.ChangeBookmarkColorBatch(new List<BookmarkInfo> { EditingBookmark }, color.Value);
+                    ActionManager.ChangeBookmarkColorBatch(new List<BookmarkInfo> { EditingBookmark }, BookmarkColor);
 
                 return;
             }
@@ -202,6 +148,20 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
                 Note = note,
                 ColorRgb = normalizedColorRgb
             });
+        }
+
+        private sealed class BookmarkColorDialog : ColorDialog
+        {
+            private readonly System.Action<Color> changed;
+
+            public BookmarkColorDialog(Color initialColor, System.Action<Color> onChanged)
+                : base(LocalizationManager.Get("Screen_Editor_SelectColor"))
+            {
+                changed = onChanged;
+                UpdateColor(initialColor);
+            }
+
+            protected override void OnColorChange(Color newColor) => changed(newColor);
         }
     }
 }

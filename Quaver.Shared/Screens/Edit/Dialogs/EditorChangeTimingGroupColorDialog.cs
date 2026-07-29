@@ -9,8 +9,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs;
 public class EditorChangeTimingGroupColorDialog : ColorDialog
 {
     public EditorChangeTimingGroupColorDialog(string id, TimingGroup timingGroup, EditorActionManager editorActionManager)
-        : base(LocalizationManager.Get("Screen_Editor_ChangeTimingGroupColor"),
-            LocalizationManager.Get("Screen_Editor_ChangeTimingGroupColorMessage"))
+        : base(LocalizationManager.Get("Screen_Editor_ChangeTimingGroupColor"))
     {
         Id = id;
         EditorActionManager = editorActionManager;
