@@ -351,6 +351,11 @@ namespace Quaver.Shared.Screens.Gameplay
         public bool IsSongSelectPreview { get; }
 
         /// <summary>
+        ///     If true, the song select gameplay preview is the active left panel.
+        /// </summary>
+        internal bool IsSongSelectPreviewDisplayed { get; set; }
+
+        /// <summary>
         ///     If true, the gameplay screen won't seek to the start when loaded.
         ///     This is used for skin hot-reloading.
         /// </summary>
@@ -622,6 +627,9 @@ namespace Quaver.Shared.Screens.Gameplay
             bool isKeyPress = true, bool isRelease = false)
         {
             if (Exiting)
+                return GlobalInputHandleResult.Pass;
+
+            if (IsSongSelectPreview && !IsSongSelectPreviewDisplayed)
                 return GlobalInputHandleResult.Pass;
 
             if (action.BaseWithLayer() is GlobalKeybindActions.GameplayTogglePlaytestAutoplay && !IsPlayComplete && !IsCalibratingOffset)
