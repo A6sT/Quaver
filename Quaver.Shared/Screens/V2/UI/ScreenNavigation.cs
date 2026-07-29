@@ -106,13 +106,14 @@ namespace Quaver.Shared.Screens.V2.UI
             if (CurrentTopLayout == TopLayout.Main)
                 return;
 
-            ClearTopLayout();
-
-            AddTopLayoutIconButton(GlobalIcon.Jukebox,
-                LocalizationManager.Get("Screen_Main_Menu_Jukebox"), OpenMusicPlayer);
-            AddTopLayoutIconButton(GlobalIcon.Chat,
-                LocalizationManager.Get("Screen_Options_ToggleChatOverlay"), ToggleChat);
-            AddSharedRightControls();
+            SetTopBar(layout =>
+            {
+                layout.AddIconButton(NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Jukebox),
+                    LocalizationManager.Get("Screen_Main_Menu_Jukebox"), OpenMusicPlayer);
+                layout.AddIconButton(NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Chat),
+                    LocalizationManager.Get("Screen_Options_ToggleChatOverlay"), ToggleChat);
+                layout.AddSharedRightControls();
+            });
 
             CurrentTopLayout = TopLayout.Main;
             CurrentActiveScreen = QuaverScreenType.Menu;
@@ -123,21 +124,23 @@ namespace Quaver.Shared.Screens.V2.UI
             if (CurrentTopLayout == TopLayout.Application && CurrentActiveScreen == activeScreen)
                 return;
 
-            ClearTopLayout();
-
-            AddApplicationButton(GlobalIcon.Home, "Screen_Main_Menu_Home", NavigateHome,
-                activeScreen == QuaverScreenType.Menu);
-            AddApplicationButton(GlobalIcon.SinglePlayer, "Screen_Main_SinglePlayer",
-                NavigateSinglePlayer, activeScreen == QuaverScreenType.Select);
-            AddApplicationButton(GlobalIcon.Multiplayer, "Screen_Main_Multiplayer",
-                NavigateMultiplayer, activeScreen == QuaverScreenType.Lobby ||
-                                     activeScreen == QuaverScreenType.Multiplayer);
-            AddApplicationButton(GlobalIcon.Download, "Screen_Download_Download",
-                NavigateDownload, activeScreen == QuaverScreenType.Download);
-            AddApplicationButton(GlobalIcon.Chat, "Screen_Main_Menu_Chat", ToggleChat, false);
-            AddApplicationButton(GlobalIcon.Jukebox, "Screen_Overlay_VolumeControl_Music",
-                OpenMusicPlayer, activeScreen == QuaverScreenType.Music);
-            AddSharedRightControls();
+            SetTopBar(layout =>
+            {
+                layout.AddApplicationLogo();
+                layout.AddApplicationButton(GlobalIcon.Home, "Screen_Main_Menu_Home", NavigateHome,
+                    activeScreen == QuaverScreenType.Menu);
+                layout.AddApplicationButton(GlobalIcon.SinglePlayer, "Screen_Main_SinglePlayer",
+                    NavigateSinglePlayer, activeScreen == QuaverScreenType.Select);
+                layout.AddApplicationButton(GlobalIcon.Multiplayer, "Screen_Main_Multiplayer",
+                    NavigateMultiplayer, activeScreen == QuaverScreenType.Lobby ||
+                                         activeScreen == QuaverScreenType.Multiplayer);
+                layout.AddApplicationButton(GlobalIcon.Download, "Screen_Download_Download",
+                    NavigateDownload, activeScreen == QuaverScreenType.Download);
+                layout.AddApplicationButton(GlobalIcon.Chat, "Screen_Main_Menu_Chat", ToggleChat, false);
+                layout.AddApplicationButton(GlobalIcon.Jukebox, "Screen_Overlay_VolumeControl_Music",
+                    OpenMusicPlayer, activeScreen == QuaverScreenType.Music);
+                layout.AddSharedRightControls();
+            });
 
             CurrentTopLayout = TopLayout.Application;
             CurrentActiveScreen = activeScreen;
@@ -148,26 +151,27 @@ namespace Quaver.Shared.Screens.V2.UI
             if (CurrentFooterLayout == FooterLayout.Default)
                 return;
 
-            ClearFooter();
+            SetFooter(layout =>
+            {
+                layout.AddIconButton(NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Website),
+                    LocalizationManager.Get("Screen_Main_Menu_Website"),
+                    () => BrowserHelper.OpenURL("https://quavergame.com"));
+                layout.AddIconButton(NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Discord),
+                    LocalizationManager.Get("Screen_Main_Menu_Discord"),
+                    () => BrowserHelper.OpenURL("https://discord.gg/quaver", true));
+                layout.AddIconButton(NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.GitHub),
+                    LocalizationManager.Get("Screen_Main_Menu_GitHub"),
+                    () => BrowserHelper.OpenURL("https://github.com/Quaver"));
 
-            AddIconButton(BottomBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Website),
-                LocalizationManager.Get("Screen_Main_Menu_Website"),
-                () => BrowserHelper.OpenURL("https://quavergame.com"), TooltipAnchor.TopCenter);
-            AddIconButton(BottomBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Discord),
-                LocalizationManager.Get("Screen_Main_Menu_Discord"),
-                () => BrowserHelper.OpenURL("https://discord.gg/quaver", true), TooltipAnchor.TopCenter);
-            AddIconButton(BottomBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.GitHub),
-                LocalizationManager.Get("Screen_Main_Menu_GitHub"),
-                () => BrowserHelper.OpenURL("https://github.com/Quaver"), TooltipAnchor.TopCenter);
-
-            AddIconButton(BottomBar, NavigationBarRegion.Right, GlobalIcons.Get(GlobalIcon.Volume),
-                LocalizationManager.Get("Screen_Options_Volume"), ShowVolume, TooltipAnchor.TopCenter);
-            AddIconButton(BottomBar, NavigationBarRegion.Right, GlobalIcons.Get(GlobalIcon.Options),
-                LocalizationManager.Get("Screen_Main_Options"),
-                () => DialogManager.Show(new OptionsDialog()), TooltipAnchor.TopCenter);
-            AddIconButton(BottomBar, NavigationBarRegion.Right, GlobalIcons.Get(GlobalIcon.Quit),
-                LocalizationManager.Get("Screen_Main_QuitGame"),
-                () => DialogManager.Show(new QuitDialog()), TooltipAnchor.TopCenter);
+                layout.AddIconButton(NavigationBarRegion.Right, GlobalIcons.Get(GlobalIcon.Volume),
+                    LocalizationManager.Get("Screen_Options_Volume"), ShowVolume);
+                layout.AddIconButton(NavigationBarRegion.Right, GlobalIcons.Get(GlobalIcon.Options),
+                    LocalizationManager.Get("Screen_Main_Options"),
+                    () => DialogManager.Show(new OptionsDialog()));
+                layout.AddIconButton(NavigationBarRegion.Right, GlobalIcons.Get(GlobalIcon.Quit),
+                    LocalizationManager.Get("Screen_Main_QuitGame"),
+                    () => DialogManager.Show(new QuitDialog()));
+            });
 
             CurrentFooterLayout = FooterLayout.Default;
         }
@@ -177,9 +181,7 @@ namespace Quaver.Shared.Screens.V2.UI
             if (CurrentFooterLayout == FooterLayout.Selection)
                 return;
 
-            ClearFooter();
-
-            var button = BottomBar.AddRoundedButton(NavigationBarRegion.Right,
+            SetFooter(layout => layout.AddRoundedButton(NavigationBarRegion.Right,
                 new NavigationBarButtonOptions
                 {
                     Icon = GlobalIcons.Get(GlobalIcon.Play),
@@ -195,11 +197,32 @@ namespace Quaver.Shared.Screens.V2.UI
                     ForegroundColor = SkinV2Color.Parse(Config.Button.ForegroundColor),
                     AlwaysShowLabel = true,
                     ClickAction = (sender, args) => ShowSelectionPlayUnavailable()
-                });
+                }));
 
-            NavigationButtons.Add(button);
-            FooterButtons.Add(button);
             CurrentFooterLayout = FooterLayout.Selection;
+        }
+
+        /// <summary>
+        ///     Replaces the top bar contents. Screens may call this again whenever their state changes.
+        /// </summary>
+        public void SetTopBar(Action<ScreenNavigationLayout> configure)
+        {
+            ClearTopLayout();
+            configure?.Invoke(new ScreenNavigationLayout(this, TopBar, TopLayoutButtons,
+                TooltipAnchor.BottomCenter));
+            CurrentTopLayout = TopLayout.Custom;
+            CurrentActiveScreen = QuaverScreenType.None;
+        }
+
+        /// <summary>
+        ///     Replaces the footer contents. Screens may call this again whenever their state changes.
+        /// </summary>
+        public void SetFooter(Action<ScreenNavigationLayout> configure)
+        {
+            ClearFooter();
+            configure?.Invoke(new ScreenNavigationLayout(this, BottomBar, FooterButtons,
+                TooltipAnchor.TopCenter));
+            CurrentFooterLayout = FooterLayout.Custom;
         }
 
         public static ScreenNavigation EnsureAttached(Container parent, SkinV2Config previewConfig = null)
@@ -274,7 +297,8 @@ namespace Quaver.Shared.Screens.V2.UI
         };
 
         private RoundedButton AddIconButton(NavigationBar bar, NavigationBarRegion region,
-            Texture2D icon, string tooltip, Action action, TooltipAnchor tooltipAnchor)
+            Texture2D icon, string tooltip, Action action, TooltipAnchor tooltipAnchor,
+            List<Drawable> layoutItems = null)
         {
             var button = bar.AddRoundedButton(region, new NavigationBarButtonOptions
             {
@@ -295,20 +319,27 @@ namespace Quaver.Shared.Screens.V2.UI
             });
 
             NavigationButtons.Add(button);
-            if (bar == BottomBar)
-                FooterButtons.Add(button);
+            layoutItems?.Add(button);
             return button;
         }
 
-        private void AddTopLayoutIconButton(GlobalIcon icon, string tooltip, Action action)
+        private void AddApplicationLogo(List<Drawable> layoutItems)
         {
-            var button = AddIconButton(TopBar, NavigationBarRegion.Left, GlobalIcons.Get(icon),
-                tooltip, action, TooltipAnchor.BottomCenter);
-            TopLayoutButtons.Add(button);
+            var texture = Skin.LoadTexture(Config.Logo.Image,
+                TextureManager.Load("Quaver.Resources/Textures/UI/Screens/Main/logo-q-colored.png"));
+            var width = Config.Logo.Height * texture.Width / texture.Height;
+            var logo = new Sprite
+            {
+                Size = new ScalableVector2(width, Config.Logo.Height),
+                Image = texture
+            };
+
+            TopBar.Add(NavigationBarRegion.Left, logo);
+            layoutItems.Add(logo);
         }
 
         private void AddApplicationButton(GlobalIcon icon, string localizationKey, Action action,
-            bool active)
+            bool active, List<Drawable> layoutItems)
         {
             var button = TopBar.AddRoundedButton(NavigationBarRegion.Left,
                 new NavigationBarButtonOptions
@@ -326,11 +357,12 @@ namespace Quaver.Shared.Screens.V2.UI
                     ForegroundColor = SkinV2Color.Parse(Config.Button.ForegroundColor),
                     ExpandLabelOnHover = true,
                     AlwaysShowLabel = active,
+                    ExpandedLabelRightPadding = Config.Button.ExpandedLabelRightPadding,
                     ClickAction = (sender, args) => action()
                 });
 
             NavigationButtons.Add(button);
-            TopLayoutButtons.Add(button);
+            layoutItems.Add(button);
         }
 
         private void AddSharedRightControls()
@@ -506,13 +538,79 @@ namespace Quaver.Shared.Screens.V2.UI
         private enum FooterLayout
         {
             Default,
-            Selection
+            Selection,
+            Custom
         }
 
         private enum TopLayout
         {
             Main,
-            Application
+            Application,
+            Custom
+        }
+
+        public sealed class ScreenNavigationLayout
+        {
+            private ScreenNavigation Navigation { get; }
+
+            private NavigationBar Bar { get; }
+
+            private List<Drawable> Items { get; }
+
+            private TooltipAnchor TooltipAnchor { get; }
+
+            public ScreenNavigationLayout(ScreenNavigation navigation, NavigationBar bar,
+                List<Drawable> items, TooltipAnchor tooltipAnchor)
+            {
+                Navigation = navigation;
+                Bar = bar;
+                Items = items;
+                TooltipAnchor = tooltipAnchor;
+            }
+
+            public void Add(Drawable drawable, NavigationBarRegion region)
+            {
+                Bar.Add(region, drawable);
+                Items.Add(drawable);
+            }
+
+            public RoundedButton AddRoundedButton(NavigationBarRegion region,
+                NavigationBarButtonOptions options)
+            {
+                var button = Bar.AddRoundedButton(region, options);
+                Navigation.NavigationButtons.Add(button);
+                Items.Add(button);
+                return button;
+            }
+
+            public RoundedButton AddIconButton(NavigationBarRegion region, Texture2D icon,
+                string tooltip, Action action) =>
+                Navigation.AddIconButton(Bar, region, icon, tooltip, action, TooltipAnchor, Items);
+
+            public void AddApplicationLogo()
+            {
+                if (Bar != Navigation.TopBar)
+                    throw new InvalidOperationException("The application logo can only be added to the top bar.");
+
+                Navigation.AddApplicationLogo(Items);
+            }
+
+            public void AddApplicationButton(GlobalIcon icon, string localizationKey, Action action,
+                bool active)
+            {
+                if (Bar != Navigation.TopBar)
+                    throw new InvalidOperationException("Application buttons can only be added to the top bar.");
+
+                Navigation.AddApplicationButton(icon, localizationKey, action, active, Items);
+            }
+
+            public void AddSharedRightControls()
+            {
+                if (Bar != Navigation.TopBar)
+                    throw new InvalidOperationException("Shared controls can only be added to the top bar.");
+
+                Navigation.AddSharedRightControls();
+            }
         }
 
         /// <summary>

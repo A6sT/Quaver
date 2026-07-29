@@ -40,6 +40,10 @@ namespace Quaver.Shared.Screens.V2
 
         private Container ContentRoot { get; set; }
 
+        protected ScreenNavigation Navigation { get; private set; }
+
+        protected virtual bool UsesNavigation => true;
+
         public string EditorGroupLabel => LocalizationManager.Get(TitleLocalizationKey);
 
         public Container PreviewRoot { get; }
@@ -148,18 +152,34 @@ namespace Quaver.Shared.Screens.V2
 
         public void EnsureNavigation()
         {
-            var navigation = ScreenNavigation.EnsureAttached(PreviewRoot);
-            ConfigureNavigation(navigation);
-            AddNavigationTargets(navigation);
+            if (!UsesNavigation)
+            {
+                ScreenManager.RemoveElement(ScreenNavigation.ElementKey);
+                Navigation = null;
+                return;
+            }
+
+            Navigation = ScreenNavigation.EnsureAttached(PreviewRoot);
+            ConfigureNavigation(Navigation);
+            AddNavigationTargets(Navigation);
         }
 
         public void ApplySkinEditorPreview(SkinV2Config config)
         {
             RootConfig = config;
             BuildContent();
-            var navigation = ScreenNavigation.ReplaceAttached(PreviewRoot, RootConfig);
-            ConfigureNavigation(navigation);
-            AddNavigationTargets(navigation);
+            if (UsesNavigation)
+            {
+                Navigation = ScreenNavigation.ReplaceAttached(PreviewRoot, RootConfig);
+                ConfigureNavigation(Navigation);
+                AddNavigationTargets(Navigation);
+            }
+            else
+            {
+                ScreenManager.RemoveElement(ScreenNavigation.ElementKey);
+                Navigation = null;
+            }
+
             UpdateEditorLayout();
         }
 
@@ -181,6 +201,18 @@ namespace Quaver.Shared.Screens.V2
         {
             navigation.ShowApplicationTopBar(((QuaverScreen) Screen).Type);
             navigation.ShowDefaultFooter();
+        }
+
+        /// <summary>
+        ///     Reapplies this screen's navigation configuration after screen state changes.
+        /// </summary>
+        protected void RefreshNavigation()
+        {
+            if (!UsesNavigation)
+                return;
+
+            Navigation = ScreenNavigation.EnsureAttached(PreviewRoot);
+            ConfigureNavigation(Navigation);
         }
 
         private void UpdateResponsiveLayout(bool force = false)

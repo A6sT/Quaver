@@ -18,15 +18,18 @@ namespace Quaver.Shared.Screens.V2
 
         protected abstract ISkinV2EditorHost SkinEditorHost { get; }
 
+        protected virtual bool UsesNavigation => true;
+
         protected bool IsSkinEditorActive => skinEditor?.IsOpen == true;
 
-        IReadOnlyCollection<string> IPersistentScreen.PersistentElementKeys { get; } =
-            new[] { ScreenNavigation.ElementKey };
+        IReadOnlyCollection<string> IPersistentScreen.PersistentElementKeys =>
+            UsesNavigation ? new[] { ScreenNavigation.ElementKey } : new string[0];
 
         public override void OnActivated()
         {
             base.OnActivated();
-            SkinEditorHost.EnsureNavigation();
+            if (UsesNavigation)
+                SkinEditorHost.EnsureNavigation();
         }
 
         public override void Update(GameTime gameTime)

@@ -27,6 +27,8 @@ namespace Quaver.Shared.Screens.V2.Initialization
 
         public override QuaverScreenType Type { get; } = QuaverScreenType.Initialization;
 
+        protected override bool UsesNavigation => false;
+
         protected override bool CanExitToMainMenu => false;
 
         private TaskHandler<int, int> InitializationTask { get; }
