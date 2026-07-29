@@ -15,8 +15,6 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
     internal sealed class SkinEditorColorPicker : SpriteImGui
     {
         private const ImGuiColorEditFlags PickerFlags =
-            ImGuiColorEditFlags.AlphaBar |
-            ImGuiColorEditFlags.AlphaPreviewHalf |
             ImGuiColorEditFlags.DisplayRGB |
             ImGuiColorEditFlags.InputRGB |
             ImGuiColorEditFlags.Uint8;
@@ -25,6 +23,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         private NumericsVector4 color;
         private string pendingHex;
         private bool positionWindow;
+        private bool allowAlpha;
 
         public bool IsOpen { get; private set; }
 
@@ -34,13 +33,14 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         {
         }
 
-        public void Open(Color initialColor, Action<string> onChanged)
+        public void Open(Color initialColor, Action<string> onChanged, bool allowAlpha = true)
         {
+            this.allowAlpha = allowAlpha;
             color = new NumericsVector4(
                 initialColor.R / 255f,
                 initialColor.G / 255f,
                 initialColor.B / 255f,
-                initialColor.A / 255f);
+                allowAlpha ? initialColor.A / 255f : 1);
             changed = onChanged;
             pendingHex = null;
             positionWindow = true;
@@ -71,12 +71,17 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             ImGui.SetNextWindowSizeConstraints(
                 new NumericsVector2(300, 0),
                 new NumericsVector2(float.MaxValue, float.MaxValue));
-            if (ImGui.Begin(LocalizationManager.Get("SkinEditor_Property_Color") +
-                            "###SkinEditorColorPicker", ref open,
-                    ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoSavedSettings))
+            var visible = ImGui.Begin(LocalizationManager.Get("SkinEditor_Property_Color") +
+                                      "###SkinEditorColorPicker", ref open,
+                ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoSavedSettings);
+            var hovered = ImGui.IsWindowHovered();
+            if (visible)
             {
-                if (ImGui.ColorPicker4("##SkinEditorColor", ref color, PickerFlags))
-                    pendingHex = ToHexAlpha(color);
+                var flags = PickerFlags | (allowAlpha
+                    ? ImGuiColorEditFlags.AlphaBar | ImGuiColorEditFlags.AlphaPreviewHalf
+                    : ImGuiColorEditFlags.NoAlpha);
+                if (ImGui.ColorPicker4("##SkinEditorColor", ref color, flags))
+                    pendingHex = ToHex(color, allowAlpha);
 
                 if (ImGui.IsItemDeactivatedAfterEdit() ||
                     pendingHex != null &&
@@ -86,7 +91,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             }
             ImGui.End();
 
-            if (!open)
+            if (!open || ImGui.IsMouseClicked(ImGuiMouseButton.Left) && !hovered)
                 Close();
         }
 
@@ -99,14 +104,16 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             pendingHex = null;
         }
 
-        private static string ToHexAlpha(NumericsVector4 value)
+        private static string ToHex(NumericsVector4 value, bool includeAlpha)
         {
             var color = new Color(
                 ToByte(value.X),
                 ToByte(value.Y),
                 ToByte(value.Z),
-                ToByte(value.W));
-            return SkinV2Color.ToHexAlpha(color);
+                includeAlpha ? ToByte(value.W) : byte.MaxValue);
+            return includeAlpha
+                ? SkinV2Color.ToHexAlpha(color)
+                : $"#{color.R:X2}{color.G:X2}{color.B:X2}";
         }
 
         private static byte ToByte(float value) =>

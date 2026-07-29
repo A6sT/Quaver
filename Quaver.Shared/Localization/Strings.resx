@@ -2525,6 +2525,7 @@ for other players to download?</value>
   <data name="SkinEditor_AssetBreadcrumb" xml:space="preserve"><value>Assets / {0}</value></data>
   <data name="SkinEditor_Group_MainMenu" xml:space="preserve"><value>Main Menu</value></data>
   <data name="SkinEditor_Group_SharedNavigation" xml:space="preserve"><value>Shared Navigation</value></data>
+  <data name="SkinEditor_Group_SharedComponents" xml:space="preserve"><value>Shared Components</value></data>
   <data name="SkinEditor_Group_Other" xml:space="preserve"><value>Screen Components</value></data>
   <data name="SkinEditor_Save" xml:space="preserve"><value>Save</value></data>
   <data name="SkinEditor_Close" xml:space="preserve"><value>Close</value></data>
@@ -2568,6 +2569,7 @@ for other players to download?</value>
   <data name="SkinEditor_Component_Background" xml:space="preserve"><value>Background</value></data>
   <data name="SkinEditor_Component_BackgroundEffects" xml:space="preserve"><value>Background Effects</value></data>
   <data name="SkinEditor_Component_Logo" xml:space="preserve"><value>Logo</value></data>
+  <data name="SkinEditor_Component_LogoAccent" xml:space="preserve"><value>Logo Accent</value></data>
   <data name="SkinEditor_Component_Actions" xml:space="preserve"><value>Action Buttons</value></data>
   <data name="SkinEditor_Component_News" xml:space="preserve"><value>News Card</value></data>
   <data name="SkinEditor_Component_TopNavigation" xml:space="preserve"><value>Top Navigation</value></data>
@@ -2596,6 +2598,7 @@ for other players to download?</value>
   <data name="SkinEditor_Property_AccentColor" xml:space="preserve"><value>Accent Color</value></data>
   <data name="SkinEditor_Property_TextColor" xml:space="preserve"><value>Text Color</value></data>
   <data name="SkinEditor_Property_BottomOffset" xml:space="preserve"><value>Bottom Offset</value></data>
+  <data name="SkinEditor_Property_Scale" xml:space="preserve"><value>Scale</value></data>
   <data name="SkinEditor_Property_FallbackImage" xml:space="preserve"><value>Fallback Image</value></data>
   <data name="SkinEditor_Property_BackgroundColor" xml:space="preserve"><value>Background Color</value></data>
   <data name="SkinEditor_Property_ForegroundColor" xml:space="preserve"><value>Foreground Color</value></data>

@@ -40,7 +40,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 "RadialRadius", "Effect", "PrimaryColor", "SecondaryColor", "Primary", "Secondary",
                 "Tertiary", "Image", "Color", "HoverColor", "AccentColor", "TextColor",
                 "BottomOffset", "FallbackImage", "BackgroundColor", "ForegroundColor",
-                "OfflineStatusColor"
+                "OfflineStatusColor", "Scale"
             }, StringComparer.Ordinal);
 
         private readonly ISkinV2EditorHost host;
@@ -258,10 +258,10 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             var editableTargets = GetEditableTargets();
             AddTargetGroup(host.EditorGroupLabel,
                 editableTargets.Where(x =>
-                    !x.ConfigPath.StartsWith("Shared.Navigation", StringComparison.Ordinal)));
-            AddTargetGroup(LocalizationManager.Get("SkinEditor_Group_SharedNavigation"),
+                    !x.ConfigPath.StartsWith("Shared.", StringComparison.Ordinal)));
+            AddTargetGroup(LocalizationManager.Get("SkinEditor_Group_SharedComponents"),
                 editableTargets.Where(x =>
-                    x.ConfigPath.StartsWith("Shared.Navigation", StringComparison.Ordinal)));
+                    x.ConfigPath.StartsWith("Shared.", StringComparison.Ordinal)));
             targetRoot.RefreshLayout();
         }
 
@@ -555,7 +555,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                         CommitText(property, picked, errorText);
                         if (!invalidPaths.Contains(property.Path))
                             SetColorSwatchValue(swatch, SkinV2Color.Parse(picked));
-                    });
+                    }, property.Path != "Shared.Brand.AccentColor");
             }
 
             if (property.IsAssetPath)
@@ -686,7 +686,8 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             IEnumerable<SkinV2GradientStopConfig> stops) =>
             stops.Select(x => new SkinV2GradientStopConfig(x.Position, x.Color)).ToList();
 
-        private RoundedButton CreateColorSwatch(Drawable parent, Color value, Action<string> changed)
+        private RoundedButton CreateColorSwatch(Drawable parent, Color value, Action<string> changed,
+            bool allowAlpha = true)
         {
             RoundedButton swatch = null;
             swatch = new RoundedButton((sender, args) =>
@@ -696,7 +697,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 {
                     SetColorSwatchValue(swatch, SkinV2Color.Parse(picked));
                     changed(picked);
-                });
+                }, allowAlpha);
             })
             {
                 Parent = parent,

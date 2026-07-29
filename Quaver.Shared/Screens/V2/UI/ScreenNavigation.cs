@@ -47,6 +47,8 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private SkinV2NavigationConfig Config { get; }
 
+        private SkinV2BrandConfig BrandConfig { get; }
+
         private NavigationBar TopBar { get; }
 
         private NavigationBar BottomBar { get; }
@@ -69,6 +71,10 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private List<Drawable> TopLayoutButtons { get; } = new List<Drawable>();
 
+        private Sprite ApplicationLogo { get; set; }
+
+        private bool ApplicationLogoUsesBundledAsset { get; set; }
+
         private FooterLayout? CurrentFooterLayout { get; set; }
 
         private TopLayout? CurrentTopLayout { get; set; }
@@ -78,7 +84,9 @@ namespace Quaver.Shared.Screens.V2.UI
         private ScreenNavigation(SkinV2Config previewConfig = null)
         {
             Skin = SkinManager.AcquireV2();
-            Config = (previewConfig ?? Skin.Config).Shared.Navigation;
+            var rootConfig = previewConfig ?? Skin.Config;
+            Config = rootConfig.Shared.Navigation;
+            BrandConfig = rootConfig.Shared.Brand;
             Size = new ScalableVector2(WindowManager.Width, WindowManager.Height);
 
             TopBar = CreateBar(Alignment.TopLeft, Config.Bar);
@@ -253,21 +261,33 @@ namespace Quaver.Shared.Screens.V2.UI
             return EnsureAttached(parent, previewConfig);
         }
 
-        public IReadOnlyList<SkinEditorTarget> GetSkinEditorTargets() => new[]
+        public IReadOnlyList<SkinEditorTarget> GetSkinEditorTargets()
         {
-            new SkinEditorTarget("navigation-top",
+            var targets = new List<SkinEditorTarget>
+            {
+                new SkinEditorTarget("navigation-top",
                 LocalizationManager.Get("SkinEditor_Component_TopNavigation"),
                 "Shared.Navigation.Bar", TopBar),
-            new SkinEditorTarget("navigation-bottom",
+                new SkinEditorTarget("navigation-bottom",
                 LocalizationManager.Get("SkinEditor_Component_BottomNavigation"),
                 "Shared.Navigation.Footer", BottomBar),
-            new SkinEditorTarget("navigation-buttons",
+                new SkinEditorTarget("navigation-buttons",
                 LocalizationManager.Get("SkinEditor_Component_NavigationButtons"),
                 "Shared.Navigation.Button", NavigationButtons.ToArray()),
-            new SkinEditorTarget("navigation-profile",
+                new SkinEditorTarget("navigation-profile",
                 LocalizationManager.Get("SkinEditor_Component_Profile"),
                 "Shared.Navigation.Profile", ProfileButton)
-        };
+            };
+
+            if (ApplicationLogoUsesBundledAsset && ApplicationLogo != null)
+            {
+                targets.Add(new SkinEditorTarget("brand-logo-accent",
+                    LocalizationManager.Get("SkinEditor_Component_LogoAccent"),
+                    "Shared.Brand", ApplicationLogo));
+            }
+
+            return targets;
+        }
 
         public override void Update(GameTime gameTime)
         {
@@ -325,17 +345,44 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private void AddApplicationLogo(List<Drawable> layoutItems)
         {
-            var texture = Skin.LoadTexture(Config.Logo.Image,
-                TextureManager.Load("Quaver.Resources/Textures/UI/Screens/Main/logo-q-colored.png"));
-            var width = Config.Logo.Height * texture.Width / texture.Height;
-            var logo = new Sprite
+            ApplicationLogoUsesBundledAsset = string.IsNullOrWhiteSpace(Config.Logo.Image);
+            if (ApplicationLogoUsesBundledAsset)
             {
-                Size = new ScalableVector2(width, Config.Logo.Height),
-                Image = texture
-            };
+                var accentColor = SkinV2Color.Parse(BrandConfig.AccentColor);
+                ApplicationLogo = accentColor == SkinV2Color.Parse(SkinV2BrandConfig.DefaultAccentColor)
+                    ? new Sprite
+                    {
+                        Image = TextureManager.Load(
+                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-q.png")
+                    }
+                    : new TintableLogo(
+                        TextureManager.Load(
+                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-q-tail.png"),
+                        accentColor,
+                        new[]
+                        {
+                            TextureManager.Load(
+                                "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-q-accent.png")
+                        },
+                        new[]
+                        {
+                            TextureManager.Load(
+                                "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-q-color.png")
+                        });
+            }
+            else
+            {
+                var texture = Skin.LoadTexture(Config.Logo.Image,
+                    TextureManager.Load(
+                        "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-q.png"));
+                ApplicationLogo = new Sprite { Image = texture };
+            }
 
-            TopBar.Add(NavigationBarRegion.Left, logo);
-            layoutItems.Add(logo);
+            var width = Config.Logo.Height * ApplicationLogo.Image.Width / ApplicationLogo.Image.Height;
+            ApplicationLogo.Size = new ScalableVector2(width, Config.Logo.Height);
+
+            TopBar.Add(NavigationBarRegion.Left, ApplicationLogo);
+            layoutItems.Add(ApplicationLogo);
         }
 
         private void AddApplicationButton(GlobalIcon icon, string localizationKey, Action action,
@@ -383,6 +430,8 @@ namespace Quaver.Shared.Screens.V2.UI
             }
 
             TopLayoutButtons.Clear();
+            ApplicationLogo = null;
+            ApplicationLogoUsesBundledAsset = false;
         }
 
         private void ClearFooter()

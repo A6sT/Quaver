@@ -44,6 +44,8 @@ namespace Quaver.Shared.Screens.V2.Main
 
         private Sprite Logo { get; set; }
 
+        private bool UsesBundledLogo { get; set; }
+
         private FlexItemOptions LogoOptions { get; set; }
 
         private FlexContainer ActionRow { get; set; }
@@ -138,15 +140,39 @@ namespace Quaver.Shared.Screens.V2.Main
                 RowGap = Config.Layout.RowGap
             };
 
-            var logoTexture = Skin.LoadTexture(Config.Logo.Image, TextureManager.Load("Quaver.Resources/Textures/UI/Screens/Main/logo-colored.png"));
-
-            Logo = new Sprite
+            UsesBundledLogo = string.IsNullOrWhiteSpace(Config.Logo.Image);
+            if (UsesBundledLogo)
             {
-                Parent = Content,
-                Image = logoTexture,
-                Size = new ScalableVector2(logoTexture.Width, logoTexture.Height)
-            };
-            LogoOptions = new FlexItemOptions { Basis = logoTexture.Height, Shrink = 1 };
+                var accentColor = SkinV2Color.Parse(RootConfig.Shared.Brand.AccentColor);
+                Logo = accentColor == SkinV2Color.Parse(SkinV2BrandConfig.DefaultAccentColor)
+                    ? new Sprite
+                    {
+                        Image = TextureManager.Load(
+                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-colored.png")
+                    }
+                    : new TintableLogo(
+                        TextureManager.Load("Quaver.Resources/Textures/UI/Screens/Main/Logos/logo.png"),
+                        accentColor,
+                        TextureManager.Load(
+                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-accent.png"),
+                        TextureManager.Load(
+                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-tail.png"));
+                Logo.Size = new ScalableVector2(Logo.Image.Width, Logo.Image.Height);
+            }
+            else
+            {
+                var logoTexture = Skin.LoadTexture(Config.Logo.Image,
+                    TextureManager.Load(
+                        "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-colored.png"));
+                Logo = new Sprite
+                {
+                    Image = logoTexture,
+                    Size = new ScalableVector2(logoTexture.Width, logoTexture.Height)
+                };
+            }
+
+            Logo.Parent = Content;
+            LogoOptions = new FlexItemOptions { Basis = Logo.Image.Height, Shrink = 1 };
             Content.SetItemOptions(Logo, LogoOptions);
 
             ActionRow = new FlexContainer
@@ -197,6 +223,12 @@ namespace Quaver.Shared.Screens.V2.Main
                     LocalizationManager.Get("SkinEditor_Component_News"),
                     "Screens.Main.News", News)
             };
+            if (UsesBundledLogo)
+            {
+                editorTargets.Insert(3, new SkinEditorTarget("brand-logo-accent",
+                    LocalizationManager.Get("SkinEditor_Component_LogoAccent"),
+                    "Shared.Brand", Logo));
+            }
 
             LastWindowWidth = -1;
             LastWindowHeight = -1;
@@ -350,7 +382,7 @@ namespace Quaver.Shared.Screens.V2.Main
                 });
 
             var logoTexture = Logo.Image;
-            var logoWidth = Math.Min(logoTexture.Width,
+            var logoWidth = Config.Logo.Scale * Math.Min(logoTexture.Width,
                 Math.Max(Config.Logo.MinimumWidth,
                     Math.Min(contentWidth - Config.Logo.HorizontalMargin, width * Config.Logo.ViewportWidthRatio)));
             var logoHeight = logoWidth * logoTexture.Height / logoTexture.Width;

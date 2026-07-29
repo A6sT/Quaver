@@ -55,7 +55,19 @@ namespace Quaver.Shared.Skinning.V2
     public sealed class SkinV2SharedConfig
     {
         [Required]
+        public SkinV2BrandConfig Brand { get; set; } = new SkinV2BrandConfig();
+
+        [Required]
         public SkinV2NavigationConfig Navigation { get; set; } = new SkinV2NavigationConfig();
+    }
+
+    public sealed class SkinV2BrandConfig
+    {
+        public const string DefaultAccentColor = "#1FBBFFFF";
+
+        [ConfigEditable]
+        [SkinColor]
+        public string AccentColor { get; set; } = DefaultAccentColor;
     }
 
     public static class SkinV2FontSizesConfig
