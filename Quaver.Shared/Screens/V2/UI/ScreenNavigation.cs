@@ -22,6 +22,7 @@ using Steamworks;
 using Wobble;
 using Wobble.Bindables;
 using Wobble.Graphics;
+using Wobble.Graphics.Animations;
 using Wobble.Graphics.Buttons;
 using Wobble.Graphics.Shaders;
 using Wobble.Graphics.Sprites;
@@ -42,6 +43,18 @@ namespace Quaver.Shared.Screens.V2.UI
     internal sealed class ScreenNavigation : Container
     {
         public const string ElementKey = "quaver-screen-navigation";
+
+        private const int LogoEnterAnimationDuration = 220;
+
+        private const int LogoExitAnimationDuration = 180;
+
+        private const int ButtonEnterAnimationDuration = 100;
+
+        private static readonly Rectangle BundledLogoSourceRectangle = new Rectangle(0, 0, 153, 132);
+
+        private const int BundledLogoTextureWidth = 53;
+
+        private const int BundledLogoTextureHeight = 46;
 
         private SkinStoreV2Lease Skin { get; }
 
@@ -71,9 +84,21 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private List<Drawable> TopLayoutButtons { get; } = new List<Drawable>();
 
+        private List<DelayedButtonReveal> DelayedButtonReveals { get; } =
+            new List<DelayedButtonReveal>();
+
+        private Dictionary<string, Texture2D> BundledLogoTextures { get; } =
+            new Dictionary<string, Texture2D>();
+
         private Sprite ApplicationLogo { get; set; }
 
+        private Container ApplicationLogoSlot { get; set; }
+
         private bool ApplicationLogoUsesBundledAsset { get; set; }
+
+        private Container OutgoingApplicationLogoSlot { get; set; }
+
+        private double OutgoingApplicationLogoTimeRemaining { get; set; }
 
         private FooterLayout? CurrentFooterLayout { get; set; }
 
@@ -114,14 +139,24 @@ namespace Quaver.Shared.Screens.V2.UI
             if (CurrentTopLayout == TopLayout.Main)
                 return;
 
+            var animateButtonsEntrance = CurrentTopLayout == TopLayout.Application;
+            if (animateButtonsEntrance)
+                BeginApplicationLogoExit();
+
+            var buttons = new List<RoundedButton>();
             SetTopBar(layout =>
             {
-                layout.AddIconButton(NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Jukebox),
-                    LocalizationManager.Get("Screen_Main_Menu_Jukebox"), OpenMusicPlayer);
-                layout.AddIconButton(NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Chat),
-                    LocalizationManager.Get("Screen_Options_ToggleChatOverlay"), ToggleChat);
+                buttons.Add(layout.AddIconButton(NavigationBarRegion.Left,
+                    GlobalIcons.Get(GlobalIcon.Jukebox),
+                    LocalizationManager.Get("Screen_Main_Menu_Jukebox"), OpenMusicPlayer));
+                buttons.Add(layout.AddIconButton(NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Chat),
+                    LocalizationManager.Get("Screen_Options_ToggleChatOverlay"), ToggleChat));
                 layout.AddSharedRightControls();
             });
+
+            AttachOutgoingApplicationLogo();
+            if (animateButtonsEntrance)
+                AnimateNavigationButtonsEntrance(buttons, LogoExitAnimationDuration);
 
             CurrentTopLayout = TopLayout.Main;
             CurrentActiveScreen = QuaverScreenType.Menu;
@@ -132,23 +167,35 @@ namespace Quaver.Shared.Screens.V2.UI
             if (CurrentTopLayout == TopLayout.Application && CurrentActiveScreen == activeScreen)
                 return;
 
+            var animateLogoEntrance = CurrentTopLayout != TopLayout.Application;
+            DestroyOutgoingApplicationLogo();
+
+            var buttons = new List<RoundedButton>();
             SetTopBar(layout =>
             {
                 layout.AddApplicationLogo();
-                layout.AddApplicationButton(GlobalIcon.Home, "Screen_Main_Menu_Home", NavigateHome,
-                    activeScreen == QuaverScreenType.Menu);
-                layout.AddApplicationButton(GlobalIcon.SinglePlayer, "Screen_Main_SinglePlayer",
-                    NavigateSinglePlayer, activeScreen == QuaverScreenType.Select);
-                layout.AddApplicationButton(GlobalIcon.Multiplayer, "Screen_Main_Multiplayer",
+                buttons.Add(layout.AddApplicationButton(GlobalIcon.Home, "Screen_Main_Menu_Home", NavigateHome,
+                    activeScreen == QuaverScreenType.Menu));
+                buttons.Add(layout.AddApplicationButton(GlobalIcon.SinglePlayer, "Screen_Main_SinglePlayer",
+                    NavigateSinglePlayer, activeScreen == QuaverScreenType.Select));
+                buttons.Add(layout.AddApplicationButton(GlobalIcon.Multiplayer, "Screen_Main_Multiplayer",
                     NavigateMultiplayer, activeScreen == QuaverScreenType.Lobby ||
-                                         activeScreen == QuaverScreenType.Multiplayer);
-                layout.AddApplicationButton(GlobalIcon.Download, "Screen_Download_Download",
-                    NavigateDownload, activeScreen == QuaverScreenType.Download);
-                layout.AddApplicationButton(GlobalIcon.Chat, "Screen_Main_Menu_Chat", ToggleChat, false);
-                layout.AddApplicationButton(GlobalIcon.Jukebox, "Screen_Overlay_VolumeControl_Music",
-                    OpenMusicPlayer, activeScreen == QuaverScreenType.Music);
+                                         activeScreen == QuaverScreenType.Multiplayer));
+                buttons.Add(layout.AddApplicationButton(GlobalIcon.Download, "Screen_Download_Download",
+                    NavigateDownload, activeScreen == QuaverScreenType.Download));
+                buttons.Add(layout.AddApplicationButton(GlobalIcon.Chat, "Screen_Main_Menu_Chat",
+                    ToggleChat, false));
+                buttons.Add(layout.AddApplicationButton(GlobalIcon.Jukebox,
+                    "Screen_Overlay_VolumeControl_Music",
+                    OpenMusicPlayer, activeScreen == QuaverScreenType.Music));
                 layout.AddSharedRightControls();
             });
+
+            if (animateLogoEntrance)
+            {
+                AnimateApplicationLogoEntrance();
+                AnimateNavigationButtonsEntrance(buttons, LogoEnterAnimationDuration);
+            }
 
             CurrentTopLayout = TopLayout.Application;
             CurrentActiveScreen = activeScreen;
@@ -294,6 +341,8 @@ namespace Quaver.Shared.Screens.V2.UI
             ResizeToWindow();
             EnsureOnlineHubSubscription();
             base.Update(gameTime);
+            UpdateOutgoingApplicationLogo(gameTime);
+            UpdateDelayedButtonReveals(gameTime);
         }
 
         public override void Destroy()
@@ -303,6 +352,10 @@ namespace Quaver.Shared.Screens.V2.UI
 
             base.Destroy();
 
+            foreach (var texture in BundledLogoTextures.Values)
+                texture.Dispose();
+            BundledLogoTextures.Clear();
+            DelayedButtonReveals.Clear();
             Skin.Dispose();
         }
 
@@ -352,40 +405,162 @@ namespace Quaver.Shared.Screens.V2.UI
                 ApplicationLogo = accentColor == SkinV2Color.Parse(SkinV2BrandConfig.DefaultAccentColor)
                     ? new Sprite
                     {
-                        Image = TextureManager.Load(
-                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-q.png")
+                        Image = LoadBundledLogoTexture(
+                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-colored.png")
                     }
                     : new TintableLogo(
-                        TextureManager.Load(
-                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-q-tail.png"),
-                        accentColor,
-                        new[]
-                        {
-                            TextureManager.Load(
-                                "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-q-accent.png")
-                        },
-                        new[]
-                        {
-                            TextureManager.Load(
-                                "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-q-color.png")
-                        });
+                        LoadBundledLogoTexture(
+                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo.png"),
+                        LoadBundledLogoTexture(
+                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-tail.png"),
+                        Color.Lerp(Color.White, accentColor, 0.5f),
+                        LoadBundledLogoTexture(
+                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-accent.png"),
+                        accentColor);
             }
             else
             {
-                var texture = Skin.LoadTexture(Config.Logo.Image,
-                    TextureManager.Load(
-                        "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-q.png"));
-                ApplicationLogo = new Sprite { Image = texture };
+                var fallback = TextureManager.Load(
+                    "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-colored.png");
+                var texture = Skin.LoadTexture(Config.Logo.Image, fallback);
+                ApplicationLogo = texture == fallback
+                    ? new Sprite
+                    {
+                        Image = LoadBundledLogoTexture(
+                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-colored.png")
+                    }
+                    : new Sprite { Image = texture };
             }
 
-            var width = Config.Logo.Height * ApplicationLogo.Image.Width / ApplicationLogo.Image.Height;
+            var aspectRatio = (float) ApplicationLogo.Image.Width / ApplicationLogo.Image.Height;
+            var width = Config.Logo.Height * aspectRatio;
             ApplicationLogo.Size = new ScalableVector2(width, Config.Logo.Height);
+            ApplicationLogo.Alignment = Alignment.MidLeft;
 
-            TopBar.Add(NavigationBarRegion.Left, ApplicationLogo);
-            layoutItems.Add(ApplicationLogo);
+            ApplicationLogoSlot = new Container
+            {
+                Size = new ScalableVector2(width, Config.Logo.Height)
+            };
+            ApplicationLogo.Parent = ApplicationLogoSlot;
+
+            TopBar.Add(NavigationBarRegion.Left, ApplicationLogoSlot);
+            layoutItems.Add(ApplicationLogoSlot);
         }
 
-        private void AddApplicationButton(GlobalIcon icon, string localizationKey, Action action,
+        private Texture2D LoadBundledLogoTexture(string resource)
+        {
+            if (BundledLogoTextures.TryGetValue(resource, out var texture) && !texture.IsDisposed)
+                return texture;
+
+            texture = TextureRegionResizer.Create(TextureManager.Load(resource),
+                BundledLogoSourceRectangle, BundledLogoTextureWidth, BundledLogoTextureHeight);
+            BundledLogoTextures[resource] = texture;
+            return texture;
+        }
+
+        private void AnimateApplicationLogoEntrance()
+        {
+            if (ApplicationLogo == null)
+                return;
+
+            ApplicationLogo.ClearAnimations();
+            ApplicationLogo.X = -Config.EdgePadding - ApplicationLogo.Width;
+            ApplicationLogo.MoveToX(0, Easing.OutCubic, LogoEnterAnimationDuration);
+        }
+
+        private void BeginApplicationLogoExit()
+        {
+            DestroyOutgoingApplicationLogo();
+
+            if (ApplicationLogoSlot == null || ApplicationLogo == null)
+                return;
+
+            TopBar.Remove(ApplicationLogoSlot, destroy: false);
+            TopLayoutButtons.Remove(ApplicationLogoSlot);
+
+            ApplicationLogo.ClearAnimations();
+            ApplicationLogo.MoveToX(-Config.EdgePadding - ApplicationLogo.Width, Easing.InCubic,
+                LogoExitAnimationDuration);
+
+            OutgoingApplicationLogoSlot = ApplicationLogoSlot;
+            OutgoingApplicationLogoTimeRemaining = LogoExitAnimationDuration;
+            ApplicationLogoSlot = null;
+            ApplicationLogo = null;
+            ApplicationLogoUsesBundledAsset = false;
+        }
+
+        private void AttachOutgoingApplicationLogo()
+        {
+            if (OutgoingApplicationLogoSlot != null)
+                OutgoingApplicationLogoSlot.Parent = TopBar;
+        }
+
+        private void UpdateOutgoingApplicationLogo(GameTime gameTime)
+        {
+            if (OutgoingApplicationLogoSlot == null)
+                return;
+
+            OutgoingApplicationLogoTimeRemaining -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (OutgoingApplicationLogoTimeRemaining <= 0)
+                DestroyOutgoingApplicationLogo();
+        }
+
+        private void DestroyOutgoingApplicationLogo()
+        {
+            if (OutgoingApplicationLogoSlot != null && !OutgoingApplicationLogoSlot.IsDisposed)
+                OutgoingApplicationLogoSlot.Destroy();
+
+            OutgoingApplicationLogoSlot = null;
+            OutgoingApplicationLogoTimeRemaining = 0;
+        }
+
+        private void AnimateNavigationButtonsEntrance(IEnumerable<RoundedButton> buttons, int delay)
+        {
+            foreach (var button in buttons)
+            {
+                button.ClearAnimations();
+                button.Alpha = 0;
+                button.Visible = false;
+                button.IsInteractionEnabled = false;
+                DelayedButtonReveals.Add(new DelayedButtonReveal
+                {
+                    Button = button,
+                    TimeRemaining = delay
+                });
+            }
+        }
+
+        private void UpdateDelayedButtonReveals(GameTime gameTime)
+        {
+            for (var i = DelayedButtonReveals.Count - 1; i >= 0; i--)
+            {
+                var delayed = DelayedButtonReveals[i];
+                if (delayed.Button.IsDisposed)
+                {
+                    DelayedButtonReveals.RemoveAt(i);
+                    continue;
+                }
+
+                delayed.TimeRemaining -= gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (delayed.TimeRemaining > 0)
+                    continue;
+
+                if (!delayed.RevealStarted)
+                {
+                    delayed.Button.Visible = true;
+                    delayed.Button.Alpha = 0;
+                    delayed.Button.FadeTo(1, Easing.OutCubic, ButtonEnterAnimationDuration);
+                    delayed.RevealStarted = true;
+                    delayed.TimeRemaining = ButtonEnterAnimationDuration;
+                    continue;
+                }
+
+                delayed.Button.IsInteractionEnabled = true;
+                DelayedButtonReveals.RemoveAt(i);
+            }
+        }
+
+        private RoundedButton AddApplicationButton(GlobalIcon icon, string localizationKey, Action action,
             bool active, List<Drawable> layoutItems)
         {
             var button = TopBar.AddRoundedButton(NavigationBarRegion.Left,
@@ -410,6 +585,7 @@ namespace Quaver.Shared.Screens.V2.UI
 
             NavigationButtons.Add(button);
             layoutItems.Add(button);
+            return button;
         }
 
         private void AddSharedRightControls()
@@ -431,6 +607,7 @@ namespace Quaver.Shared.Screens.V2.UI
 
             TopLayoutButtons.Clear();
             ApplicationLogo = null;
+            ApplicationLogoSlot = null;
             ApplicationLogoUsesBundledAsset = false;
         }
 
@@ -598,6 +775,15 @@ namespace Quaver.Shared.Screens.V2.UI
             Custom
         }
 
+        private sealed class DelayedButtonReveal
+        {
+            public RoundedButton Button { get; set; }
+
+            public double TimeRemaining { get; set; }
+
+            public bool RevealStarted { get; set; }
+        }
+
         public sealed class ScreenNavigationLayout
         {
             private ScreenNavigation Navigation { get; }
@@ -644,13 +830,13 @@ namespace Quaver.Shared.Screens.V2.UI
                 Navigation.AddApplicationLogo(Items);
             }
 
-            public void AddApplicationButton(GlobalIcon icon, string localizationKey, Action action,
+            public RoundedButton AddApplicationButton(GlobalIcon icon, string localizationKey, Action action,
                 bool active)
             {
                 if (Bar != Navigation.TopBar)
                     throw new InvalidOperationException("Application buttons can only be added to the top bar.");
 
-                Navigation.AddApplicationButton(icon, localizationKey, action, active, Items);
+                return Navigation.AddApplicationButton(icon, localizationKey, action, active, Items);
             }
 
             public void AddSharedRightControls()

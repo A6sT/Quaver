@@ -30,6 +30,14 @@ namespace Quaver.Shared.Screens.V2.UI
                 AddLayer(texture, accentColor);
         }
 
+        public TintableLogo(Texture2D baseTexture, Texture2D underlayTexture, Color underlayColor,
+            Texture2D accentTexture, Color accentColor)
+            : this(baseTexture)
+        {
+            AddLayer(underlayTexture, underlayColor);
+            AddLayer(accentTexture, accentColor);
+        }
+
         private TintableLogo(Texture2D baseTexture)
         {
             Image = baseTexture;

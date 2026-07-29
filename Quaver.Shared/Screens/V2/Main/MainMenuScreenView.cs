@@ -152,11 +152,12 @@ namespace Quaver.Shared.Screens.V2.Main
                     }
                     : new TintableLogo(
                         TextureManager.Load("Quaver.Resources/Textures/UI/Screens/Main/Logos/logo.png"),
-                        accentColor,
+                        TextureManager.Load(
+                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-tail.png"),
+                        Color.Lerp(Color.White, accentColor, 0.5f),
                         TextureManager.Load(
                             "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-accent.png"),
-                        TextureManager.Load(
-                            "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-tail.png"));
+                        accentColor);
                 Logo.Size = new ScalableVector2(Logo.Image.Width, Logo.Image.Height);
             }
             else
