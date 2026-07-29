@@ -13,7 +13,7 @@ public class EditorChangeBookmarkColorDialog : ColorDialog
     private List<BookmarkInfo> Bookmarks { get; }
 
     public EditorChangeBookmarkColorDialog(List<BookmarkInfo> bookmarks, EditorActionManager actionManager)
-        : base("CHANGE BOOKMARK COLOR", "Enter a new RGB color for the selected bookmarks...")
+        : base("CHANGE BOOKMARK COLOR")
     {
         Bookmarks = bookmarks;
         ActionManager = actionManager;

@@ -2545,14 +2545,8 @@ Vous pouvez utiliser les filtres ci-dessous pour cibler votre recherche.</value>
   <data name="Screen_Editor_ChangeTimingGroupColor" xml:space="preserve">
     <value>CHANGE TIMING GROUP COLOR</value>
   </data>
-  <data name="Screen_Editor_ChangeTimingGroupColorMessage" xml:space="preserve">
-    <value>Enter a new RGB color for your timing group...</value>
-  </data>
   <data name="Screen_Editor_ChangeWaveformColor" xml:space="preserve">
     <value>CHANGER LA COULEUR DU SPECTRE AUDIO</value>
-  </data>
-  <data name="Screen_Editor_ChangeWaveformColorMessage" xml:space="preserve">
-    <value>Entrez une nouvelle couleur RGB pour votre spectre audio... (par défaut: 0,200,255)</value>
   </data>
   <data name="Screen_Editor_AddDifficultyFromFile" xml:space="preserve">
     <value>ADD DIFFICULTY FROM FILE</value>
@@ -2616,12 +2610,6 @@ Vous pouvez utiliser les filtres ci-dessous pour cibler votre recherche.</value>
   </data>
   <data name="Screen_Editor_SelectColor" xml:space="preserve">
     <value>SÉLECTIONNEZ UNE COULEUR</value>
-  </data>
-  <data name="Screen_Editor_SelectColorMessage" xml:space="preserve">
-    <value>Entrez une nouvelle couleur RVB...</value>
-  </data>
-  <data name="Screen_Editor_RgbColorPlaceholder" xml:space="preserve">
-    <value>Entrez une couleur RVB (ex : 255,255,255)...</value>
   </data>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve">
     <value>Veuillez patienter pendant que votre carte est soumise pour le classement...</value>
@@ -3156,9 +3144,6 @@ Vous pouvez utiliser les filtres ci-dessous pour cibler votre recherche.</value>
   </data>
   <data name="Screen_Editor_ChangeLayerColor" xml:space="preserve">
     <value>CHANGE LAYER COLOR</value>
-  </data>
-  <data name="Screen_Editor_ChangeLayerColorMessage" xml:space="preserve">
-    <value>Enter a new RGB color for your layer...</value>
   </data>
   <data name="Screen_Editor_EditName" xml:space="preserve">
     <value>Edit Name</value>

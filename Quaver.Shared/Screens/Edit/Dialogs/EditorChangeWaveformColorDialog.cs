@@ -24,8 +24,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
         /// <inheritdoc />
         /// <summary>
         /// </summary>
-        public EditorChangeWaveformColorDialog() : base(LocalizationManager.Get("Screen_Editor_ChangeWaveformColor"),
-            LocalizationManager.Get("Screen_Editor_ChangeWaveformColorMessage"))
+        public EditorChangeWaveformColorDialog() : base(LocalizationManager.Get("Screen_Editor_ChangeWaveformColor"))
         {
             var currentEditorWaveformColor = new Color(
                 ConfigManager.EditorWaveformColorR.Value,
