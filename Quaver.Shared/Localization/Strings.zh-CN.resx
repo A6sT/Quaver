@@ -1863,15 +1863,6 @@
   <data name="Screen_Multiplayer_WaitingToStart" xml:space="preserve">
     <value>等待开始</value>
   </data>
-  <data name="Screen_Multiplayer_WaitingToStartOneDot" xml:space="preserve">
-    <value>等待开始。</value>
-  </data>
-  <data name="Screen_Multiplayer_WaitingToStartTwoDots" xml:space="preserve">
-    <value>等待开始。。</value>
-  </data>
-  <data name="Screen_Multiplayer_WaitingToStartThreeDots" xml:space="preserve">
-    <value>等待开始。。。</value>
-  </data>
   <data name="Screen_Multiplayer_WaitingForServer" xml:space="preserve">
     <value>等待服务器</value>
   </data>
@@ -2862,14 +2853,17 @@
   <data name="Screen_Editor_ScrollVelocityHelp" xml:space="preserve">
     <value>SV可以动态更改物件下落速度与方向。</value>
   </data>
-  <data name="Screen_Editor_ScrollVelocityInteractionHelp" xml:space="preserve">
-    <value>点击一行 SV 以进行编辑；双击可跳转至 SV 的发生时间</value>
+  <data name="Screen_Editor_ScrollPointInteractionHelp" xml:space="preserve">
+    <value>点击单个 {0} 节点以编辑，双击可跳转到节点时间。</value>
   </data>
   <data name="Screen_Editor_DifferenceFromSf" xml:space="preserve">
     <value>（与 SSF 的区别）</value>
   </data>
-  <data name="Screen_Editor_SelectCurrentSv" xml:space="preserve">
-    <value>选择当前 SV</value>
+  <data name="Screen_Editor_Sv" xml:space="preserve">
+    <value>SV</value>
+  </data>
+  <data name="Screen_Editor_SelectCurrentScrollPoint" xml:space="preserve">
+    <value>选择当前 {0}</value>
   </data>
   <data name="Screen_Editor_Multiplier" xml:space="preserve">
     <value>倍率</value>
@@ -2883,8 +2877,8 @@
   <data name="Screen_Editor_DifferenceFromSv" xml:space="preserve">
     <value>（与 SV 的区别）</value>
   </data>
-  <data name="Screen_Editor_SelectCurrentSsf" xml:space="preserve">
-    <value>选择当前 SSF</value>
+  <data name="Screen_Editor_Ssf" xml:space="preserve">
+    <value>SSF</value>
   </data>
   <data name="Screen_Editor_TimingGroupEditor" xml:space="preserve">
     <value>时间组编辑器</value>
@@ -3011,9 +3005,6 @@
   </data>
   <data name="Screen_Editor_ScrollSpeedFactorMultiplierHelp" xml:space="preserve">
     <value>SSF 可看作对您当前下落速度应用的倍率。列表里的值会从一个倍率线性变化到下一个值，类似帧动画。</value>
-  </data>
-  <data name="Screen_Editor_ScrollSpeedFactorInteractionHelp" xml:space="preserve">
-    <value>点击单个 SSF 节点以编辑，双击可跳转到节点时间。</value>
   </data>
   <data name="Screen_Editor_SvVsSsfTooltip" xml:space="preserve">
     <value>SV 会变更物件下落速度，而 SSF 会缩放物件与判定线之间的距离。</value>
@@ -3228,14 +3219,11 @@
   <data name="Screen_Editor_GlobalTimingGroupTooltip" xml:space="preserve">
     <value>此时间组的 SV 将嵌入其他所有时间组中。</value>
   </data>
-  <data name="Screen_Editor_SelectCurrentSsfTooltip" xml:space="preserve">
-    <value>此按钮将选择当前时间应用的 SSF 节点。如果同时按下 Ctrl 则会将其加入选择中。如果同时按下 Shift 且已经选择了一个节点，则会从那个节点开始选择直到当前节点的所有节点。</value>
+  <data name="Screen_Editor_SelectCurrentScrollPointTooltip" xml:space="preserve">
+    <value>此按钮将选择当前时间应用的 {0} 节点。如果同时按下 Ctrl 则会将其加入选择中。如果同时按下 Shift 且已经选择了一个节点，则会从那个节点开始选择直到当前节点的所有节点。</value>
   </data>
   <data name="Screen_Editor_ScrollSpeedFactorsSelected" xml:space="preserve">
     <value>已选择 {0} 个 SSF</value>
-  </data>
-  <data name="Screen_Editor_SelectCurrentSvTooltip" xml:space="preserve">
-    <value>此按钮将选择当前时间应用的 SV 节点。如果同时按下 Ctrl 则会将其加入选择中。如果同时按下 Shift 且已经选择了一个节点，则会从那个节点开始选择直到当前节点的所有节点。</value>
   </data>
   <data name="Screen_Editor_ScrollVelocitiesSelected" xml:space="preserve">
     <value>已选择 {0} 个 SV</value>

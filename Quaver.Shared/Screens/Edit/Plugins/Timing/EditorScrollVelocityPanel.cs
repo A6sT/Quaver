@@ -272,7 +272,7 @@ namespace Quaver.Shared.Screens.Edit.Plugins.Timing
         {
             ImGui.TextWrapped(LocalizationManager.Get("Screen_Editor_ScrollVelocityHelp"));
             ImGui.Dummy(new Vector2(0, 10));
-            ImGui.TextWrapped(LocalizationManager.Get("Screen_Editor_ScrollVelocityInteractionHelp"));
+            ImGui.TextWrapped(LocalizationManager.Get("Screen_Editor_ScrollPointInteractionHelp", LocalizationManager.Get("Screen_Editor_Sv")));
             ShowDifferenceText();
         }
 
@@ -351,7 +351,7 @@ namespace Quaver.Shared.Screens.Edit.Plugins.Timing
         /// </summary>
         private void DrawSelectCurrentSVButton()
         {
-            if (ImGui.Button(LocalizationManager.Get("Screen_Editor_SelectCurrentSv")))
+            if (ImGui.Button(LocalizationManager.Get("Screen_Editor_SelectCurrentScrollPoint", LocalizationManager.Get("Screen_Editor_Sv"))))
             {
                 var currentPointIndex = SelectedScrollGroup.ScrollVelocities.IndexAtTime((float)Screen.Track.Time);
                 if (currentPointIndex >= 0)
@@ -392,7 +392,7 @@ namespace Quaver.Shared.Screens.Edit.Plugins.Timing
             {
                 ImGui.BeginTooltip();
                 ImGui.PushTextWrapPos(ImGui.GetFontSize() * 25);
-                ImGui.Text(LocalizationManager.Get("Screen_Editor_SelectCurrentSvTooltip"));
+                ImGui.Text(LocalizationManager.Get("Screen_Editor_SelectCurrentScrollPointTooltip", LocalizationManager.Get("Screen_Editor_Sv")));
                 ImGui.PopTextWrapPos();
                 ImGui.EndTooltip();
             }
