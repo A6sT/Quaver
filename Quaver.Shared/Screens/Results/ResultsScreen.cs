@@ -271,7 +271,7 @@ namespace Quaver.Shared.Screens.Results
         public void ExitToMenu()
         {
             if (OnlineManager.CurrentGame != null)
-                Exit(() => new MultiplayerGameScreen());
+                Exit(() => QuaverScreenFactory.CreateMultiplayerGame());
             else
                 Exit(() => QuaverScreenFactory.CreateSelection());
         }
@@ -283,7 +283,7 @@ namespace Quaver.Shared.Screens.Results
             if (ModManager.IsActivated(ModIdentifier.Coop))
                 ModManager.RemoveMod(ModIdentifier.Coop);
 
-            Exit(() => new MapLoadingScreen(MapManager.Selected.Value.Scores.Value));
+            Exit(() => QuaverScreenFactory.CreateMapLoading(MapManager.Selected.Value.Scores.Value));
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace Quaver.Shared.Screens.Results
                 return;
             }
 
-            Exit(() => new MapLoadingScreen(MapManager.Selected.Value.Scores.Value, replay));
+            Exit(() => QuaverScreenFactory.CreateMapLoading(MapManager.Selected.Value.Scores.Value, replay));
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Quaver.Shared.Screens.Results
             if (onlineReplay == null)
                 return;
 
-            Exit(() => new MapLoadingScreen(MapManager.Selected.Value.Scores.Value, onlineReplay));
+            Exit(() => QuaverScreenFactory.CreateMapLoading(MapManager.Selected.Value.Scores.Value, onlineReplay));
         }
 
         /// <summary>

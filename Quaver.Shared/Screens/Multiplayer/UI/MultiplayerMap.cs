@@ -478,7 +478,7 @@ namespace Quaver.Shared.Screens.Multiplayer.UI
                 var game = GameBase.Game as QuaverGame;
 
                 if (game?.CurrentScreen.Type == QuaverScreenType.Multiplayer || game?.CurrentScreen.Type == QuaverScreenType.Select)
-                    game?.CurrentScreen.Exit(() => new ImportingScreen(Screen), 0, QuaverScreenChangeType.AddToStack);
+                    game?.CurrentScreen.Exit(() => QuaverScreenFactory.CreateImporting(Screen), 0, QuaverScreenChangeType.AddToStack);
             }
 
             CurrentDownload = null;

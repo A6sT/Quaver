@@ -539,10 +539,12 @@ namespace Quaver.Shared.Screens.Edit
         /// <param name="screen"></param>
         /// <param name="delay"></param>
         /// <param name="type"></param>
-        public override void Exit(Func<QuaverScreen> screen, int delay = 0, QuaverScreenChangeType type = QuaverScreenChangeType.CompleteChange)
+        public override void Exit(Func<QuaverScreen> screen, int delay = 0,
+            QuaverScreenChangeType type = QuaverScreenChangeType.CompleteChange,
+            ScreenTransitionMode transitionMode = ScreenTransitionMode.Auto)
         {
             StopManualChangesWatcher();
-            base.Exit(screen, delay, type);
+            base.Exit(screen, delay, type, transitionMode);
         }
 
         /// <inheritdoc />

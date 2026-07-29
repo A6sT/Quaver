@@ -28,7 +28,7 @@ using Wobble.Input;
 
 namespace Quaver.Shared.Screens.Multi
 {
-    public sealed class MultiplayerGameScreen : QuaverScreen, IHasLeftPanel
+    public sealed class MultiplayerGameScreen : QuaverScreen, IHasLeftPanel, IMultiplayerGameScreenState
     {
         /// <inheritdoc />
         /// <summary>

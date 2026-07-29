@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Quaver.API.Helpers;
@@ -34,7 +33,7 @@ namespace Quaver.Shared.Screens.V2.Main
     /// <summary>
     ///     Rewritten main menu screen. Its behavior is intentionally independent from the legacy main menu.
     /// </summary>
-    internal sealed class MainMenuScreen : SkinV2Screen, IPersistentScreen
+    internal sealed class MainMenuScreen : SkinV2Screen
     {
         public override QuaverScreenType Type { get; } = QuaverScreenType.Menu;
 
@@ -50,9 +49,6 @@ namespace Quaver.Shared.Screens.V2.Main
 
         protected override ISkinV2EditorHost SkinEditorHost => (MainMenuScreenView) View;
 
-        IReadOnlyCollection<string> IPersistentScreen.PersistentElementKeys { get; } =
-            new[] { ScreenNavigation.ElementKey };
-
         public MainMenuScreen()
         {
             SetRichPresence();
@@ -67,12 +63,6 @@ namespace Quaver.Shared.Screens.V2.Main
 
             Jukebox = new MainMenuJukeboxController(this);
             View = new MainMenuScreenView(this);
-        }
-
-        public override void OnActivated()
-        {
-            base.OnActivated();
-            ((MainMenuScreenView) View).EnsureNavigation();
         }
 
         public override void OnFirstUpdate()
@@ -125,7 +115,7 @@ namespace Quaver.Shared.Screens.V2.Main
         {
             if (MapsetImporter.Queue.Count != 0 || FlaggedForOsuImport)
             {
-                Exit(() => new ImportingScreen());
+                Exit(() => QuaverScreenFactory.CreateImporting());
                 return;
             }
 

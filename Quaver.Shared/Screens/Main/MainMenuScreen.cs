@@ -164,7 +164,7 @@ namespace Quaver.Shared.Screens.Main
             // We have maps in the queue, so we need to go to the import screen first
             if (MapsetImporter.Queue.Count != 0 || FlaggedForOsuImport)
             {
-                Exit(() => new ImportingScreen());
+                Exit(() => QuaverScreenFactory.CreateImporting());
                 return;
             }
 

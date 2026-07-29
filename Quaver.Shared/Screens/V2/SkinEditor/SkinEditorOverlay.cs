@@ -256,16 +256,12 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             };
 
             var editableTargets = GetEditableTargets();
-            AddTargetGroup(LocalizationManager.Get("SkinEditor_Group_MainMenu"),
+            AddTargetGroup(host.EditorGroupLabel,
                 editableTargets.Where(x =>
-                    x.ConfigPath.StartsWith("Screens.Main", StringComparison.Ordinal)));
+                    !x.ConfigPath.StartsWith("Shared.Navigation", StringComparison.Ordinal)));
             AddTargetGroup(LocalizationManager.Get("SkinEditor_Group_SharedNavigation"),
                 editableTargets.Where(x =>
                     x.ConfigPath.StartsWith("Shared.Navigation", StringComparison.Ordinal)));
-            AddTargetGroup(LocalizationManager.Get("SkinEditor_Group_Other"),
-                editableTargets.Where(x =>
-                    !x.ConfigPath.StartsWith("Screens.Main", StringComparison.Ordinal) &&
-                    !x.ConfigPath.StartsWith("Shared.Navigation", StringComparison.Ordinal)));
             targetRoot.RefreshLayout();
         }
 

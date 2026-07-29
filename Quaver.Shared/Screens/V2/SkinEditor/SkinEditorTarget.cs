@@ -26,6 +26,8 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
     internal interface ISkinV2EditorHost
     {
+        string EditorGroupLabel { get; }
+
         Container PreviewRoot { get; }
 
         Container EditorRoot { get; }
@@ -36,5 +38,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             float assetPanelHeight = 0);
 
         void ApplySkinEditorPreview(SkinV2Config config);
+
+        void EnsureNavigation();
     }
 }

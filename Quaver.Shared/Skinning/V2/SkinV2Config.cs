@@ -1,6 +1,17 @@
 using System.ComponentModel.DataAnnotations;
 using Quaver.Shared.Assets;
+using Quaver.Shared.Screens.V2.Downloading;
+using Quaver.Shared.Screens.V2.Importing;
+using Quaver.Shared.Screens.V2.Initialization;
+using Quaver.Shared.Screens.V2.Loading;
 using Quaver.Shared.Screens.V2.Main;
+using Quaver.Shared.Screens.V2.Multi;
+using Quaver.Shared.Screens.V2.Multiplayer;
+using Quaver.Shared.Screens.V2.MultiplayerLobby;
+using Quaver.Shared.Screens.V2.Music;
+using Quaver.Shared.Screens.V2.Results;
+using Quaver.Shared.Screens.V2.Selection;
+using Quaver.Shared.Screens.V2.Theater;
 using Quaver.Shared.Screens.V2.UI;
 using Wobble.Configuration;
 
@@ -94,5 +105,41 @@ namespace Quaver.Shared.Skinning.V2
     {
         [Required]
         public SkinV2MainConfig Main { get; set; } = new SkinV2MainConfig();
+
+        [Required]
+        public SkinV2InitializationConfig Initialization { get; set; } =
+            new SkinV2InitializationConfig();
+
+        [Required]
+        public SkinV2ImportingConfig Importing { get; set; } = new SkinV2ImportingConfig();
+
+        [Required]
+        public SkinV2MapLoadingConfig Loading { get; set; } = new SkinV2MapLoadingConfig();
+
+        [Required]
+        public SkinV2SelectionConfig Selection { get; set; } = new SkinV2SelectionConfig();
+
+        [Required]
+        public SkinV2DownloadingConfig Downloading { get; set; } = new SkinV2DownloadingConfig();
+
+        [Required]
+        public SkinV2MultiplayerLobbyConfig MultiplayerLobby { get; set; } =
+            new SkinV2MultiplayerLobbyConfig();
+
+        [Required]
+        public SkinV2MultiplayerGameConfig MultiplayerGame { get; set; } =
+            new SkinV2MultiplayerGameConfig();
+
+        [Required]
+        public SkinV2MultiplayerConfig Multiplayer { get; set; } = new SkinV2MultiplayerConfig();
+
+        [Required]
+        public SkinV2MusicPlayerConfig Music { get; set; } = new SkinV2MusicPlayerConfig();
+
+        [Required]
+        public SkinV2TheaterConfig Theater { get; set; } = new SkinV2TheaterConfig();
+
+        [Required]
+        public SkinV2ResultsConfig Results { get; set; } = new SkinV2ResultsConfig();
     }
 }

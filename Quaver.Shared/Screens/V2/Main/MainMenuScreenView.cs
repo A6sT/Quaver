@@ -60,6 +60,8 @@ namespace Quaver.Shared.Screens.V2.Main
 
         public Container EditorRoot { get; }
 
+        public string EditorGroupLabel => LocalizationManager.Get("SkinEditor_Group_MainMenu");
+
         public IReadOnlyList<SkinEditorTarget> EditorTargets => editorTargets;
 
         private List<SkinEditorTarget> editorTargets = new List<SkinEditorTarget>();
@@ -222,6 +224,8 @@ namespace Quaver.Shared.Screens.V2.Main
         public void EnsureNavigation()
         {
             var navigation = ScreenNavigation.EnsureAttached(PreviewRoot);
+            navigation.ShowMainTopBar();
+            navigation.ShowDefaultFooter();
             AddNavigationTargets(navigation);
         }
 

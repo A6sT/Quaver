@@ -296,7 +296,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 if (OnlineManager.CurrentGame != null)
                     return;
 
-                game?.CurrentScreen?.Exit(() => new ResultsScreen(MapManager.Selected.Value, Score.Item));
+                game?.CurrentScreen?.Exit(() => QuaverScreenFactory.CreateResults(MapManager.Selected.Value, Score.Item));
             };
 
             Button.RightClicked += (sender, args) =>

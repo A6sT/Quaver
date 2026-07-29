@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Quaver.Shared.Screens.V2.SkinEditor;
+using Quaver.Shared.Screens.V2.UI;
 using Quaver.Shared.Skinning;
 using Wobble.Graphics.UI.Dialogs;
 using Wobble.Input;
@@ -10,13 +12,22 @@ namespace Quaver.Shared.Screens.V2
     /// <summary>
     ///     Base for replacement screens that can host the Skin V2 editor without exposing it to legacy screens.
     /// </summary>
-    internal abstract class SkinV2Screen : QuaverScreen
+    internal abstract class SkinV2Screen : QuaverScreen, IPersistentScreen
     {
         private SkinEditorController skinEditor;
 
         protected abstract ISkinV2EditorHost SkinEditorHost { get; }
 
         protected bool IsSkinEditorActive => skinEditor?.IsOpen == true;
+
+        IReadOnlyCollection<string> IPersistentScreen.PersistentElementKeys { get; } =
+            new[] { ScreenNavigation.ElementKey };
+
+        public override void OnActivated()
+        {
+            base.OnActivated();
+            SkinEditorHost.EnsureNavigation();
+        }
 
         public override void Update(GameTime gameTime)
         {

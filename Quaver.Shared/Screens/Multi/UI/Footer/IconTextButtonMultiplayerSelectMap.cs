@@ -11,8 +11,8 @@ namespace Quaver.Shared.Screens.Multi.UI.Footer
         public IconTextButtonMultiplayerSelectMap(QuaverScreen screen) : base(FontAwesome.Get(FontAwesomeIcon.fa_music_note_black_symbol),
             FontManager.GetWobbleFont(Fonts.InterBold), MultiLocalization.Get("SelectMap"), (sender, args) =>
             {
-                var multi = (MultiplayerGameScreen) screen;
-                multi.DontLeaveGameUponScreenSwitch = true;
+                if (screen is IMultiplayerGameScreenState multi)
+                    multi.DontLeaveGameUponScreenSwitch = true;
 
                 screen.Exit(() => QuaverScreenFactory.CreateSelection());
             })

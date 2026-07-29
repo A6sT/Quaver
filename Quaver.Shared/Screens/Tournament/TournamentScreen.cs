@@ -355,7 +355,7 @@ namespace Quaver.Shared.Screens.Tournament
                         processors.Add(screen.Ruleset.ScoreProcessor);
                     }
 
-                    Exit(() => new ResultsScreen(MainGameplayScreen, new MultiplayerGame(), processors, new List<ScoreProcessor>()));
+                    Exit(() => QuaverScreenFactory.CreateResults(MainGameplayScreen, new MultiplayerGame(), processors, new List<ScoreProcessor>()));
                 }
             }
         }
@@ -428,7 +428,7 @@ namespace Quaver.Shared.Screens.Tournament
                         processors.Add(screen.Ruleset.StandardizedReplayPlayer.ScoreProcessor);
                     }
 
-                    Exit(() => new ResultsScreen(MainGameplayScreen, OnlineManager.CurrentGame,
+                    Exit(() => QuaverScreenFactory.CreateResults(MainGameplayScreen, OnlineManager.CurrentGame,
                         processors, new List<ScoreProcessor>()));
                 }
             }

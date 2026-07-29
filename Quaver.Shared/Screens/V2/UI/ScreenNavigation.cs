@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using Quaver.Server.Client;
 using Quaver.Shared.Assets;
 using Quaver.Shared.Config;
+using Quaver.Shared.Database.Maps;
 using Quaver.Shared.Graphics;
 using Quaver.Shared.Graphics.Menu.Border.Components.Users;
 using Quaver.Shared.Graphics.Notifications;
@@ -52,6 +53,8 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private ProfileControl ProfileButton { get; }
 
+        private RoundedButton DonateButton { get; }
+
         private RoundedButton HubButton { get; }
 
         private Texture2D HubListIcon { get; }
@@ -62,6 +65,16 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private List<Drawable> NavigationButtons { get; } = new List<Drawable>();
 
+        private List<Drawable> FooterButtons { get; } = new List<Drawable>();
+
+        private List<Drawable> TopLayoutButtons { get; } = new List<Drawable>();
+
+        private FooterLayout? CurrentFooterLayout { get; set; }
+
+        private TopLayout? CurrentTopLayout { get; set; }
+
+        private QuaverScreenType CurrentActiveScreen { get; set; } = QuaverScreenType.None;
+
         private ScreenNavigation(SkinV2Config previewConfig = null)
         {
             Skin = SkinManager.AcquireV2();
@@ -71,25 +84,71 @@ namespace Quaver.Shared.Screens.V2.UI
             TopBar = CreateBar(Alignment.TopLeft, Config.Bar);
             BottomBar = CreateBar(Alignment.BotLeft, Config.Footer);
 
-            AddIconButton(TopBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Jukebox),
-                LocalizationManager.Get("Screen_Main_Menu_Jukebox"), OpenMusicPlayer,
-                TooltipAnchor.BottomCenter);
-            AddIconButton(TopBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Chat),
-                LocalizationManager.Get("Screen_Options_ToggleChatOverlay"), ToggleChat,
-                TooltipAnchor.BottomCenter);
-            AddIconButton(TopBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Heart),
-                LocalizationManager.Get("Screen_Main_Menu_Donate"), ShowDonateMessage,
-                TooltipAnchor.BottomCenter);
-
             ProfileButton = new ProfileControl(Config.Profile,
                 SkinV2Color.Parse(Config.Button.BackgroundColor),
                 UserInterface.OfflineAvatar,
                 Config.Button.Size);
-            TopBar.Add(NavigationBarRegion.Right, ProfileButton);
             HubListIcon = GlobalIcons.Get(GlobalIcon.BurgerRedDot);
             HubMenuIcon = GlobalIcons.Get(GlobalIcon.Burger);
+            DonateButton = AddIconButton(TopBar, NavigationBarRegion.Right,
+                GlobalIcons.Get(GlobalIcon.Heart),
+                LocalizationManager.Get("Screen_Main_Menu_Donate"), ShowDonateMessage,
+                TooltipAnchor.BottomCenter);
             HubButton = AddIconButton(TopBar, NavigationBarRegion.Right, HubMenuIcon,
                 "Online Hub", ToggleOnlineHub, TooltipAnchor.BottomCenter);
+
+            ShowMainTopBar();
+            ShowDefaultFooter();
+        }
+
+        public void ShowMainTopBar()
+        {
+            if (CurrentTopLayout == TopLayout.Main)
+                return;
+
+            ClearTopLayout();
+
+            AddTopLayoutIconButton(GlobalIcon.Jukebox,
+                LocalizationManager.Get("Screen_Main_Menu_Jukebox"), OpenMusicPlayer);
+            AddTopLayoutIconButton(GlobalIcon.Chat,
+                LocalizationManager.Get("Screen_Options_ToggleChatOverlay"), ToggleChat);
+            AddSharedRightControls();
+
+            CurrentTopLayout = TopLayout.Main;
+            CurrentActiveScreen = QuaverScreenType.Menu;
+        }
+
+        public void ShowApplicationTopBar(QuaverScreenType activeScreen)
+        {
+            if (CurrentTopLayout == TopLayout.Application && CurrentActiveScreen == activeScreen)
+                return;
+
+            ClearTopLayout();
+
+            AddApplicationButton(GlobalIcon.Home, "Screen_Main_Menu_Home", NavigateHome,
+                activeScreen == QuaverScreenType.Menu);
+            AddApplicationButton(GlobalIcon.SinglePlayer, "Screen_Main_SinglePlayer",
+                NavigateSinglePlayer, activeScreen == QuaverScreenType.Select);
+            AddApplicationButton(GlobalIcon.Multiplayer, "Screen_Main_Multiplayer",
+                NavigateMultiplayer, activeScreen == QuaverScreenType.Lobby ||
+                                     activeScreen == QuaverScreenType.Multiplayer);
+            AddApplicationButton(GlobalIcon.Download, "Screen_Download_Download",
+                NavigateDownload, activeScreen == QuaverScreenType.Download);
+            AddApplicationButton(GlobalIcon.Chat, "Screen_Main_Menu_Chat", ToggleChat, false);
+            AddApplicationButton(GlobalIcon.Jukebox, "Screen_Overlay_VolumeControl_Music",
+                OpenMusicPlayer, activeScreen == QuaverScreenType.Music);
+            AddSharedRightControls();
+
+            CurrentTopLayout = TopLayout.Application;
+            CurrentActiveScreen = activeScreen;
+        }
+
+        public void ShowDefaultFooter()
+        {
+            if (CurrentFooterLayout == FooterLayout.Default)
+                return;
+
+            ClearFooter();
 
             AddIconButton(BottomBar, NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Website),
                 LocalizationManager.Get("Screen_Main_Menu_Website"),
@@ -110,6 +169,37 @@ namespace Quaver.Shared.Screens.V2.UI
                 LocalizationManager.Get("Screen_Main_QuitGame"),
                 () => DialogManager.Show(new QuitDialog()), TooltipAnchor.TopCenter);
 
+            CurrentFooterLayout = FooterLayout.Default;
+        }
+
+        public void ShowSelectionFooter()
+        {
+            if (CurrentFooterLayout == FooterLayout.Selection)
+                return;
+
+            ClearFooter();
+
+            var button = BottomBar.AddRoundedButton(NavigationBarRegion.Right,
+                new NavigationBarButtonOptions
+                {
+                    Icon = GlobalIcons.Get(GlobalIcon.Play),
+                    IconSize = new Vector2(Config.Button.IconSize, Config.Button.IconSize),
+                    Text = LocalizationManager.Get("Screen_Selection_Play"),
+                    Font = FontManager.GetWobbleFont(Fonts.InterBold),
+                    FontSize = SkinV2FontSizesConfig.TextBase,
+                    WidthMode = ButtonSizeMode.Auto,
+                    Height = Config.Button.Size,
+                    AutoSizePadding = new Vector2(Config.EdgePadding, 0),
+                    CornerRadius = Config.Button.CornerRadius,
+                    BackgroundColor = SkinV2Color.Parse(Config.Button.BackgroundColor),
+                    ForegroundColor = SkinV2Color.Parse(Config.Button.ForegroundColor),
+                    AlwaysShowLabel = true,
+                    ClickAction = (sender, args) => ShowSelectionPlayUnavailable()
+                });
+
+            NavigationButtons.Add(button);
+            FooterButtons.Add(button);
+            CurrentFooterLayout = FooterLayout.Selection;
         }
 
         public static ScreenNavigation EnsureAttached(Container parent, SkinV2Config previewConfig = null)
@@ -205,7 +295,71 @@ namespace Quaver.Shared.Screens.V2.UI
             });
 
             NavigationButtons.Add(button);
+            if (bar == BottomBar)
+                FooterButtons.Add(button);
             return button;
+        }
+
+        private void AddTopLayoutIconButton(GlobalIcon icon, string tooltip, Action action)
+        {
+            var button = AddIconButton(TopBar, NavigationBarRegion.Left, GlobalIcons.Get(icon),
+                tooltip, action, TooltipAnchor.BottomCenter);
+            TopLayoutButtons.Add(button);
+        }
+
+        private void AddApplicationButton(GlobalIcon icon, string localizationKey, Action action,
+            bool active)
+        {
+            var button = TopBar.AddRoundedButton(NavigationBarRegion.Left,
+                new NavigationBarButtonOptions
+                {
+                    Icon = GlobalIcons.Get(icon),
+                    IconSize = new Vector2(Config.Button.IconSize, Config.Button.IconSize),
+                    Text = LocalizationManager.Get(localizationKey),
+                    Font = FontManager.GetWobbleFont(Fonts.InterBold),
+                    FontSize = SkinV2FontSizesConfig.TextBase,
+                    Width = Config.Button.Size,
+                    Height = Config.Button.Size,
+                    AutoSizePadding = new Vector2(Config.EdgePadding, 0),
+                    CornerRadius = Config.Button.CornerRadius,
+                    BackgroundColor = SkinV2Color.Parse(Config.Button.BackgroundColor),
+                    ForegroundColor = SkinV2Color.Parse(Config.Button.ForegroundColor),
+                    ExpandLabelOnHover = true,
+                    AlwaysShowLabel = active,
+                    ClickAction = (sender, args) => action()
+                });
+
+            NavigationButtons.Add(button);
+            TopLayoutButtons.Add(button);
+        }
+
+        private void AddSharedRightControls()
+        {
+            TopBar.Add(NavigationBarRegion.Right, ProfileButton);
+            TopBar.Add(NavigationBarRegion.Right, DonateButton);
+            TopBar.Add(NavigationBarRegion.Right, HubButton);
+        }
+
+        private void ClearTopLayout()
+        {
+            TopBar.Clear(destroy: false);
+
+            foreach (var button in TopLayoutButtons)
+            {
+                NavigationButtons.Remove(button);
+                button.Destroy();
+            }
+
+            TopLayoutButtons.Clear();
+        }
+
+        private void ClearFooter()
+        {
+            foreach (var button in FooterButtons)
+                NavigationButtons.Remove(button);
+
+            FooterButtons.Clear();
+            BottomBar.Clear(destroy: true);
         }
 
         private void EnsureOnlineHubSubscription()
@@ -257,6 +411,60 @@ namespace Quaver.Shared.Screens.V2.UI
                 game.CurrentScreen?.Exit(() => QuaverScreenFactory.CreateMusicPlayer());
         }
 
+        private static void NavigateHome()
+        {
+            if (GameBase.Game is QuaverGame game &&
+                game.CurrentScreen?.Type != QuaverScreenType.Menu)
+                game.CurrentScreen?.Exit(() => QuaverScreenFactory.CreateMainMenu());
+        }
+
+        private static void NavigateSinglePlayer()
+        {
+            if (GameBase.Game is QuaverGame game &&
+                game.CurrentScreen?.Type != QuaverScreenType.Select)
+                game.CurrentScreen?.Exit(() => QuaverScreenFactory.CreateSelection());
+        }
+
+        private static void NavigateMultiplayer()
+        {
+            if (!(GameBase.Game is QuaverGame game) ||
+                game.CurrentScreen?.Type == QuaverScreenType.Lobby ||
+                game.CurrentScreen?.Type == QuaverScreenType.Multiplayer)
+                return;
+
+            if (!OnlineManager.Connected)
+            {
+                NotificationManager.Show(NotificationLevel.Error,
+                    LocalizationManager.Get("Screen_Main_MultiplayerLoginRequired"));
+                return;
+            }
+
+            if (MapManager.Mapsets.Count == 0)
+            {
+                if (OnlineManager.Status.Value == ConnectionStatus.Connected)
+                {
+                    game.CurrentScreen?.Exit(() => QuaverScreenFactory.CreateDownloading());
+                    return;
+                }
+
+                NotificationManager.Show(NotificationLevel.Error,
+                    LocalizationManager.Get("Screen_Main_NoMapsLoaded"));
+                return;
+            }
+
+            game.CurrentScreen?.Exit(() => QuaverScreenFactory.CreateMultiplayerLobby());
+        }
+
+        private static void NavigateDownload()
+        {
+            if (!(GameBase.Game is QuaverGame game) ||
+                game.CurrentScreen?.Type == QuaverScreenType.Download)
+                return;
+
+            var previousScreen = game.CurrentScreen?.Type ?? QuaverScreenType.Menu;
+            game.CurrentScreen?.Exit(() => QuaverScreenFactory.CreateDownloading(previousScreen));
+        }
+
         private static void ToggleChat()
         {
             if (!(GameBase.Game is QuaverGame game) || game.OnlineChat == null)
@@ -278,6 +486,10 @@ namespace Quaver.Shared.Screens.V2.UI
                 game.VolumeController?.Show();
         }
 
+        private static void ShowSelectionPlayUnavailable() =>
+            NotificationManager.Show(NotificationLevel.Warning,
+                LocalizationManager.Get("Screen_Main_NotImplemented"));
+
         private static void ToggleOnlineHub()
         {
             if (DialogManager.Dialogs.Count == 0)
@@ -289,6 +501,18 @@ namespace Quaver.Shared.Screens.V2.UI
             var topDialog = DialogManager.Dialogs[DialogManager.Dialogs.Count - 1];
             if (topDialog is OnlineHubDialog dialog)
                 dialog.Close();
+        }
+
+        private enum FooterLayout
+        {
+            Default,
+            Selection
+        }
+
+        private enum TopLayout
+        {
+            Main,
+            Application
         }
 
         /// <summary>
