@@ -26,6 +26,8 @@ namespace Quaver.Shared.Screens
 {
     public static class QuaverScreenManager
     {
+        private const int TransitionWaitTimeout = 5000;
+
         /// <summary>
         ///     The previous screen that the user was on.
         /// </summary>
@@ -102,8 +104,14 @@ namespace Quaver.Shared.Screens
             Transitioner.FadeIn(foregroundElements);
 
             // Wait for the transitioner to fully fade to black.
-            while (Transitioner.Blackness?.Animations.Count != 0)
+            var waitStarted = Environment.TickCount64;
+            while (Transitioner.IsAnimating &&
+                   Environment.TickCount64 - waitStarted < TransitionWaitTimeout)
                 Thread.Sleep(16);
+
+            if (Transitioner.IsAnimating)
+                Logger.Warning("Screen transition fade-in timed out; forcing the screen switch and recovery fade.",
+                    LogType.Runtime);
 
             // Run this on the next game loop on the main thread.
             game.ScheduleRenderTargetDraw(() => ChangeScreen(e.Result, retainedElements, false));
@@ -131,25 +139,30 @@ namespace Quaver.Shared.Screens
             bool switchImmediately)
         {
             var game = (QuaverGame)GameBase.Game;
-            ScreenManager.ChangeScreen(screen, retainedElements, switchImmediately);
-            game.CurrentScreen = screen;
-            game.RefreshFpsCounterVisibility();
+            try
+            {
+                ScreenManager.ChangeScreen(screen, retainedElements, switchImmediately);
+                game.CurrentScreen = screen;
+                game.RefreshFpsCounterVisibility();
 
-            // Update client status on the server.
-            var status = screen.GetClientStatus();
+                // Update client status on the server.
+                var status = screen.GetClientStatus();
 
-            if (status != null)
-                OnlineManager.Client?.UpdateClientStatus(status);
+                if (status != null)
+                    OnlineManager.Client?.UpdateClientStatus(status);
 
-            OtherGameMapDatabaseCache.RunThread();
+                OtherGameMapDatabaseCache.RunThread();
 
-            if (switchImmediately)
+                Logger.Important($"Screen has been switched to type: `{screen.Type}`", LogType.Runtime);
+            }
+            finally
+            {
+                // The screen is fully covered at this point, so starting the fade immediately
+                // still preserves the black transition frame. Keeping this in the finally block
+                // prevents an exception or a lost follow-up draw callback from orphaning blackness.
                 Transitioner.FadeOut();
-            else
-                game.ScheduleRenderTargetDraw(Transitioner.FadeOut);
-
-            Logger.Important($"Screen has been switched to type: `{screen.Type}`", LogType.Runtime);
-            Button.IsGloballyClickable = true;
+                Button.IsGloballyClickable = true;
+            }
         }
 
         private sealed class ScreenChangeRequest
