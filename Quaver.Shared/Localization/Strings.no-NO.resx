@@ -2553,14 +2553,8 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
   <data name="Screen_Editor_ChangeTimingGroupColor" xml:space="preserve">
     <value>ENDRE TIDSGRUPPE FARGE</value>
   </data>
-  <data name="Screen_Editor_ChangeTimingGroupColorMessage" xml:space="preserve">
-    <value>Angi en ny RGB-farge for din tidsgruppe...</value>
-  </data>
   <data name="Screen_Editor_ChangeWaveformColor" xml:space="preserve">
     <value>ENDRE BØLGEFORM FARGE</value>
-  </data>
-  <data name="Screen_Editor_ChangeWaveformColorMessage" xml:space="preserve">
-    <value>Angi en ny RGB-farge for din bølgeform... (standard: 0,200,255)</value>
   </data>
   <data name="Screen_Editor_AddDifficultyFromFile" xml:space="preserve">
     <value>LEGG TIL VANSKELIGHETSGRAD FRA FIL</value>
@@ -2624,12 +2618,6 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
   </data>
   <data name="Screen_Editor_SelectColor" xml:space="preserve">
     <value>VELG FARGE</value>
-  </data>
-  <data name="Screen_Editor_SelectColorMessage" xml:space="preserve">
-    <value>Angi en ny RGB-Farge...</value>
-  </data>
-  <data name="Screen_Editor_RgbColorPlaceholder" xml:space="preserve">
-    <value>Angi RGB-Farge (f.eks: 255,255,255)...</value>
   </data>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve">
     <value>Vennligst vent mens din map sendes inn for rangering...</value>
@@ -3164,9 +3152,6 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
   </data>
   <data name="Screen_Editor_ChangeLayerColor" xml:space="preserve">
     <value>ENDRE LAG FARGE</value>
-  </data>
-  <data name="Screen_Editor_ChangeLayerColorMessage" xml:space="preserve">
-    <value>Angi en ny RGB-farge for ditt lag...</value>
   </data>
   <data name="Screen_Editor_EditName" xml:space="preserve">
     <value>Endre navn</value>

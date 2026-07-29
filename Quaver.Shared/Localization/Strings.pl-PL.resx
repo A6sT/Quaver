@@ -2559,14 +2559,8 @@ dla innych graczy do pobrania?</value>
   <data name="Screen_Editor_ChangeTimingGroupColor" xml:space="preserve">
     <value>CHANGE TIMING GROUP COLOR</value>
   </data>
-  <data name="Screen_Editor_ChangeTimingGroupColorMessage" xml:space="preserve">
-    <value>Enter a new RGB color for your timing group...</value>
-  </data>
   <data name="Screen_Editor_ChangeWaveformColor" xml:space="preserve">
     <value>CHANGE WAVEFORM COLOR</value>
-  </data>
-  <data name="Screen_Editor_ChangeWaveformColorMessage" xml:space="preserve">
-    <value>Enter a new RGB color for your waveform... (default: 0,200,255)</value>
   </data>
   <data name="Screen_Editor_AddDifficultyFromFile" xml:space="preserve">
     <value>ADD DIFFICULTY FROM FILE</value>
@@ -2630,12 +2624,6 @@ dla innych graczy do pobrania?</value>
   </data>
   <data name="Screen_Editor_SelectColor" xml:space="preserve">
     <value>SELECT COLOR</value>
-  </data>
-  <data name="Screen_Editor_SelectColorMessage" xml:space="preserve">
-    <value>Enter a new RGB color...</value>
-  </data>
-  <data name="Screen_Editor_RgbColorPlaceholder" xml:space="preserve">
-    <value>Enter RGB color (ex: 255,255,255)...</value>
   </data>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve">
     <value>Please wait while your map is being submitted for rank...</value>
@@ -3170,9 +3158,6 @@ dla innych graczy do pobrania?</value>
   </data>
   <data name="Screen_Editor_ChangeLayerColor" xml:space="preserve">
     <value>CHANGE LAYER COLOR</value>
-  </data>
-  <data name="Screen_Editor_ChangeLayerColorMessage" xml:space="preserve">
-    <value>Enter a new RGB color for your layer...</value>
   </data>
   <data name="Screen_Editor_EditName" xml:space="preserve">
     <value>Edit Name</value>

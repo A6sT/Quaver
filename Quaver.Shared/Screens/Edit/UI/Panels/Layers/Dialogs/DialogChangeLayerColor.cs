@@ -21,8 +21,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Panels.Layers.Dialogs
         /// <summary>
         /// </summary>
         public DialogChangeLayerColor(EditorLayerInfo layer, EditorActionManager manager, Qua workingMap) : base(
-            LocalizationManager.Get("Screen_Editor_ChangeLayerColor"),
-            LocalizationManager.Get("Screen_Editor_ChangeLayerColorMessage"))
+            LocalizationManager.Get("Screen_Editor_ChangeLayerColor"))
         {
             ActionManager = manager;
             Layer = layer;
