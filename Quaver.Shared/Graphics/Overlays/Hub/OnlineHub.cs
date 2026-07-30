@@ -238,7 +238,7 @@ namespace Quaver.Shared.Graphics.Overlays.Hub
         /// </summary>
         private void CreateHeaderText()
         {
-            HeaderText = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "ONLINE HUB", 20)
+            HeaderText = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "ONLINE HUB", 20)
             {
                 Parent = HeaderBackground,
                 Alignment = Alignment.MidLeft,

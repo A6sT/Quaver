@@ -7,7 +7,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Footer
     public class IconTextButtonExit : IconTextButton
     {
         public IconTextButtonExit(EditScreen screen) : base(FontAwesome.Get(FontAwesomeIcon.fa_chevron_pointing_to_the_left),
-            FontManager.GetWobbleFont(Fonts.InterBold), LocalizationManager.Get("Screen_Editor_Exit"),
+            FontManager.GetWobbleFont(Fonts.InterSemiBold), LocalizationManager.Get("Screen_Editor_Exit"),
             (sender, args) => screen.LeaveEditor())
         {
         }

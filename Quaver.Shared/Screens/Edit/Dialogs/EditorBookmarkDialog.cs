@@ -77,7 +77,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
         private void CreateTextbox()
         {
             Textbox = new Textbox(new ScalableVector2(Panel.Width - ContentHorizontalPadding * 2, ControlHeight),
-                FontManager.GetWobbleFont(Fonts.InterBold),
+                FontManager.GetWobbleFont(Fonts.InterSemiBold),
                 20, EditingBookmark?.Note ?? "", LocalizationManager.Get("Screen_Editor_BookmarkNotePlaceholder"),
                 OnSubmit)
             {
@@ -108,7 +108,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
                 CornerRadius = 6
             };
 
-            ColorButton.SetLabel(FontManager.GetWobbleFont(Fonts.InterBold),
+            ColorButton.SetLabel(FontManager.GetWobbleFont(Fonts.InterSemiBold),
                 LocalizationManager.Get("Screen_Editor_ChangeColor"), 20, Color.White);
 
             ColorSwatch = new Sprite

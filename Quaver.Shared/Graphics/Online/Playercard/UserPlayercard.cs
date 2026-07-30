@@ -364,7 +364,7 @@ namespace Quaver.Shared.Graphics.Online.Playercard
         /// </summary>
         private void CreateUsername(string username)
         {
-            TextUsername = new SpriteText(Fonts.InterBold, " ", 24)
+            TextUsername = new SpriteText(Fonts.InterSemiBold, " ", 24)
             {
                 Parent = Avatar,
                 X = Avatar.Width + 5,

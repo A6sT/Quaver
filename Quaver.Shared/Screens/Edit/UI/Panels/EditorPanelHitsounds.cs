@@ -276,7 +276,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Panels
         /// </summary>
         private void CreateName()
         {
-            Name = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold),
+            Name = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold),
                 LocalizationManager.Get("Screen_Editor_Hitsound_" + Sound), 18)
             {
                 Parent = this,

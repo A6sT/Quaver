@@ -243,7 +243,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Panels.Layers
         /// </summary>
         private void CreateName()
         {
-            Name = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "", 18)
+            Name = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "", 18)
             {
                 Parent = this,
                 Alignment = Alignment.MidLeft,

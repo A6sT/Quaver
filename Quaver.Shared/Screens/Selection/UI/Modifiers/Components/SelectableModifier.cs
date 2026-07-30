@@ -68,7 +68,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Modifiers.Components
                 UsePreviousSpriteBatchOptions = true
             };
 
-            Name = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), mod.Name.ToUpper(), 20)
+            Name = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), mod.Name.ToUpper(), 20)
             {
                 Parent = this,
                 Alignment = Alignment.MidLeft,
@@ -86,7 +86,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Modifiers.Components
                     BorderColor = mod.ModColor,
                     BorderThickness = 2,
                     TextSize = 20,
-                    TextWeight = FontWeight.Bold
+                    TextWeight = FontWeight.SemiBold
                 }
             });
 
