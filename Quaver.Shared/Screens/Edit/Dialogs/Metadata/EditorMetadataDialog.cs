@@ -423,6 +423,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs.Metadata
                 qua.Creator = Creator.Textbox.RawText.Trim();
                 qua.Source = Source.Textbox.RawText.Trim();
                 qua.Tags = Tags.Textbox.RawText.Trim();
+                qua.SongPreviewTime = WorkingMap.SongPreviewTime;
                 qua.Save(path);
 
                 map.Artist = qua.Artist;
@@ -430,6 +431,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs.Metadata
                 map.Creator = qua.Creator;
                 map.Source = qua.Source;
                 map.Tags = qua.Tags;
+                map.AudioPreviewTime = qua.SongPreviewTime;
                 map.Md5Checksum = MapsetHelper.GetMd5Checksum(path);
                 map.LastFileWrite = File.GetLastWriteTimeUtc(path);
 
