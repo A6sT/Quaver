@@ -6,6 +6,7 @@ using Quaver.Shared.Graphics;
 using Quaver.Shared.Graphics.Menu.Border;
 using Quaver.Shared.Graphics.Menu.Border.Components.Buttons;
 using Quaver.Shared.Helpers;
+using Quaver.Shared.Screens.Edit.Input;
 using Quaver.Shared.Screens.Edit.UI.Footer.Bookmarks;
 using Quaver.Shared.Screens.Edit.UI.Footer.Time;
 using Quaver.Shared.Screens.Menu.UI.Jukebox;
@@ -187,7 +188,8 @@ namespace Quaver.Shared.Screens.Edit.UI.Footer
             FastForwardButton.Clicked += (o, e) => Screen.SeekToNearestBookmark(Direction.Forward);
             FastForwardButton.Hovered += (o, e) =>
             {
-                Screen.ActivateTooltip(new Tooltip(LocalizationManager.Get("Screen_Editor_NextBookmarkTooltip"),
+                Screen.ActivateTooltip(new Tooltip(LocalizationManager.Get("Screen_Editor_NextBookmarkTooltip",
+                        Screen.InputManager.InputConfig.GetOrDefault(EditorKeybindActions.SeekToNextBookmark).ToDisplayString()),
                     ColorHelper.HexToColor("#808080")));
             };
             FastForwardButton.LeftHover += (o, e) => Screen.DeactivateTooltip();
@@ -209,7 +211,8 @@ namespace Quaver.Shared.Screens.Edit.UI.Footer
             BackwardButton.Clicked += (sender, args) => Screen.SeekToNearestBookmark(Direction.Backward);
             BackwardButton.Hovered += (o, e) =>
             {
-                Screen.ActivateTooltip(new Tooltip(LocalizationManager.Get("Screen_Editor_PreviousBookmarkTooltip"),
+                Screen.ActivateTooltip(new Tooltip(LocalizationManager.Get("Screen_Editor_PreviousBookmarkTooltip",
+                        Screen.InputManager.InputConfig.GetOrDefault(EditorKeybindActions.SeekToLastBookmark).ToDisplayString()),
                     ColorHelper.HexToColor("#808080")));
             };
             BackwardButton.LeftHover += (o, e) => Screen.DeactivateTooltip();
