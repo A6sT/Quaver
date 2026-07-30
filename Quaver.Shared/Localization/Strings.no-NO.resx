@@ -147,9 +147,6 @@
   <data name="Screen_Main_QuitDialogTitle" xml:space="preserve">
     <value>AVSLUTT QUAVER</value>
   </data>
-  <data name="Screen_Main_QuitDialogMessage" xml:space="preserve">
-    <value>Er du sikker på at du vil avslutte spillet?</value>
-  </data>
   <data name="Screen_Main_SinglePlayerDescription" xml:space="preserve">
     <value>Konkurranse for rangeringslister</value>
   </data>
@@ -795,9 +792,6 @@ Hvis mappen ble ikke fullført, vil det i tillegg vise ytelsen dersom alle påf�
   </data>
   <data name="Screen_Results_Anerroroccuredwhileexportingthereplay" xml:space="preserve">
     <value>En feil oppstod under eksport av spillingen!</value>
-  </data>
-  <data name="Screen_Results_YouhavealreadyfixedyourlocaloffsetforthismapTheresnoneedtodoitagain" xml:space="preserve">
-    <value>Du har allerede fikset din lokale offset på denne mappen. Det er ikke nødvendig å gjøre det igjen.</value>
   </data>
   <data name="Screen_Results_Thereisnodatatobeabletofixyourlocaloffset" xml:space="preserve">
     <value>Det er ingen data som kan fikse ditt lokale offset!</value>
@@ -1525,11 +1519,6 @@ Hvis mappen ble ikke fullført, vil det i tillegg vise ytelsen dersom alle påf�
   <data name="Screen_Download_NoSongSelected" xml:space="preserve">
     <value>Ingen sang valgt</value>
   </data>
-  <data name="Screen_Download_NoSongSelectedDescription" xml:space="preserve">
-    <value>For å starte nedlastingen, dobbelklikk på en sang.
-Å klikke en gang vil la deg til å forhåndsvise sangen.
-Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
-  </data>
   <data name="Screen_Download_EndDate" xml:space="preserve">
     <value>Slutt Dato</value>
   </data>
@@ -1640,9 +1629,6 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
   </data>
   <data name="Screen_Multi_ExitToLobbyTitle" xml:space="preserve">
     <value>DRA TIL LOBBYEN</value>
-  </data>
-  <data name="Screen_Multi_ExitToLobbyMessage" xml:space="preserve">
-    <value>Er du sikker på at du vil dra til lobbyen?</value>
   </data>
   <data name="Screen_Multi_Leave" xml:space="preserve">
     <value>Dra</value>
@@ -2508,9 +2494,6 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
   <data name="Screen_Editor_No" xml:space="preserve">
     <value>NEI</value>
   </data>
-  <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve">
-    <value>Er du sikker på at du vil sende inn mapsettet ditt for rangering?&#xA;Notat: Husk at den må følge rangeringskriteriene for å bli akseptert.</value>
-  </data>
   <data name="Screen_Editor_CustomBeatSnap" xml:space="preserve">
     <value>TILPASSET TAKTSLAG</value>
   </data>
@@ -2612,9 +2595,6 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
   </data>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve">
     <value>Vennligst vent mens din map sendes inn for rangering...</value>
-  </data>
-  <data name="Screen_Editor_RankingIssuesFound" xml:space="preserve">
-    <value>Ditt mapsett har problemer som hindrer den fra å bli rangert. Sjekk AutoMod for hver vanskelighetsgrad, og deretter prøv på nytt.</value>
   </data>
   <data name="Screen_Editor_SubmitForRankError" xml:space="preserve">
     <value>En feil oppstod under sending av din mapsett for rangering.</value>
@@ -3236,9 +3216,6 @@ Du kan bruke filtrene nedenfor til å begrense søket ditt.</value>
   </data>
   <data name="Screen_Editor_ReadyForRank" xml:space="preserve">
     <value>Klar for rangering!</value>
-  </data>
-  <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve">
-    <value>Dette er en advarsel om en potensiell feil. Du kan ignorere dette hvis det er ikke et problem.</value>
   </data>
   <data name="Screen_Editor_AutoModCriticalTooltip" xml:space="preserve">
     <value>Dette er en kritisk feil som påvirker mappens spillbarhet.</value>

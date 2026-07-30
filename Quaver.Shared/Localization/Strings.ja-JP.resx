@@ -147,9 +147,6 @@
   <data name="Screen_Main_QuitDialogTitle" xml:space="preserve">
     <value>Quaver を終了</value>
   </data>
-  <data name="Screen_Main_QuitDialogMessage" xml:space="preserve">
-    <value>ゲームを終了しますか？</value>
-  </data>
   <data name="Screen_Main_SinglePlayerDescription" xml:space="preserve">
     <value>リーダーボードのランクを競うする</value>
   </data>
@@ -799,9 +796,6 @@ Marvelous instead.</value>
   </data>
   <data name="Screen_Results_Anerroroccuredwhileexportingthereplay" xml:space="preserve">
     <value>An error occured while exporting the replay!</value>
-  </data>
-  <data name="Screen_Results_YouhavealreadyfixedyourlocaloffsetforthismapTheresnoneedtodoitagain" xml:space="preserve">
-    <value>You have already fixed your local offset for this map! There's no need to do it again.</value>
   </data>
   <data name="Screen_Results_Thereisnodatatobeabletofixyourlocaloffset" xml:space="preserve">
     <value>There is no data to be able to fix your local offset!</value>
@@ -1530,11 +1524,6 @@ for the selected game mode?</value>
   <data name="Screen_Download_NoSongSelected" xml:space="preserve">
     <value>No Song Selected</value>
   </data>
-  <data name="Screen_Download_NoSongSelectedDescription" xml:space="preserve">
-    <value>To begin downloading, double-click on a song.
-Clicking once will allow you to preview the audio.
-You can use the filters below to narrow down your search.</value>
-  </data>
   <data name="Screen_Download_EndDate" xml:space="preserve">
     <value>End Date</value>
   </data>
@@ -1646,9 +1635,6 @@ sure you would like to start without all players ready?</value>
   </data>
   <data name="Screen_Multi_ExitToLobbyTitle" xml:space="preserve">
     <value>ルームに戻る</value>
-  </data>
-  <data name="Screen_Multi_ExitToLobbyMessage" xml:space="preserve">
-    <value>Are you sure you would like to exit to the lobby?</value>
   </data>
   <data name="Screen_Multi_Leave" xml:space="preserve">
     <value>離れる</value>
@@ -2515,9 +2501,6 @@ for other players to download?</value>
   <data name="Screen_Editor_No" xml:space="preserve">
     <value>NO</value>
   </data>
-  <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve">
-    <value>Are you sure you would like to submit your mapset for rank?&#xA;Note: It must follow the ranking criteria in order to be accepted.</value>
-  </data>
   <data name="Screen_Editor_CustomBeatSnap" xml:space="preserve">
     <value>CUSTOM BEAT SNAP</value>
   </data>
@@ -2619,9 +2602,6 @@ for other players to download?</value>
   </data>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve">
     <value>Please wait while your map is being submitted for rank...</value>
-  </data>
-  <data name="Screen_Editor_RankingIssuesFound" xml:space="preserve">
-    <value>Your mapset has issues that prevent it from being ranked. Please review the AutoMod for each difficulty, and then try again.</value>
   </data>
   <data name="Screen_Editor_SubmitForRankError" xml:space="preserve">
     <value>An error occurred while submitting your mapset for rank.</value>
@@ -3243,9 +3223,6 @@ for other players to download?</value>
   </data>
   <data name="Screen_Editor_ReadyForRank" xml:space="preserve">
     <value>Ready for rank!</value>
-  </data>
-  <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve">
-    <value>This is a warning of a potential error. You can ignore this if it isn't an issue.</value>
   </data>
   <data name="Screen_Editor_AutoModCriticalTooltip" xml:space="preserve">
     <value>This is a critical error which affects the playability of your map.</value>

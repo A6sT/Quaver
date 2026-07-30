@@ -147,9 +147,6 @@
   <data name="Screen_Main_QuitDialogTitle" xml:space="preserve">
     <value>QUAVER BEENDEN</value>
   </data>
-  <data name="Screen_Main_QuitDialogMessage" xml:space="preserve">
-    <value>Bist du dir sicher, dass du das Spiel beenden möchtest?</value>
-  </data>
   <data name="Screen_Main_SinglePlayerDescription" xml:space="preserve">
     <value>Nehme an Ranglisten teil</value>
   </data>
@@ -795,9 +792,6 @@ Wenn die Map nicht fertig gespielt wurde, dann wird zusätzlich die Genauigkeit 
   </data>
   <data name="Screen_Results_Anerroroccuredwhileexportingthereplay" xml:space="preserve">
     <value>Ein Fehler ist beim Exportieren der Wiederholung aufgetreten!</value>
-  </data>
-  <data name="Screen_Results_YouhavealreadyfixedyourlocaloffsetforthismapTheresnoneedtodoitagain" xml:space="preserve">
-    <value>Du hast bereits dein lokales Offset für diese Map gefixed. Es ist nicht nötig, es erneut zu tun.</value>
   </data>
   <data name="Screen_Results_Thereisnodatatobeabletofixyourlocaloffset" xml:space="preserve">
     <value>Es gibt keine Werte, um dein lokales Offset fixen zu können!</value>
@@ -1526,11 +1520,6 @@ für den ausgewählten Spielmodus finden?</value>
   <data name="Screen_Download_NoSongSelected" xml:space="preserve">
     <value>Kein Song ausgewählt</value>
   </data>
-  <data name="Screen_Download_NoSongSelectedDescription" xml:space="preserve">
-    <value>Um das Downloaden zu starten, doppelklicke auf einen Song. 
-Mit einem einfachen Klick kannst du eine Audiovorschau anhören.
-Mit den Filtern unten kannst du deine Suche eingrenzen.</value>
-  </data>
   <data name="Screen_Download_EndDate" xml:space="preserve">
     <value>Enddatum</value>
   </data>
@@ -1641,9 +1630,6 @@ Mit den Filtern unten kannst du deine Suche eingrenzen.</value>
   </data>
   <data name="Screen_Multi_ExitToLobbyTitle" xml:space="preserve">
     <value>ZUR LOBBY VERLASSEN</value>
-  </data>
-  <data name="Screen_Multi_ExitToLobbyMessage" xml:space="preserve">
-    <value>Bist du sicher, dass du die Lobby verlassen möchtest?</value>
   </data>
   <data name="Screen_Multi_Leave" xml:space="preserve">
     <value>Verlassen</value>
@@ -2510,9 +2496,6 @@ hochladen, damit andere Spieler es herunterladen können?</value>
   <data name="Screen_Editor_No" xml:space="preserve">
     <value>NEIN</value>
   </data>
-  <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve">
-    <value>Bist du sicher, dass du deine Map fürs Ranking einreichen möchtest?&#xA; Hinweis: Es muss den Ranking-Kriterien folgen, um akzeptiert zu werden.</value>
-  </data>
   <data name="Screen_Editor_CustomBeatSnap" xml:space="preserve">
     <value>BENUTZERDEFINIERTER BEAT SNAP</value>
   </data>
@@ -2614,9 +2597,6 @@ hochladen, damit andere Spieler es herunterladen können?</value>
   </data>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve">
     <value>Please wait while your map is being submitted for rank...</value>
-  </data>
-  <data name="Screen_Editor_RankingIssuesFound" xml:space="preserve">
-    <value>Your mapset has issues that prevent it from being ranked. Please review the AutoMod for each difficulty, and then try again.</value>
   </data>
   <data name="Screen_Editor_SubmitForRankError" xml:space="preserve">
     <value>An error occurred while submitting your mapset for rank.</value>
@@ -3238,9 +3218,6 @@ hochladen, damit andere Spieler es herunterladen können?</value>
   </data>
   <data name="Screen_Editor_ReadyForRank" xml:space="preserve">
     <value>Ready for rank!</value>
-  </data>
-  <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve">
-    <value>This is a warning of a potential error. You can ignore this if it isn't an issue.</value>
   </data>
   <data name="Screen_Editor_AutoModCriticalTooltip" xml:space="preserve">
     <value>This is a critical error which affects the playability of your map.</value>
