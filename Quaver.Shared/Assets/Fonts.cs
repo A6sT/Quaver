@@ -18,10 +18,7 @@ namespace Quaver.Shared.Assets
 {
     public static class Fonts
     {
-        private const int NotoCjkWeight = FontWeight.SemiBold;
-
-        // Temporary adjustment for testing lighter font rendering across Quaver.
-        private const int FontWeightAdjustment = -100;
+        private const int NotoCjkWeight = FontWeight.Medium;
         private const int InterImplicitFontSizeReduction = 0;
         private const int InterDefaultSize = 20;
         private const string Folder = "Quaver.Resources/Fonts";
@@ -52,7 +49,7 @@ namespace Quaver.Shared.Assets
             var notoCjkFont = new WobbleFontFace(
                 GameBase.Game.Resources.Get($@"{Folder}/NotoCJK/NotoSansCJK-VF.ttf.ttc"),
                 index: QuaverLocalization.GetNotoCjkFaceIndex(ConfigManager.Language.Value),
-                weight: AdjustFontWeight(NotoCjkWeight));
+                weight: NotoCjkWeight);
 
             var interFont = GameBase.Game.Resources.Get($"{Folder}/Inter/{Inter}.ttf");
 
@@ -74,7 +71,7 @@ namespace Quaver.Shared.Assets
             void CacheInterFont(string name, int weight)
             {
                 CacheFont(name, new WobbleFontStore(InterDefaultSize,
-                    new WobbleFontFace(interFont, weight: AdjustFontWeight(weight),
+                    new WobbleFontFace(interFont, weight: weight,
                         enableTabularNumbers: true),
                     implicitFontSizeReduction: InterImplicitFontSizeReduction,
                     addedFonts: CreateFallbacks()));
@@ -98,6 +95,7 @@ namespace Quaver.Shared.Assets
                 { FontWeight.ExtraBold, FontManager.GetWobbleFont(InterHeavy) },
                 { FontWeight.Black, FontManager.GetWobbleFont(InterBlack) }
             };
+            TooltipManager.Theme.TextWeight = FontWeight.Medium;
 
             var dir = $"{WobbleGame.WorkingDirectory}/Fonts";
             Directory.CreateDirectory(dir);
@@ -129,7 +127,7 @@ namespace Quaver.Shared.Assets
             if (!FontManager.WobbleFonts.TryGetValue(name, out var font))
                 return;
 
-            font.Reload(new WobbleFontFace(interFont, weight: AdjustFontWeight(weight)),
+            font.Reload(new WobbleFontFace(interFont, weight: weight),
                 InterImplicitFontSizeReduction,
                 fallbacks);
         }
@@ -140,7 +138,7 @@ namespace Quaver.Shared.Assets
             var notoCjkFont = new WobbleFontFace(
                 GameBase.Game.Resources.Get($@"{Folder}/NotoCJK/NotoSansCJK-VF.ttf.ttc"),
                 index: QuaverLocalization.GetNotoCjkFaceIndex(cultureName),
-                weight: AdjustFontWeight(NotoCjkWeight));
+                weight: NotoCjkWeight);
 
             return new Dictionary<string, WobbleFontFace>
             {
@@ -149,7 +147,5 @@ namespace Quaver.Shared.Assets
             };
         }
 
-        private static int AdjustFontWeight(int weight) =>
-            System.Math.Max(FontWeight.Thin, weight + FontWeightAdjustment);
     }
 }

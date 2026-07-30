@@ -309,7 +309,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs.Metadata
                 Tint = ColorHelper.HexToColor("#0968AC")
             };
 
-            SyncMetadataButton.SetLabel(FontManager.GetWobbleFont(Fonts.InterBold),
+            SyncMetadataButton.SetLabel(FontManager.GetWobbleFont(Fonts.InterSemiBold),
                 LocalizationManager.Get("Screen_Editor_SyncMetadata"), 18, Color.White);
         }
 

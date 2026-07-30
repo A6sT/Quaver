@@ -17,7 +17,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Footer
     public class IconTextButtonTestPlay : IconTextButton
     {
         public IconTextButtonTestPlay(EditScreen screen) : base(FontAwesome.Get(FontAwesomeIcon.fa_play_button),
-            FontManager.GetWobbleFont(Fonts.InterBold), LocalizationManager.Get("Screen_Editor_TestPlay"),
+            FontManager.GetWobbleFont(Fonts.InterSemiBold), LocalizationManager.Get("Screen_Editor_TestPlay"),
             (sender, args) => screen.ExitToTestPlay())
         {
             Hovered += (sender, args) => screen?.ActivateTooltip(new Tooltip(

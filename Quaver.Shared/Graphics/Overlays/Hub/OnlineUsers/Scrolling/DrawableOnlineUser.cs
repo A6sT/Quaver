@@ -254,7 +254,7 @@ namespace Quaver.Shared.Graphics.Overlays.Hub.OnlineUsers.Scrolling
         /// </summary>
         private void CreateClan()
         {
-            Clan = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "", 18)
+            Clan = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "", 18)
             {
                 Parent = this,
                 Alignment = Alignment.TopLeft,
@@ -268,7 +268,7 @@ namespace Quaver.Shared.Graphics.Overlays.Hub.OnlineUsers.Scrolling
         /// </summary>
         private void CreateUsername()
         {
-            Username = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "Loading...", 18)
+            Username = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "Loading...", 18)
             {
                 Parent = this,
                 Alignment = Alignment.TopLeft,
@@ -282,7 +282,7 @@ namespace Quaver.Shared.Graphics.Overlays.Hub.OnlineUsers.Scrolling
         /// </summary>
         private void CreateStatus()
         {
-            Status = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "Idle", 16)
+            Status = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "Idle", 16)
             {
                 Parent = this,
                 Alignment = Alignment.BotLeft,

@@ -359,13 +359,13 @@ namespace Quaver.Shared.Screens.Edit.UI.Panels
         {
             const int padding = 16;
 
-            Key = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), key, 16)
+            Key = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), key, 16)
             {
                 Parent = this,
                 X = padding
             };
 
-            Value = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), value, 16)
+            Value = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), value, 16)
             {
                 Parent = this,
                 Alignment = Alignment.MidRight,

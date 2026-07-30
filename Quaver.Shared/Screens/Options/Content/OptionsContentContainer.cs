@@ -151,7 +151,7 @@ namespace Quaver.Shared.Screens.Options.Content
                 // Create header if the subcategory has a valid name
                 if (!string.IsNullOrEmpty(subcategory.Name))
                 {
-                    var header = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), subcategory.Name, 20)
+                    var header = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), subcategory.Name, 20)
                     {
                         Position = new ScalableVector2(28, totalHeight),
                         Tint = ColorHelper.HexToColor("#45D6F5")
@@ -170,7 +170,7 @@ namespace Quaver.Shared.Screens.Options.Content
                             IsClickable = false
                         };
 
-                        var tooltipLabel = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "Mod", 16)
+                        var tooltipLabel = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "Mod", 16)
                         {
                             Parent = tooltipButton,
                             Position = new ScalableVector2(0, (tooltipButton.Height - 16) / 2),

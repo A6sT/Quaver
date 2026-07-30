@@ -109,7 +109,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
 
         private void CreateHeader()
         {
-            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "GLOBAL ICONS", 28)
+            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "GLOBAL ICONS", 28)
             {
                 Parent = ScreenScrollContainer.ContentContainer,
                 Alignment = Alignment.TopCenter,
@@ -118,7 +118,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
                 UsePreviousSpriteBatchOptions = true
             };
 
-            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterRegular),
+            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterLight),
                 $"{Icons.Length} icons — labels are read directly from the GlobalIcon enum", 17)
             {
                 Parent = ScreenScrollContainer.ContentContainer,
@@ -159,7 +159,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
                 UsePreviousSpriteBatchOptions = true
             };
 
-            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), icon.ToString(), 16)
+            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterMedium), icon.ToString(), 16)
             {
                 Parent = card,
                 Alignment = Alignment.TopLeft,
@@ -169,7 +169,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
                 UsePreviousSpriteBatchOptions = true
             };
 
-            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterRegular), $"Index {index}", 14)
+            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterLight), $"Index {index}", 14)
             {
                 Parent = card,
                 Alignment = Alignment.TopLeft,

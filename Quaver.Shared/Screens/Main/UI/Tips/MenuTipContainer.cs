@@ -92,7 +92,7 @@ namespace Quaver.Shared.Screens.Main.UI.Tips
 
         /// <summary>
         /// </summary>
-        private void CreateLabel() => Label = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold),
+        private void CreateLabel() => Label = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold),
             GetTipLabel(), 18)
         {
             Parent = this,
@@ -120,7 +120,7 @@ namespace Quaver.Shared.Screens.Main.UI.Tips
         /// </summary>
         private void CreateTextTip()
         {
-            TextTip = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold),
+            TextTip = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold),
                 GetTipText(TipKeys[^1]), 16)
             {
                 Alignment = Alignment.MidLeft,

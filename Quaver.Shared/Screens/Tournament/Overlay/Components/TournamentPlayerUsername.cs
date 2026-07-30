@@ -48,7 +48,7 @@ namespace Quaver.Shared.Screens.Tournament.Overlay.Components
             Image = Flags.Get(Player.User.OnlineUser.CountryFlag)
         };
 
-        private void CreateUsername() => TextUsername = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold),
+        private void CreateUsername() => TextUsername = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold),
             Player.User.OnlineUser.Username)
         {
             Parent = this,
