@@ -6,6 +6,7 @@ using Quaver.Shared.Graphics;
 using Quaver.Shared.Graphics.Menu.Border.Components;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Screens.Edit.Dialogs;
+using Quaver.Shared.Screens.Edit.Input;
 using Quaver.Shared.Screens.Selection.UI.Playlists.Dialogs.Create;
 using Wobble.Graphics.Sprites.Text;
 using Wobble.Graphics.UI.Dialogs;
@@ -19,10 +20,10 @@ namespace Quaver.Shared.Screens.Edit.UI.Footer
             FontManager.GetWobbleFont(Fonts.InterBold), LocalizationManager.Get("Screen_Editor_TestPlay"),
             (sender, args) => screen.ExitToTestPlay())
         {
-            var tooltip = new Tooltip(LocalizationManager.Get("Screen_Editor_TestPlayTooltip"),
-                ColorHelper.HexToColor("#808080"));
-
-            Hovered += (sender, args) => screen?.ActivateTooltip(tooltip);
+            Hovered += (sender, args) => screen?.ActivateTooltip(new Tooltip(
+                LocalizationManager.Get("Screen_Editor_TestPlayTooltip",
+                    screen.InputManager.InputConfig.GetOrDefault(EditorKeybindActions.PlayTest).ToDisplayString()),
+                ColorHelper.HexToColor("#808080")));
             LeftHover += (sender, args) => screen?.DeactivateTooltip();
 
             RightClicked += (sender, args) => DialogManager.Show(new EditorModifierMenuDialog());

@@ -166,13 +166,13 @@
     <value>你知道吗：</value>
   </data>
   <data name="Screen_Main_TipOpenOptions" xml:space="preserve">
-    <value>按下 CTRL+O 打开选项菜单。</value>
+    <value>按下 {0} 打开选项菜单。</value>
   </data>
   <data name="Screen_Main_TipImportMapFiles" xml:space="preserve">
     <value>将谱面文件（.qp）拖入游戏窗口即可导入。</value>
   </data>
   <data name="Screen_Main_TipMapPreview" xml:space="preserve">
-    <value>在选歌界面按下 F3 键可以显示谱面预览。</value>
+    <value>在选歌界面按下 {0} 键可以显示谱面预览。</value>
   </data>
   <data name="Screen_Main_TipPauseSubmission" xml:space="preserve">
     <value>如果在游玩时暂停，成绩将不会上传。</value>
@@ -187,13 +187,10 @@
     <value>如需创建谱面，请将 .mp3 文件拖入游戏窗口！</value>
   </data>
   <data name="Screen_Main_TipRandomSong" xml:space="preserve">
-    <value>在选歌界面按下 F2 键会随机选择一首歌曲。</value>
-  </data>
-  <data name="Screen_Main_TipPlayercard" xml:space="preserve">
-    <value>在菜单栏按下 F10 键可以打开你的玩家信息。</value>
+    <value>在选歌界面按下 {0} 键会随机选择一首歌曲。</value>
   </data>
   <data name="Screen_Main_TipScrollSpeed" xml:space="preserve">
-    <value>在游玩时按下 F3/F4 键可以更改物件移动速度。</value>
+    <value>在游玩时按下 {0}/{1} 键可以更改物件移动速度。</value>
   </data>
   <data name="Screen_Main_TipCalibrateOffset" xml:space="preserve">
     <value>在选项菜单可以校正您的延迟。</value>
@@ -1008,9 +1005,6 @@
   </data>
   <data name="Screen_Options_UseSmoothAudioStartTimingDuringGameplay" xml:space="preserve">
     <value>游玩时使用平滑音频开头</value>
-  </data>
-  <data name="Screen_Options_DisplayGameplayOverlayShiftF6" xml:space="preserve">
-    <value>游玩时显示HUD（Shift + F6）</value>
   </data>
   <data name="Screen_Options_DisplayNotificationsDuringGameplay" xml:space="preserve">
     <value>游玩时显示通知</value>
@@ -2546,22 +2540,22 @@
     <value>已禁用 {0} 上色</value>
   </data>
   <data name="Screen_Editor_AddBookmarkTooltip" xml:space="preserve">
-    <value>在当前位置添加书签。将鼠标置于黄色书签线上可查看其中的注释。.&amp;#xA左键书签线以编辑，右键以删除。快捷键：CTRL + B</value>
+    <value>在当前位置添加书签。将鼠标置于黄色书签线上可查看其中的注释。.&amp;#xA左键书签线以编辑，右键以删除。快捷键：{0}</value>
   </data>
   <data name="Screen_Editor_BeatSnap" xml:space="preserve">
     <value>吸附分度</value>
   </data>
   <data name="Screen_Editor_BeatSnapTooltip" xml:space="preserve">
-    <value>更改当前吸附分度。&#xA;快捷键：CTRL + 上下箭头/滚轮</value>
+    <value>更改当前吸附分度。&#xA;快捷键：{0} / {1}</value>
   </data>
   <data name="Screen_Editor_PlaybackSpeedTooltip" xml:space="preserve">
-    <value>更改播放速度。&#xA;快捷键：CTRL + -/+</value>
+    <value>更改播放速度。&#xA;快捷键：{0} / {1}</value>
   </data>
   <data name="Screen_Editor_TestPlay" xml:space="preserve">
     <value>试玩</value>
   </data>
   <data name="Screen_Editor_TestPlayTooltip" xml:space="preserve">
-    <value>保存并试玩谱面。&#xA;右键以选择试玩使用的模组。&#xA;快捷键：F4</value>
+    <value>保存并试玩谱面。&#xA;右键以选择试玩使用的模组。&#xA;快捷键：{0}</value>
   </data>
   <data name="Screen_Editor_TimingPointEditor" xml:space="preserve">
     <value>BPM 编辑器</value>
@@ -2939,10 +2933,10 @@
     <value>预览时间已改为：{0}</value>
   </data>
   <data name="Screen_Editor_ZoomInTooltip" xml:space="preserve">
-    <value>放大（Page Up）</value>
+    <value>放大（{0}）</value>
   </data>
   <data name="Screen_Editor_ZoomOutTooltip" xml:space="preserve">
-    <value>缩小（Page Down）</value>
+    <value>缩小（{0}）</value>
   </data>
   <data name="Screen_Editor_DenseLinesDetected" xml:space="preserve">
     <value>检测到密集线段。线段将不再频繁绘制。</value>
@@ -2954,10 +2948,10 @@
     <value>正在加载频谱图......</value>
   </data>
   <data name="Screen_Editor_NextBookmarkTooltip" xml:space="preserve">
-    <value>跳转至时间线里下一个书签。&#xA;快捷键：CTRL + 右箭头</value>
+    <value>跳转至时间线里下一个书签。&#xA;快捷键：{0}</value>
   </data>
   <data name="Screen_Editor_PreviousBookmarkTooltip" xml:space="preserve">
-    <value>跳转至时间线里上一个书签。&#xA;快捷键：CTRL + 左箭头</value>
+    <value>跳转至时间线里上一个书签。&#xA;快捷键：{0}</value>
   </data>
   <data name="Screen_Editor_TimingPointsSelected" xml:space="preserve">
     <value>已选择 {0} 个 BPM 节点</value>

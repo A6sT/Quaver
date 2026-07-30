@@ -166,13 +166,13 @@
     <value>TIP:</value>
   </data>
   <data name="Screen_Main_TipOpenOptions" xml:space="preserve">
-    <value>Ved å trykke på CTRL+O vil åpne innstillinger-menyen.</value>
+    <value>Ved å trykke på {0} vil åpne innstillinger-menyen.</value>
   </data>
   <data name="Screen_Main_TipImportMapFiles" xml:space="preserve">
     <value>Dra map-filer (.qp) inn i spillet for å importere dem.</value>
   </data>
   <data name="Screen_Main_TipMapPreview" xml:space="preserve">
-    <value>Ved å trykke på F3 i sang-velgeren vises det forhåndsvisning av map.</value>
+    <value>Ved å trykke på {0} i sang-velgeren vises det forhåndsvisning av map.</value>
   </data>
   <data name="Screen_Main_TipPauseSubmission" xml:space="preserve">
     <value>Pauser mens du spiller hindrer score-submisjon.</value>
@@ -187,13 +187,10 @@
     <value>Dra en .mp3 fil inni spillet for å lage et nytt map!</value>
   </data>
   <data name="Screen_Main_TipRandomSong" xml:space="preserve">
-    <value>Ved å trykke på F2 i sang-velgeren velger du en tilfeldig sang.</value>
-  </data>
-  <data name="Screen_Main_TipPlayercard" xml:space="preserve">
-    <value>Ved å trykke på F10 i menyen åpner det spilletkortet ditt.</value>
+    <value>Ved å trykke på {0} i sang-velgeren velger du en tilfeldig sang.</value>
   </data>
   <data name="Screen_Main_TipScrollSpeed" xml:space="preserve">
-    <value>Ved å trykke på F3/F4 midt i spill endrer det rullehastighet.</value>
+    <value>Ved å trykke på {0}/{1} midt i spill endrer det rullehastighet.</value>
   </data>
   <data name="Screen_Main_TipCalibrateOffset" xml:space="preserve">
     <value>Ditt offset kan kalibreres i instillngene.</value>
@@ -1008,9 +1005,6 @@ Hvis mappen ble ikke fullført, vil det i tillegg vise ytelsen dersom alle påf�
   </data>
   <data name="Screen_Options_UseSmoothAudioStartTimingDuringGameplay" xml:space="preserve">
     <value>Bruk jevnt lydstart under spilling</value>
-  </data>
-  <data name="Screen_Options_DisplayGameplayOverlayShiftF6" xml:space="preserve">
-    <value>Vis spilloverlegg (Shift + F6)</value>
   </data>
   <data name="Screen_Options_DisplayNotificationsDuringGameplay" xml:space="preserve">
     <value>Vis varsler under spillingen</value>
@@ -2546,22 +2540,22 @@ Hvis mappen ble ikke fullført, vil det i tillegg vise ytelsen dersom alle påf�
     <value>Deaktiverte {0} farging</value>
   </data>
   <data name="Screen_Editor_AddBookmarkTooltip" xml:space="preserve">
-    <value>Legger til et bokmerke i gjeldende posisjon i tidslinjen.&#xA;- Hold musepekeren over et bokmerke for å vise notater som er forbundet med den.&#xA;- Venstreklikk et bokmerke til å redigere den.&#xA;- Høyreklikk et bokmerke for å slette den.&#xA;-Hurtigtast: CTRL + B</value>
+    <value>Legger til et bokmerke i gjeldende posisjon i tidslinjen.&#xA;- Hold musepekeren over et bokmerke for å vise notater som er forbundet med den.&#xA;- Venstreklikk et bokmerke til å redigere den.&#xA;- Høyreklikk et bokmerke for å slette den.&#xA;-Hurtigtast: {0}</value>
   </data>
   <data name="Screen_Editor_BeatSnap" xml:space="preserve">
     <value>Taktslag</value>
   </data>
   <data name="Screen_Editor_BeatSnapTooltip" xml:space="preserve">
-    <value>Endre nåværende taktslag divisor&#xA;Hurtigtast: CTRL + Opp/Ned/Scroll Hjul</value>
+    <value>Endre nåværende taktslag divisor&#xA;Hurtigtast: {0} / {1}</value>
   </data>
   <data name="Screen_Editor_PlaybackSpeedTooltip" xml:space="preserve">
-    <value>Endre avspillingshastighet.&#xA;Hurtigtast: CTRL + -/+</value>
+    <value>Endre avspillingshastighet.&#xA;Hurtigtast: {0} / {1}</value>
   </data>
   <data name="Screen_Editor_TestPlay" xml:space="preserve">
     <value>Prøvespill</value>
   </data>
   <data name="Screen_Editor_TestPlayTooltip" xml:space="preserve">
-    <value>Lagre og prøvespill din map.&#xA;Høyreklikk lar deg velge modifikatorer til å bruke mens du prøvespiller.&#xA;Hurtigtast: F4</value>
+    <value>Lagre og prøvespill din map.&#xA;Høyreklikk lar deg velge modifikatorer til å bruke mens du prøvespiller.&#xA;Hurtigtast: {0}</value>
   </data>
   <data name="Screen_Editor_TimingPointEditor" xml:space="preserve">
     <value>Tidspunkt editor</value>
@@ -2939,10 +2933,10 @@ Hvis mappen ble ikke fullført, vil det i tillegg vise ytelsen dersom alle påf�
     <value>Forhåndsvisningstid endret til: {0}</value>
   </data>
   <data name="Screen_Editor_ZoomInTooltip" xml:space="preserve">
-    <value>Zoom inn (Page Up)</value>
+    <value>Zoom inn ({0})</value>
   </data>
   <data name="Screen_Editor_ZoomOutTooltip" xml:space="preserve">
-    <value>Zoom inn (Page Down)</value>
+    <value>Zoom inn ({0})</value>
   </data>
   <data name="Screen_Editor_DenseLinesDetected" xml:space="preserve">
     <value>Tett linjer oppdaget. Linjer vil bli tegnet sjeldnere.</value>
@@ -2954,10 +2948,10 @@ Hvis mappen ble ikke fullført, vil det i tillegg vise ytelsen dersom alle påf�
     <value>Laster spektrogram...</value>
   </data>
   <data name="Screen_Editor_NextBookmarkTooltip" xml:space="preserve">
-    <value>Søk til neste bokmerke i tidslinjen.&#xA;Hurtigtast: CTRL + Høyre</value>
+    <value>Søk til neste bokmerke i tidslinjen.&#xA;Hurtigtast: {0}</value>
   </data>
   <data name="Screen_Editor_PreviousBookmarkTooltip" xml:space="preserve">
-    <value>Søk til forrige bokmerke i tidslinjen.&#xA;Hurtigtast: CTRL + Venstre</value>
+    <value>Søk til forrige bokmerke i tidslinjen.&#xA;Hurtigtast: {0}</value>
   </data>
   <data name="Screen_Editor_TimingPointsSelected" xml:space="preserve">
     <value>{0} tidspunkter valgt</value>
