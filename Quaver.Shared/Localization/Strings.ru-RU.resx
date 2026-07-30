@@ -1112,242 +1112,32 @@
   <data name="Screen_Options_Searchforoptions" xml:space="preserve">
     <value>Поиск Настроек...</value>
   </data>
-  <data name="Screen_Options_1KGameplayLayout" xml:space="preserve">
-    <value>Раскладка для 1К</value>
-  </data>
-  <data name="Screen_Options_1KScrollSpeed" xml:space="preserve">
-    <value>Скорость Прокрутки для 1К</value>
-  </data>
-  <data name="Screen_Options_1KScrollDirection" xml:space="preserve">
-    <value>Направление Прокрутки для 1К</value>
-  </data>
-  <data name="Screen_Options_1KScratchLayout" xml:space="preserve">
-    <value>Раскладка Scratch для 1К</value>
-  </data>
-  <data name="Screen_Options_Place1KScratchLaneOnLeft" xml:space="preserve">
-    <value>Размещать Scratch-дорожку для 1К слева</value>
-  </data>
-  <data name="Screen_Options_1KCoopLayout" xml:space="preserve">
-    <value>Кооперативная Раскладка для 1К</value>
-  </data>
-  <data name="Screen_Options_Prioritized1KDifficulty" xml:space="preserve">
-    <value>Приоритетная Сложность для 1К</value>
-  </data>
   <data name="Screen_Options_1Keys" xml:space="preserve">
     <value>1 Клавиша</value>
-  </data>
-  <data name="Screen_Options_2KGameplayLayout" xml:space="preserve">
-    <value>Раскладка для 2К</value>
-  </data>
-  <data name="Screen_Options_2KScrollSpeed" xml:space="preserve">
-    <value>Скорость Прокрутки для 2К</value>
-  </data>
-  <data name="Screen_Options_2KScrollDirection" xml:space="preserve">
-    <value>Направление Прокрутки для 2К</value>
-  </data>
-  <data name="Screen_Options_2KScratchLayout" xml:space="preserve">
-    <value>Раскладка Scratch для 2К</value>
-  </data>
-  <data name="Screen_Options_Place2KScratchLaneOnLeft" xml:space="preserve">
-    <value>Размещать Scratch-дорожку для 2К слева</value>
-  </data>
-  <data name="Screen_Options_2KCoopLayout" xml:space="preserve">
-    <value>Кооперативная Раскладка для 2К</value>
-  </data>
-  <data name="Screen_Options_Prioritized2KDifficulty" xml:space="preserve">
-    <value>Приоритетная Сложность для 2К</value>
   </data>
   <data name="Screen_Options_2Keys" xml:space="preserve">
     <value>2 Клавиши</value>
   </data>
-  <data name="Screen_Options_3KGameplayLayout" xml:space="preserve">
-    <value>Раскладка для 3К</value>
-  </data>
-  <data name="Screen_Options_3KScrollSpeed" xml:space="preserve">
-    <value>Скорость Прокрутки для 3К</value>
-  </data>
-  <data name="Screen_Options_3KScrollDirection" xml:space="preserve">
-    <value>Направление Прокрутки для 3К</value>
-  </data>
-  <data name="Screen_Options_3KScratchLayout" xml:space="preserve">
-    <value>Раскладка Scratch для 3К</value>
-  </data>
-  <data name="Screen_Options_Place3KScratchLaneOnLeft" xml:space="preserve">
-    <value>Размещать Scratch-дорожку для 3К слева</value>
-  </data>
-  <data name="Screen_Options_3KCoopLayout" xml:space="preserve">
-    <value>Кооперативная Раскладка для 3К</value>
-  </data>
-  <data name="Screen_Options_Prioritized3KDifficulty" xml:space="preserve">
-    <value>Приоритетная Сложность для 3К</value>
-  </data>
   <data name="Screen_Options_3Keys" xml:space="preserve">
     <value>3 Клавиши</value>
-  </data>
-  <data name="Screen_Options_4KGameplayLayout" xml:space="preserve">
-    <value>Раскладка для 4К</value>
-  </data>
-  <data name="Screen_Options_4KScrollSpeed" xml:space="preserve">
-    <value>Скорость Прокрутки для 4К</value>
-  </data>
-  <data name="Screen_Options_4KScrollDirection" xml:space="preserve">
-    <value>Направление Прокрутки для 4К</value>
-  </data>
-  <data name="Screen_Options_4KScratchLayout" xml:space="preserve">
-    <value>Раскладка Scratch для 4К</value>
-  </data>
-  <data name="Screen_Options_Place4KScratchLaneOnLeft" xml:space="preserve">
-    <value>Размещать Scratch-дорожку для 4К слева</value>
-  </data>
-  <data name="Screen_Options_4KCoopLayout" xml:space="preserve">
-    <value>Кооперативная Раскладка для 4К</value>
-  </data>
-  <data name="Screen_Options_Prioritized4KDifficulty" xml:space="preserve">
-    <value>Приоритетная Сложность для 4К</value>
   </data>
   <data name="Screen_Options_4Keys" xml:space="preserve">
     <value>4 Клавиши</value>
   </data>
-  <data name="Screen_Options_5KGameplayLayout" xml:space="preserve">
-    <value>Раскладка для 5К</value>
-  </data>
-  <data name="Screen_Options_5KScrollSpeed" xml:space="preserve">
-    <value>Скорость Прокрутки для 5К</value>
-  </data>
-  <data name="Screen_Options_5KScrollDirection" xml:space="preserve">
-    <value>Направление Прокрутки для 5К</value>
-  </data>
-  <data name="Screen_Options_5KScratchLayout" xml:space="preserve">
-    <value>Раскладка Scratch для 5К</value>
-  </data>
-  <data name="Screen_Options_Place5KScratchLaneOnLeft" xml:space="preserve">
-    <value>Размещать Scratch-дорожку для 5К слева</value>
-  </data>
-  <data name="Screen_Options_5KCoopLayout" xml:space="preserve">
-    <value>Кооперативная Раскладка для 5К</value>
-  </data>
-  <data name="Screen_Options_Prioritized5KDifficulty" xml:space="preserve">
-    <value>Приоритетная Сложность для 5К</value>
-  </data>
   <data name="Screen_Options_5Keys" xml:space="preserve">
     <value>5 Клавиши</value>
-  </data>
-  <data name="Screen_Options_6KGameplayLayout" xml:space="preserve">
-    <value>Раскладка для 6К</value>
-  </data>
-  <data name="Screen_Options_6KScrollSpeed" xml:space="preserve">
-    <value>Скорость Прокрутки для 6К</value>
-  </data>
-  <data name="Screen_Options_6KScrollDirection" xml:space="preserve">
-    <value>Направление Прокрутки для 6К</value>
-  </data>
-  <data name="Screen_Options_6KScratchLayout" xml:space="preserve">
-    <value>Раскладка Scratch для 6К</value>
-  </data>
-  <data name="Screen_Options_Place6KScratchLaneOnLeft" xml:space="preserve">
-    <value>Размещать Scratch-дорожку для 6К слева</value>
-  </data>
-  <data name="Screen_Options_6KCoopLayout" xml:space="preserve">
-    <value>Кооперативная Раскладка для 6К</value>
-  </data>
-  <data name="Screen_Options_Prioritized6KDifficulty" xml:space="preserve">
-    <value>Приоритетная Сложность для 6К</value>
   </data>
   <data name="Screen_Options_6Keys" xml:space="preserve">
     <value>6 Клавиш</value>
   </data>
-  <data name="Screen_Options_7KGameplayLayout" xml:space="preserve">
-    <value>Раскладка для 7К</value>
-  </data>
-  <data name="Screen_Options_7KScrollSpeed" xml:space="preserve">
-    <value>Скорость Прокрутки для 7К</value>
-  </data>
-  <data name="Screen_Options_7KScrollDirection" xml:space="preserve">
-    <value>Направление Прокрутки для 7К</value>
-  </data>
-  <data name="Screen_Options_7KScratchLayout" xml:space="preserve">
-    <value>Раскладка Scratch для 7К</value>
-  </data>
-  <data name="Screen_Options_Place7KScratchLaneOnLeft" xml:space="preserve">
-    <value>Размещать Scratch-дорожку для 7К слева</value>
-  </data>
-  <data name="Screen_Options_7KCoopLayout" xml:space="preserve">
-    <value>Кооперативная Раскладка для 7К</value>
-  </data>
-  <data name="Screen_Options_Prioritized7KDifficulty" xml:space="preserve">
-    <value>Приоритетная Сложность для 7К</value>
-  </data>
   <data name="Screen_Options_7Keys" xml:space="preserve">
     <value>7 Клавиш</value>
-  </data>
-  <data name="Screen_Options_8KGameplayLayout" xml:space="preserve">
-    <value>Раскладка для 8К</value>
-  </data>
-  <data name="Screen_Options_8KScrollSpeed" xml:space="preserve">
-    <value>Скорость Прокрутки для 8К</value>
-  </data>
-  <data name="Screen_Options_8KScrollDirection" xml:space="preserve">
-    <value>Направление Прокрутки для 8К</value>
-  </data>
-  <data name="Screen_Options_8KScratchLayout" xml:space="preserve">
-    <value>Раскладка Scratch для 8К</value>
-  </data>
-  <data name="Screen_Options_Place8KScratchLaneOnLeft" xml:space="preserve">
-    <value>Размещать Scratch-дорожку для 8К слева</value>
-  </data>
-  <data name="Screen_Options_8KCoopLayout" xml:space="preserve">
-    <value>Кооперативная Раскладка для 8К</value>
-  </data>
-  <data name="Screen_Options_Prioritized8KDifficulty" xml:space="preserve">
-    <value>Приоритетная Сложность для 8К</value>
   </data>
   <data name="Screen_Options_8Keys" xml:space="preserve">
     <value>8 Клавиш</value>
   </data>
-  <data name="Screen_Options_9KGameplayLayout" xml:space="preserve">
-    <value>Раскладка для 9К</value>
-  </data>
-  <data name="Screen_Options_9KScrollSpeed" xml:space="preserve">
-    <value>Скорость Прокрутки для 9К</value>
-  </data>
-  <data name="Screen_Options_9KScrollDirection" xml:space="preserve">
-    <value>Направление Прокрутки для 9К</value>
-  </data>
-  <data name="Screen_Options_9KScratchLayout" xml:space="preserve">
-    <value>Раскладка Scratch для 9К</value>
-  </data>
-  <data name="Screen_Options_Place9KScratchLaneOnLeft" xml:space="preserve">
-    <value>Размещать Scratch-дорожку для 9К слева</value>
-  </data>
-  <data name="Screen_Options_9KCoopLayout" xml:space="preserve">
-    <value>Кооперативная Раскладка для 9К</value>
-  </data>
-  <data name="Screen_Options_Prioritized9KDifficulty" xml:space="preserve">
-    <value>Приоритетная Сложность для 9К</value>
-  </data>
   <data name="Screen_Options_9Keys" xml:space="preserve">
     <value>9 Клавиш</value>
-  </data>
-  <data name="Screen_Options_10KGameplayLayout" xml:space="preserve">
-    <value>Раскладка для 10К</value>
-  </data>
-  <data name="Screen_Options_10KScrollSpeed" xml:space="preserve">
-    <value>Скорость Прокрутки для 10К</value>
-  </data>
-  <data name="Screen_Options_10KScrollDirection" xml:space="preserve">
-    <value>Направление Прокрутки для 10К</value>
-  </data>
-  <data name="Screen_Options_10KScratchLayout" xml:space="preserve">
-    <value>Раскладка Scratch для 10К</value>
-  </data>
-  <data name="Screen_Options_Place10KScratchLaneOnLeft" xml:space="preserve">
-    <value>Размещать Scratch-дорожку для 10К слева</value>
-  </data>
-  <data name="Screen_Options_10KCoopLayout" xml:space="preserve">
-    <value>Кооперативная Раскладка для 10К</value>
-  </data>
-  <data name="Screen_Options_Prioritized10KDifficulty" xml:space="preserve">
-    <value>Приоритетная Сложность для 10К</value>
   </data>
   <data name="Screen_Options_10Keys" xml:space="preserve">
     <value>10 Клавиш</value>

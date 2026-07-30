@@ -1111,242 +1111,32 @@ Hvis mappen ble ikke fullført, vil det i tillegg vise ytelsen dersom alle påf�
   <data name="Screen_Options_Searchforoptions" xml:space="preserve">
     <value>Søk etter instillinger...</value>
   </data>
-  <data name="Screen_Options_1KGameplayLayout" xml:space="preserve">
-    <value>1T Spill-layout</value>
-  </data>
-  <data name="Screen_Options_1KScrollSpeed" xml:space="preserve">
-    <value>1T Rullehastighet</value>
-  </data>
-  <data name="Screen_Options_1KScrollDirection" xml:space="preserve">
-    <value>1T Rulleretning</value>
-  </data>
-  <data name="Screen_Options_1KScratchLayout" xml:space="preserve">
-    <value>1T Scratch-layout</value>
-  </data>
-  <data name="Screen_Options_Place1KScratchLaneOnLeft" xml:space="preserve">
-    <value>Plasser 1T Scratch Lane til Venstre</value>
-  </data>
-  <data name="Screen_Options_1KCoopLayout" xml:space="preserve">
-    <value>1T Co-op Layout</value>
-  </data>
-  <data name="Screen_Options_Prioritized1KDifficulty" xml:space="preserve">
-    <value>Prioritert 1T Vanskelighetsgrad</value>
-  </data>
   <data name="Screen_Options_1Keys" xml:space="preserve">
     <value>1 Tast</value>
-  </data>
-  <data name="Screen_Options_2KGameplayLayout" xml:space="preserve">
-    <value>2T Spill-layout</value>
-  </data>
-  <data name="Screen_Options_2KScrollSpeed" xml:space="preserve">
-    <value>2T Rullehastighet</value>
-  </data>
-  <data name="Screen_Options_2KScrollDirection" xml:space="preserve">
-    <value>2T Rulleretning</value>
-  </data>
-  <data name="Screen_Options_2KScratchLayout" xml:space="preserve">
-    <value>2T Scratch-layout</value>
-  </data>
-  <data name="Screen_Options_Place2KScratchLaneOnLeft" xml:space="preserve">
-    <value>Plasser 2T Scratch Lane til Venstre</value>
-  </data>
-  <data name="Screen_Options_2KCoopLayout" xml:space="preserve">
-    <value>2T Co-op Layout</value>
-  </data>
-  <data name="Screen_Options_Prioritized2KDifficulty" xml:space="preserve">
-    <value>Prioritert 2T Vanskelighetsgrad</value>
   </data>
   <data name="Screen_Options_2Keys" xml:space="preserve">
     <value>2 Taster</value>
   </data>
-  <data name="Screen_Options_3KGameplayLayout" xml:space="preserve">
-    <value>3T Spill-layout</value>
-  </data>
-  <data name="Screen_Options_3KScrollSpeed" xml:space="preserve">
-    <value>3T Rullehastighet</value>
-  </data>
-  <data name="Screen_Options_3KScrollDirection" xml:space="preserve">
-    <value>3T Rulleretning</value>
-  </data>
-  <data name="Screen_Options_3KScratchLayout" xml:space="preserve">
-    <value>3T Scratch-layout</value>
-  </data>
-  <data name="Screen_Options_Place3KScratchLaneOnLeft" xml:space="preserve">
-    <value>Plasser 3T Scratch Lane til Venstre</value>
-  </data>
-  <data name="Screen_Options_3KCoopLayout" xml:space="preserve">
-    <value>3T Co-op Layout</value>
-  </data>
-  <data name="Screen_Options_Prioritized3KDifficulty" xml:space="preserve">
-    <value>Prioritert 3T Vanskelighetsgrad</value>
-  </data>
   <data name="Screen_Options_3Keys" xml:space="preserve">
     <value>3 Taster</value>
-  </data>
-  <data name="Screen_Options_4KGameplayLayout" xml:space="preserve">
-    <value>4T Spill-layout</value>
-  </data>
-  <data name="Screen_Options_4KScrollSpeed" xml:space="preserve">
-    <value>4T Rullehastighet</value>
-  </data>
-  <data name="Screen_Options_4KScrollDirection" xml:space="preserve">
-    <value>4T Rulleretning</value>
-  </data>
-  <data name="Screen_Options_4KScratchLayout" xml:space="preserve">
-    <value>4T Scratch-layout</value>
-  </data>
-  <data name="Screen_Options_Place4KScratchLaneOnLeft" xml:space="preserve">
-    <value>Plasser 4T Scratch Lane til Venstre</value>
-  </data>
-  <data name="Screen_Options_4KCoopLayout" xml:space="preserve">
-    <value>4T Co-op Layout</value>
-  </data>
-  <data name="Screen_Options_Prioritized4KDifficulty" xml:space="preserve">
-    <value>Prioritert 4T Vanskelighetsgrad</value>
   </data>
   <data name="Screen_Options_4Keys" xml:space="preserve">
     <value>4 Taster</value>
   </data>
-  <data name="Screen_Options_5KGameplayLayout" xml:space="preserve">
-    <value>5T Spill-layout</value>
-  </data>
-  <data name="Screen_Options_5KScrollSpeed" xml:space="preserve">
-    <value>5T Rullehastighet</value>
-  </data>
-  <data name="Screen_Options_5KScrollDirection" xml:space="preserve">
-    <value>5T Rulleretning</value>
-  </data>
-  <data name="Screen_Options_5KScratchLayout" xml:space="preserve">
-    <value>5T Scratch-layout</value>
-  </data>
-  <data name="Screen_Options_Place5KScratchLaneOnLeft" xml:space="preserve">
-    <value>Plasser 5T Scratch Lane til Venstre</value>
-  </data>
-  <data name="Screen_Options_5KCoopLayout" xml:space="preserve">
-    <value>5T Co-op Layout</value>
-  </data>
-  <data name="Screen_Options_Prioritized5KDifficulty" xml:space="preserve">
-    <value>Prioritert 5T Vanskelighetsgrad</value>
-  </data>
   <data name="Screen_Options_5Keys" xml:space="preserve">
     <value>5 Taster</value>
-  </data>
-  <data name="Screen_Options_6KGameplayLayout" xml:space="preserve">
-    <value>6T Spill-layout</value>
-  </data>
-  <data name="Screen_Options_6KScrollSpeed" xml:space="preserve">
-    <value>6T Rullehastighet</value>
-  </data>
-  <data name="Screen_Options_6KScrollDirection" xml:space="preserve">
-    <value>6T Rulleretning</value>
-  </data>
-  <data name="Screen_Options_6KScratchLayout" xml:space="preserve">
-    <value>6T Scratch-layout</value>
-  </data>
-  <data name="Screen_Options_Place6KScratchLaneOnLeft" xml:space="preserve">
-    <value>Plasser 6T Scratch Lane til Venstre</value>
-  </data>
-  <data name="Screen_Options_6KCoopLayout" xml:space="preserve">
-    <value>6T Co-op Layout</value>
-  </data>
-  <data name="Screen_Options_Prioritized6KDifficulty" xml:space="preserve">
-    <value>Prioritert 6T Vanskelighetsgrad</value>
   </data>
   <data name="Screen_Options_6Keys" xml:space="preserve">
     <value>6 Taster</value>
   </data>
-  <data name="Screen_Options_7KGameplayLayout" xml:space="preserve">
-    <value>7T Spill-layout</value>
-  </data>
-  <data name="Screen_Options_7KScrollSpeed" xml:space="preserve">
-    <value>7T Rullehastighet</value>
-  </data>
-  <data name="Screen_Options_7KScrollDirection" xml:space="preserve">
-    <value>7T Rulleretning</value>
-  </data>
-  <data name="Screen_Options_7KScratchLayout" xml:space="preserve">
-    <value>7T Scratch-layout</value>
-  </data>
-  <data name="Screen_Options_Place7KScratchLaneOnLeft" xml:space="preserve">
-    <value>Plasser 7T Scratch Lane til Venstre</value>
-  </data>
-  <data name="Screen_Options_7KCoopLayout" xml:space="preserve">
-    <value>7T Co-op Layout</value>
-  </data>
-  <data name="Screen_Options_Prioritized7KDifficulty" xml:space="preserve">
-    <value>Prioritert 7T Vanskelighetsgrad</value>
-  </data>
   <data name="Screen_Options_7Keys" xml:space="preserve">
     <value>7 Taster</value>
-  </data>
-  <data name="Screen_Options_8KGameplayLayout" xml:space="preserve">
-    <value>8T Spill-layout</value>
-  </data>
-  <data name="Screen_Options_8KScrollSpeed" xml:space="preserve">
-    <value>8T Rullehastighet</value>
-  </data>
-  <data name="Screen_Options_8KScrollDirection" xml:space="preserve">
-    <value>8T Rulleretning</value>
-  </data>
-  <data name="Screen_Options_8KScratchLayout" xml:space="preserve">
-    <value>8T Scratch-layout</value>
-  </data>
-  <data name="Screen_Options_Place8KScratchLaneOnLeft" xml:space="preserve">
-    <value>Plasser 8T Scratch Lane til Venstre</value>
-  </data>
-  <data name="Screen_Options_8KCoopLayout" xml:space="preserve">
-    <value>8T Co-op Layout</value>
-  </data>
-  <data name="Screen_Options_Prioritized8KDifficulty" xml:space="preserve">
-    <value>Prioritert 8T Vanskelighetsgrad</value>
   </data>
   <data name="Screen_Options_8Keys" xml:space="preserve">
     <value>8 Taster</value>
   </data>
-  <data name="Screen_Options_9KGameplayLayout" xml:space="preserve">
-    <value>9T Spill-layout</value>
-  </data>
-  <data name="Screen_Options_9KScrollSpeed" xml:space="preserve">
-    <value>9T Rullehastighet</value>
-  </data>
-  <data name="Screen_Options_9KScrollDirection" xml:space="preserve">
-    <value>9T Rulleretning</value>
-  </data>
-  <data name="Screen_Options_9KScratchLayout" xml:space="preserve">
-    <value>9T Scratch-layout</value>
-  </data>
-  <data name="Screen_Options_Place9KScratchLaneOnLeft" xml:space="preserve">
-    <value>Plasser 9T Scratch Lane til Venstre</value>
-  </data>
-  <data name="Screen_Options_9KCoopLayout" xml:space="preserve">
-    <value>9T Co-op Layout</value>
-  </data>
-  <data name="Screen_Options_Prioritized9KDifficulty" xml:space="preserve">
-    <value>Prioritert 9T Vanskelighetsgrad</value>
-  </data>
   <data name="Screen_Options_9Keys" xml:space="preserve">
     <value>9 Taster</value>
-  </data>
-  <data name="Screen_Options_10KGameplayLayout" xml:space="preserve">
-    <value>10T Spill-layout</value>
-  </data>
-  <data name="Screen_Options_10KScrollSpeed" xml:space="preserve">
-    <value>10T Rullehastighet</value>
-  </data>
-  <data name="Screen_Options_10KScrollDirection" xml:space="preserve">
-    <value>10T Rulleretning</value>
-  </data>
-  <data name="Screen_Options_10KScratchLayout" xml:space="preserve">
-    <value>10T Scratch-layout</value>
-  </data>
-  <data name="Screen_Options_Place10KScratchLaneOnLeft" xml:space="preserve">
-    <value>Plasser 10T Scratch Lane til Venstre</value>
-  </data>
-  <data name="Screen_Options_10KCoopLayout" xml:space="preserve">
-    <value>10T Co-op Layout</value>
-  </data>
-  <data name="Screen_Options_Prioritized10KDifficulty" xml:space="preserve">
-    <value>Prioritert 10T Vanskelighetsgrad</value>
   </data>
   <data name="Screen_Options_10Keys" xml:space="preserve">
     <value>10 Taster</value>

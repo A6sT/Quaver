@@ -1115,242 +1115,32 @@ Marvelous instead.</value>
   <data name="Screen_Options_Searchforoptions" xml:space="preserve">
     <value>Search for options...</value>
   </data>
-  <data name="Screen_Options_1KGameplayLayout" xml:space="preserve">
-    <value>1K 키 배치</value>
-  </data>
-  <data name="Screen_Options_1KScrollSpeed" xml:space="preserve">
-    <value>1K 스크롤 속도</value>
-  </data>
-  <data name="Screen_Options_1KScrollDirection" xml:space="preserve">
-    <value>1K 스크롤 방향</value>
-  </data>
-  <data name="Screen_Options_1KScratchLayout" xml:space="preserve">
-    <value>1K 스크래치 키 배치</value>
-  </data>
-  <data name="Screen_Options_Place1KScratchLaneOnLeft" xml:space="preserve">
-    <value>1K 스크래치 레인을 왼쪽에 배치</value>
-  </data>
-  <data name="Screen_Options_1KCoopLayout" xml:space="preserve">
-    <value>1K Co-op 키 배치</value>
-  </data>
-  <data name="Screen_Options_Prioritized1KDifficulty" xml:space="preserve">
-    <value>1K 난이도를 우선순위로 하기</value>
-  </data>
   <data name="Screen_Options_1Keys" xml:space="preserve">
     <value>1K</value>
-  </data>
-  <data name="Screen_Options_2KGameplayLayout" xml:space="preserve">
-    <value>2K 키 배치</value>
-  </data>
-  <data name="Screen_Options_2KScrollSpeed" xml:space="preserve">
-    <value>2K 스크롤 속도</value>
-  </data>
-  <data name="Screen_Options_2KScrollDirection" xml:space="preserve">
-    <value>2K 스크롤 방향</value>
-  </data>
-  <data name="Screen_Options_2KScratchLayout" xml:space="preserve">
-    <value>2K 스크래치 키 배치</value>
-  </data>
-  <data name="Screen_Options_Place2KScratchLaneOnLeft" xml:space="preserve">
-    <value>2K 스크래치 레인을 왼쪽에 배치</value>
-  </data>
-  <data name="Screen_Options_2KCoopLayout" xml:space="preserve">
-    <value>2K Co-op 키 배치</value>
-  </data>
-  <data name="Screen_Options_Prioritized2KDifficulty" xml:space="preserve">
-    <value>2K 난이도를 우선순위로 하기</value>
   </data>
   <data name="Screen_Options_2Keys" xml:space="preserve">
     <value>2K</value>
   </data>
-  <data name="Screen_Options_3KGameplayLayout" xml:space="preserve">
-    <value>3K 키 배치</value>
-  </data>
-  <data name="Screen_Options_3KScrollSpeed" xml:space="preserve">
-    <value>3K 스크롤 속도</value>
-  </data>
-  <data name="Screen_Options_3KScrollDirection" xml:space="preserve">
-    <value>3K 스크롤 방향</value>
-  </data>
-  <data name="Screen_Options_3KScratchLayout" xml:space="preserve">
-    <value>3K 스크래치 키 배치</value>
-  </data>
-  <data name="Screen_Options_Place3KScratchLaneOnLeft" xml:space="preserve">
-    <value>3K 스크래치 레인을 왼쪽에 배치</value>
-  </data>
-  <data name="Screen_Options_3KCoopLayout" xml:space="preserve">
-    <value>3K Co-op 키 배치</value>
-  </data>
-  <data name="Screen_Options_Prioritized3KDifficulty" xml:space="preserve">
-    <value>3K 난이도를 우선순위로 하기</value>
-  </data>
   <data name="Screen_Options_3Keys" xml:space="preserve">
     <value>3K</value>
-  </data>
-  <data name="Screen_Options_4KGameplayLayout" xml:space="preserve">
-    <value>4K 키 배치</value>
-  </data>
-  <data name="Screen_Options_4KScrollSpeed" xml:space="preserve">
-    <value>4K 스크롤 속도</value>
-  </data>
-  <data name="Screen_Options_4KScrollDirection" xml:space="preserve">
-    <value>4K 스크롤 방향</value>
-  </data>
-  <data name="Screen_Options_4KScratchLayout" xml:space="preserve">
-    <value>4K 스크래치 키 배치</value>
-  </data>
-  <data name="Screen_Options_Place4KScratchLaneOnLeft" xml:space="preserve">
-    <value>4K 스크래치 레인을 왼쪽에 배치</value>
-  </data>
-  <data name="Screen_Options_4KCoopLayout" xml:space="preserve">
-    <value>4K Co-op 키 배치</value>
-  </data>
-  <data name="Screen_Options_Prioritized4KDifficulty" xml:space="preserve">
-    <value>4K 난이도를 우선순위로 하기</value>
   </data>
   <data name="Screen_Options_4Keys" xml:space="preserve">
     <value>4K</value>
   </data>
-  <data name="Screen_Options_5KGameplayLayout" xml:space="preserve">
-    <value>5K 키 배치</value>
-  </data>
-  <data name="Screen_Options_5KScrollSpeed" xml:space="preserve">
-    <value>5K 스크롤 속도</value>
-  </data>
-  <data name="Screen_Options_5KScrollDirection" xml:space="preserve">
-    <value>5K 스크롤 방향</value>
-  </data>
-  <data name="Screen_Options_5KScratchLayout" xml:space="preserve">
-    <value>5K 스크래치 키 배치</value>
-  </data>
-  <data name="Screen_Options_Place5KScratchLaneOnLeft" xml:space="preserve">
-    <value>5K 스크래치 레인을 왼쪽에 배치</value>
-  </data>
-  <data name="Screen_Options_5KCoopLayout" xml:space="preserve">
-    <value>5K Co-op 키 배치</value>
-  </data>
-  <data name="Screen_Options_Prioritized5KDifficulty" xml:space="preserve">
-    <value>5K 난이도를 우선순위로 하기</value>
-  </data>
   <data name="Screen_Options_5Keys" xml:space="preserve">
     <value>5K</value>
-  </data>
-  <data name="Screen_Options_6KGameplayLayout" xml:space="preserve">
-    <value>6K 키 배치</value>
-  </data>
-  <data name="Screen_Options_6KScrollSpeed" xml:space="preserve">
-    <value>6K 스크롤 속도</value>
-  </data>
-  <data name="Screen_Options_6KScrollDirection" xml:space="preserve">
-    <value>6K 스크롤 방향</value>
-  </data>
-  <data name="Screen_Options_6KScratchLayout" xml:space="preserve">
-    <value>6K 스크래치 키 배치</value>
-  </data>
-  <data name="Screen_Options_Place6KScratchLaneOnLeft" xml:space="preserve">
-    <value>6K 스크래치 레인을 왼쪽에 배치</value>
-  </data>
-  <data name="Screen_Options_6KCoopLayout" xml:space="preserve">
-    <value>6K Co-op 키 배치</value>
-  </data>
-  <data name="Screen_Options_Prioritized6KDifficulty" xml:space="preserve">
-    <value>6K 난이도를 우선순위로 하기</value>
   </data>
   <data name="Screen_Options_6Keys" xml:space="preserve">
     <value>6K</value>
   </data>
-  <data name="Screen_Options_7KGameplayLayout" xml:space="preserve">
-    <value>7K 키 배치</value>
-  </data>
-  <data name="Screen_Options_7KScrollSpeed" xml:space="preserve">
-    <value>7K 스크롤 속도</value>
-  </data>
-  <data name="Screen_Options_7KScrollDirection" xml:space="preserve">
-    <value>7K 스크롤 방향</value>
-  </data>
-  <data name="Screen_Options_7KScratchLayout" xml:space="preserve">
-    <value>7K 스크래치 키 배치</value>
-  </data>
-  <data name="Screen_Options_Place7KScratchLaneOnLeft" xml:space="preserve">
-    <value>7K 스크래치 레인을 왼쪽에 배치</value>
-  </data>
-  <data name="Screen_Options_7KCoopLayout" xml:space="preserve">
-    <value>7K Co-op 키 배치</value>
-  </data>
-  <data name="Screen_Options_Prioritized7KDifficulty" xml:space="preserve">
-    <value>7K 난이도를 우선순위로 하기</value>
-  </data>
   <data name="Screen_Options_7Keys" xml:space="preserve">
     <value>7K</value>
-  </data>
-  <data name="Screen_Options_8KGameplayLayout" xml:space="preserve">
-    <value>8K 키 배치</value>
-  </data>
-  <data name="Screen_Options_8KScrollSpeed" xml:space="preserve">
-    <value>8K 스크롤 속도</value>
-  </data>
-  <data name="Screen_Options_8KScrollDirection" xml:space="preserve">
-    <value>8K 스크롤 방향</value>
-  </data>
-  <data name="Screen_Options_8KScratchLayout" xml:space="preserve">
-    <value>8K 스크래치 키 배치</value>
-  </data>
-  <data name="Screen_Options_Place8KScratchLaneOnLeft" xml:space="preserve">
-    <value>8K 스크래치 레인을 왼쪽에 배치</value>
-  </data>
-  <data name="Screen_Options_8KCoopLayout" xml:space="preserve">
-    <value>8K Co-op 키 배치</value>
-  </data>
-  <data name="Screen_Options_Prioritized8KDifficulty" xml:space="preserve">
-    <value>8K 난이도를 우선순위로 하기</value>
   </data>
   <data name="Screen_Options_8Keys" xml:space="preserve">
     <value>8K</value>
   </data>
-  <data name="Screen_Options_9KGameplayLayout" xml:space="preserve">
-    <value>9K 키 배치</value>
-  </data>
-  <data name="Screen_Options_9KScrollSpeed" xml:space="preserve">
-    <value>9K 스크롤 속도</value>
-  </data>
-  <data name="Screen_Options_9KScrollDirection" xml:space="preserve">
-    <value>9K 스크롤 방향</value>
-  </data>
-  <data name="Screen_Options_9KScratchLayout" xml:space="preserve">
-    <value>9K 스크래치 키 배치</value>
-  </data>
-  <data name="Screen_Options_Place9KScratchLaneOnLeft" xml:space="preserve">
-    <value>9K 스크래치 레인을 왼쪽에 배치</value>
-  </data>
-  <data name="Screen_Options_9KCoopLayout" xml:space="preserve">
-    <value>9K Co-op 키 배치</value>
-  </data>
-  <data name="Screen_Options_Prioritized9KDifficulty" xml:space="preserve">
-    <value>9K 난이도를 우선순위로 하기</value>
-  </data>
   <data name="Screen_Options_9Keys" xml:space="preserve">
     <value>9K</value>
-  </data>
-  <data name="Screen_Options_10KGameplayLayout" xml:space="preserve">
-    <value>10K 키 배치</value>
-  </data>
-  <data name="Screen_Options_10KScrollSpeed" xml:space="preserve">
-    <value>10K 스크롤 속도</value>
-  </data>
-  <data name="Screen_Options_10KScrollDirection" xml:space="preserve">
-    <value>10K 스크롤 방향</value>
-  </data>
-  <data name="Screen_Options_10KScratchLayout" xml:space="preserve">
-    <value>10K 스크래치 키 배치</value>
-  </data>
-  <data name="Screen_Options_Place10KScratchLaneOnLeft" xml:space="preserve">
-    <value>10K 스크래치 레인을 왼쪽에 배치</value>
-  </data>
-  <data name="Screen_Options_10KCoopLayout" xml:space="preserve">
-    <value>10K Co-op 키 배치</value>
-  </data>
-  <data name="Screen_Options_Prioritized10KDifficulty" xml:space="preserve">
-    <value>10K 난이도를 우선순위로 하기</value>
   </data>
   <data name="Screen_Options_10Keys" xml:space="preserve">
     <value>10K</value>
