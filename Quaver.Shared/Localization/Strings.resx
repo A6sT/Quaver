@@ -1643,6 +1643,51 @@ You can use the filters below to narrow down your search.</value>
   <data name="Screen_Download_10Keys" xml:space="preserve">
     <value>10 Keys</value>
   </data>
+  <data name="Screen_Download_SearchMaps" xml:space="preserve">
+    <value>Search maps...</value>
+  </data>
+  <data name="Screen_Download_SearchPlaylists" xml:space="preserve">
+    <value>Search playlists...</value>
+  </data>
+  <data name="Screen_Download_OwnedMaps" xml:space="preserve">
+    <value>Owned Maps</value>
+  </data>
+  <data name="Screen_Download_OwnedPlaylists" xml:space="preserve">
+    <value>Owned Playlists</value>
+  </data>
+  <data name="Screen_Download_Mapsets" xml:space="preserve">
+    <value>Mapsets</value>
+  </data>
+  <data name="Screen_Download_AllKeymodes" xml:space="preserve">
+    <value>All Keymodes</value>
+  </data>
+  <data name="Screen_Download_NPS" xml:space="preserve">
+    <value>NPS</value>
+  </data>
+  <data name="Screen_Download_MinPercent" xml:space="preserve">
+    <value>Min%</value>
+  </data>
+  <data name="Screen_Download_MaxPercent" xml:space="preserve">
+    <value>Max%</value>
+  </data>
+  <data name="Screen_Download_Min" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="Screen_Download_Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Screen_Download_AnyLength" xml:space="preserve">
+    <value>Any Length</value>
+  </data>
+  <data name="Screen_Download_AnyCombo" xml:space="preserve">
+    <value>Any Combo</value>
+  </data>
+  <data name="Screen_Download_Artist" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="Screen_Download_AnyMapCount" xml:space="preserve">
+    <value>Any Map Count</value>
+  </data>
   <data name="Screen_Multi_ConfirmReadyTitle" xml:space="preserve">
     <value>CONFIRM READY</value>
   </data>
@@ -2600,6 +2645,8 @@ for other players to download?</value>
   <data name="SkinEditor_Property_BottomOffset" xml:space="preserve"><value>Bottom Offset</value></data>
   <data name="SkinEditor_Property_Scale" xml:space="preserve"><value>Scale</value></data>
   <data name="SkinEditor_Property_FallbackImage" xml:space="preserve"><value>Fallback Image</value></data>
+  <data name="SkinEditor_Group_Download" xml:space="preserve"><value>Download</value></data>
+  <data name="SkinEditor_Component_SearchArea" xml:space="preserve"><value>Search Area</value></data>
   <data name="SkinEditor_Property_BackgroundColor" xml:space="preserve"><value>Background Color</value></data>
   <data name="SkinEditor_Property_ForegroundColor" xml:space="preserve"><value>Foreground Color</value></data>
   <data name="SkinEditor_Property_OfflineStatusColor" xml:space="preserve"><value>Offline Status Color</value></data>
