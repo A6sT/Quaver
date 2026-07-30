@@ -1292,12 +1292,6 @@ für den ausgewählten Spielmodus finden?</value>
   <data name="Screen_Download_FILTEROPTIONS" xml:space="preserve">
     <value>FILTER OPTIONEN</value>
   </data>
-  <data name="Screen_Download_UploadDate" xml:space="preserve">
-    <value>Veröffentlichungsdatum</value>
-  </data>
-  <data name="Screen_Download_LastUpdateDate" xml:space="preserve">
-    <value>Zuletzt aktualisiert</value>
-  </data>
   <data name="Screen_Download_DisplayOwnedMapsets" xml:space="preserve">
     <value>Eigene Mapsets anzeigen</value>
   </data>

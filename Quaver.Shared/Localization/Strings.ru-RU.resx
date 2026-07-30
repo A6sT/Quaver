@@ -1292,12 +1292,6 @@
   <data name="Screen_Download_FILTEROPTIONS" xml:space="preserve">
     <value>ПАРАМЕТРЫ ФИЛЬТРОВ</value>
   </data>
-  <data name="Screen_Download_UploadDate" xml:space="preserve">
-    <value>Дата Загрузки</value>
-  </data>
-  <data name="Screen_Download_LastUpdateDate" xml:space="preserve">
-    <value>Дата Последнего Обновления</value>
-  </data>
   <data name="Screen_Download_DisplayOwnedMapsets" xml:space="preserve">
     <value>Показывать Свои Наборы Карт</value>
   </data>

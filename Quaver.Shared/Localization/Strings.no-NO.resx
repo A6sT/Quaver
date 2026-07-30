@@ -1291,12 +1291,6 @@ Hvis mappen ble ikke fullført, vil det i tillegg vise ytelsen dersom alle påf�
   <data name="Screen_Download_FILTEROPTIONS" xml:space="preserve">
     <value>FILTRER ALTERNATIVER</value>
   </data>
-  <data name="Screen_Download_UploadDate" xml:space="preserve">
-    <value>Opplastningsdato</value>
-  </data>
-  <data name="Screen_Download_LastUpdateDate" xml:space="preserve">
-    <value>Siste oppdateringsdato</value>
-  </data>
   <data name="Screen_Download_DisplayOwnedMapsets" xml:space="preserve">
     <value>Vis egne mapsett</value>
   </data>

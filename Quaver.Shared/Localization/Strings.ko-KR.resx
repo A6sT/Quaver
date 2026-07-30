@@ -1296,12 +1296,6 @@ for the selected game mode?</value>
   <data name="Screen_Download_FILTEROPTIONS" xml:space="preserve">
     <value>FILTER OPTIONS</value>
   </data>
-  <data name="Screen_Download_UploadDate" xml:space="preserve">
-    <value>Upload Date</value>
-  </data>
-  <data name="Screen_Download_LastUpdateDate" xml:space="preserve">
-    <value>Last Update Date</value>
-  </data>
   <data name="Screen_Download_DisplayOwnedMapsets" xml:space="preserve">
     <value>Display Owned Mapsets</value>
   </data>

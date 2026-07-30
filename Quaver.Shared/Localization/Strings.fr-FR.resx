@@ -1292,12 +1292,6 @@ Si la map n'a pas été terminée, le graphique affiche également la performanc
   <data name="Screen_Download_FILTEROPTIONS" xml:space="preserve">
     <value>OPTIONS DE FILTRAGE</value>
   </data>
-  <data name="Screen_Download_UploadDate" xml:space="preserve">
-    <value>Date de Publication</value>
-  </data>
-  <data name="Screen_Download_LastUpdateDate" xml:space="preserve">
-    <value>Date de la Dernière Publication</value>
-  </data>
   <data name="Screen_Download_DisplayOwnedMapsets" xml:space="preserve">
     <value>Afficher les Collections de map Possédés</value>
   </data>

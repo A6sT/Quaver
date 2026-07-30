@@ -1295,12 +1295,6 @@ Marvelous instead.</value>
   <data name="Screen_Download_FILTEROPTIONS" xml:space="preserve">
     <value>OPCJE FILTRÓW</value>
   </data>
-  <data name="Screen_Download_UploadDate" xml:space="preserve">
-    <value>Data Przesłania:</value>
-  </data>
-  <data name="Screen_Download_LastUpdateDate" xml:space="preserve">
-    <value>Data Ostatniej Aktualizacji</value>
-  </data>
   <data name="Screen_Download_DisplayOwnedMapsets" xml:space="preserve">
     <value>Wyświetl Posiadane Mapy</value>
   </data>

@@ -1291,12 +1291,6 @@
   <data name="Screen_Download_FILTEROPTIONS" xml:space="preserve">
     <value>过滤选项</value>
   </data>
-  <data name="Screen_Download_UploadDate" xml:space="preserve">
-    <value>上传日期</value>
-  </data>
-  <data name="Screen_Download_LastUpdateDate" xml:space="preserve">
-    <value>更新日期</value>
-  </data>
   <data name="Screen_Download_DisplayOwnedMapsets" xml:space="preserve">
     <value>显示已有谱面</value>
   </data>

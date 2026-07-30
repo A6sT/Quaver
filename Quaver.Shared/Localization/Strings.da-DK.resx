@@ -1291,12 +1291,6 @@ Hvis mappet ikke blev fuldført, vil det også vise præstationen hvis alle efte
   <data name="Screen_Download_FILTEROPTIONS" xml:space="preserve">
     <value>FILTERINDSTILLINGER</value>
   </data>
-  <data name="Screen_Download_UploadDate" xml:space="preserve">
-    <value>Uploaddato</value>
-  </data>
-  <data name="Screen_Download_LastUpdateDate" xml:space="preserve">
-    <value>Seneste opdateringsdato</value>
-  </data>
   <data name="Screen_Download_DisplayOwnedMapsets" xml:space="preserve">
     <value>Vis ejede mapsets</value>
   </data>
