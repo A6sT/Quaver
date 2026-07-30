@@ -1,6 +1,7 @@
 using Quaver.Shared.Assets;
 using Quaver.Shared.Graphics;
 using Quaver.Shared.Helpers;
+using Quaver.Shared.Screens.Edit.Input;
 using Quaver.Shared.Screens.Menu.UI.Jukebox;
 using Wobble;
 using Wobble.Bindables;
@@ -39,7 +40,9 @@ namespace Quaver.Shared.Screens.Edit.UI.Playfield.Zoom
             };
 
             ZoomIn.Hovered += (sender, args) => game?.CurrentScreen?.ActivateTooltip(
-                new Tooltip(LocalizationManager.Get("Screen_Editor_ZoomInTooltip"), tooltipColor));
+                new Tooltip(LocalizationManager.Get("Screen_Editor_ZoomInTooltip",
+                    (game.CurrentScreen as EditScreen)?.InputManager.InputConfig
+                    .GetOrDefault(EditorKeybindActions.ZoomIn).ToDisplayString() ?? string.Empty), tooltipColor));
             ZoomIn.LeftHover += (sender, args) => game?.CurrentScreen?.DeactivateTooltip();
 
             ZoomOut = new IconButton(UserInterface.EditorZoomOut, (sender, args) => scrollSpeed.Value--)
@@ -50,7 +53,9 @@ namespace Quaver.Shared.Screens.Edit.UI.Playfield.Zoom
             };
 
             ZoomOut.Hovered += (sender, args) => game?.CurrentScreen?.ActivateTooltip(
-                new Tooltip(LocalizationManager.Get("Screen_Editor_ZoomOutTooltip"), tooltipColor));
+                new Tooltip(LocalizationManager.Get("Screen_Editor_ZoomOutTooltip",
+                    (game.CurrentScreen as EditScreen)?.InputManager.InputConfig
+                    .GetOrDefault(EditorKeybindActions.ZoomOut).ToDisplayString() ?? string.Empty), tooltipColor));
             ZoomOut.LeftHover += (sender, args) => game?.CurrentScreen?.DeactivateTooltip();
 
             Size = new ScalableVector2(ButtonSize.X.Value, ButtonSize.Y.Value * 2 + 4);
