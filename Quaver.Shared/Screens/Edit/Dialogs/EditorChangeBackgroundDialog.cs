@@ -27,7 +27,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
             LocalizationManager.Get("Screen_Editor_ChangeBackgroundOrBanner"),
             LocalizationManager.Get("Screen_Editor_ChangeBackgroundOrBannerMessage"))
         {
-            YesButton.SetLabel(FontManager.GetWobbleFont(Fonts.InterBold),
+            YesButton.SetLabel(FontManager.GetWobbleFont(Fonts.InterSemiBold),
                 LocalizationManager.Get("Screen_Editor_Background"), 20, Color.White);
             YesAction += () => ChangeBackground(screen, file);
 
@@ -44,7 +44,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
                 Tint = ConfirmColor
             };
 
-            BannerButton.SetLabel(FontManager.GetWobbleFont(Fonts.InterBold),
+            BannerButton.SetLabel(FontManager.GetWobbleFont(Fonts.InterSemiBold),
                 LocalizationManager.Get("Screen_Editor_Banner"), 20, Color.White);
 
             YesButton.X -= 80;

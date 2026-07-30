@@ -13,7 +13,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Footer
     public class IconTextButtonAddBookmark : IconTextButton
     {
         public IconTextButtonAddBookmark(EditScreen screen) : base(FontAwesome.Get(FontAwesomeIcon.fa_plus_black_symbol), 
-            FontManager.GetWobbleFont(Fonts.InterBold), LocalizationManager.Get("Screen_Editor_AddBookmark"),
+            FontManager.GetWobbleFont(Fonts.InterSemiBold), LocalizationManager.Get("Screen_Editor_AddBookmark"),
             (o, e) => DialogManager.Show(new EditorBookmarkDialog(screen.ActionManager, screen.Track, null)))
         {
             Hovered += (sender, args) => screen?.ActivateTooltip(new Tooltip(

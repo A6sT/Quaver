@@ -287,7 +287,7 @@ namespace Quaver.Shared.Screens.Results.UI.Tabs.Overview.Graphs
                 return;
             }
 
-            var _ = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), ResultsLocalization.Get("Statistics Not Available"), 18)
+            var _ = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), ResultsLocalization.Get("Statistics Not Available"), 18)
             {
                 Parent = GraphContainer,
                 Alignment = Alignment.MidCenter

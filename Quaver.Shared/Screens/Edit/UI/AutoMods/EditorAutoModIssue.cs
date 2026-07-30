@@ -89,7 +89,7 @@ namespace Quaver.Shared.Screens.Edit.UI.AutoMods
             };
         }
 
-        private void CreateIssueText() => IssueText = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold),
+        private void CreateIssueText() => IssueText = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold),
             "", 20)
         {
             Parent = this,

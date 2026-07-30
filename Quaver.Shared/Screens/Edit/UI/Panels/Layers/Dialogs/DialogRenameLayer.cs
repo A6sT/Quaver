@@ -49,7 +49,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Panels.Layers.Dialogs
         /// </summary>
         private void CreateTextbox()
         {
-            Textbox = new Textbox(new ScalableVector2(Panel.Width * 0.90f, 50), FontManager.GetWobbleFont(Fonts.InterBold),
+            Textbox = new Textbox(new ScalableVector2(Panel.Width * 0.90f, 50), FontManager.GetWobbleFont(Fonts.InterSemiBold),
                 20, Layer.Name, LocalizationManager.Get("Screen_Editor_EnterNamePlaceholder"), s => OnSubmit(s))
             {
                 Parent = Panel,

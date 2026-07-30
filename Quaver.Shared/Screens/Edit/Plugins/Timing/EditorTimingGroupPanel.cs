@@ -135,7 +135,7 @@ namespace Quaver.Shared.Screens.Edit.Plugins.Timing
             ImGui.SetNextWindowSizeConstraints(new Vector2(356, 0), new Vector2(600, float.MaxValue));
             ImGui.PushFont(Options.Fonts.First().Context);
             ((IColoredImGuiTitle)this).ImGuiPushTitleColors();
-            ImGui.Begin(Name);
+            EditorImGui.Begin(this, Name);
 
             DrawHeaderText();
 

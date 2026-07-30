@@ -15,7 +15,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Footer
     public class IconTextButtonBeatSnap : IconTextButton
     {
         public IconTextButtonBeatSnap(EditScreen screen) : base(FontAwesome.Get(FontAwesomeIcon.fa_sun),
-            FontManager.GetWobbleFont(Fonts.InterBold), LocalizationManager.Get("Screen_Editor_BeatSnap"),
+            FontManager.GetWobbleFont(Fonts.InterSemiBold), LocalizationManager.Get("Screen_Editor_BeatSnap"),
             (sender, args) => screen?.ActivateRightClickOptions(new BeatSnapRightClickOptions(screen.BeatSnap, EditScreen.AvailableBeatSnaps)))
         {
             Hovered += (sender, args) => screen?.ActivateTooltip(new Tooltip(

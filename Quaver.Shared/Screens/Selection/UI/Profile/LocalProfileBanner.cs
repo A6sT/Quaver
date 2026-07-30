@@ -154,7 +154,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Profile
         /// </summary>
         private void CreateUsername()
         {
-            Username = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold),
+            Username = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold),
                 Profile.Value.Username ?? ConfigManager.Username?.Value ?? SelectionLocalization.Get("Player"), 22)
             {
                 Parent = this,
@@ -179,7 +179,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Profile
             if (Profile.Value.IsOnline)
                 typeStr = SelectionLocalization.Get("Online Profile");
 
-            ProfileType = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), typeStr, 18)
+            ProfileType = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), typeStr, 18)
             {
                 Parent = this,
                 Y = Flag.Y + Flag.Height + 6,

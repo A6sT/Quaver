@@ -41,7 +41,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
                 Tint = ColorHelper.HexToColor("#F2994A")
             };
 
-            YellowNoButton.SetLabel(FontManager.GetWobbleFont(Fonts.InterBold),
+            YellowNoButton.SetLabel(FontManager.GetWobbleFont(Fonts.InterSemiBold),
                 LocalizationManager.Get("Screen_Editor_No"), 20, Color.White);
 
             YesButton.X -= 80;

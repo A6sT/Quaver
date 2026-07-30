@@ -200,7 +200,7 @@ namespace Quaver.Shared.Screens.MultiplayerLobby.UI.Selected
         /// </summary>
         private void CreateNameText()
         {
-            Name = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "", 20)
+            Name = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "", 20)
             {
                 Parent = this,
                 Position = new ScalableVector2(14, 14),
@@ -212,7 +212,7 @@ namespace Quaver.Shared.Screens.MultiplayerLobby.UI.Selected
         /// </summary>
         private void CreateMapText()
         {
-            Map = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "", 18)
+            Map = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "", 18)
             {
                 Parent = this,
                 Position = new ScalableVector2(Name.X, Name.Y + Name.Height + 32)
@@ -226,7 +226,7 @@ namespace Quaver.Shared.Screens.MultiplayerLobby.UI.Selected
         /// </summary>
         private void CreateDifficultyRatingText()
         {
-            DifficultyRating = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "", 18)
+            DifficultyRating = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "", 18)
             {
                 Parent = this,
                 Position = new ScalableVector2(Name.X, Map.Y + Map.Height + 5)
@@ -377,7 +377,7 @@ namespace Quaver.Shared.Screens.MultiplayerLobby.UI.Selected
         /// </summary>
         private void CreateDownloadStatus()
         {
-            DownloadStatus = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold), "", 18)
+            DownloadStatus = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "", 18)
             {
                 Parent = this,
                 Alignment = Bpm.Alignment,
