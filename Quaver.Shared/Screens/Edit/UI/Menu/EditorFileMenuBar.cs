@@ -1094,6 +1094,19 @@ namespace Quaver.Shared.Screens.Edit.UI.Menu
                 ImGui.EndMenu();
             }
 
+            if (ImGui.BeginMenu(LocalizationManager.Get("Screen_Editor_Keysounds")))
+            {
+                if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_Enable"), "", Screen.EnableKeysounds.Value))
+                    Screen.EnableKeysounds.Value = !Screen.EnableKeysounds.Value;
+
+                var keysoundPlugin = Screen.BuiltInPlugins[EditorBuiltInPlugin.KeysoundEditor];
+                if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_OpenKeysoundEditor"), "",
+                        keysoundPlugin.IsActive, Screen.Map.Game == MapGame.Quaver))
+                    Screen.TogglePlugin(keysoundPlugin);
+
+                ImGui.EndMenu();
+            }
+
             if (ImGui.BeginMenu(LocalizationManager.Get("Screen_Editor_Metronome")))
             {
                 if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_Enable"), "", Screen.EnableMetronome.Value))

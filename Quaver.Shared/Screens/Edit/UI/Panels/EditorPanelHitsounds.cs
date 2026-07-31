@@ -5,16 +5,20 @@ using Microsoft.Xna.Framework.Graphics;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Structures;
 using Quaver.Shared.Assets;
+using Quaver.Shared.Database.Maps;
 using Quaver.Shared.Graphics.Notifications;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Screens.Edit.Actions;
 using Quaver.Shared.Screens.Edit.Actions.Hitsounds.Add;
 using Quaver.Shared.Screens.Edit.Actions.Hitsounds.Remove;
+using Quaver.Shared.Screens.Edit.Plugins;
+using Wobble.Assets;
 using Wobble.Bindables;
 using Wobble.Graphics;
 using Wobble.Graphics.Sprites;
 using Wobble.Graphics.Sprites.Text;
 using Wobble.Graphics.UI.Buttons;
+using Wobble.Graphics.UI.Tooltips;
 using Wobble.Managers;
 
 namespace Quaver.Shared.Screens.Edit.UI.Panels
@@ -31,7 +35,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Panels
 
         /// <summary>
         /// </summary>
-        private List<DrawableEditorHitsound> HitsoundList { get; }
+        private List<Button> SoundButtons { get; }
 
         /// <summary>
         /// </summary>
@@ -50,11 +54,12 @@ namespace Quaver.Shared.Screens.Edit.UI.Panels
 
             Depth = 1;
 
-            HitsoundList = new List<DrawableEditorHitsound>
+            SoundButtons = new List<Button>
             {
                 new DrawableEditorHitsound(HitSounds.Whistle, SelectedHitsounds, SelectedHitObjects, ActionManager),
                 new DrawableEditorHitsound(HitSounds.Finish, SelectedHitsounds, SelectedHitObjects, ActionManager),
-                new DrawableEditorHitsound(HitSounds.Clap, SelectedHitsounds, SelectedHitObjects, ActionManager)
+                new DrawableEditorHitsound(HitSounds.Clap, SelectedHitsounds, SelectedHitObjects, ActionManager),
+                new DrawableEditorKeysoundButton(ActionManager.EditScreen)
             };
 
             AlignSounds();
@@ -90,12 +95,12 @@ namespace Quaver.Shared.Screens.Edit.UI.Panels
         /// </summary>
         private void AlignSounds()
         {
-            for (var i = 0; i < HitsoundList.Count; i++)
+            for (var i = 0; i < SoundButtons.Count; i++)
             {
-                var sound = HitsoundList[i];
+                var sound = SoundButtons[i];
 
                 sound.Parent = Content;
-                sound.Size = new ScalableVector2(Content.Width, Content.Height / HitsoundList.Count - 3);
+                sound.Size = new ScalableVector2(Content.Width, Content.Height / SoundButtons.Count - 3);
                 sound.X = 4;
                 sound.Y = sound.Height * i;
             }
@@ -143,6 +148,103 @@ namespace Quaver.Shared.Screens.Edit.UI.Panels
         private void OnHitsoundAdded(object sender, EditorHitsoundAddedEventArgs e) => SetSelectedHitsounds();
 
         private void OnHitsoundRemoved(object sender, EditorHitSoundRemovedEventArgs e) => SetSelectedHitsounds();
+    }
+
+    public class DrawableEditorKeysoundButton : ImageButton
+    {
+        private EditScreen Screen { get; }
+
+        private IDisposable TooltipRegistration { get; }
+
+        private Sprite Icon { get; }
+
+        private SpriteTextPlus Name { get; }
+
+        private Sprite BorderLine { get; }
+
+        public DrawableEditorKeysoundButton(EditScreen screen)
+            : base(UserInterface.OptionsSidebarButtonBackground)
+        {
+            Screen = screen;
+            Alpha = 0;
+
+            Icon = new Sprite
+            {
+                Parent = this,
+                Alignment = Alignment.MidLeft,
+                X = 17,
+                Size = new ScalableVector2(20, 20),
+                Image = FontAwesome.Get(FontAwesomeIcon.fa_music_note_black_symbol)
+            };
+
+            Name = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterBold),
+                LocalizationManager.Get("Screen_Editor_CustomKeysounds"), 18)
+            {
+                Parent = this,
+                Alignment = Alignment.MidLeft,
+                X = Icon.X + Icon.Width + 14
+            };
+
+            BorderLine = new Sprite
+            {
+                Parent = this,
+                Size = new ScalableVector2(4, 0),
+                Alpha = 0
+            };
+
+            TooltipRegistration = this.AddTooltip(new TooltipOptions(
+                LocalizationManager.Get("Screen_Editor_CustomKeysoundsTooltip")));
+            Clicked += OnClicked;
+        }
+
+        private void OnClicked(object sender, EventArgs e)
+        {
+            if (Screen.Map.Game != MapGame.Quaver)
+            {
+                NotificationManager.Show(NotificationLevel.Warning,
+                    LocalizationManager.Get("Screen_Editor_CannotEditKeysoundsForImportedMap"));
+                return;
+            }
+
+            Screen.ToggleBuiltinPlugin(EditorBuiltInPlugin.KeysoundEditor);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            var isActive = Screen.BuiltInPlugins[EditorBuiltInPlugin.KeysoundEditor].IsActive;
+
+            if (isActive)
+            {
+                Alpha = 1;
+                Tint = ColorHelper.HexToColor("#45D6F5");
+                BorderLine.Alpha = 1;
+            }
+            else if (IsHovered)
+            {
+                Alpha = 0.45f;
+                Tint = Color.White;
+                BorderLine.Alpha = Alpha;
+            }
+            else
+            {
+                Alpha = 0;
+                Tint = Color.White;
+                BorderLine.Alpha = 0;
+            }
+
+            Icon.Tint = Tint;
+            Name.Tint = Tint;
+            BorderLine.Height = Height;
+            BorderLine.Tint = Tint;
+            base.Update(gameTime);
+        }
+
+        public override void Destroy()
+        {
+            Clicked -= OnClicked;
+            TooltipRegistration.Dispose();
+            base.Destroy();
+        }
     }
 
     public class DrawableEditorHitsound : ImageButton

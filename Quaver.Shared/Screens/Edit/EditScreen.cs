@@ -44,6 +44,7 @@ using Quaver.Shared.Screens.Edit.Dialogs.Metadata;
 using Quaver.Shared.Screens.Edit.Input;
 using Quaver.Shared.Screens.Edit.Plugins;
 using Quaver.Shared.Screens.Edit.Plugins.Bookmarks;
+using Quaver.Shared.Screens.Edit.Plugins.Keysounds;
 using Quaver.Shared.Screens.Edit.Plugins.Timing;
 using Quaver.Shared.Screens.Edit.UI;
 using Quaver.Shared.Screens.Edit.UI.Panels.Layers.Dialogs;
@@ -188,6 +189,11 @@ namespace Quaver.Shared.Screens.Edit
         /// </summary>
         public Bindable<bool> EnableHitsounds { get; } =
             ConfigManager.EditorEnableHitsounds ?? new Bindable<bool>(true) { Value = true };
+
+        /// <summary>
+        /// </summary>
+        public Bindable<bool> EnableKeysounds { get; } =
+            ConfigManager.EditorEnableKeysounds ?? new Bindable<bool>(true) { Value = true };
 
         /// <summary>
         /// </summary>
@@ -409,6 +415,8 @@ namespace Quaver.Shared.Screens.Edit
             SetAudioTrack(track);
 
             ActionManager = new EditorActionManager(this, WorkingMap);
+            ActionManager.CustomAudioSamplesChanged += OnCustomAudioSamplesChanged;
+            ReloadCustomAudioSamples();
             UneditableMap = new Bindable<Qua>(null);
             Metronome = new Metronome(WorkingMap, Track,
                 ConfigManager.GlobalAudioOffset ?? new BindableInt(0, -500, 500), MetronomePlayHalfBeats);
@@ -493,8 +501,8 @@ namespace Quaver.Shared.Screens.Edit
             {
                 HandleInput();
 
-                if (EnableHitsounds.Value)
-                    PlayHitsounds();
+                if (EnableHitsounds.Value || EnableKeysounds.Value)
+                    PlayNoteSounds();
 
                 if (EnableMetronome.Value)
                     Metronome?.Update(gameTime);
@@ -512,6 +520,7 @@ namespace Quaver.Shared.Screens.Edit
             GameBase.Game.Window.FileDropped -= OnFileDropped;
             ActionManager.TimingGroupRenamed -= ActionManagerOnTimingGroupRenamed;
             ActionManager.TimingGroupDeleted -= ActionManagerOnTimingGroupDeleted;
+            ActionManager.CustomAudioSamplesChanged -= OnCustomAudioSamplesChanged;
             ReferenceDifficultyIndex.ValueChanged -= LoadReferenceDifficulty;
 
             BackupScheduler?.Dispose();
@@ -547,6 +556,9 @@ namespace Quaver.Shared.Screens.Edit
 
             if (EnableHitsounds != ConfigManager.EditorEnableHitsounds)
                 EnableHitsounds.Dispose();
+
+            if (EnableKeysounds != ConfigManager.EditorEnableKeysounds)
+                EnableKeysounds.Dispose();
 
             if (HitsoundVolume != ConfigManager.EditorHitsoundVolume)
                 HitsoundVolume.Dispose();
@@ -678,7 +690,7 @@ namespace Quaver.Shared.Screens.Edit
 
         /// <summary>
         /// </summary>
-        private void PlayHitsounds()
+        private void PlayNoteSounds()
         {
             if (!Track.IsPlaying)
                 return;
@@ -704,14 +716,35 @@ namespace Quaver.Shared.Screens.Edit
                         // ignore and play
                     }
 
-                    if (obj.Type != HitObjectType.Mine)
+                    if (obj.Type != HitObjectType.Mine && EnableHitsounds.Value)
                         HitObjectManager.PlayObjectHitSounds(obj, EditorSkin.Value, HitsoundVolume.Value);
+
+                    if (obj.Type != HitObjectType.Mine && EnableKeysounds.Value)
+                        HitObjectManager.PlayObjectKeySounds(obj);
+
                     HitsoundObjectIndex = i + 1;
                 }
                 else
                     break;
             }
         }
+
+        /// <summary>
+        ///     Reloads custom audio samples from the editor's unsaved working map.
+        /// </summary>
+        public void ReloadCustomAudioSamples()
+        {
+            try
+            {
+                CustomAudioSampleCache.LoadSamples(Map, WorkingMap, $"editor:{Map.Id}", true);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, LogType.Runtime);
+            }
+        }
+
+        private void OnCustomAudioSamplesChanged(object sender, EventArgs e) => ReloadCustomAudioSamples();
 
         #region SEEKING
 
@@ -1000,6 +1033,7 @@ namespace Quaver.Shared.Screens.Edit
                 {EditorBuiltInPlugin.ScrollSpeedFactorEditor, new EditorScrollSpeedFactorPanel(this)},
                 {EditorBuiltInPlugin.TimingGroupEditor, new EditorTimingGroupPanel(this)},
                 {EditorBuiltInPlugin.KeybindEditor, new EditorKeybindPanel(this)},
+                {EditorBuiltInPlugin.KeysoundEditor, new EditorKeysoundPanel(this)},
                 {EditorBuiltInPlugin.BpmCalculator, new EditorPlugin(this, LocalizationManager.Get("Screen_Editor_BpmCalculator"), "The Quaver Team", "",
                     $"{dir}/BpmCalculator/plugin.lua", true)},
                 {EditorBuiltInPlugin.BpmDetector, new EditorPlugin(this, LocalizationManager.Get("Screen_Editor_BpmDetector"), "The Quaver Team", "",

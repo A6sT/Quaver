@@ -28,6 +28,7 @@ using Quaver.Shared.Screens.Edit.Actions.HitObjects.Reverse;
 using Quaver.Shared.Screens.Edit.Actions.HitObjects.Swap;
 using Quaver.Shared.Screens.Edit.Actions.Hitsounds.Add;
 using Quaver.Shared.Screens.Edit.Actions.Hitsounds.Remove;
+using Quaver.Shared.Screens.Edit.Actions.Keysounds;
 using Quaver.Shared.Screens.Edit.Actions.Layers.Colors;
 using Quaver.Shared.Screens.Edit.Actions.Layers.Create;
 using Quaver.Shared.Screens.Edit.Actions.Layers.Move;
@@ -277,6 +278,24 @@ namespace Quaver.Shared.Screens.Edit.Plugins
                     EditScreen.ActionManager,
                     args[0].ToObject<List<HitObjectInfo>>(),
                     args[1].ToObject<HitSounds>()
+                ),
+                EditorActionType.ChangeKeysounds => new EditorActionChangeKeysounds(
+                    EditScreen.ActionManager,
+                    args[0].ToObject<List<HitObjectInfo>>(),
+                    args[1].ToObject<EditorKeysoundChangeMode>(),
+                    args.Length > 2 ? args[2].ToObject<int>() : 0,
+                    args.Length > 3 ? args[3].ToObject<int>() : 100
+                ),
+                EditorActionType.AddCustomAudioSample => new EditorActionAddCustomAudioSample(
+                    EditScreen.ActionManager,
+                    EditScreen.WorkingMap,
+                    args[0].ToObject<CustomAudioSampleInfo>()
+                ),
+                EditorActionType.ChangeCustomAudioSample => new EditorActionChangeCustomAudioSample(
+                    EditScreen.ActionManager,
+                    args[0].ToObject<CustomAudioSampleInfo>(),
+                    args[1].ToObject<int>(),
+                    args[2].ToObject<bool>()
                 ),
                 EditorActionType.CreateLayer => new EditorActionCreateLayer(
                     EditScreen.WorkingMap,

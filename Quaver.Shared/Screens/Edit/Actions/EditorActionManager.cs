@@ -26,6 +26,7 @@ using Quaver.Shared.Screens.Edit.Actions.HitObjects.Reverse;
 using Quaver.Shared.Screens.Edit.Actions.HitObjects.Swap;
 using Quaver.Shared.Screens.Edit.Actions.Hitsounds.Add;
 using Quaver.Shared.Screens.Edit.Actions.Hitsounds.Remove;
+using Quaver.Shared.Screens.Edit.Actions.Keysounds;
 using Quaver.Shared.Screens.Edit.Actions.Layers.Colors;
 using Quaver.Shared.Screens.Edit.Actions.Layers.Create;
 using Quaver.Shared.Screens.Edit.Actions.Layers.Move;
@@ -165,6 +166,16 @@ namespace Quaver.Shared.Screens.Edit.Actions
         ///     Event invoked when a hitsound has been removed from a group of objects
         /// </summary>
         public event EventHandler<EditorHitSoundRemovedEventArgs> HitsoundRemoved;
+
+        /// <summary>
+        ///     Event invoked when keysounds have been changed on a group of objects.
+        /// </summary>
+        public event EventHandler<EditorKeysoundsChangedEventArgs> KeysoundsChanged;
+
+        /// <summary>
+        ///     Event invoked when the custom audio sample library has changed.
+        /// </summary>
+        public event EventHandler<EditorCustomAudioSamplesChangedEventArgs> CustomAudioSamplesChanged;
 
         /// <summary>
         ///     Event invoked when a layer has been created
@@ -942,6 +953,13 @@ namespace Quaver.Shared.Screens.Edit.Actions
                 case EditorActionType.RemoveHitsound:
                     HitsoundRemoved?.Invoke(this, (EditorHitSoundRemovedEventArgs)args);
                     break;
+                case EditorActionType.ChangeKeysounds:
+                    KeysoundsChanged?.Invoke(this, (EditorKeysoundsChangedEventArgs)args);
+                    break;
+                case EditorActionType.AddCustomAudioSample:
+                case EditorActionType.ChangeCustomAudioSample:
+                    CustomAudioSamplesChanged?.Invoke(this, (EditorCustomAudioSamplesChangedEventArgs)args);
+                    break;
                 case EditorActionType.CreateLayer:
                     LayerCreated?.Invoke(this, (EditorLayerCreatedEventArgs)args);
                     break;
@@ -1088,6 +1106,8 @@ namespace Quaver.Shared.Screens.Edit.Actions
             HitObjectsMoved = null;
             HitsoundAdded = null;
             HitsoundRemoved = null;
+            KeysoundsChanged = null;
+            CustomAudioSamplesChanged = null;
             LayerCreated = null;
             LayerDeleted = null;
             LayerRenamed = null;

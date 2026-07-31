@@ -62,6 +62,9 @@ namespace Quaver.Shared.Screens.Edit.Actions
         ChangeScrollSpeedFactorLaneMaskBatch,
         ChangeScrollSpeedFactorOffsetBatch,
         RemoveScrollSpeedFactor,
-        RemoveScrollSpeedFactorBatch
+        RemoveScrollSpeedFactorBatch,
+        ChangeKeysounds,
+        AddCustomAudioSample,
+        ChangeCustomAudioSample
     }
 }

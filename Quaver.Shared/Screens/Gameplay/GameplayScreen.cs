@@ -472,7 +472,7 @@ namespace Quaver.Shared.Screens.Gameplay
             {
                 try
                 {
-                    CustomAudioSampleCache.LoadSamples(MapManager.Selected.Value, MapHash);
+                    CustomAudioSampleCache.LoadSamples(MapManager.Selected.Value, Map, MapHash);
                 }
                 catch (Exception e)
                 {

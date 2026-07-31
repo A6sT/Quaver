@@ -2141,6 +2141,36 @@ for other players to download?</value>
   <data name="Screen_Editor_CompositionTools" xml:space="preserve"><value>Composition Tools</value></data>
   <data name="Screen_Editor_Layers" xml:space="preserve"><value>Layers</value></data>
   <data name="Screen_Editor_Hitsounds" xml:space="preserve"><value>Hitsounds</value></data>
+  <data name="Screen_Editor_Keysounds" xml:space="preserve"><value>Keysounds</value></data>
+  <data name="Screen_Editor_CustomKeysounds" xml:space="preserve"><value>Custom</value></data>
+  <data name="Screen_Editor_CustomKeysoundsTooltip" xml:space="preserve"><value>Assign custom keysounds to selected notes.</value></data>
+  <data name="Screen_Editor_KeysoundEditorMessage" xml:space="preserve"><value>Manage the map's keysound library and assign keysounds to the currently selected notes.</value></data>
+  <data name="Screen_Editor_OpenKeysoundEditor" xml:space="preserve"><value>Open Keysound Editor</value></data>
+  <data name="Screen_Editor_KeysoundSampleLibrary" xml:space="preserve"><value>Keysound library</value></data>
+  <data name="Screen_Editor_KeysoundSearchSamples" xml:space="preserve"><value>Search keysounds...</value></data>
+  <data name="Screen_Editor_KeysoundSamples" xml:space="preserve"><value>Keysounds</value></data>
+  <data name="Screen_Editor_KeysoundSelectedNotes" xml:space="preserve"><value>Selected notes</value></data>
+  <data name="Screen_Editor_KeysoundKeysoundedNotes" xml:space="preserve"><value>{0}/{1} have keysounds</value></data>
+  <data name="Screen_Editor_KeysoundUses" xml:space="preserve"><value>Uses</value></data>
+  <data name="Screen_Editor_KeysoundPlay" xml:space="preserve"><value>Play</value></data>
+  <data name="Screen_Editor_KeysoundAssignments" xml:space="preserve"><value>Assignments</value></data>
+  <data name="Screen_Editor_KeysoundCoverage" xml:space="preserve"><value>Coverage</value></data>
+  <data name="Screen_Editor_KeysoundMixed" xml:space="preserve"><value>Mixed</value></data>
+  <data name="Screen_Editor_KeysoundNoAssignments" xml:space="preserve"><value>The selected notes do not have any keysounds.</value></data>
+  <data name="Screen_Editor_KeysoundNoSamples" xml:space="preserve"><value>This map does not have any custom keysounds yet.</value></data>
+  <data name="Screen_Editor_KeysoundAddToSelected" xml:space="preserve"><value>Add Keysound</value></data>
+  <data name="Screen_Editor_KeysoundSampleUsage" xml:space="preserve"><value>Used by {0} notes</value></data>
+  <data name="Screen_Editor_DropAudioSamplesHere" xml:space="preserve"><value>Drop a .wav, .ogg, or .mp3 file here</value></data>
+  <data name="Screen_Editor_Preview" xml:space="preserve"><value>Preview</value></data>
+  <data name="Screen_Editor_KeysoundPreviewSelected" xml:space="preserve"><value>Preview selected keysound</value></data>
+  <data name="Screen_Editor_KeysoundPreviewAll" xml:space="preserve"><value>Preview all</value></data>
+  <data name="Screen_Editor_KeysoundSampleUsageTab" xml:space="preserve"><value>Keysound usage</value></data>
+  <data name="Screen_Editor_KeysoundSampleNotUsed" xml:space="preserve"><value>This keysound is not assigned to any notes.</value></data>
+  <data name="Screen_Editor_RemoveSampleFromSelected" xml:space="preserve"><value>Remove keysound</value></data>
+  <data name="Screen_Editor_ClearKeysounds" xml:space="preserve"><value>Clear all keysounds</value></data>
+  <data name="Screen_Editor_SelectedNoteCount" xml:space="preserve"><value>{0} notes selected</value></data>
+  <data name="Screen_Editor_KeysoundUnaffectedByRate" xml:space="preserve"><value>Unaffected by playback rate</value></data>
+  <data name="Screen_Editor_KeysoundFollowsRate" xml:space="preserve"><value>Follows playback rate</value></data>
   <data name="Screen_Editor_DisplayGameplayPreview" xml:space="preserve"><value>Display Gameplay Preview</value></data>
   <data name="Screen_Editor_ReferenceDifficulty" xml:space="preserve"><value>Reference Difficulty</value></data>
   <data name="Screen_Editor_None" xml:space="preserve"><value>None</value></data>
@@ -2434,6 +2464,11 @@ for other players to download?</value>
   <data name="Screen_Editor_ObjectCount" xml:space="preserve"><value>Object Count</value></data>
   <data name="Screen_Editor_DifficultyRating" xml:space="preserve"><value>Difficulty Rating</value></data>
   <data name="Screen_Editor_SelectObjectsBeforeChangingHitsounds" xml:space="preserve"><value>You need to select objects before changing their hitsounds!</value></data>
+  <data name="Screen_Editor_SelectObjectsBeforeChangingKeysounds" xml:space="preserve"><value>You need to select notes before changing their keysounds!</value></data>
+  <data name="Screen_Editor_CannotEditKeysoundsForImportedMap" xml:space="preserve"><value>Custom keysounds can only be edited on Quaver maps.</value></data>
+  <data name="Screen_Editor_KeysoundAlreadyImported" xml:space="preserve"><value>That keysound is already in this map.</value></data>
+  <data name="Screen_Editor_KeysoundImported" xml:space="preserve"><value>Imported keysound: {0}</value></data>
+  <data name="Screen_Editor_KeysoundImportFailed" xml:space="preserve"><value>The keysound could not be imported.</value></data>
   <data name="Screen_Editor_SelectTool" xml:space="preserve"><value>Select</value></data>
   <data name="Screen_Editor_NoteTool" xml:space="preserve"><value>Note</value></data>
   <data name="Screen_Editor_LongNoteTool" xml:space="preserve"><value>Long Note</value></data>

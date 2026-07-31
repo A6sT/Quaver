@@ -7,6 +7,7 @@ using Quaver.API.Enums;
 using Quaver.API.Maps.Structures;
 using Quaver.Shared.Config;
 using Quaver.Shared.Screens.Edit.Actions;
+using Quaver.Shared.Screens.Edit.Actions.Keysounds;
 using Quaver.Shared.Screens.Edit.UI.Playfield;
 using Quaver.Shared.Scripting;
 
@@ -17,6 +18,8 @@ namespace Quaver.Shared.Screens.Edit.Plugins
         static readonly DynValue s_actionType = DefineEnum<EditorActionType>();
 
         static readonly DynValue s_hitSounds = DefineEnum<HitSounds>();
+
+        static readonly DynValue s_keysoundChangeMode = DefineEnum<EditorKeysoundChangeMode>();
 
         static readonly DynValue s_hitObjectType = DefineEnum<HitObjectType>();
 
@@ -61,6 +64,7 @@ namespace Quaver.Shared.Screens.Edit.Plugins
         {
             RegisterIfEnum(typeof(GameMode));
             RegisterIfEnum(typeof(HitSounds));
+            RegisterIfEnum(typeof(EditorKeysoundChangeMode));
             RegisterIfEnum(typeof(TimeSignature));
             RegisterIfEnum(typeof(EditorActionType));
         }
@@ -114,6 +118,7 @@ namespace Quaver.Shared.Screens.Edit.Plugins
                 globals["hitobject_type"] = s_hitObjectType;
                 globals["time_signature"] = s_timeSignature;
                 globals["action_type"] = s_actionType;
+                globals["keysound_change_mode"] = s_keysoundChangeMode;
                 globals["actions"] = Editor.ActionManager.PluginActionManager;
                 globals["map"] = EditorPluginMap;
                 globals["coloring_type"] = s_hitObjectColoring;

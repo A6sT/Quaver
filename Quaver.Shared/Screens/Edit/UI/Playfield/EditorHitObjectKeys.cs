@@ -11,6 +11,7 @@ using Quaver.Shared.Graphics;
 using Quaver.Shared.Screens.Gameplay.Rulesets.HitObjects;
 using Quaver.Shared.Screens.Gameplay.Rulesets.Keys.HitObjects;
 using Quaver.Shared.Skinning;
+using Wobble.Assets;
 using Wobble.Audio.Tracks;
 using Wobble.Bindables;
 using Wobble.Graphics;
@@ -45,6 +46,11 @@ namespace Quaver.Shared.Screens.Edit.UI.Playfield
         /// </summary>
         private Sprite SelectionSprite { get; set; }
 
+        /// <summary>
+        ///     Marks notes that have one or more custom keysounds assigned.
+        /// </summary>
+        private Sprite KeysoundMarker { get; set; }
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -69,6 +75,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Playfield
             CreateLongNoteSprite();
             UpdateLongNoteSizeAndAlpha();
             CreateSelectionSprite();
+            CreateKeysoundMarker();
 
             Refresh();
         }
@@ -91,6 +98,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Playfield
             base.Destroy();
             Body?.Destroy();
             Tail?.Destroy();
+            KeysoundMarker?.Destroy();
         }
 
         /// <inheritdoc />
@@ -112,6 +120,9 @@ namespace Quaver.Shared.Screens.Edit.UI.Playfield
 
             base.DrawToSpriteBatch();
 
+            if (Info.KeySounds.Count != 0)
+                KeysoundMarker.DrawToSpriteBatch();
+
             if (SelectionSprite.Visible)
             {
                 if (Info.IsLongNote)
@@ -121,6 +132,20 @@ namespace Quaver.Shared.Screens.Edit.UI.Playfield
 
                 SelectionSprite.Draw(new GameTime());
             }
+        }
+
+        private void CreateKeysoundMarker()
+        {
+            KeysoundMarker = new Sprite
+            {
+                Parent = this,
+                Alignment = Alignment.TopRight,
+                Size = new ScalableVector2(12, 12),
+                X = -2,
+                Y = 2,
+                Image = FontAwesome.Get(FontAwesomeIcon.fa_music_note_black_symbol),
+                Tint = Colors.MainAccent
+            };
         }
 
         /// <summary>

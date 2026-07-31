@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using Quaver.API.Maps;
 using Quaver.Shared.Config;
 using Quaver.Shared.Database.Maps;
 using Wobble.Audio.Samples;
@@ -16,9 +17,9 @@ namespace Quaver.Shared.Audio
     public static class CustomAudioSampleCache
     {
         /// <summary>
-        ///     MD5 hash of the map where the sound samples are from.
+        ///     Identity of the map state where the sound samples are from.
         /// </summary>
-        private static string MapMd5 { get; set; }
+        private static string CacheKey { get; set; }
 
         /// <summary>
         ///     The cached audio samples.
@@ -37,23 +38,38 @@ namespace Quaver.Shared.Audio
         /// <param name="md5"></param>
         public static void LoadSamples(Map map, string md5)
         {
-            if (map.Qua == null)
+            LoadSamples(map, map?.Qua, string.IsNullOrEmpty(md5) ? map?.Md5Checksum : md5);
+        }
+
+        /// <summary>
+        ///     Loads audio samples from a specific map state. The editor uses this overload for its working copy.
+        /// </summary>
+        /// <param name="map"></param>
+        /// <param name="qua"></param>
+        /// <param name="cacheKey"></param>
+        /// <param name="force"></param>
+        public static void LoadSamples(Map map, Qua qua, string cacheKey, bool force = false)
+        {
+            if (map == null || qua == null)
                 return;
+
+            if (string.IsNullOrEmpty(cacheKey))
+                cacheKey = map.Md5Checksum;
 
             // Always clean up the left-over channels.
             StopAll();
 
-            // If the MD5 is the same, no need to re-load the samples.
-            if (MapMd5 == md5)
+            // If the map state is the same, no need to re-load the samples.
+            if (!force && CacheKey != null && CacheKey == cacheKey)
                 return;
 
-            MapMd5 = map.Md5Checksum;
+            CacheKey = cacheKey;
 
             foreach (var sample in Samples)
                 sample.Dispose();
 
             Samples = new List<GameplayAudioSample>();
-            foreach (var info in map.Qua.CustomAudioSamples)
+            foreach (var info in qua.CustomAudioSamples)
             {
                 // If the path is missing an extension or the file doesn't exist, we need to try some other extensions
                 // for compatibility with osu!.
@@ -155,7 +171,7 @@ namespace Quaver.Shared.Audio
             StopAll();
             Samples.ForEach(x => x.Dispose());
             Samples.Clear();
-            MapMd5 = null;
+            CacheKey = null;
         }
     }
 }
