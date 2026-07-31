@@ -148,7 +148,7 @@
     <value>QUITTER QUAVER</value>
   </data>
   <data name="Screen_Main_QuitDialogMessage" xml:space="preserve">
-    <value>Quit the game?</value>
+    <value>Quitter le jeu?</value>
   </data>
   <data name="Screen_Main_SinglePlayerDescription" xml:space="preserve">
     <value>Concourez pour une place au classement</value>
@@ -175,7 +175,7 @@
     <value>Faites glisser les fichiers de map (.qp) dans le jeu pour les importer.</value>
   </data>
   <data name="Screen_Main_TipMapPreview" xml:space="preserve">
-    <value>Appuyer sur {0} lors de la sélection d'une map affiche un aperçu de la carte.</value>
+    <value>Appuyer sur {0} lors de la sélection d'une map affiche un aperçu de la map.</value>
   </data>
   <data name="Screen_Main_TipPauseSubmission" xml:space="preserve">
     <value>Mettre le jeu en pause empêche la soumission du score.</value>
@@ -211,28 +211,28 @@
     <value>Publié le {0}</value>
   </data>
   <data name="Screen_Main_NewsLoading" xml:space="preserve">
-    <value>Loading news…</value>
+    <value>Chargement des actualités…</value>
   </data>
   <data name="Screen_Main_NewsUnavailable" xml:space="preserve">
-    <value>News is currently unavailable</value>
+    <value>Actualités actuellement indisponibles</value>
   </data>
   <data name="Screen_Main_AutoLoginFailed" xml:space="preserve">
-    <value>Failed to automatically login!</value>
+    <value>Échec de la connexion automatique!</value>
   </data>
   <data name="Screen_Main_NoMapsLoaded" xml:space="preserve">
-    <value>You have no maps loaded. Try importing some!</value>
+    <value>Vous n'avez aucune carte chargée. Essayez d'en importer!</value>
   </data>
   <data name="Screen_Main_NotImplemented" xml:space="preserve">
-    <value>Not implemented yet!</value>
+    <value>Pas encore implémenté!</value>
   </data>
   <data name="Screen_Main_MultiplayerLoginRequired" xml:space="preserve">
-    <value>You must be logged in to play multiplayer.</value>
+    <value>Vous devez être connecté pour jouer en mode multijoueur.</value>
   </data>
   <data name="Screen_Main_EditorMapRequired" xml:space="preserve">
-    <value>You cannot edit without a map selected.</value>
+    <value>Vous ne pouvez pas éditer sans une map sélectionnée.</value>
   </data>
   <data name="Screen_Main_MapReadFailed" xml:space="preserve">
-    <value>Unable to read map file!</value>
+    <value>Impossible de lire le fichier de la map!</value>
   </data>
   <data name="Screen_Selection_All" xml:space="preserve">
     <value>Tous</value>
@@ -1115,25 +1115,25 @@ Si la map n'a pas été terminée, le graphique affiche également la performanc
     <value>Rechercher des options...</value>
   </data>
   <data name="Screen_Options_KeyCountGameplayLayout" xml:space="preserve">
-    <value>{0}K Gameplay Layout</value>
+    <value>Disposition de Jeu {0}K</value>
   </data>
   <data name="Screen_Options_KeyCountScrollSpeed" xml:space="preserve">
-    <value>{0}K Scroll Speed</value>
+    <value>Vitesse de Défilement {0}K</value>
   </data>
   <data name="Screen_Options_KeyCountScrollDirection" xml:space="preserve">
-    <value>{0}K Scroll Direction</value>
+    <value>Direction de Défilement {0}K</value>
   </data>
   <data name="Screen_Options_KeyCountScratchLayout" xml:space="preserve">
-    <value>{0}K Scratch Layout</value>
+    <value>Disposition Scratch {0}K</value>
   </data>
   <data name="Screen_Options_KeyCountPlaceScratchLaneOnLeft" xml:space="preserve">
-    <value>Place {0}K Scratch Lane On Left</value>
+    <value>Placer la Colonne de Scratch {0}K à Gauche</value>
   </data>
   <data name="Screen_Options_KeyCountCoopLayout" xml:space="preserve">
-    <value>{0}K Co-op Layout</value>
+    <value>Disposition Co-op {0}K</value>
   </data>
   <data name="Screen_Options_KeyCountPrioritizedDifficulty" xml:space="preserve">
-    <value>Prioritized {0}K Difficulty</value>
+    <value>Difficulté privilégiée de {0}K</value>
   </data>
   <data name="Screen_Options_1Keys" xml:space="preserve">
     <value>1 Touche</value>
@@ -1329,9 +1329,9 @@ Si la map n'a pas été terminée, le graphique affiche également la performanc
     <value>Aucune Chanson Sélectionnée</value>
   </data>
   <data name="Screen_Download_NoSongSelectedDescription" xml:space="preserve">
-    <value>Double-click a song to download it.
-Click once to preview it.
-Use the filters to narrow your search.</value>
+    <value>Double-cliquez sur une musique pour la télécharger.
+Cliquez une fois pour la prévisualiser.
+Utilisez les filtres pour affiner votre recherche.</value>
   </data>
   <data name="Screen_Download_EndDate" xml:space="preserve">
     <value>Date de Fin</value>
@@ -1445,7 +1445,7 @@ Use the filters to narrow your search.</value>
     <value>QUITTER LE LOBBY</value>
   </data>
   <data name="Screen_Multi_ExitToLobbyMessage" xml:space="preserve">
-    <value>Exit to the lobby?</value>
+    <value>Quitter le lobby?</value>
   </data>
   <data name="Screen_Multi_Leave" xml:space="preserve">
     <value>Quitter</value>
@@ -1903,7 +1903,9 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_RefreshFileCache" xml:space="preserve">
     <value>Rafraichir le Cache du Fichier</value>
   </data>
-  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve"><value>Refresh Editor from .qua File</value></data>
+  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve">
+    <value>Rafraîchir l'éditeur depuis un fichier .qua</value>
+  </data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
     <value>Publier</value>
   </data>
@@ -1959,7 +1961,7 @@ Use the filters to narrow your search.</value>
     <value>Inverser les voies d'objets</value>
   </data>
   <data name="Screen_Editor_Lane" xml:space="preserve">
-    <value></value>
+    <value>Piste {0}</value>
   </data>
   <data name="Screen_Editor_MoveObjectsToLayer" xml:space="preserve">
     <value>Déplacer les Objets vers le Calque</value>
@@ -1998,22 +2000,22 @@ Use the filters to narrow your search.</value>
     <value>Appliquer le Décalage a la Map</value>
   </data>
   <data name="Screen_Editor_ResnapAllNotes" xml:space="preserve">
-    <value>Resnap All Notes</value>
+    <value>Recaler Toutes les Notes</value>
   </data>
   <data name="Screen_Editor_ResnapToCurrentSnap" xml:space="preserve">
-    <value>Resnap to currently selected snap (1/{0})</value>
+    <value>Recaler sur la mesure actuellement sélectionnée (1/{0})</value>
   </data>
   <data name="Screen_Editor_ResnapToCommonSnaps" xml:space="preserve">
-    <value>Resnap to 1/16 and 1/12 snaps</value>
+    <value>Recaler sur la mesure 1/16 et 1/12</value>
   </data>
   <data name="Screen_Editor_ResnapToCustomDivisions" xml:space="preserve">
-    <value>Resnap to custom divisions</value>
+    <value>Recaler sur une division personnalisée</value>
   </data>
   <data name="Screen_Editor_Resnap" xml:space="preserve">
-    <value>Resnap</value>
+    <value>Recaler</value>
   </data>
   <data name="Screen_Editor_ResnapSelectedNotes" xml:space="preserve">
-    <value>Resnap Selected Notes</value>
+    <value>Recaler les Notes Sélectionnées</value>
   </data>
   <data name="Screen_Editor_ApplyModifierToMap" xml:space="preserve">
     <value>Appliquer les modificateurs à la map</value>
@@ -2085,10 +2087,10 @@ Use the filters to narrow your search.</value>
     <value>Mettre la Vitesse de Défilement à l'Échelle</value>
   </data>
   <data name="Screen_Editor_PlaceObjectsOnNearestTick" xml:space="preserve">
-    <value>Place Objects On Nearest Tick</value>
+    <value>Placer un Objet sur le Tick le plus Proche</value>
   </data>
   <data name="Screen_Editor_PlaceObjectsWithTopRowNumbers" xml:space="preserve">
-    <value>Place Objects With Top Row Numbers</value>
+    <value>Placer des Objets avec des Numéros de Rangées Supérieurs</value>
   </data>
   <data name="Screen_Editor_SnapNotesWhenLiveMapping" xml:space="preserve">
     <value>Aimanter les Notes lors du Mapping en Direct</value>
@@ -2097,7 +2099,7 @@ Use the filters to narrow your search.</value>
     <value>Décalage des Notes Placées Pendant le Mapping en Direct</value>
   </data>
   <data name="Screen_Editor_PlaceLongNotesWhenLiveMapping" xml:space="preserve">
-    <value>Place Long Notes When Live Mapping</value>
+    <value>Placer des Notes Longues lors du Mapping en Direct</value>
   </data>
   <data name="Screen_Editor_SetLiveMappingLongNoteMinimumLength" xml:space="preserve">
     <value>Set Minimum Length Of Long Notes Placed During Live Mapping</value>
@@ -2112,7 +2114,7 @@ Use the filters to narrow your search.</value>
     <value>Luminosité</value>
   </data>
   <data name="Screen_Editor_AudioDirection" xml:space="preserve">
-    <value>Audio Direction</value>
+    <value>Direction Audio</value>
   </data>
   <data name="Screen_Editor_Filter" xml:space="preserve">
     <value>Filtre</value>
@@ -2133,7 +2135,7 @@ Use the filters to narrow your search.</value>
     <value>Échelle de Fréquence</value>
   </data>
   <data name="Screen_Editor_CutoffFactor" xml:space="preserve">
-    <value>Cutoff Factor</value>
+    <value>Facteur de Coupe</value>
   </data>
   <data name="Screen_Editor_IntensityFactor" xml:space="preserve">
     <value>Facteur d'Intensité</value>
@@ -2294,8 +2296,12 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_SaveChanges" xml:space="preserve">
     <value>ENREGISTRER LES MODIFICATIONS</value>
   </data>
-  <data name="Screen_Editor_UnsavedChanges" xml:space="preserve"><value>UNSAVED CHANGES</value></data>
-  <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve"><value>This map hasn't been saved.&#xA;Refreshing from .qua will discard unsaved changes. Continue?</value></data>
+  <data name="Screen_Editor_UnsavedChanges" xml:space="preserve">
+    <value>CHANGEMENTS NON ENREGISTRES</value>
+  </data>
+  <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve">
+    <value>Cette map n'a pas été enregistrée.&#xA;Rafraîchir depuis un fichier .qua supprimera les changements non enregistrés. Continuer ?</value>
+  </data>
   <data name="Screen_Editor_SaveBeforeCreatingDifficulty" xml:space="preserve">
     <value>Vous avez des Modifications non Enregistrées. Voulez-vous Sauvegarder&#xA;avant de Créer une Nouvelle Difficulté ?</value>
   </data>
@@ -2314,7 +2320,9 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_No" xml:space="preserve">
     <value>NON</value>
   </data>
-  <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve"><value>Submit this mapset for rank?&#xA;It must meet the ranking criteria.</value></data>
+  <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve">
+    <value>Soumettez cette collection de map pour le classement?&#xA;Elle doit remplir les critères de classement.</value>
+  </data>
   <data name="Screen_Editor_CustomBeatSnap" xml:space="preserve">
     <value>CUSTOM BEAT SNAP</value>
   </data>
@@ -2379,7 +2387,7 @@ Use the filters to narrow your search.</value>
     <value>APPLIQUER LES MODIFICATEURS</value>
   </data>
   <data name="Screen_Editor_ApplyModifierConfirmation" xml:space="preserve">
-    <value></value>
+    <value>Voulez-vous appliquer le modificateur: "{0}" sur votre map?&#xA;&#xA;Cette action n'est PAS réversible! Choisissez judicieusement.</value>
   </data>
   <data name="Screen_Editor_ChangeBackgroundOrBanner" xml:space="preserve">
     <value>CHANGE BACKGROUND / BANNER</value>
@@ -2417,7 +2425,9 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve">
     <value>Veuillez patienter pendant que votre carte est soumise pour le classement...</value>
   </data>
-  <data name="Screen_Editor_RankingIssuesFound" xml:space="preserve"><value>AutoMod found ranking blockers. Review each difficulty and try again.</value></data>
+  <data name="Screen_Editor_RankingIssuesFound" xml:space="preserve">
+    <value>AutoMod a trouvé des éléments bloquant le classement. Examinez chaque difficulté et réessayez.</value>
+  </data>
   <data name="Screen_Editor_SubmitForRankError" xml:space="preserve">
     <value>An error occurred while submitting your mapset for rank.</value>
   </data>
@@ -2971,7 +2981,7 @@ Use the filters to narrow your search.</value>
     <value>Échec de la détection du BPM et du décalage !</value>
   </data>
   <data name="Screen_Editor_NoNotesResnapped" xml:space="preserve">
-    <value>No notes resnapped</value>
+    <value>Pas de note recalée</value>
   </data>
   <data name="Screen_Editor_PreviewTimeChanged" xml:space="preserve">
     <value>Preview time changed to: {0}</value>
@@ -3031,7 +3041,7 @@ Use the filters to narrow your search.</value>
     <value>Are you sure you want to overwrite your keymap?&#xA;You might want to back up your keymap first.</value>
   </data>
   <data name="Screen_Editor_IssueCountLabel" xml:space="preserve">
-    <value>Issue Count:</value>
+    <value>Nombre de Problèmes:</value>
   </data>
   <data name="Screen_Editor_NotReadyForRank" xml:space="preserve">
     <value>Pas prêt pour le classement!</value>
@@ -3039,7 +3049,9 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_ReadyForRank" xml:space="preserve">
     <value>Prêt pour le classement!</value>
   </data>
-  <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve"><value>Potential error; ignore it if harmless.</value></data>
+  <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve">
+    <value>Erreurs potentielles; ignorez-les si elles sont inoffensives.</value>
+  </data>
   <data name="Screen_Editor_AutoModCriticalTooltip" xml:space="preserve">
     <value>Ceci est une erreur critique qui affecte la jouabilité de votre map.</value>
   </data>
@@ -3068,10 +3080,10 @@ Use the filters to narrow your search.</value>
     <value>Personnalisé</value>
   </data>
   <data name="Screen_Editor_ResnappedNote" xml:space="preserve">
-    <value>Resnapped {0} note</value>
+    <value>{0} note recalée</value>
   </data>
   <data name="Screen_Editor_ResnappedNotes" xml:space="preserve">
-    <value>Resnapped {0} notes</value>
+    <value>{0} notes recalées</value>
   </data>
   <data name="Screen_Editor_UnsnappedNote" xml:space="preserve">
     <value>Unsnapped {0} note</value>
