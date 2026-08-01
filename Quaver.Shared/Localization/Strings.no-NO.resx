@@ -148,7 +148,7 @@
     <value>AVSLUTT QUAVER</value>
   </data>
   <data name="Screen_Main_QuitDialogMessage" xml:space="preserve">
-    <value>Quit the game?</value>
+    <value>Avslutt spillet?</value>
   </data>
   <data name="Screen_Main_SinglePlayerDescription" xml:space="preserve">
     <value>Konkurranse for rangeringslister</value>
@@ -211,10 +211,10 @@
     <value>Publisert {0}</value>
   </data>
   <data name="Screen_Main_NewsLoading" xml:space="preserve">
-    <value>Loading news…</value>
+    <value>Laster nyheter...</value>
   </data>
   <data name="Screen_Main_NewsUnavailable" xml:space="preserve">
-    <value>News is currently unavailable</value>
+    <value>Nyheten er for tiden utilgjengelig</value>
   </data>
   <data name="Screen_Main_AutoLoginFailed" xml:space="preserve">
     <value>Failed to automatically login!</value>
@@ -553,7 +553,7 @@
     <value>Spillkontroll</value>
   </data>
   <data name="Screen_Options_ModKeybindTooltip" xml:space="preserve">
-    <value>Mod allows a keybind to trigger while additional modifier keys (Ctrl, Alt, or Shift) are held.</value>
+    <value>"Mod" gjør at en hurtigtast kan utløses mens ekstra modifikatortaster (Ctrl, Alt eller Shift) er holdt.</value>
   </data>
   <data name="Screen_Options_GameplayUserInterface" xml:space="preserve">
     <value>Spillkontroll Brukergrensesnitt</value>
@@ -797,7 +797,7 @@ Hvis mappen ble ikke fullført, vil det i tillegg vise ytelsen dersom alle påf�
     <value>En feil oppstod under eksport av spillingen!</value>
   </data>
   <data name="Screen_Results_YouhavealreadyfixedyourlocaloffsetforthismapTheresnoneedtodoitagain" xml:space="preserve">
-    <value>This map's local offset is already fixed.</value>
+    <value>Dette mappets lokale forskyvning er allerede fikset.</value>
   </data>
   <data name="Screen_Results_Thereisnodatatobeabletofixyourlocaloffset" xml:space="preserve">
     <value>Det er ingen data som kan fikse ditt lokale offset!</value>
@@ -1115,25 +1115,25 @@ Hvis mappen ble ikke fullført, vil det i tillegg vise ytelsen dersom alle påf�
     <value>Søk etter instillinger...</value>
   </data>
   <data name="Screen_Options_KeyCountGameplayLayout" xml:space="preserve">
-    <value>{0}K Gameplay Layout</value>
+    <value>{0}K Spill-layout</value>
   </data>
   <data name="Screen_Options_KeyCountScrollSpeed" xml:space="preserve">
-    <value>{0}K Scroll Speed</value>
+    <value>{0}K Rullehastighet</value>
   </data>
   <data name="Screen_Options_KeyCountScrollDirection" xml:space="preserve">
-    <value>{0}K Scroll Direction</value>
+    <value>{0}K Rulleretning</value>
   </data>
   <data name="Screen_Options_KeyCountScratchLayout" xml:space="preserve">
-    <value>{0}K Scratch Layout</value>
+    <value>{0}K Scratch-layout</value>
   </data>
   <data name="Screen_Options_KeyCountPlaceScratchLaneOnLeft" xml:space="preserve">
-    <value>Place {0}K Scratch Lane On Left</value>
+    <value>Plasser {0}K Scratch Lane til Venstre</value>
   </data>
   <data name="Screen_Options_KeyCountCoopLayout" xml:space="preserve">
     <value>{0}K Co-op Layout</value>
   </data>
   <data name="Screen_Options_KeyCountPrioritizedDifficulty" xml:space="preserve">
-    <value>Prioritized {0}K Difficulty</value>
+    <value>Prioritert {0}K Vanskelighetsgrad</value>
   </data>
   <data name="Screen_Options_1Keys" xml:space="preserve">
     <value>1 Tast</value>
@@ -1328,9 +1328,9 @@ Hvis mappen ble ikke fullført, vil det i tillegg vise ytelsen dersom alle påf�
     <value>Ingen sang valgt</value>
   </data>
   <data name="Screen_Download_NoSongSelectedDescription" xml:space="preserve">
-    <value>Double-click a song to download it.
-Click once to preview it.
-Use the filters to narrow your search.</value>
+    <value>Dobbeltklikk på en sang for å laste den ned.
+Klikk én gang for å forhåndsvise det.
+Bruk filtrene til å begrense søket.</value>
   </data>
   <data name="Screen_Download_EndDate" xml:space="preserve">
     <value>Slutt Dato</value>
@@ -1444,7 +1444,7 @@ Use the filters to narrow your search.</value>
     <value>DRA TIL LOBBYEN</value>
   </data>
   <data name="Screen_Multi_ExitToLobbyMessage" xml:space="preserve">
-    <value>Exit to the lobby?</value>
+    <value>Gå til lobbyen?</value>
   </data>
   <data name="Screen_Multi_Leave" xml:space="preserve">
     <value>Dra</value>
@@ -1902,7 +1902,9 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_RefreshFileCache" xml:space="preserve">
     <value>Oppdater filbuffer</value>
   </data>
-  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve"><value>Refresh Editor from .qua File</value></data>
+  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve">
+    <value>Oppdater editor fra .qua fil</value>
+  </data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
     <value>Last opp</value>
   </data>
@@ -2293,8 +2295,12 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_SaveChanges" xml:space="preserve">
     <value>LAGRE ENDRINGER</value>
   </data>
-  <data name="Screen_Editor_UnsavedChanges" xml:space="preserve"><value>UNSAVED CHANGES</value></data>
-  <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve"><value>This map hasn't been saved.&#xA;Refreshing from .qua will discard unsaved changes. Continue?</value></data>
+  <data name="Screen_Editor_UnsavedChanges" xml:space="preserve">
+    <value>ULAGREDE ENDRINGER</value>
+  </data>
+  <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve">
+    <value>Dette mappet har ikke blitt lagret.&#xA;Oppdatere fra .qua vil kaste ulagrede endringer. Fortsett?</value>
+  </data>
   <data name="Screen_Editor_SaveBeforeCreatingDifficulty" xml:space="preserve">
     <value>Du har ulagrede endringer. Ønsker du å lagre&#xA;før du lager ny vanskelighetsgrad?</value>
   </data>
@@ -2313,7 +2319,9 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_No" xml:space="preserve">
     <value>NEI</value>
   </data>
-  <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve"><value>Submit this mapset for rank?&#xA;It must meet the ranking criteria.</value></data>
+  <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve">
+    <value>Send inn i dette mapsettet for rangering?&#xA;Den må oppfylle rangeringskriteriene.</value>
+  </data>
   <data name="Screen_Editor_CustomBeatSnap" xml:space="preserve">
     <value>TILPASSET TAKTSLAG</value>
   </data>
@@ -2416,7 +2424,9 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve">
     <value>Vennligst vent mens din map sendes inn for rangering...</value>
   </data>
-  <data name="Screen_Editor_RankingIssuesFound" xml:space="preserve"><value>AutoMod found ranking blockers. Review each difficulty and try again.</value></data>
+  <data name="Screen_Editor_RankingIssuesFound" xml:space="preserve">
+    <value>AutoMod funnet rangeringsblokkere. Gå gjennom hver vanskelighetsgrad og prøv igjen.</value>
+  </data>
   <data name="Screen_Editor_SubmitForRankError" xml:space="preserve">
     <value>En feil oppstod under sending av din mapsett for rangering.</value>
   </data>
@@ -3038,7 +3048,9 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_ReadyForRank" xml:space="preserve">
     <value>Klar for rangering!</value>
   </data>
-  <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve"><value>Potential error; ignore it if harmless.</value></data>
+  <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve">
+    <value>Potensiell feil; ignorer den hvis det er ufarlig.</value>
+  </data>
   <data name="Screen_Editor_AutoModCriticalTooltip" xml:space="preserve">
     <value>Dette er en kritisk feil som påvirker mappens spillbarhet.</value>
   </data>
