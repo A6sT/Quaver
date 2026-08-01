@@ -345,11 +345,11 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             Action clicked) => CreateButton(localizationKey, width, active, clicked);
 
         private RoundedButton CreateStaticSelector(string localizationKey, float width,
-            Microsoft.Xna.Framework.Graphics.Texture2D icon = null) =>
+            TextureRegion? icon = null) =>
             CreateButton(localizationKey, width, false, null, icon);
 
         private RoundedButton CreateButton(string localizationKey, float width, bool active,
-            Action clicked, Microsoft.Xna.Framework.Graphics.Texture2D icon = null)
+            Action clicked, TextureRegion? icon = null)
         {
             var button = new RoundedButton(clicked == null
                 ? null
@@ -363,8 +363,8 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
                 PerformHoverFade = true
             };
 
-            if (icon != null)
-                button.SetIcon(icon, new Vector2(Config.Button.IconSize, Config.Button.IconSize));
+            if (icon.HasValue)
+                button.SetIcon(icon.Value, new Vector2(Config.Button.IconSize, Config.Button.IconSize));
             if (!string.IsNullOrEmpty(localizationKey))
                 button.SetLabel(ButtonFont, LocalizationManager.Get(localizationKey),
                     Config.Button.FontSize, SkinV2Color.Parse(active

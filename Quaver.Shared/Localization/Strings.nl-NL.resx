@@ -147,6 +147,9 @@
   <data name="Screen_Main_QuitDialogTitle" xml:space="preserve">
     <value>VERLAAT QUAVER</value>
   </data>
+  <data name="Screen_Main_QuitDialogMessage" xml:space="preserve">
+    <value>Quit the game?</value>
+  </data>
   <data name="Screen_Main_SinglePlayerDescription" xml:space="preserve">
     <value>Concurreer voor klassement rank</value>
   </data>
@@ -549,6 +552,9 @@
   <data name="Screen_Options_GameplayControls" xml:space="preserve">
     <value>Gameplay Besturing</value>
   </data>
+  <data name="Screen_Options_ModKeybindTooltip" xml:space="preserve">
+    <value>Mod allows a keybind to trigger while additional modifier keys (Ctrl, Alt, or Shift) are held.</value>
+  </data>
   <data name="Screen_Options_GameplayUserInterface" xml:space="preserve">
     <value>Gameplay Gebruikersinterface</value>
   </data>
@@ -793,6 +799,9 @@ als Uitstekend werden geraakt.</value>
   </data>
   <data name="Screen_Results_Anerroroccuredwhileexportingthereplay" xml:space="preserve">
     <value>Er is een fout opgetreden tijdens het exporteren van de replay!</value>
+  </data>
+  <data name="Screen_Results_YouhavealreadyfixedyourlocaloffsetforthismapTheresnoneedtodoitagain" xml:space="preserve">
+    <value>This map's local offset is already fixed.</value>
   </data>
   <data name="Screen_Results_Thereisnodatatobeabletofixyourlocaloffset" xml:space="preserve">
     <value>Er is geen data beschikbaar om je lokale afwijking aan te passen!</value>
@@ -1109,6 +1118,27 @@ als Uitstekend werden geraakt.</value>
   <data name="Screen_Options_Searchforoptions" xml:space="preserve">
     <value>Zoek voor opties...</value>
   </data>
+  <data name="Screen_Options_KeyCountGameplayLayout" xml:space="preserve">
+    <value>{0}K Gameplay Layout</value>
+  </data>
+  <data name="Screen_Options_KeyCountScrollSpeed" xml:space="preserve">
+    <value>{0}K Scroll Speed</value>
+  </data>
+  <data name="Screen_Options_KeyCountScrollDirection" xml:space="preserve">
+    <value>{0}K Scroll Direction</value>
+  </data>
+  <data name="Screen_Options_KeyCountScratchLayout" xml:space="preserve">
+    <value>{0}K Scratch Layout</value>
+  </data>
+  <data name="Screen_Options_KeyCountPlaceScratchLaneOnLeft" xml:space="preserve">
+    <value>Place {0}K Scratch Lane On Left</value>
+  </data>
+  <data name="Screen_Options_KeyCountCoopLayout" xml:space="preserve">
+    <value>{0}K Co-op Layout</value>
+  </data>
+  <data name="Screen_Options_KeyCountPrioritizedDifficulty" xml:space="preserve">
+    <value>Prioritized {0}K Difficulty</value>
+  </data>
   <data name="Screen_Options_1Keys" xml:space="preserve">
     <value>1 Toets</value>
   </data>
@@ -1302,6 +1332,11 @@ voor de geselecteerde gamemode?</value>
   <data name="Screen_Download_NoSongSelected" xml:space="preserve">
     <value>Geen Nummer Geselecteerd</value>
   </data>
+  <data name="Screen_Download_NoSongSelectedDescription" xml:space="preserve">
+    <value>Double-click a song to download it.
+Click once to preview it.
+Use the filters to narrow your search.</value>
+  </data>
   <data name="Screen_Download_EndDate" xml:space="preserve">
     <value>Einddatum</value>
   </data>
@@ -1414,6 +1449,9 @@ gereed is?</value>
   </data>
   <data name="Screen_Multi_ExitToLobbyTitle" xml:space="preserve">
     <value>VERLAAT NAAR DE LOBBY</value>
+  </data>
+  <data name="Screen_Multi_ExitToLobbyMessage" xml:space="preserve">
+    <value>Exit to the lobby?</value>
   </data>
   <data name="Screen_Multi_Leave" xml:space="preserve">
     <value>Verlaten</value>
@@ -1872,6 +1910,7 @@ om andere spelers het te laten downloaden?</value>
   <data name="Screen_Editor_RefreshFileCache" xml:space="preserve">
     <value>Refresh File Cache</value>
   </data>
+  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve"><value>Refresh Editor from .qua File</value></data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
     <value>Upload</value>
   </data>
@@ -2262,6 +2301,8 @@ om andere spelers het te laten downloaden?</value>
   <data name="Screen_Editor_SaveChanges" xml:space="preserve">
     <value>SAVE CHANGES</value>
   </data>
+  <data name="Screen_Editor_UnsavedChanges" xml:space="preserve"><value>UNSAVED CHANGES</value></data>
+  <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve"><value>This map hasn't been saved.&#xA;Refreshing from .qua will discard unsaved changes. Continue?</value></data>
   <data name="Screen_Editor_SaveBeforeCreatingDifficulty" xml:space="preserve">
     <value>You have unsaved changes. Would you like to save&#xA;before creating a new difficulty?</value>
   </data>
@@ -2280,6 +2321,7 @@ om andere spelers het te laten downloaden?</value>
   <data name="Screen_Editor_No" xml:space="preserve">
     <value>NO</value>
   </data>
+  <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve"><value>Submit this mapset for rank?&#xA;It must meet the ranking criteria.</value></data>
   <data name="Screen_Editor_CustomBeatSnap" xml:space="preserve">
     <value>CUSTOM BEAT SNAP</value>
   </data>
@@ -2382,6 +2424,7 @@ om andere spelers het te laten downloaden?</value>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve">
     <value>Please wait while your map is being submitted for rank...</value>
   </data>
+  <data name="Screen_Editor_RankingIssuesFound" xml:space="preserve"><value>AutoMod found ranking blockers. Review each difficulty and try again.</value></data>
   <data name="Screen_Editor_SubmitForRankError" xml:space="preserve">
     <value>An error occurred while submitting your mapset for rank.</value>
   </data>
@@ -3003,6 +3046,7 @@ om andere spelers het te laten downloaden?</value>
   <data name="Screen_Editor_ReadyForRank" xml:space="preserve">
     <value>Ready for rank!</value>
   </data>
+  <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve"><value>Potential error; ignore it if harmless.</value></data>
   <data name="Screen_Editor_AutoModCriticalTooltip" xml:space="preserve">
     <value>This is a critical error which affects the playability of your map.</value>
   </data>

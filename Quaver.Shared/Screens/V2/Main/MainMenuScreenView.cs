@@ -312,7 +312,7 @@ namespace Quaver.Shared.Screens.V2.Main
                 margin + (availableHeight - WindowManager.Height * scale) / 2f);
         }
 
-        private void CreateAction(Texture2D icon, string localizationKey, Action action)
+        private void CreateAction(TextureRegion icon, string localizationKey, Action action)
         {
             var button = new MainActionButton(action, Config.Actions)
             {

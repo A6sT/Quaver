@@ -147,6 +147,9 @@
   <data name="Screen_Main_QuitDialogTitle" xml:space="preserve">
     <value>ออกจาก Quaver</value>
   </data>
+  <data name="Screen_Main_QuitDialogMessage" xml:space="preserve">
+    <value>ต้องการออกจากเกมหรือไม่?</value>
+  </data>
   <data name="Screen_Main_SinglePlayerDescription" xml:space="preserve">
     <value>แข่งขันชิงอันดับในกระดานจัดอันดับ</value>
   </data>
@@ -549,6 +552,9 @@
   <data name="Screen_Options_GameplayControls" xml:space="preserve">
     <value>Gameplay Controls</value>
   </data>
+  <data name="Screen_Options_ModKeybindTooltip" xml:space="preserve">
+    <value>Mod allows a keybind to trigger while additional modifier keys (Ctrl, Alt, or Shift) are held.</value>
+  </data>
   <data name="Screen_Options_GameplayUserInterface" xml:space="preserve">
     <value>Gameplay User Interface</value>
   </data>
@@ -788,7 +794,10 @@
     <value>โปรดรอสักครู่ขณะกำลังนำออกรีเพลย์...</value>
   </data>
   <data name="Screen_Results_Anerroroccuredwhileexportingthereplay" xml:space="preserve">
-    <value>เกิดปัญหาระหว่างการนำออกรีเพลย์!</value>
+    <value>เกิดข้อผิดพลาดระหว่างการนำออกรีเพลย์!</value>
+  </data>
+  <data name="Screen_Results_YouhavealreadyfixedyourlocaloffsetforthismapTheresnoneedtodoitagain" xml:space="preserve">
+    <value>This map's local offset is already fixed.</value>
   </data>
   <data name="Screen_Results_Thereisnodatatobeabletofixyourlocaloffset" xml:space="preserve">
     <value>ไม่มีข้อมูลที่จะช่วยแก้ค่า Offset เฉพาะของแมพนี้ให้ได้!</value>
@@ -806,7 +815,7 @@
     <value>บันทึกคะแนนในเครื่องไปยังฐานข้อมูลไม่สำเร็จ โปรดตรวจสอบล็อก!</value>
   </data>
   <data name="Screen_Results_TherewasanerrorwhensavingyourreplayCheckRuntimelogformoredetails" xml:space="preserve">
-    <value>เกิดปัญหาระหว่างการบันทึกรีเพลย์ ตรวจสอบไฟล์ Runtime.log สำหรับรายละเอียดเพิ่มเติม</value>
+    <value>เกิดข้อผิดพลาดระหว่างการบันทึกรีเพลย์ ตรวจสอบไฟล์ Runtime.log สำหรับรายละเอียดเพิ่มเติม</value>
   </data>
   <data name="Screen_Results_Thereisnoreplaydataavailabletoconvertthisscore" xml:space="preserve">
     <value>There is no replay data available to convert this score!</value>
@@ -1105,6 +1114,27 @@
   <data name="Screen_Options_Searchforoptions" xml:space="preserve">
     <value>Search for options...</value>
   </data>
+  <data name="Screen_Options_KeyCountGameplayLayout" xml:space="preserve">
+    <value>{0}K Gameplay Layout</value>
+  </data>
+  <data name="Screen_Options_KeyCountScrollSpeed" xml:space="preserve">
+    <value>ความเร็วโน้ต {0}K</value>
+  </data>
+  <data name="Screen_Options_KeyCountScrollDirection" xml:space="preserve">
+    <value>ทิศทางโน้ต {0}K</value>
+  </data>
+  <data name="Screen_Options_KeyCountScratchLayout" xml:space="preserve">
+    <value>{0}K Scratch Layout</value>
+  </data>
+  <data name="Screen_Options_KeyCountPlaceScratchLaneOnLeft" xml:space="preserve">
+    <value>Place {0}K Scratch Lane On Left</value>
+  </data>
+  <data name="Screen_Options_KeyCountCoopLayout" xml:space="preserve">
+    <value>{0}K Co-op Layout</value>
+  </data>
+  <data name="Screen_Options_KeyCountPrioritizedDifficulty" xml:space="preserve">
+    <value>Prioritized {0}K Difficulty</value>
+  </data>
   <data name="Screen_Options_1Keys" xml:space="preserve">
     <value>1 Keys</value>
   </data>
@@ -1298,6 +1328,11 @@ for the selected game mode?</value>
   <data name="Screen_Download_NoSongSelected" xml:space="preserve">
     <value>No Song Selected</value>
   </data>
+  <data name="Screen_Download_NoSongSelectedDescription" xml:space="preserve">
+    <value>ดับเบิลคลิกที่เพลงเพื่อดาวน์โหลด
+คลิกหนึ่งครั้งเพื่อเล่นตัวอย่างเพลง
+ใช้ตัวกรองเพื่อจำกัดขอบเขตการค้นหา</value>
+  </data>
   <data name="Screen_Download_EndDate" xml:space="preserve">
     <value>End Date</value>
   </data>
@@ -1408,7 +1443,10 @@ for the selected game mode?</value>
 sure you would like to start without all players ready?</value>
   </data>
   <data name="Screen_Multi_ExitToLobbyTitle" xml:space="preserve">
-    <value>EXIT TO LOBBY</value>
+    <value>ออกไปยังล็อบบี้</value>
+  </data>
+  <data name="Screen_Multi_ExitToLobbyMessage" xml:space="preserve">
+    <value>ต้องการออกไปยังล็อบบี้หรือไม่?</value>
   </data>
   <data name="Screen_Multi_Leave" xml:space="preserve">
     <value>ออก</value>
@@ -1684,10 +1722,10 @@ sure you would like to start without all players ready?</value>
     <value>RULESET: </value>
   </data>
   <data name="Screen_MultiplayerLobby_All" xml:space="preserve">
-    <value>All</value>
+    <value>ทั้งหมด</value>
   </data>
   <data name="Screen_MultiplayerLobby_FreeForAll" xml:space="preserve">
-    <value>Free-For-All</value>
+    <value>ทุกคนแข่งกันเอง</value>
   </data>
   <data name="Screen_MultiplayerLobby_Team" xml:space="preserve">
     <value>ทีม</value>
@@ -1705,10 +1743,10 @@ sure you would like to start without all players ready?</value>
     <value>สถานะของแมพ: </value>
   </data>
   <data name="Screen_MultiplayerLobby_Imported" xml:space="preserve">
-    <value>Imported</value>
+    <value>นำเข้าแล้ว</value>
   </data>
   <data name="Screen_MultiplayerLobby_Uploaded" xml:space="preserve">
-    <value>Uploaded</value>
+    <value>อัปโหลดแล้ว</value>
   </data>
   <data name="Screen_MultiplayerLobby_Unsubmitted" xml:space="preserve">
     <value>ไม่ได้อัปโหลด</value>
@@ -1825,7 +1863,7 @@ sure you would like to start without all players ready?</value>
     <value>Allowed Game Modes</value>
   </data>
   <data name="Screen_MultiplayerLobby_None" xml:space="preserve">
-    <value>None</value>
+    <value>ไม่มี</value>
   </data>
   <data name="Screen_MultiplayerLobby_InProgress" xml:space="preserve">
     <value>In Progress</value>
@@ -1865,6 +1903,9 @@ sure you would like to start without all players ready?</value>
   </data>
   <data name="Screen_Editor_RefreshFileCache" xml:space="preserve">
     <value>Refresh File Cache</value>
+  </data>
+  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve">
+    <value>Refresh Editor from .qua File</value>
   </data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
     <value>Upload</value>
@@ -2256,6 +2297,12 @@ sure you would like to start without all players ready?</value>
   <data name="Screen_Editor_SaveChanges" xml:space="preserve">
     <value>SAVE CHANGES</value>
   </data>
+  <data name="Screen_Editor_UnsavedChanges" xml:space="preserve">
+    <value>UNSAVED CHANGES</value>
+  </data>
+  <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve">
+    <value>This map hasn't been saved.&#xA;Refreshing from .qua will discard unsaved changes. Continue?</value>
+  </data>
   <data name="Screen_Editor_SaveBeforeCreatingDifficulty" xml:space="preserve">
     <value>You have unsaved changes. Would you like to save&#xA;before creating a new difficulty?</value>
   </data>
@@ -2273,6 +2320,9 @@ sure you would like to start without all players ready?</value>
   </data>
   <data name="Screen_Editor_No" xml:space="preserve">
     <value>NO</value>
+  </data>
+  <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve">
+    <value>Submit this mapset for rank?&#xA;It must meet the ranking criteria.</value>
   </data>
   <data name="Screen_Editor_CustomBeatSnap" xml:space="preserve">
     <value>CUSTOM BEAT SNAP</value>
@@ -2375,6 +2425,9 @@ sure you would like to start without all players ready?</value>
   </data>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve">
     <value>Please wait while your map is being submitted for rank...</value>
+  </data>
+  <data name="Screen_Editor_RankingIssuesFound" xml:space="preserve">
+    <value>AutoMod found ranking blockers. Review each difficulty and try again.</value>
   </data>
   <data name="Screen_Editor_SubmitForRankError" xml:space="preserve">
     <value>An error occurred while submitting your mapset for rank.</value>
@@ -2761,7 +2814,7 @@ sure you would like to start without all players ready?</value>
     <value>An internal server error has occurred. Please try again!</value>
   </data>
   <data name="Screen_Editor_UploadErrorUnauthorized" xml:space="preserve">
-    <value>Please re-log and try again!</value>
+    <value>โปรดล็อกอินใหม่แล้วลองอีกรอบ!</value>
   </data>
   <data name="Screen_Editor_UploadErrorBanned" xml:space="preserve">
     <value>You cannot upload a mapset while banned!</value>
@@ -2770,7 +2823,7 @@ sure you would like to start without all players ready?</value>
     <value>No mapset was sent with the request!</value>
   </data>
   <data name="Screen_Editor_UploadErrorRequestTooLarge" xml:space="preserve">
-    <value>Your mapset is too large! The max file size is 50mb</value>
+    <value>แมพเซตนี้ใหญ่เกินไป! ขนาดไฟล์สูงสุดคือ 50 MB</value>
   </data>
   <data name="Screen_Editor_UploadErrorInvalidMapsetFileExtension" xml:space="preserve">
     <value>File extension error. Please report this to a developer!</value>
@@ -2996,6 +3049,9 @@ sure you would like to start without all players ready?</value>
   </data>
   <data name="Screen_Editor_ReadyForRank" xml:space="preserve">
     <value>Ready for rank!</value>
+  </data>
+  <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve">
+    <value>อาจจะเป็นข้อผิดพลาด เพิกเฉยได้ถ้าไม่เป็นปัญหา</value>
   </data>
   <data name="Screen_Editor_AutoModCriticalTooltip" xml:space="preserve">
     <value>This is a critical error which affects the playability of your map.</value>

@@ -72,9 +72,9 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private RoundedButton HubButton { get; }
 
-        private Texture2D HubListIcon { get; }
+        private TextureRegion HubListIcon { get; }
 
-        private Texture2D HubMenuIcon { get; }
+        private TextureRegion HubMenuIcon { get; }
 
         private OnlineHub SubscribedOnlineHub { get; set; }
 
@@ -239,7 +239,7 @@ namespace Quaver.Shared.Screens.V2.UI
             SetFooter(layout => layout.AddRoundedButton(NavigationBarRegion.Right,
                 new NavigationBarButtonOptions
                 {
-                    Icon = GlobalIcons.Get(GlobalIcon.Play),
+                    IconRegion = GlobalIcons.Get(GlobalIcon.Play),
                     IconSize = new Vector2(Config.Button.IconSize, Config.Button.IconSize),
                     Text = LocalizationManager.Get("Screen_Selection_Play"),
                     Font = FontManager.GetWobbleFont(Fonts.InterBold),
@@ -370,12 +370,12 @@ namespace Quaver.Shared.Screens.V2.UI
         };
 
         private RoundedButton AddIconButton(NavigationBar bar, NavigationBarRegion region,
-            Texture2D icon, string tooltip, Action action, TooltipAnchor tooltipAnchor,
+            TextureRegion icon, string tooltip, Action action, TooltipAnchor tooltipAnchor,
             List<Drawable> layoutItems = null)
         {
             var button = bar.AddRoundedButton(region, new NavigationBarButtonOptions
             {
-                Icon = icon,
+                IconRegion = icon,
                 IconSize = new Vector2(Config.Button.IconSize, Config.Button.IconSize),
                 Width = Config.Button.Size,
                 Height = Config.Button.Size,
@@ -566,7 +566,7 @@ namespace Quaver.Shared.Screens.V2.UI
             var button = TopBar.AddRoundedButton(NavigationBarRegion.Left,
                 new NavigationBarButtonOptions
                 {
-                    Icon = GlobalIcons.Get(icon),
+                    IconRegion = GlobalIcons.Get(icon),
                     IconSize = new Vector2(Config.Button.IconSize, Config.Button.IconSize),
                     Text = LocalizationManager.Get(localizationKey),
                     Font = FontManager.GetWobbleFont(Fonts.InterBold),
@@ -641,8 +641,10 @@ namespace Quaver.Shared.Screens.V2.UI
         private void UpdateHubIcon()
         {
             var icon = SubscribedOnlineHub?.HasUnreadSections == true ? HubListIcon : HubMenuIcon;
-            if (HubButton.Icon.Image != icon)
-                HubButton.Icon.Image = icon;
+            var current = HubButton.Icon.Region;
+            if (!current.HasValue || !ReferenceEquals(current.Value.Texture, icon.Texture) ||
+                current.Value.SourceRectangle != icon.SourceRectangle)
+                HubButton.Icon.Region = icon;
         }
 
         private void ResizeToWindow()
@@ -818,7 +820,7 @@ namespace Quaver.Shared.Screens.V2.UI
                 return button;
             }
 
-            public RoundedButton AddIconButton(NavigationBarRegion region, Texture2D icon,
+            public RoundedButton AddIconButton(NavigationBarRegion region, TextureRegion icon,
                 string tooltip, Action action) =>
                 Navigation.AddIconButton(Bar, region, icon, tooltip, action, TooltipAnchor, Items);
 
@@ -921,7 +923,7 @@ namespace Quaver.Shared.Screens.V2.UI
                     Alignment = Alignment.MidLeft,
                     X = Config.FlagX,
                     Size = new ScalableVector2(Config.FlagSize, Config.FlagSize),
-                    Image = Flags.Get("XX"),
+                    Region = Flags.GetRegion("XX"),
                     Visible = false
                 };
 
@@ -1015,7 +1017,7 @@ namespace Quaver.Shared.Screens.V2.UI
 
                 if (connected)
                 {
-                    Flag.Image = Flags.Get(user?.OnlineUser?.CountryFlag ?? "XX");
+                    Flag.Region = Flags.GetRegion(user?.OnlineUser?.CountryFlag ?? "XX");
                     Flag.Visible = true;
                     Clan.UpdateFromUser(user?.OnlineUser, SkinV2Color.Parse(Config.TextColor));
                 }

@@ -40,7 +40,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs.Metadata
 
         private LabelledTextbox Source { get; set; }
 
-        private LabelledTextbox Tags { get; set; }
+        private LabelledTextarea Tags { get; set; }
 
         private LabelledTextbox KeyCount { get; set; }
 
@@ -69,9 +69,11 @@ namespace Quaver.Shared.Screens.Edit.Dialogs.Metadata
 
         private const int TextboxHeight = 42;
 
-        private const int TextboxLabelSpacing = 12;
+        private const int TextboxLabelSpacing = 8;
 
-        private const int Spacing = 23;
+        private const int TextareaHeight = 72;
+
+        private const int Spacing = 15;
 
         public EditorMetadataDialog(EditScreen screen) : base(LocalizationManager.Get("Screen_Editor_EditMetadata"),
             LocalizationManager.Get("Screen_Editor_EditMetadataMessage"))
@@ -83,7 +85,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs.Metadata
             CreateSongTitleTextbox();
             CreateDifficultyNameTextbox();
             CreateSourceTextbox();
-            CreateTagsTextbox();
+            CreateTagsTextarea();
             CreateCreatorTextbox();
             CreateKeyCountTextbox();
             CreateBpmAffectsSvCheckbox();
@@ -96,7 +98,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs.Metadata
                 Title.Textbox,
                 DifficultyName.Textbox,
                 Source.Textbox,
-                Tags.Textbox,
+                Tags.Textarea,
                 Creator.Textbox,
                 KeyCount.Textbox
             })
@@ -202,16 +204,20 @@ namespace Quaver.Shared.Screens.Edit.Dialogs.Metadata
             };
         }
 
-        private void CreateTagsTextbox()
+        private void CreateTagsTextarea()
         {
-            Tags = new LabelledTextbox(Panel.Width * 0.9f, LocalizationManager.Get("Screen_Editor_Tags"), LabelSize,
-                TextboxHeight, LabelSize, TextboxLabelSpacing, LocalizationManager.Get("Screen_Editor_TagsPlaceholder"),
-                WorkingMap.Tags)
+            Tags = new LabelledTextarea(Panel.Width * 0.9f, LocalizationManager.Get("Screen_Editor_Tags"), LabelSize,
+                TextareaHeight, LabelSize, TextboxLabelSpacing,
+                LocalizationManager.Get("Screen_Editor_TagsPlaceholder"), WorkingMap.Tags)
             {
                 Parent = Panel,
                 Y = DifficultyName.Y + DifficultyName.Height + Spacing,
                 Alignment = Alignment.TopCenter,
-                Textbox = { AllowSubmission = false },
+                Textarea =
+                {
+                    AllowNewLines = false,
+                    AllowSubmission = false,
+                },
                 Tint = Color.Transparent
             };
         }
@@ -362,7 +368,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs.Metadata
             WorkingMap.Creator = Creator.Textbox.RawText.Trim();
             WorkingMap.DifficultyName = DifficultyName.Textbox.RawText.Trim();
             WorkingMap.Source = Source.Textbox.RawText.Trim();
-            WorkingMap.Tags = Tags.Textbox.RawText.Trim();
+            WorkingMap.Tags = Tags.Textarea.RawText.Trim();
             WorkingMap.LegacyLNRendering = LegacyLNRendering.Checkbox.BindedValue.Value;
 
             if (WorkingMap.TimingPoints.Count > 0)
@@ -422,7 +428,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs.Metadata
                 qua.Title = Title.Textbox.RawText.Trim();
                 qua.Creator = Creator.Textbox.RawText.Trim();
                 qua.Source = Source.Textbox.RawText.Trim();
-                qua.Tags = Tags.Textbox.RawText.Trim();
+                qua.Tags = Tags.Textarea.RawText.Trim();
                 qua.SongPreviewTime = WorkingMap.SongPreviewTime;
                 qua.Save(path);
 
