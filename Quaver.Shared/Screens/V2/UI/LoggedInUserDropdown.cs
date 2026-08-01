@@ -210,7 +210,7 @@ namespace Quaver.Shared.Screens.V2.UI
             {
                 Parent = IdentityLayout,
                 Size = new ScalableVector2(Config.FlagSize, Config.FlagSize),
-                Image = Flags.Get("XX"),
+                Region = Flags.GetRegion("XX"),
                 UsePreviousSpriteBatchOptions = true
             };
             CreateSpacer(IdentityLayout, Config.IdentitySpacing, Config.IdentityHeight);
@@ -508,7 +508,7 @@ namespace Quaver.Shared.Screens.V2.UI
             return pill;
         }
 
-        private RoundedButton CreateActionButton(Drawable parent, Texture2D icon, Action action)
+        private RoundedButton CreateActionButton(Drawable parent, TextureRegion icon, Action action)
         {
             var button = new RoundedButton((sender, args) => action())
             {
@@ -522,7 +522,7 @@ namespace Quaver.Shared.Screens.V2.UI
             return button;
         }
 
-        private RoundedButton CreateStatPill(FlexContainer parent, float width, Texture2D icon)
+        private RoundedButton CreateStatPill(FlexContainer parent, float width, TextureRegion icon)
         {
             var pill = new RoundedButton
             {
@@ -631,7 +631,7 @@ namespace Quaver.Shared.Screens.V2.UI
             LoginWheel.Visible = false;
             Avatar.SetSource(GetAvatar());
             RefreshProfileCover();
-            Flag.Image = Flags.Get(User.OnlineUser.CountryFlag ?? "XX");
+            Flag.Region = Flags.GetRegion(User.OnlineUser.CountryFlag ?? "XX");
             Clan.UpdateFromUser(User.OnlineUser, SkinV2Color.Parse(Config.TextColor));
             ClanUsernameSpacer.Width = Clan.Visible ? Config.IdentitySpacing + 1 : 0;
 

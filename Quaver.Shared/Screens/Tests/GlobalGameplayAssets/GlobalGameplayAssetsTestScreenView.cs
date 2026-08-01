@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Quaver.API.Enums;
 using Quaver.Shared.Assets;
 using Wobble;
 using Wobble.Assets;
@@ -9,11 +12,11 @@ using Wobble.Graphics.Sprites.Text;
 using Wobble.Managers;
 using Wobble.Screens;
 using Wobble.Window;
-using GlobalIconStore = Quaver.Shared.Assets.GlobalIcons;
+using GlobalGameplayAssetStore = Quaver.Shared.Assets.GlobalGameplayAssets;
 
-namespace Quaver.Shared.Screens.Tests.GlobalIcons
+namespace Quaver.Shared.Screens.Tests.GlobalGameplayAssets
 {
-    public sealed class GlobalIconsTestScreenView : ScreenView
+    public sealed class GlobalGameplayAssetsTestScreenView : ScreenView
     {
         private static readonly Color BackgroundColor = new Color(17, 24, 32);
 
@@ -31,24 +34,50 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
 
         private const float BottomPadding = 36;
 
-        private const float CardWidth = 230;
+        private const float CardWidth = 300;
 
         private const float CardHeight = 92;
 
         private const float CardGap = 14;
 
-        private GlobalIcon[] Icons { get; } = (GlobalIcon[]) Enum.GetValues(typeof(GlobalIcon));
+        private static readonly GlobalJudgementWindow[] Judgements =
+            (GlobalJudgementWindow[]) Enum.GetValues(typeof(GlobalJudgementWindow));
+
+        private static readonly ModIdentifier[] Mods =
+        {
+            ModIdentifier.Mirror,
+            ModIdentifier.Autoplay,
+            ModIdentifier.Coop,
+            ModIdentifier.NoFail,
+            ModIdentifier.NoSliderVelocity,
+            ModIdentifier.NoMiss,
+            ModIdentifier.NoMines,
+            ModIdentifier.NoLongNotes,
+            ModIdentifier.FullLN,
+            ModIdentifier.Inverse,
+            ModIdentifier.Randomize,
+            ModIdentifier.HeatlthAdjust,
+            ModIdentifier.NoPause,
+            ModIdentifier.Paused,
+            ModIdentifier.None
+        };
+
+        private static readonly float[] Rates = CreateRates();
+
+        private List<AssetEntry> Entries { get; } = new List<AssetEntry>();
 
         private ScrollContainer ScreenScrollContainer { get; }
 
-        private FlexContainer IconGrid { get; }
+        private FlexContainer AssetGrid { get; }
 
         private float LastWindowWidth { get; set; } = -1;
 
         private float LastWindowHeight { get; set; } = -1;
 
-        public GlobalIconsTestScreenView(Screen screen) : base(screen)
+        public GlobalGameplayAssetsTestScreenView(Screen screen) : base(screen)
         {
+            CreateEntries();
+
             ScreenScrollContainer = new ScrollContainer(
                 new ScalableVector2(Container.Width, Container.Height),
                 new ScalableVector2(Container.Width, Container.Height + 1))
@@ -64,7 +93,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
 
             CreateHeader();
 
-            IconGrid = new FlexContainer
+            AssetGrid = new FlexContainer
             {
                 Parent = ScreenScrollContainer.ContentContainer,
                 Alignment = Alignment.TopCenter,
@@ -79,10 +108,10 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
                 UsePreviousSpriteBatchOptions = true
             };
 
-            for (var i = 0; i < Icons.Length; i++)
+            for (var i = 0; i < Entries.Count; i++)
             {
-                var card = CreateIconCard(Icons[i], i);
-                IconGrid.SetItemOptions(card, new FlexItemOptions
+                var card = CreateAssetCard(Entries[i], i);
+                AssetGrid.SetItemOptions(card, new FlexItemOptions
                 {
                     Basis = CardWidth,
                     Grow = 0,
@@ -107,9 +136,43 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
 
         public override void Destroy() => Container.Destroy();
 
+        private void CreateEntries()
+        {
+            foreach (var judgement in Judgements)
+            {
+                Entries.Add(new AssetEntry(
+                    $"Judgement: {judgement}",
+                    "Single sprite",
+                    GlobalGameplayAssetStore.GetJudgement(judgement)));
+            }
+
+            foreach (var mod in Mods)
+            {
+                Entries.Add(new AssetEntry(
+                    $"Mod: {mod}",
+                    "Active / inactive",
+                    GlobalGameplayAssetStore.GetMod(mod),
+                    GlobalGameplayAssetStore.GetMod(mod, true)));
+            }
+
+            Entries.Add(new AssetEntry(
+                "Mod badge: More",
+                "Active / inactive",
+                GlobalGameplayAssetStore.GetModBadge(GlobalModBadge.More),
+                GlobalGameplayAssetStore.GetModBadge(GlobalModBadge.More, true)));
+
+            foreach (var rate in Rates)
+            {
+                Entries.Add(new AssetEntry(
+                    $"Rate: {rate:0.00}x",
+                    "Single sprite",
+                    GlobalGameplayAssetStore.GetRate(rate)));
+            }
+        }
+
         private void CreateHeader()
         {
-            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "GLOBAL ICONS", 28)
+            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "GLOBAL GAMEPLAY ASSETS", 28)
             {
                 Parent = ScreenScrollContainer.ContentContainer,
                 Alignment = Alignment.TopCenter,
@@ -119,7 +182,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
             };
 
             new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterLight),
-                $"{Icons.Length} icons — labels are read directly from the GlobalIcon enum", 17)
+                $"{Entries.Count} sprites — judgements, modifiers, badges, and rates", 17)
             {
                 Parent = ScreenScrollContainer.ContentContainer,
                 Alignment = Alignment.TopCenter,
@@ -129,11 +192,11 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
             };
         }
 
-        private Container CreateIconCard(GlobalIcon icon, int index)
+        private Container CreateAssetCard(AssetEntry entry, int index)
         {
             var card = new Container
             {
-                Parent = IconGrid,
+                Parent = AssetGrid,
                 Size = new ScalableVector2(CardWidth, CardHeight),
                 UsePreviousSpriteBatchOptions = true
             };
@@ -148,33 +211,49 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
                 UsePreviousSpriteBatchOptions = true
             }.AddBorder(BorderColor, 1);
 
-            new Sprite
+            for (var i = 0; i < entry.Textures.Length; i++)
+            {
+                var texture = entry.Textures[i];
+                new Sprite
+                {
+                    Parent = card,
+                    Alignment = Alignment.MidLeft,
+                    X = 16 + i * 68,
+                    Size = new ScalableVector2(texture.Width, texture.Height),
+                    Region = texture,
+                    Tint = Color.White,
+                    UsePreviousSpriteBatchOptions = true
+                };
+            }
+
+            var textX = entry.Textures.Length == 1 ? 102 : 156;
+
+            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterMedium), entry.Name, 16)
             {
                 Parent = card,
-                Alignment = Alignment.MidLeft,
-                X = 20,
-                Size = new ScalableVector2(GlobalIconStore.IconSize, GlobalIconStore.IconSize),
-                Region = GlobalIconStore.Get(icon),
+                Alignment = Alignment.TopLeft,
+                X = textX,
+                Y = 18,
                 Tint = Color.White,
                 UsePreviousSpriteBatchOptions = true
             };
 
-            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterMedium), icon.ToString(), 16)
+            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterLight), entry.Detail, 14)
             {
                 Parent = card,
                 Alignment = Alignment.TopLeft,
-                X = 78,
-                Y = 23,
-                Tint = Color.White,
+                X = textX,
+                Y = 44,
+                Tint = MutedTextColor,
                 UsePreviousSpriteBatchOptions = true
             };
 
-            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterLight), $"Index {index}", 14)
+            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterLight), $"Index {index}", 13)
             {
                 Parent = card,
                 Alignment = Alignment.TopLeft,
-                X = 78,
-                Y = 50,
+                X = textX,
+                Y = 64,
                 Tint = MutedTextColor,
                 UsePreviousSpriteBatchOptions = true
             };
@@ -196,16 +275,41 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
 
             var gridWidth = Math.Max(CardWidth, width - OuterPadding * 2);
             var columns = Math.Max(1, (int) ((gridWidth + CardGap) / (CardWidth + CardGap)));
-            var rows = (int) Math.Ceiling(Icons.Length / (double) columns);
+            var rows = (int) Math.Ceiling(Entries.Count / (double) columns);
             var gridHeight = rows * CardHeight + Math.Max(0, rows - 1) * CardGap;
             var contentHeight = Math.Max(height + 1, HeaderHeight + gridHeight + BottomPadding);
 
             ScreenScrollContainer.ContentContainer.Size = new ScalableVector2(width, contentHeight);
-            IconGrid.Size = new ScalableVector2(gridWidth, gridHeight);
-            IconGrid.RefreshLayout();
+            AssetGrid.Size = new ScalableVector2(gridWidth, gridHeight);
+            AssetGrid.RefreshLayout();
 
             LastWindowWidth = width;
             LastWindowHeight = height;
+        }
+
+        private static float[] CreateRates()
+        {
+            var rates = new float[31];
+            for (var i = 0; i < rates.Length; i++)
+                rates[i] = (50 + i * 5) / 100f;
+
+            return rates;
+        }
+
+        private sealed class AssetEntry
+        {
+            public string Name { get; }
+
+            public string Detail { get; }
+
+            public TextureRegion[] Textures { get; }
+
+            public AssetEntry(string name, string detail, params TextureRegion[] textures)
+            {
+                Name = name;
+                Detail = detail;
+                Textures = textures;
+            }
         }
     }
 }
