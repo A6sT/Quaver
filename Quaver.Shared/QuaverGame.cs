@@ -86,6 +86,7 @@ using Quaver.Shared.Screens.Tests.YesNoDialog;
 using Quaver.Shared.Screens.Tests.Footer;
 using Quaver.Shared.Screens.Tests.GlobalIcons;
 using Quaver.Shared.Screens.Tests.GlobalGameplayAssets;
+using Quaver.Shared.Screens.Tests.UserGroupBadges;
 using Quaver.Shared.Screens.Tests.ListenerLists;
 using Quaver.Shared.Screens.Tests.Luas;
 using Quaver.Shared.Screens.Tests.MenuJukebox;
@@ -312,6 +313,7 @@ namespace Quaver.Shared
             {"Flags", typeof(FlagsTestScreen)},
             {"Global Icons", typeof(GlobalIconsTestScreen)},
             {"Global Gameplay Assets", typeof(GlobalGameplayAssetsTestScreen)},
+            {"User Groups", typeof(UserGroupsTestScreen)},
             {"Main Menu", typeof(MainMenuScreen)},
             {"ResultsScreen (Multi)", typeof(TestResultsMultiScreen)},
             {"ResultsScreen", typeof(TestResultsScreen)},
@@ -446,6 +448,7 @@ namespace Quaver.Shared
             GlobalIcons.Load();
             Flags.Load();
             GlobalGameplayAssets.Load();
+            UserGroupAssets.Load();
 
             Logger.Important($"Currently running Quaver version: `{Version}`", LogType.Runtime);
             IsReadyToUpdate = true;
@@ -475,6 +478,7 @@ namespace Quaver.Shared
             GlobalIcons.Dispose();
             Flags.Dispose();
             GlobalGameplayAssets.Dispose();
+            UserGroupAssets.Dispose();
             base.UnloadContent();
 
             if (SteamManager.IsInitialized)
@@ -1305,6 +1309,7 @@ namespace Quaver.Shared
             InvokeHotReloadAssetMethod(assembly, typeof(GlobalIcons), nameof(GlobalIcons.Load));
             InvokeHotReloadAssetMethod(assembly, typeof(Flags), nameof(Flags.Load));
             InvokeHotReloadAssetMethod(assembly, typeof(GlobalGameplayAssets), nameof(GlobalGameplayAssets.Load));
+            InvokeHotReloadAssetMethod(assembly, typeof(UserGroupAssets), nameof(UserGroupAssets.Load));
         }
 
         private static void DisposeHotReloadAssembly(Assembly assembly)
@@ -1312,6 +1317,7 @@ namespace Quaver.Shared
             InvokeHotReloadAssetMethod(assembly, typeof(GlobalIcons), nameof(GlobalIcons.Dispose));
             InvokeHotReloadAssetMethod(assembly, typeof(Flags), nameof(Flags.Dispose));
             InvokeHotReloadAssetMethod(assembly, typeof(GlobalGameplayAssets), nameof(GlobalGameplayAssets.Dispose));
+            InvokeHotReloadAssetMethod(assembly, typeof(UserGroupAssets), nameof(UserGroupAssets.Dispose));
         }
 
         private static void InvokeHotReloadAssetMethod(Assembly assembly, Type assetType, string methodName)
