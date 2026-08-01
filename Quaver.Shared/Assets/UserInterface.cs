@@ -14,6 +14,10 @@ namespace Quaver.Shared.Assets
     {
         public static Texture2D BlankBox => TextureManager.Load($"Quaver.Resources/Textures/UI/blank-box.png");
         public static Texture2D IconsGrid => TextureManager.Load("Quaver.Resources/Textures/UI/Global/IconsGrid.png");
+        public static Texture2D FlagsGrid => TextureManager.Load("Quaver.Resources/Textures/UI/Global/Flags.png");
+        public static Texture2D Judgements => TextureManager.Load("Quaver.Resources/Textures/UI/Global/Judgements.png");
+        public static Texture2D Mods => TextureManager.Load("Quaver.Resources/Textures/UI/Global/Mods.png");
+        public static Texture2D Rates => TextureManager.Load("Quaver.Resources/Textures/UI/Global/Rates.png");
         public static Texture2D PlayfieldMask => TextureManager.Load($"Quaver.Resources/Textures/UI/playfield-mask.png");
         public static Texture2D UnknownAvatar => TextureManager.Load($"Quaver.Resources/Textures/UI/unknown-avatar.png");
         public static Texture2D YouAvatar => TextureManager.Load($"Quaver.Resources/Textures/UI/you-avatar.png");

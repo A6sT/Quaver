@@ -75,6 +75,7 @@ using Quaver.Shared.Screens.Tests.DrawablePlaylists;
 using Quaver.Shared.Screens.Tests.Dropdowns;
 using Quaver.Shared.Screens.Tests.Editor;
 using Quaver.Shared.Screens.Tests.FilterPanel;
+using Quaver.Shared.Screens.Tests.Flags;
 using Quaver.Shared.Screens.Tests.Jukebox;
 using Quaver.Shared.Screens.Tests.Leaderboards;
 using Quaver.Shared.Screens.Tests.LeaderboardWithMaps;
@@ -84,6 +85,7 @@ using Quaver.Shared.Screens.Tests.ModifierSelectors;
 using Quaver.Shared.Screens.Tests.YesNoDialog;
 using Quaver.Shared.Screens.Tests.Footer;
 using Quaver.Shared.Screens.Tests.GlobalIcons;
+using Quaver.Shared.Screens.Tests.GlobalGameplayAssets;
 using Quaver.Shared.Screens.Tests.ListenerLists;
 using Quaver.Shared.Screens.Tests.Luas;
 using Quaver.Shared.Screens.Tests.MenuJukebox;
@@ -307,7 +309,9 @@ namespace Quaver.Shared
         private Dictionary<string, Type> VisualTests { get; } = new Dictionary<string, Type>()
         {
             {"AutoMod", typeof(AutoModTestScreen)},
+            {"Flags", typeof(FlagsTestScreen)},
             {"Global Icons", typeof(GlobalIconsTestScreen)},
+            {"Global Gameplay Assets", typeof(GlobalGameplayAssetsTestScreen)},
             {"Main Menu", typeof(MainMenuScreen)},
             {"ResultsScreen (Multi)", typeof(TestResultsMultiScreen)},
             {"ResultsScreen", typeof(TestResultsScreen)},
@@ -356,6 +360,10 @@ namespace Quaver.Shared
         public QuaverGame() : base(ConfigureSdlVideoBackend())
 #endif
         {
+#if VISUAL_TESTS
+            hl.InitializeAssembly = InitializeHotReloadAssembly;
+            hl.DisposeAssembly = DisposeHotReloadAssembly;
+#endif
             Content.RootDirectory = "Content";
             _token = new Token(this);
 
@@ -436,6 +444,8 @@ namespace Quaver.Shared
         {
             base.LoadContent();
             GlobalIcons.Load();
+            Flags.Load();
+            GlobalGameplayAssets.Load();
 
             Logger.Important($"Currently running Quaver version: `{Version}`", LogType.Runtime);
             IsReadyToUpdate = true;
@@ -463,6 +473,8 @@ namespace Quaver.Shared
             DiscordHelper.Shutdown();
             TooltipManager.TargetEligibilityFilter = null;
             GlobalIcons.Dispose();
+            Flags.Dispose();
+            GlobalGameplayAssets.Dispose();
             base.UnloadContent();
 
             if (SteamManager.IsInitialized)
@@ -1287,6 +1299,32 @@ namespace Quaver.Shared
 
 #if VISUAL_TESTS
         protected override HotLoaderScreen InitializeHotLoaderScreen() => new HotLoaderScreen(VisualTests);
+
+        private static void InitializeHotReloadAssembly(Assembly assembly)
+        {
+            InvokeHotReloadAssetMethod(assembly, typeof(GlobalIcons), nameof(GlobalIcons.Load));
+            InvokeHotReloadAssetMethod(assembly, typeof(Flags), nameof(Flags.Load));
+            InvokeHotReloadAssetMethod(assembly, typeof(GlobalGameplayAssets), nameof(GlobalGameplayAssets.Load));
+        }
+
+        private static void DisposeHotReloadAssembly(Assembly assembly)
+        {
+            InvokeHotReloadAssetMethod(assembly, typeof(GlobalIcons), nameof(GlobalIcons.Dispose));
+            InvokeHotReloadAssetMethod(assembly, typeof(Flags), nameof(Flags.Dispose));
+            InvokeHotReloadAssetMethod(assembly, typeof(GlobalGameplayAssets), nameof(GlobalGameplayAssets.Dispose));
+        }
+
+        private static void InvokeHotReloadAssetMethod(Assembly assembly, Type assetType, string methodName)
+        {
+            var type = assembly.GetType(assetType.FullName!);
+            var method = type?.GetMethod(methodName, BindingFlags.Static | BindingFlags.Public |
+                BindingFlags.NonPublic);
+
+            if (method == null)
+                throw new MissingMethodException(assembly.FullName, $"{assetType.FullName}.{methodName}");
+
+            method.Invoke(null, null);
+        }
 
         private void SetVisualTestingPresence()
         {

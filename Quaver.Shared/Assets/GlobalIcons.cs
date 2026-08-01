@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Wobble;
+using Wobble.Graphics.Sprites;
 
 namespace Quaver.Shared.Assets
 {
@@ -84,8 +85,8 @@ namespace Quaver.Shared.Assets
 
         private static Texture2D? Sheet { get; set; }
 
-        private static Dictionary<GlobalIcon, Texture2D> Textures { get; } =
-            new Dictionary<GlobalIcon, Texture2D>();
+        private static Dictionary<GlobalIcon, TextureRegion> Textures { get; } =
+            new Dictionary<GlobalIcon, TextureRegion>();
 
         private static IReadOnlyDictionary<GlobalIcon, Point> Coordinates { get; } =
             new Dictionary<GlobalIcon, Point>
@@ -143,14 +144,13 @@ namespace Quaver.Shared.Assets
             };
 
         /// <summary>
-        ///     Gets a shared 40x40 texture for an icon in the global grid.
-        ///     Callers must not dispose the returned texture.
+        ///     Gets a shared 40x40 atlas region for an icon in the global grid.
         /// </summary>
         /// <param name="icon">The icon to retrieve.</param>
-        /// <returns>The globally owned icon texture.</returns>
+        /// <returns>The globally owned icon atlas region.</returns>
         /// <exception cref="ArgumentOutOfRangeException">The icon is not mapped.</exception>
         /// <exception cref="InvalidOperationException">The icon grid is unavailable or has invalid dimensions.</exception>
-        public static Texture2D Get(GlobalIcon icon)
+        public static TextureRegion Get(GlobalIcon icon)
         {
             if (!Coordinates.ContainsKey(icon))
                 throw new ArgumentOutOfRangeException(nameof(icon), icon, "The global icon is not mapped.");
@@ -167,7 +167,7 @@ namespace Quaver.Shared.Assets
         }
 
         /// <summary>
-        ///     Loads, validates, and crops the globally shared icon grid on the UI thread.
+        ///     Loads and validates the globally shared icon grid on the UI thread.
         /// </summary>
         internal static void Load()
         {
@@ -190,21 +190,13 @@ namespace Quaver.Shared.Assets
                     var sourceRectangle = CreateSourceRectangle(mapping.Value);
                     ValidateSourceRectangle(mapping.Key, sheet, sourceRectangle);
 
-                    var pixels = new Color[IconSize * IconSize];
-                    sheet.GetData(0, sourceRectangle, pixels, 0, pixels.Length);
-
-                    var texture = new Texture2D(GameBase.Game.GraphicsDevice, IconSize, IconSize);
-                    Textures.Add(mapping.Key, texture);
-                    texture.SetData(pixels);
+                    Textures.Add(mapping.Key, new TextureRegion(sheet, sourceRectangle));
                 }
 
                 Sheet = sheet;
             }
             catch
             {
-                foreach (var texture in Textures.Values)
-                    texture?.Dispose();
-
                 Textures.Clear();
                 Sheet = null;
                 throw;
@@ -212,13 +204,10 @@ namespace Quaver.Shared.Assets
         }
 
         /// <summary>
-        ///     Disposes all cropped icon textures. The source sheet is owned by <c>TextureManager</c>.
+        ///     Clears all icon atlas regions. The source sheet is owned by <c>TextureManager</c>.
         /// </summary>
         internal static void Dispose()
         {
-            foreach (var texture in Textures.Values)
-                texture?.Dispose();
-
             Textures.Clear();
             Sheet = null;
         }

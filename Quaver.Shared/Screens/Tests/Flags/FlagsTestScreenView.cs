@@ -1,6 +1,15 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Copyright (c) Swan & The Quaver Team <support@quavergame.com>.
+*/
+
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Quaver.Shared.Assets;
+using FlagAssets = Quaver.Shared.Assets.Flags;
 using Wobble;
 using Wobble.Assets;
 using Wobble.Graphics;
@@ -9,11 +18,10 @@ using Wobble.Graphics.Sprites.Text;
 using Wobble.Managers;
 using Wobble.Screens;
 using Wobble.Window;
-using GlobalIconStore = Quaver.Shared.Assets.GlobalIcons;
 
-namespace Quaver.Shared.Screens.Tests.GlobalIcons
+namespace Quaver.Shared.Screens.Tests.Flags
 {
-    public sealed class GlobalIconsTestScreenView : ScreenView
+    public sealed class FlagsTestScreenView : ScreenView
     {
         private static readonly Color BackgroundColor = new Color(17, 24, 32);
 
@@ -31,23 +39,23 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
 
         private const float BottomPadding = 36;
 
-        private const float CardWidth = 230;
+        private const float CardWidth = 190;
 
-        private const float CardHeight = 92;
+        private const float CardHeight = 104;
 
         private const float CardGap = 14;
 
-        private GlobalIcon[] Icons { get; } = (GlobalIcon[]) Enum.GetValues(typeof(GlobalIcon));
+        private List<string> CountryCodes { get; } = new List<string>(FlagAssets.CountryCodes);
 
         private ScrollContainer ScreenScrollContainer { get; }
 
-        private FlexContainer IconGrid { get; }
+        private FlexContainer FlagGrid { get; }
 
         private float LastWindowWidth { get; set; } = -1;
 
         private float LastWindowHeight { get; set; } = -1;
 
-        public GlobalIconsTestScreenView(Screen screen) : base(screen)
+        public FlagsTestScreenView(Screen screen) : base(screen)
         {
             ScreenScrollContainer = new ScrollContainer(
                 new ScalableVector2(Container.Width, Container.Height),
@@ -64,7 +72,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
 
             CreateHeader();
 
-            IconGrid = new FlexContainer
+            FlagGrid = new FlexContainer
             {
                 Parent = ScreenScrollContainer.ContentContainer,
                 Alignment = Alignment.TopCenter,
@@ -79,10 +87,10 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
                 UsePreviousSpriteBatchOptions = true
             };
 
-            for (var i = 0; i < Icons.Length; i++)
+            for (var i = 0; i < CountryCodes.Count; i++)
             {
-                var card = CreateIconCard(Icons[i], i);
-                IconGrid.SetItemOptions(card, new FlexItemOptions
+                var card = CreateFlagCard(CountryCodes[i], i);
+                FlagGrid.SetItemOptions(card, new FlexItemOptions
                 {
                     Basis = CardWidth,
                     Grow = 0,
@@ -109,7 +117,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
 
         private void CreateHeader()
         {
-            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "GLOBAL ICONS", 28)
+            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "FLAGS", 28)
             {
                 Parent = ScreenScrollContainer.ContentContainer,
                 Alignment = Alignment.TopCenter,
@@ -119,7 +127,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
             };
 
             new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterLight),
-                $"{Icons.Length} icons — labels are read directly from the GlobalIcon enum", 17)
+                $"{CountryCodes.Count} flags — labels use string country codes", 17)
             {
                 Parent = ScreenScrollContainer.ContentContainer,
                 Alignment = Alignment.TopCenter,
@@ -129,11 +137,11 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
             };
         }
 
-        private Container CreateIconCard(GlobalIcon icon, int index)
+        private Container CreateFlagCard(string countryCode, int index)
         {
             var card = new Container
             {
-                Parent = IconGrid,
+                Parent = FlagGrid,
                 Size = new ScalableVector2(CardWidth, CardHeight),
                 UsePreviousSpriteBatchOptions = true
             };
@@ -152,19 +160,19 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
             {
                 Parent = card,
                 Alignment = Alignment.MidLeft,
-                X = 20,
-                Size = new ScalableVector2(GlobalIconStore.IconSize, GlobalIconStore.IconSize),
-                Region = GlobalIconStore.Get(icon),
+                X = 12,
+                Size = new ScalableVector2(72, 72),
+                Region = FlagAssets.GetRegion(countryCode),
                 Tint = Color.White,
                 UsePreviousSpriteBatchOptions = true
             };
 
-            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterMedium), icon.ToString(), 16)
+            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterMedium), countryCode, 18)
             {
                 Parent = card,
                 Alignment = Alignment.TopLeft,
-                X = 78,
-                Y = 23,
+                X = 98,
+                Y = 31,
                 Tint = Color.White,
                 UsePreviousSpriteBatchOptions = true
             };
@@ -173,8 +181,8 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
             {
                 Parent = card,
                 Alignment = Alignment.TopLeft,
-                X = 78,
-                Y = 50,
+                X = 98,
+                Y = 58,
                 Tint = MutedTextColor,
                 UsePreviousSpriteBatchOptions = true
             };
@@ -196,13 +204,13 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
 
             var gridWidth = Math.Max(CardWidth, width - OuterPadding * 2);
             var columns = Math.Max(1, (int) ((gridWidth + CardGap) / (CardWidth + CardGap)));
-            var rows = (int) Math.Ceiling(Icons.Length / (double) columns);
+            var rows = (int) Math.Ceiling(CountryCodes.Count / (double) columns);
             var gridHeight = rows * CardHeight + Math.Max(0, rows - 1) * CardGap;
             var contentHeight = Math.Max(height + 1, HeaderHeight + gridHeight + BottomPadding);
 
             ScreenScrollContainer.ContentContainer.Size = new ScalableVector2(width, contentHeight);
-            IconGrid.Size = new ScalableVector2(gridWidth, gridHeight);
-            IconGrid.RefreshLayout();
+            FlagGrid.Size = new ScalableVector2(gridWidth, gridHeight);
+            FlagGrid.RefreshLayout();
 
             LastWindowWidth = width;
             LastWindowHeight = height;
