@@ -45,7 +45,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Playfield.Lines
             Tooltip.Border.DrawIfOffScreen = true;
             Tooltip.Visible = !string.IsNullOrEmpty(Bookmark.Note);
 
-            ImageButton = new DrawableEditorLineBookmarkButton(Playfield, Bookmark)
+            ImageButton = new DrawableEditorLineBookmarkButton(Playfield, Bookmark, Tooltip.Text)
             {
                 Parent = this,
                 Size = new ScalableVector2(0, 0, 1, 1),
