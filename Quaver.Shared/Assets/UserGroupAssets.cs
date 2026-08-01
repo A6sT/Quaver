@@ -45,6 +45,10 @@ namespace Quaver.Shared.Assets
 
         private const int RowStride = 27;
 
+        private const int LogicalSheetWidth = 237;
+
+        private const int LogicalSheetHeight = 319;
+
         private static Texture2D? Sheet { get; set; }
 
         private static Dictionary<(GlobalUserGroup Group, bool Full), TextureRegion> Textures { get; } =
@@ -92,6 +96,17 @@ namespace Quaver.Shared.Assets
         }
 
         /// <summary>
+        ///     Gets the logical on-screen size of a user-group badge.
+        /// </summary>
+        public static Point GetDisplaySize(GlobalUserGroup group, bool full = false)
+        {
+            if (!Mappings.TryGetValue(group, out var mapping))
+                throw new ArgumentOutOfRangeException(nameof(group), group, "The global user group is not mapped.");
+
+            return new Point(full ? mapping.FullWidth : SmallBadgeWidth, BadgeHeight);
+        }
+
+        /// <summary>
         ///     Loads and validates every user-group badge on the UI thread.
         /// </summary>
         internal static void Load()
@@ -103,6 +118,7 @@ namespace Quaver.Shared.Assets
             Sheet = null;
 
             var sheet = UserInterface.UserGroups;
+            var scale = GetSourceScale(sheet);
 
             try
             {
@@ -110,7 +126,7 @@ namespace Quaver.Shared.Assets
                 {
                     foreach (var full in new[] { false, true })
                     {
-                        var sourceRectangle = CreateSourceRectangle(mapping.Value, full);
+                        var sourceRectangle = CreateSourceRectangle(mapping.Value, full, scale);
                         ValidateSourceRectangle(mapping.Key, full, sheet, sourceRectangle);
                         Textures.Add((mapping.Key, full), new TextureRegion(sheet, sourceRectangle));
                     }
@@ -135,12 +151,25 @@ namespace Quaver.Shared.Assets
             Sheet = null;
         }
 
-        private static Rectangle CreateSourceRectangle((int Row, int FullWidth) mapping, bool full) =>
+        private static Rectangle CreateSourceRectangle((int Row, int FullWidth) mapping, bool full, int scale) =>
             new Rectangle(
-                full ? FullBadgeX : 0,
-                mapping.Row * RowStride,
-                full ? mapping.FullWidth : SmallBadgeWidth,
-                BadgeHeight);
+                (full ? FullBadgeX : 0) * scale,
+                mapping.Row * RowStride * scale,
+                (full ? mapping.FullWidth : SmallBadgeWidth) * scale,
+                BadgeHeight * scale);
+
+        private static int GetSourceScale(Texture2D sheet)
+        {
+            if (sheet.Width % LogicalSheetWidth != 0 || sheet.Height % LogicalSheetHeight != 0 ||
+                sheet.Width / LogicalSheetWidth != sheet.Height / LogicalSheetHeight)
+            {
+                throw new InvalidOperationException(
+                    $"The global user-group spritesheet must be a uniform integer scale of " +
+                    $"{LogicalSheetWidth}x{LogicalSheetHeight}, but was {sheet.Width}x{sheet.Height}.");
+            }
+
+            return sheet.Width / LogicalSheetWidth;
+        }
 
         private static void ValidateSourceRectangle(GlobalUserGroup group, bool full, Texture2D sheet,
             Rectangle sourceRectangle)
