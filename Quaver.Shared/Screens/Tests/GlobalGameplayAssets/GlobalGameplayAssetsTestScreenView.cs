@@ -143,6 +143,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalGameplayAssets
                 Entries.Add(new AssetEntry(
                     $"Judgement: {judgement}",
                     "Single sprite",
+                    GlobalGameplayAssetStore.JudgementDisplaySize,
                     GlobalGameplayAssetStore.GetJudgement(judgement)));
             }
 
@@ -151,6 +152,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalGameplayAssets
                 Entries.Add(new AssetEntry(
                     $"Mod: {mod}",
                     "Active / inactive",
+                    GlobalGameplayAssetStore.ModDisplaySize,
                     GlobalGameplayAssetStore.GetMod(mod),
                     GlobalGameplayAssetStore.GetMod(mod, true)));
             }
@@ -158,6 +160,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalGameplayAssets
             Entries.Add(new AssetEntry(
                 "Mod badge: More",
                 "Active / inactive",
+                GlobalGameplayAssetStore.ModDisplaySize,
                 GlobalGameplayAssetStore.GetModBadge(GlobalModBadge.More),
                 GlobalGameplayAssetStore.GetModBadge(GlobalModBadge.More, true)));
 
@@ -166,6 +169,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalGameplayAssets
                 Entries.Add(new AssetEntry(
                     $"Rate: {rate:0.00}x",
                     "Single sprite",
+                    GlobalGameplayAssetStore.RateDisplaySize,
                     GlobalGameplayAssetStore.GetRate(rate)));
             }
         }
@@ -219,7 +223,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalGameplayAssets
                     Parent = card,
                     Alignment = Alignment.MidLeft,
                     X = 16 + i * 68,
-                    Size = new ScalableVector2(texture.Width, texture.Height),
+                    Size = new ScalableVector2(entry.DisplaySize.X, entry.DisplaySize.Y),
                     Region = texture,
                     Tint = Color.White,
                     UsePreviousSpriteBatchOptions = true
@@ -302,12 +306,15 @@ namespace Quaver.Shared.Screens.Tests.GlobalGameplayAssets
 
             public string Detail { get; }
 
+            public Point DisplaySize { get; }
+
             public TextureRegion[] Textures { get; }
 
-            public AssetEntry(string name, string detail, params TextureRegion[] textures)
+            public AssetEntry(string name, string detail, Point displaySize, params TextureRegion[] textures)
             {
                 Name = name;
                 Detail = detail;
+                DisplaySize = displaySize;
                 Textures = textures;
             }
         }

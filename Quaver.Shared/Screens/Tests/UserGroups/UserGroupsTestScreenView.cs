@@ -140,6 +140,8 @@ namespace Quaver.Shared.Screens.Tests.UserGroupBadges
         {
             var small = UserGroupAssets.Get(group);
             var full = UserGroupAssets.Get(group, true);
+            var smallSize = UserGroupAssets.GetDisplaySize(group);
+            var fullSize = UserGroupAssets.GetDisplaySize(group, true);
 
             var card = new Container
             {
@@ -184,7 +186,7 @@ namespace Quaver.Shared.Screens.Tests.UserGroupBadges
                 Alignment = Alignment.TopLeft,
                 X = 18,
                 Y = 56,
-                Size = new ScalableVector2(small.Width, small.Height),
+                Size = new ScalableVector2(smallSize.X, smallSize.Y),
                 Region = small,
                 Tint = Color.White,
                 UsePreviousSpriteBatchOptions = true
@@ -196,7 +198,7 @@ namespace Quaver.Shared.Screens.Tests.UserGroupBadges
                 Alignment = Alignment.TopLeft,
                 X = 70,
                 Y = 56,
-                Size = new ScalableVector2(full.Width, full.Height),
+                Size = new ScalableVector2(fullSize.X, fullSize.Y),
                 Region = full,
                 Tint = Color.White,
                 UsePreviousSpriteBatchOptions = true

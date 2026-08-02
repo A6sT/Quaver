@@ -55,6 +55,13 @@ namespace Quaver.Shared.Assets
         private const int ModColumnStride = SpriteWidth + SpriteSpacing;
         private const int RateSpriteWidth = SpriteWidth;
 
+        private const int LogicalJudgementsSheetWidth = JudgementSpriteWidth;
+        private const int LogicalJudgementsSheetHeight = 256;
+        private const int LogicalModsSheetWidth = ModColumnStride + ModSpriteWidth;
+        private const int LogicalModsSheetHeight = 459;
+        private const int LogicalRatesSheetWidth = RateSpriteWidth;
+        private const int LogicalRatesSheetHeight = 894;
+
         private static Texture2D? JudgementsSheet { get; set; }
         private static Texture2D? ModsSheet { get; set; }
         private static Texture2D? RatesSheet { get; set; }
@@ -69,6 +76,12 @@ namespace Quaver.Shared.Assets
             new Dictionary<(GlobalModBadge Badge, bool Inactive), TextureRegion>();
 
         private static Dictionary<int, TextureRegion> RateTextures { get; } = new Dictionary<int, TextureRegion>();
+
+        public static Point JudgementDisplaySize => new Point(JudgementSpriteWidth, SpriteHeight);
+
+        public static Point ModDisplaySize => new Point(ModSpriteWidth, SpriteHeight);
+
+        public static Point RateDisplaySize => new Point(RateSpriteWidth, SpriteHeight);
 
         private static IReadOnlyDictionary<GlobalJudgementWindow, Point> JudgementCoordinates { get; } =
             new Dictionary<GlobalJudgementWindow, Point>
@@ -209,12 +222,18 @@ namespace Quaver.Shared.Assets
             var judgementsSheet = UserInterface.Judgements;
             var modsSheet = UserInterface.Mods;
             var ratesSheet = UserInterface.Rates;
+            var judgementScale = GetSourceScale(judgementsSheet, LogicalJudgementsSheetWidth,
+                LogicalJudgementsSheetHeight, "global judgement-window");
+            var modScale = GetSourceScale(modsSheet, LogicalModsSheetWidth, LogicalModsSheetHeight,
+                "global modifier");
+            var rateScale = GetSourceScale(ratesSheet, LogicalRatesSheetWidth, LogicalRatesSheetHeight,
+                "global rate");
 
             try
             {
                 foreach (var mapping in JudgementCoordinates)
                 {
-                    var sourceRectangle = CreateSourceRectangle(mapping.Value, 0, JudgementSpriteWidth);
+                    var sourceRectangle = CreateSourceRectangle(mapping.Value, 0, JudgementSpriteWidth, judgementScale);
                     ValidateSourceRectangle(mapping.Key, judgementsSheet, sourceRectangle, "global judgement-window");
                     JudgementTextures.Add(mapping.Key, new TextureRegion(judgementsSheet, sourceRectangle));
                 }
@@ -224,7 +243,7 @@ namespace Quaver.Shared.Assets
                     foreach (var inactive in new[] { false, true })
                     {
                         var sourceRectangle = CreateSourceRectangle(mapping.Value,
-                            inactive ? ModColumnStride : 0, ModSpriteWidth);
+                            inactive ? ModColumnStride : 0, ModSpriteWidth, modScale);
                         ValidateSourceRectangle(mapping.Key, modsSheet, sourceRectangle, "global modifier");
                         ModTextures.Add((mapping.Key, inactive), new TextureRegion(modsSheet, sourceRectangle));
                     }
@@ -235,7 +254,7 @@ namespace Quaver.Shared.Assets
                     foreach (var inactive in new[] { false, true })
                     {
                         var sourceRectangle = CreateSourceRectangle(mapping.Value,
-                            inactive ? ModColumnStride : 0, ModSpriteWidth);
+                            inactive ? ModColumnStride : 0, ModSpriteWidth, modScale);
                         ValidateSourceRectangle(mapping.Key, modsSheet, sourceRectangle, "global modifier badge");
                         ModBadgeTextures.Add((mapping.Key, inactive), new TextureRegion(modsSheet, sourceRectangle));
                     }
@@ -243,7 +262,7 @@ namespace Quaver.Shared.Assets
 
                 for (var rateIndex = 0; rateIndex < 31; rateIndex++)
                 {
-                    var sourceRectangle = CreateSourceRectangle(new Point(0, rateIndex), 0, RateSpriteWidth);
+                    var sourceRectangle = CreateSourceRectangle(new Point(0, rateIndex), 0, RateSpriteWidth, rateScale);
                     ValidateSourceRectangle(rateIndex, ratesSheet, sourceRectangle, "global rate");
                     RateTextures.Add(50 + rateIndex * 5, new TextureRegion(ratesSheet, sourceRectangle));
                 }
@@ -296,11 +315,25 @@ namespace Quaver.Shared.Assets
             throw new InvalidOperationException($"The {sheetName} sprite {value} was not loaded.");
         }
 
-        private static Rectangle CreateSourceRectangle(Point coordinate, int xOffset, int width) => new Rectangle(
-            xOffset + coordinate.X * (width + SpriteSpacing),
-            coordinate.Y * RowStride,
-            width,
-            SpriteHeight);
+        private static Rectangle CreateSourceRectangle(Point coordinate, int xOffset, int width, int scale = 1) =>
+            new Rectangle(
+                (xOffset + coordinate.X * (width + SpriteSpacing)) * scale,
+                coordinate.Y * RowStride * scale,
+                width * scale,
+                SpriteHeight * scale);
+
+        private static int GetSourceScale(Texture2D sheet, int logicalWidth, int logicalHeight, string sheetName)
+        {
+            if (sheet.Width % logicalWidth != 0 || sheet.Height % logicalHeight != 0 ||
+                sheet.Width / logicalWidth != sheet.Height / logicalHeight)
+            {
+                throw new InvalidOperationException(
+                    $"The {sheetName} spritesheet must be a uniform integer scale of " +
+                    $"{logicalWidth}x{logicalHeight}, but was {sheet.Width}x{sheet.Height}.");
+            }
+
+            return sheet.Width / logicalWidth;
+        }
 
         private static Texture2D RequireSheet(Texture2D? sheet, string sheetName)
         {
