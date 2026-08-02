@@ -76,7 +76,7 @@
     <value>設定を閉じると言語が更新されます</value>
   </data>
   <data name="Chat_SendAMessage" xml:space="preserve">
-    <value>メッセージを入力...</value>
+    <value>メッセージを入力…</value>
   </data>
   <data name="Screen_Main_Menu_Home" xml:space="preserve">
     <value>ホーム</value>
@@ -685,11 +685,9 @@
     <value>Statistics Not Available</value>
   </data>
   <data name="Screen_Results_Accuracygraphtooltip" xml:space="preserve">
-    <value>This displays the course of accuracy throughout the score.
+    <value>これは譜面全体を通した精度の推移を表示します。
 
-If the map was not completed, then it will additionally
-show the accuracy if all subsequent hits had been
-Marvelous instead.</value>
+譜面が最後まで完了しなかった場合、それ以降のすべてのヒットがMarvelousだったと仮定した場合の精度も追加で表示されます。</value>
   </data>
   <data name="Screen_Results_Latehitwindow" xml:space="preserve">
     <value>Late (+{0} ms)</value>
@@ -698,11 +696,9 @@ Marvelous instead.</value>
     <value>Early (-{0} ms)</value>
   </data>
   <data name="Screen_Results_Ratinggraphtooltip" xml:space="preserve">
-    <value>This displays the course of performance throughout the score.
+    <value>これは譜面全体を通したパフォーマンスの推移を表示します。
 
-If the map was not completed, then it will additionally
-show the performance if all subsequent hits had been
-Marvelous instead.</value>
+譜面が最後まで完了しなかった場合、それ以降のすべてのヒットがMarvelousだったと仮定した場合の精度も追加で表示されます。</value>
   </data>
   <data name="Screen_Results_SubmittingScore" xml:space="preserve">
     <value>SUBMITTING SCORE...</value>
@@ -801,7 +797,7 @@ Marvelous instead.</value>
     <value>An error occured while exporting the replay!</value>
   </data>
   <data name="Screen_Results_YouhavealreadyfixedyourlocaloffsetforthismapTheresnoneedtodoitagain" xml:space="preserve">
-    <value>This map's local offset is already fixed.</value>
+    <value>この譜面のローカルオフセットはすでに調整済みです</value>
   </data>
   <data name="Screen_Results_Thereisnodatatobeabletofixyourlocaloffset" xml:space="preserve">
     <value>There is no data to be able to fix your local offset!</value>
@@ -1122,10 +1118,10 @@ Marvelous instead.</value>
     <value>{0}K Gameplay Layout</value>
   </data>
   <data name="Screen_Options_KeyCountScrollSpeed" xml:space="preserve">
-    <value>{0}K Scroll Speed</value>
+    <value>{0}K スクロール速度</value>
   </data>
   <data name="Screen_Options_KeyCountScrollDirection" xml:space="preserve">
-    <value>{0}K Scroll Direction</value>
+    <value>{0K} スクロール方向</value>
   </data>
   <data name="Screen_Options_KeyCountScratchLayout" xml:space="preserve">
     <value>{0}K Scratch Layout</value>
@@ -1480,25 +1476,25 @@ sure you would like to start without all players ready?</value>
     <value>準備完了</value>
   </data>
   <data name="Screen_Multi_WaitingForHostToStart" xml:space="preserve">
-    <value>ホストが開始するのを待っています...</value>
+    <value>ホストが開始するのを待っています</value>
   </data>
   <data name="Screen_Multi_ChangeGameNameTitle" xml:space="preserve">
     <value>ルーム名の変更</value>
   </data>
   <data name="Screen_Multi_ChangeGameNameMessage" xml:space="preserve">
-    <value>新しいルーム名を入力...</value>
+    <value>新しいルーム名を入力…</value>
   </data>
   <data name="Screen_Multi_EnterNamePlaceholder" xml:space="preserve">
-    <value>ルーム名を入力...</value>
+    <value>ルーム名を入力…</value>
   </data>
   <data name="Screen_Multi_ChangeGamePasswordTitle" xml:space="preserve">
     <value>ルームのパスワードの変更</value>
   </data>
   <data name="Screen_Multi_ChangeGamePasswordMessage" xml:space="preserve">
-    <value>ルームの新しいパスワードを入力...</value>
+    <value>ルームの新しいパスワードを入力…</value>
   </data>
   <data name="Screen_Multi_EnterPasswordPlaceholder" xml:space="preserve">
-    <value>ルームのパスワードを入力...</value>
+    <value>ルームのパスワードを入力…</value>
   </data>
   <data name="Screen_Multi_UploadUnsubmittedMapsetTitle" xml:space="preserve">
     <value>UPLOAD UNSUBMITTED MAPSET</value>
@@ -1910,7 +1906,7 @@ for other players to download?</value>
     <value>Refresh File Cache</value>
   </data>
   <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve">
-    <value>Refresh Editor from .qua File</value>
+    <value>.quaファイルからエディターを再読み込み</value>
   </data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
     <value>Upload</value>
@@ -2192,7 +2188,7 @@ for other players to download?</value>
     <value>Upload To Workshop</value>
   </data>
   <data name="Screen_Editor_UploadingPluginToWorkshop" xml:space="preserve">
-    <value>Steam ワークショップにプラグインをアップロード中...</value>
+    <value>Steam ワークショップにプラグインをアップロード中…</value>
   </data>
   <data name="Screen_Editor_PluginUploadedToWorkshop" xml:space="preserve">
     <value>Successfully uploaded plugin to the workshop!</value>
@@ -2303,10 +2299,10 @@ for other players to download?</value>
     <value>SAVE CHANGES</value>
   </data>
   <data name="Screen_Editor_UnsavedChanges" xml:space="preserve">
-    <value>UNSAVED CHANGES</value>
+    <value>未保存の変更</value>
   </data>
   <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve">
-    <value>This map hasn't been saved.&#xA;Refreshing from .qua will discard unsaved changes. Continue?</value>
+    <value>この譜面は保存されていません。&#xA;.quaから再読み込みすると、未保存の変更は破棄されます。続行しますか？</value>
   </data>
   <data name="Screen_Editor_SaveBeforeCreatingDifficulty" xml:space="preserve">
     <value>You have unsaved changes. Would you like to save&#xA;before creating a new difficulty?</value>
@@ -3056,7 +3052,7 @@ for other players to download?</value>
     <value>Ready for rank!</value>
   </data>
   <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve">
-    <value>Potential error; ignore it if harmless.</value>
+    <value>潜在的な問題、ランクに影響する可能性があります</value>
   </data>
   <data name="Screen_Editor_AutoModCriticalTooltip" xml:space="preserve">
     <value>This is a critical error which affects the playability of your map.</value>
