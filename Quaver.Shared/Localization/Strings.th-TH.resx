@@ -211,28 +211,28 @@
     <value>เผยแพร่เมื่อ {0}</value>
   </data>
   <data name="Screen_Main_NewsLoading" xml:space="preserve">
-    <value>Loading news…</value>
+    <value>กำลังโหลดข่าวสาร...</value>
   </data>
   <data name="Screen_Main_NewsUnavailable" xml:space="preserve">
-    <value>News is currently unavailable</value>
+    <value>ข่าวสารไม่พร้อมใช้งานในขณะนี้</value>
   </data>
   <data name="Screen_Main_AutoLoginFailed" xml:space="preserve">
-    <value>Failed to automatically login!</value>
+    <value>ล็อกอินอัตโนมัติไม่สำเร็จ!</value>
   </data>
   <data name="Screen_Main_NoMapsLoaded" xml:space="preserve">
-    <value>You have no maps loaded. Try importing some!</value>
+    <value>ไม่มีแมพที่โหลดไว้ ลองนำเข้าแมพสิ!</value>
   </data>
   <data name="Screen_Main_NotImplemented" xml:space="preserve">
-    <value>Not implemented yet!</value>
+    <value>ยังไม่ได้ใช้งาน!</value>
   </data>
   <data name="Screen_Main_MultiplayerLoginRequired" xml:space="preserve">
-    <value>You must be logged in to play multiplayer.</value>
+    <value>ต้องล็อกอินเพื่อเล่นโหมดผู้เล่นหลายคน</value>
   </data>
   <data name="Screen_Main_EditorMapRequired" xml:space="preserve">
-    <value>You cannot edit without a map selected.</value>
+    <value>ไม่สามารถแก้ไขแมพได้ถ้ายังไม่ได้เลือกแมพ</value>
   </data>
   <data name="Screen_Main_MapReadFailed" xml:space="preserve">
-    <value>Unable to read map file!</value>
+    <value>ไม่สามารถอ่านไฟล์แมพได้!</value>
   </data>
   <data name="Screen_Selection_All" xml:space="preserve">
     <value>ทั้งหมด</value>
@@ -535,19 +535,19 @@
     <value>แถบความคืบหน้า</value>
   </data>
   <data name="Screen_Options_LaneCover" xml:space="preserve">
-    <value>Lane Cover</value>
+    <value>ตัวปิดแถว</value>
   </data>
   <data name="Screen_Options_Selection" xml:space="preserve">
     <value>Selection</value>
   </data>
   <data name="Screen_Options_Navigation" xml:space="preserve">
-    <value>Navigation</value>
+    <value>การนำทาง</value>
   </data>
   <data name="Screen_Options_Sharing" xml:space="preserve">
-    <value>Sharing</value>
+    <value>การแชร์</value>
   </data>
   <data name="Screen_Options_Configuration" xml:space="preserve">
-    <value>Configuration</value>
+    <value>การตั้งค่า</value>
   </data>
   <data name="Screen_Options_GameplayControls" xml:space="preserve">
     <value>Gameplay Controls</value>
@@ -568,7 +568,7 @@
     <value>อื่น ๆ</value>
   </data>
   <data name="Screen_Options_NavigationMaintenance" xml:space="preserve">
-    <value>Navigation &amp; Maintenance</value>
+    <value>การนำทางและการซ่อมบำรุง</value>
   </data>
   <data name="Screen_Options_InstalledGames" xml:space="preserve">
     <value>เกมที่ติดตั้ง</value>
@@ -577,7 +577,7 @@
     <value>การแจ้งเตือน</value>
   </data>
   <data name="Screen_Options_SongSelect" xml:space="preserve">
-    <value>Song Select</value>
+    <value>หน้าเลือกเพลง</value>
   </data>
   <data name="Screen_Options_ScreenResolution" xml:space="preserve">
     <value>ความละเอียดหน้าจอ</value>
@@ -622,7 +622,7 @@
     <value>กลับ</value>
   </data>
   <data name="Screen_Results_RetryMap" xml:space="preserve">
-    <value>Retry Map</value>
+    <value>เล่นแมพนี้ใหม่</value>
   </data>
   <data name="Screen_Results_WatchReplay" xml:space="preserve">
     <value>ดูรีเพลย์</value>
@@ -634,10 +634,10 @@
     <value>แก้ค่า Offset</value>
   </data>
   <data name="Screen_Results_ConvertScore" xml:space="preserve">
-    <value>Convert Score</value>
+    <value>แปลงคะแนน</value>
   </data>
   <data name="Screen_Results_PleasewaitYourscoreisalreadybeingconverted" xml:space="preserve">
-    <value>Please wait! Your score is already being converted!</value>
+    <value>กำลังแปลงคะแนนอยู่ โปรดรอสักครู่!</value>
   </data>
   <data name="Screen_Results_Overview" xml:space="preserve">
     <value>ภาพรวม</value>
@@ -830,7 +830,7 @@
     <value>ปรับค่า Offset</value>
   </data>
   <data name="Screen_Options_PitchAudioWithPlaybackRate" xml:space="preserve">
-    <value>Pitch Audio With Playback Rate</value>
+    <value>ปรับระดับเสียงตามความเร็วของเพลง</value>
   </data>
   <data name="Screen_Options_BackgroundBrightness" xml:space="preserve">
     <value>ความสว่างพื้นหลัง</value>
@@ -1043,7 +1043,7 @@
     <value>Keep Playing Upon Failing</value>
   </data>
   <data name="Screen_Options_NormaliseScrollVelocityByRatePercentage" xml:space="preserve">
-    <value>Normalise Scroll Velocity By Rate Percentage</value>
+    <value>เปอร์เซนต์การปรับ Scroll Velocity ตามความเร็ว</value>
   </data>
   <data name="Screen_Options_Display1v1TournamentOverlay" xml:space="preserve">
     <value>Display 1v1 Tournament Overlay</value>
@@ -1557,7 +1557,7 @@ sure you would like to start without all players ready?</value>
     <value>Free Mod</value>
   </data>
   <data name="Screen_Multiplayer_FreeRate" xml:space="preserve">
-    <value>Free Rate</value>
+    <value>เลือกความเร็วได้อิสระ</value>
   </data>
   <data name="Screen_Multiplayer_EnablePreview" xml:space="preserve">
     <value>Enable Preview</value>
@@ -1905,7 +1905,7 @@ sure you would like to start without all players ready?</value>
     <value>รีเฟรชแคชไฟล์</value>
   </data>
   <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve">
-    <value>Refresh Editor from .qua File</value>
+    <value>รีเฟรชตัวแก้ไขจากไฟล์ .qua</value>
   </data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
     <value>อัปโหลด</value>
@@ -2565,7 +2565,7 @@ sure you would like to start without all players ready?</value>
     <value>There was an issue while loading this map in the editor.</value>
   </data>
   <data name="Screen_Editor_CannotChangeAudioRateFurther" xml:space="preserve">
-    <value>You cannot change the audio rate this way any further!</value>
+    <value>ไม่สามารถปรับความเร็วเสียงทางนี้ได้อีก!</value>
   </data>
   <data name="Screen_Editor_CacheUpdatedOnExit" xml:space="preserve">
     <value>The cached data for this file will be updated when you leave the editor.</value>
@@ -2604,7 +2604,7 @@ sure you would like to start without all players ready?</value>
     <value>Change the current beat snap divisor.&#xA;Hotkeys: {0} / {1}</value>
   </data>
   <data name="Screen_Editor_PlaybackSpeedTooltip" xml:space="preserve">
-    <value>Change the audio playback rate.&#xA;Hotkeys: {0} / {1}</value>
+    <value>เปลี่ยนความเร็วเสียง&#xA;ปุ่มลัด: {0} / {1}</value>
   </data>
   <data name="Screen_Editor_TestPlay" xml:space="preserve">
     <value>Test Play</value>
