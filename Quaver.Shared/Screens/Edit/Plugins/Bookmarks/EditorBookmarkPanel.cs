@@ -317,7 +317,7 @@ public class EditorBookmarkPanel : SpriteImGui, IEditorPlugin, IColoredImGuiTitl
                 ImGui.PopStyleColor();
 
             ImGui.TableNextColumn();
-            ImGui.TextWrapped(bookmark.Note ?? "");
+            ImGui.TextWrapped((bookmark.Note ?? "").Replace("%", "%%"));
 
             ImGui.TableNextColumn();
             var bookmarkColor = ColorHelper.ToXnaColor(bookmark.GetColor());

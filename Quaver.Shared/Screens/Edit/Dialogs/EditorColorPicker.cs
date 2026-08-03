@@ -13,6 +13,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
     {
         private const ImGuiColorEditFlags PickerFlags =
             ImGuiColorEditFlags.DisplayRGB |
+            ImGuiColorEditFlags.DisplayHex |
             ImGuiColorEditFlags.InputRGB |
             ImGuiColorEditFlags.Uint8;
 
