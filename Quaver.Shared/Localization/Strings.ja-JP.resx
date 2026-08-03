@@ -76,7 +76,7 @@
     <value>設定を閉じると言語が更新されます</value>
   </data>
   <data name="Chat_SendAMessage" xml:space="preserve">
-    <value>メッセージを入力...</value>
+    <value>メッセージを入力…</value>
   </data>
   <data name="Screen_Main_Menu_Home" xml:space="preserve">
     <value>ホーム</value>
@@ -124,7 +124,7 @@
     <value>エディター</value>
   </data>
   <data name="Screen_Main_Competitive" xml:space="preserve">
-    <value>Competitive</value>
+    <value>コンペティティブ</value>
   </data>
   <data name="Screen_Main_MapEditor" xml:space="preserve">
     <value>譜面エディター</value>
@@ -148,7 +148,7 @@
     <value>Quaver を終了</value>
   </data>
   <data name="Screen_Main_QuitDialogMessage" xml:space="preserve">
-    <value>Quit the game?</value>
+    <value>ゲームを終了しますか？</value>
   </data>
   <data name="Screen_Main_SinglePlayerDescription" xml:space="preserve">
     <value>リーダーボードのランクを競うする</value>
@@ -157,7 +157,7 @@
     <value>他のプレイヤーとカスタムマッチをプレイする</value>
   </data>
   <data name="Screen_Main_CompetitiveDescription" xml:space="preserve">
-    <value>Compete against players all over the world</value>
+    <value>世界中のプレイヤーと競う</value>
   </data>
   <data name="Screen_Main_MapEditorDescription" xml:space="preserve">
     <value>好きな曲の譜面を作成・編集する</value>
@@ -205,46 +205,46 @@
     <value>選曲画面で CTRL+ +/-を押すと曲の再生速度が変わります。</value>
   </data>
   <data name="Screen_Main_NowPlaying" xml:space="preserve">
-    <value>再生中</value>
+    <value>再生中：</value>
   </data>
   <data name="Screen_Main_Published" xml:space="preserve">
     <value>{0} が公開済み</value>
   </data>
   <data name="Screen_Main_NewsLoading" xml:space="preserve">
-    <value>Loading news…</value>
+    <value>ニュースを読み込み中…</value>
   </data>
   <data name="Screen_Main_NewsUnavailable" xml:space="preserve">
-    <value>News is currently unavailable</value>
+    <value>現在ニュースは利用できません。</value>
   </data>
   <data name="Screen_Main_AutoLoginFailed" xml:space="preserve">
-    <value>Failed to automatically login!</value>
+    <value>自動ログインに失敗しました。</value>
   </data>
   <data name="Screen_Main_NoMapsLoaded" xml:space="preserve">
-    <value>You have no maps loaded. Try importing some!</value>
+    <value>譜面が読み込まれていません。インポートしてください！</value>
   </data>
   <data name="Screen_Main_NotImplemented" xml:space="preserve">
-    <value>Not implemented yet!</value>
+    <value>まだ実装されていません！</value>
   </data>
   <data name="Screen_Main_MultiplayerLoginRequired" xml:space="preserve">
-    <value>You must be logged in to play multiplayer.</value>
+    <value>マルチプレイヤーをプレイするにはログインが必要です。</value>
   </data>
   <data name="Screen_Main_EditorMapRequired" xml:space="preserve">
-    <value>You cannot edit without a map selected.</value>
+    <value>譜面を選択しないと編集できません。</value>
   </data>
   <data name="Screen_Main_MapReadFailed" xml:space="preserve">
-    <value>Unable to read map file!</value>
+    <value>譜面ファイルを読み込めません！</value>
   </data>
   <data name="Screen_Selection_All" xml:space="preserve">
-    <value>All</value>
+    <value>すべて表示</value>
   </data>
   <data name="Screen_Selection_Artist" xml:space="preserve">
-    <value>Artist</value>
+    <value>アーティスト</value>
   </data>
   <data name="Screen_Selection_Back" xml:space="preserve">
     <value>戻る</value>
   </data>
   <data name="Screen_Selection_By" xml:space="preserve">
-    <value>By:</value>
+    <value>制作者：</value>
   </data>
   <data name="Screen_Selection_BPM" xml:space="preserve">
     <value>BPM</value>
@@ -301,10 +301,10 @@
     <value>LEADERBOARD</value>
   </data>
   <data name="Screen_Selection_Length" xml:space="preserve">
-    <value>Length</value>
+    <value>長さ</value>
   </data>
   <data name="Screen_Selection_LengthLabel" xml:space="preserve">
-    <value>Length:</value>
+    <value>長さ：</value>
   </data>
   <data name="Screen_Selection_Local" xml:space="preserve">
     <value>ローカル</value>
@@ -316,16 +316,16 @@
     <value>ロングノーツ ％</value>
   </data>
   <data name="Screen_Selection_MapFound" xml:space="preserve">
-    <value>Map Found</value>
+    <value>件の譜面が見つかりました</value>
   </data>
   <data name="Screen_Selection_MapsFound" xml:space="preserve">
-    <value>Maps Found</value>
+    <value>件の譜面が見つかりました</value>
   </data>
   <data name="Screen_Selection_MarvelousPerfectRatio" xml:space="preserve">
     <value>Marvelous/Perfect Ratio</value>
   </data>
   <data name="Screen_Selection_MaxCombo" xml:space="preserve">
-    <value>Max Combo</value>
+    <value>最大コンボ</value>
   </data>
   <data name="Screen_Selection_Mode" xml:space="preserve">
     <value>モード：</value>
@@ -424,7 +424,7 @@
     <value>SELECT:</value>
   </data>
   <data name="Screen_Selection_SortBy" xml:space="preserve">
-    <value>SORT BY:</value>
+    <value>並び替え：</value>
   </data>
   <data name="Screen_Selection_Source" xml:space="preserve">
     <value>Source</value>
@@ -595,7 +595,7 @@
     <value>Set Custom FPS</value>
   </data>
   <data name="Screen_Options_DisplayFPSCounter" xml:space="preserve">
-    <value>Display FPS Counter</value>
+    <value>FPSカウンターを表示</value>
   </data>
   <data name="Screen_Options_AudioOutputDevice" xml:space="preserve">
     <value>オーディオ出力デバイス</value>
@@ -655,7 +655,7 @@
     <value>on {0} @ {1}</value>
   </data>
   <data name="Screen_Results_JudgementPreset" xml:space="preserve">
-    <value>Judgement Preset:</value>
+    <value>判定プリセット：</value>
   </data>
   <data name="Screen_Results_Graph" xml:space="preserve">
     <value>GRAPH:</value>
@@ -685,11 +685,9 @@
     <value>Statistics Not Available</value>
   </data>
   <data name="Screen_Results_Accuracygraphtooltip" xml:space="preserve">
-    <value>This displays the course of accuracy throughout the score.
+    <value>これは譜面全体を通した精度の推移を表示します。
 
-If the map was not completed, then it will additionally
-show the accuracy if all subsequent hits had been
-Marvelous instead.</value>
+譜面が最後まで完了しなかった場合、それ以降のすべてのヒットがMarvelousだったと仮定した場合の精度も追加で表示されます。</value>
   </data>
   <data name="Screen_Results_Latehitwindow" xml:space="preserve">
     <value>Late (+{0} ms)</value>
@@ -698,11 +696,9 @@ Marvelous instead.</value>
     <value>Early (-{0} ms)</value>
   </data>
   <data name="Screen_Results_Ratinggraphtooltip" xml:space="preserve">
-    <value>This displays the course of performance throughout the score.
+    <value>これは譜面全体を通したパフォーマンスの推移を表示します。
 
-If the map was not completed, then it will additionally
-show the performance if all subsequent hits had been
-Marvelous instead.</value>
+譜面が最後まで完了しなかった場合、それ以降のすべてのヒットがMarvelousだったと仮定した場合の精度も追加で表示されます。</value>
   </data>
   <data name="Screen_Results_SubmittingScore" xml:space="preserve">
     <value>SUBMITTING SCORE...</value>
@@ -747,7 +743,7 @@ Marvelous instead.</value>
     <value>Grade</value>
   </data>
   <data name="Screen_Results_MAXCOMBO" xml:space="preserve">
-    <value>MAX COMBO</value>
+    <value>最大コンボ</value>
   </data>
   <data name="Screen_Results_PERFORMANCERATING" xml:space="preserve">
     <value>PERFORMANCE RATING</value>
@@ -801,7 +797,7 @@ Marvelous instead.</value>
     <value>An error occured while exporting the replay!</value>
   </data>
   <data name="Screen_Results_YouhavealreadyfixedyourlocaloffsetforthismapTheresnoneedtodoitagain" xml:space="preserve">
-    <value>This map's local offset is already fixed.</value>
+    <value>この譜面のローカルオフセットはすでに調整済みです</value>
   </data>
   <data name="Screen_Results_Thereisnodatatobeabletofixyourlocaloffset" xml:space="preserve">
     <value>There is no data to be able to fix your local offset!</value>
@@ -870,7 +866,7 @@ Marvelous instead.</value>
     <value>Display Hit Bubbles</value>
   </data>
   <data name="Screen_Options_DisplayJudgementCounter" xml:space="preserve">
-    <value>Display Judgement Counter</value>
+    <value>判定カウンターを表示</value>
   </data>
   <data name="Screen_Options_DisplayScoreboard" xml:space="preserve">
     <value>Display Scoreboard</value>
@@ -924,7 +920,7 @@ Marvelous instead.</value>
     <value>Playfield Scale</value>
   </data>
   <data name="Screen_Options_TintHitlightingBasedOnJudgementColor" xml:space="preserve">
-    <value>Tint Hitlighting Based On Judgement Color</value>
+    <value>判定色に応じてヒットライティングを着色</value>
   </data>
   <data name="Screen_Options_Pause" xml:space="preserve">
     <value>Pause</value>
@@ -1026,7 +1022,7 @@ Marvelous instead.</value>
     <value>Show Spectators</value>
   </data>
   <data name="Screen_Options_DisplayRankedAccuracyWithCustomJudgements" xml:space="preserve">
-    <value>Display Ranked Accuracy With Custom Judgements</value>
+    <value>ランク精度をカスタム判定で表示</value>
   </data>
   <data name="Screen_Options_HitErrorFadeTime" xml:space="preserve">
     <value>Hit Error Fade Time</value>
@@ -1122,10 +1118,10 @@ Marvelous instead.</value>
     <value>{0}K Gameplay Layout</value>
   </data>
   <data name="Screen_Options_KeyCountScrollSpeed" xml:space="preserve">
-    <value>{0}K Scroll Speed</value>
+    <value>{0}K スクロール速度</value>
   </data>
   <data name="Screen_Options_KeyCountScrollDirection" xml:space="preserve">
-    <value>{0}K Scroll Direction</value>
+    <value>{0K} スクロール方向</value>
   </data>
   <data name="Screen_Options_KeyCountScratchLayout" xml:space="preserve">
     <value>{0}K Scratch Layout</value>
@@ -1231,19 +1227,19 @@ for the selected game mode?</value>
     <value>STATUS: </value>
   </data>
   <data name="Screen_Download_All" xml:space="preserve">
-    <value>All</value>
+    <value>すべて表示</value>
   </data>
   <data name="Screen_Download_Unranked" xml:space="preserve">
-    <value>Unranked</value>
+    <value>未ランク</value>
   </data>
   <data name="Screen_Download_Ranked" xml:space="preserve">
-    <value>Ranked</value>
+    <value>ランク</value>
   </data>
   <data name="Screen_Download_ClanRanked" xml:space="preserve">
-    <value>Clan Ranked</value>
+    <value>クランランク</value>
   </data>
   <data name="Screen_Download_DIFFICULTY" xml:space="preserve">
-    <value>DIFFICULTY: </value>
+    <value>難易度： </value>
   </data>
   <data name="Screen_Download_None" xml:space="preserve">
     <value>None</value>
@@ -1270,22 +1266,22 @@ for the selected game mode?</value>
     <value>モード：</value>
   </data>
   <data name="Screen_Download_SORTBY" xml:space="preserve">
-    <value>SORT BY: </value>
+    <value>並び替え： </value>
   </data>
   <data name="Screen_Download_Newest" xml:space="preserve">
-    <value>Newest</value>
+    <value>新着順</value>
   </data>
   <data name="Screen_Download_DateSubmitted" xml:space="preserve">
-    <value>Date Submitted</value>
+    <value>投稿日</value>
   </data>
   <data name="Screen_Download_Length" xml:space="preserve">
-    <value>Length</value>
+    <value>長さ</value>
   </data>
   <data name="Screen_Download_Difficulty" xml:space="preserve">
-    <value>Difficulty</value>
+    <value>難易度</value>
   </data>
   <data name="Screen_Download_MaxCombo" xml:space="preserve">
-    <value>Max Combo</value>
+    <value>最大コンボ</value>
   </data>
   <data name="Screen_Download_BPM" xml:space="preserve">
     <value>BPM</value>
@@ -1297,10 +1293,10 @@ for the selected game mode?</value>
     <value>プレイ回数</value>
   </data>
   <data name="Screen_Download_Ascending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>昇順</value>
   </data>
   <data name="Screen_Download_Descending" xml:space="preserve">
-    <value>Descending</value>
+    <value>降順</value>
   </data>
   <data name="Screen_Download_DownloadMaps" xml:space="preserve">
     <value>Download Maps</value>
@@ -1312,7 +1308,7 @@ for the selected game mode?</value>
     <value>Finished downloading: {0} - {1}!</value>
   </data>
   <data name="Screen_Download_By" xml:space="preserve">
-    <value>By:</value>
+    <value>制作者：</value>
   </data>
   <data name="Screen_Download_LNs" xml:space="preserve">
     <value>LNs: </value>
@@ -1344,19 +1340,19 @@ Use the filters to narrow your search.</value>
     <value>Start Date</value>
   </data>
   <data name="Screen_Download_DifficultyRating" xml:space="preserve">
-    <value>Difficulty Rating</value>
+    <value>難易度</value>
   </data>
   <data name="Screen_Download_MaxRating" xml:space="preserve">
-    <value>Max Rating</value>
+    <value>最大難易度</value>
   </data>
   <data name="Screen_Download_MinRating" xml:space="preserve">
     <value>Min Rating</value>
   </data>
   <data name="Screen_Download_RankedPlayCount" xml:space="preserve">
-    <value>Ranked Play Count</value>
+    <value>ランクプレイ回数</value>
   </data>
   <data name="Screen_Download_MaxPlays" xml:space="preserve">
-    <value>Max Plays</value>
+    <value>最大プレイ回数</value>
   </data>
   <data name="Screen_Download_MinPlays" xml:space="preserve">
     <value>Min Plays</value>
@@ -1365,16 +1361,16 @@ Use the filters to narrow your search.</value>
     <value>Long Note %</value>
   </data>
   <data name="Screen_Download_MaxLN" xml:space="preserve">
-    <value>Max LN%</value>
+    <value>最大LN％</value>
   </data>
   <data name="Screen_Download_MinLN" xml:space="preserve">
     <value>Min LN%</value>
   </data>
   <data name="Screen_Download_LengthSeconds" xml:space="preserve">
-    <value>Length (Seconds)</value>
+    <value>長さ（秒）</value>
   </data>
   <data name="Screen_Download_MaxLength" xml:space="preserve">
-    <value>Max Length</value>
+    <value>最大長さ</value>
   </data>
   <data name="Screen_Download_MinLength" xml:space="preserve">
     <value>Min Length</value>
@@ -1386,7 +1382,7 @@ Use the filters to narrow your search.</value>
     <value>Min Combo</value>
   </data>
   <data name="Screen_Download_MaxBPM" xml:space="preserve">
-    <value>Max BPM</value>
+    <value>最大 BPM</value>
   </data>
   <data name="Screen_Download_MinBPM" xml:space="preserve">
     <value>Min BPM</value>
@@ -1450,7 +1446,7 @@ sure you would like to start without all players ready?</value>
     <value>ルームに戻る</value>
   </data>
   <data name="Screen_Multi_ExitToLobbyMessage" xml:space="preserve">
-    <value>Exit to the lobby?</value>
+    <value>ルームに戻りますか？</value>
   </data>
   <data name="Screen_Multi_Leave" xml:space="preserve">
     <value>離れる</value>
@@ -1480,25 +1476,25 @@ sure you would like to start without all players ready?</value>
     <value>準備完了</value>
   </data>
   <data name="Screen_Multi_WaitingForHostToStart" xml:space="preserve">
-    <value>ホストが開始するのを待っています...</value>
+    <value>ホストが開始するのを待っています</value>
   </data>
   <data name="Screen_Multi_ChangeGameNameTitle" xml:space="preserve">
     <value>ルーム名の変更</value>
   </data>
   <data name="Screen_Multi_ChangeGameNameMessage" xml:space="preserve">
-    <value>新しいルーム名を入力...</value>
+    <value>新しいルーム名を入力…</value>
   </data>
   <data name="Screen_Multi_EnterNamePlaceholder" xml:space="preserve">
-    <value>ルーム名を入力...</value>
+    <value>ルーム名を入力…</value>
   </data>
   <data name="Screen_Multi_ChangeGamePasswordTitle" xml:space="preserve">
     <value>ルームのパスワードの変更</value>
   </data>
   <data name="Screen_Multi_ChangeGamePasswordMessage" xml:space="preserve">
-    <value>ルームの新しいパスワードを入力...</value>
+    <value>ルームの新しいパスワードを入力…</value>
   </data>
   <data name="Screen_Multi_EnterPasswordPlaceholder" xml:space="preserve">
-    <value>ルームのパスワードを入力...</value>
+    <value>ルームのパスワードを入力…</value>
   </data>
   <data name="Screen_Multi_UploadUnsubmittedMapsetTitle" xml:space="preserve">
     <value>UPLOAD UNSUBMITTED MAPSET</value>
@@ -1553,7 +1549,7 @@ for other players to download?</value>
     <value>ゲームモード</value>
   </data>
   <data name="Screen_Multiplayer_MaxPlayers" xml:space="preserve">
-    <value>Max Players</value>
+    <value>定員</value>
   </data>
   <data name="Screen_Multiplayer_AutoHostRotation" xml:space="preserve">
     <value>Auto Host Rotation</value>
@@ -1577,7 +1573,7 @@ for other players to download?</value>
     <value>Allowed Game Modes</value>
   </data>
   <data name="Screen_Multiplayer_MaximumSongLength" xml:space="preserve">
-    <value>Maximum Song Length</value>
+    <value>最大曲の長さ</value>
   </data>
   <data name="Screen_Multiplayer_DifficultyRange" xml:space="preserve">
     <value>Difficulty Range</value>
@@ -1631,7 +1627,7 @@ for other players to download?</value>
     <value>Change Team</value>
   </data>
   <data name="Screen_Multiplayer_MustUnreadyToSwitchTeams" xml:space="preserve">
-    <value>You must unready in order to switch teams!</value>
+    <value>チームを変更するにはレディを解除してください!</value>
   </data>
   <data name="Screen_Multiplayer_CannotSwitchTeamsDuringCountdown" xml:space="preserve">
     <value>カウントダウン中はチームを変更できません</value>
@@ -1667,7 +1663,7 @@ for other players to download?</value>
     <value>Referee</value>
   </data>
   <data name="Screen_Multiplayer_PlayersCount" xml:space="preserve">
-    <value>({0}/{1}) Players</value>
+    <value>（{0}/{1}）プレイヤー</value>
   </data>
   <data name="Screen_Multiplayer_WaitingToStart" xml:space="preserve">
     <value>Waiting to start</value>
@@ -1691,7 +1687,7 @@ for other players to download?</value>
     <value>Please wait...</value>
   </data>
   <data name="Screen_Multiplayer_MapInfo" xml:space="preserve">
-    <value>By: {0} | Length: {1} | BPM: {2} | LNs: {3}%</value>
+    <value>制作者：{0} | 長さ：{1} | BPM：{2} | LN：{3}％</value>
   </data>
   <data name="Screen_Multiplayer_MapMissingClickToDownload" xml:space="preserve">
     <value>You don't have this map. Click to download!</value>
@@ -1727,7 +1723,7 @@ for other players to download?</value>
     <value>RULESET: </value>
   </data>
   <data name="Screen_MultiplayerLobby_All" xml:space="preserve">
-    <value>All</value>
+    <value>すべて表示</value>
   </data>
   <data name="Screen_MultiplayerLobby_FreeForAll" xml:space="preserve">
     <value>個人戦</value>
@@ -1736,7 +1732,7 @@ for other players to download?</value>
     <value>チーム</value>
   </data>
   <data name="Screen_MultiplayerLobby_ModeLabel" xml:space="preserve">
-    <value>モード：</value>
+    <value>モード： </value>
   </data>
   <data name="Screen_MultiplayerLobby_4Keys" xml:space="preserve">
     <value>4K</value>
@@ -1766,7 +1762,7 @@ for other players to download?</value>
     <value>Full</value>
   </data>
   <data name="Screen_MultiplayerLobby_Password" xml:space="preserve">
-    <value>Password</value>
+    <value>パスワード</value>
   </data>
   <data name="Screen_MultiplayerLobby_GamesFound" xml:space="preserve">
     <value>GAMES FOUND</value>
@@ -1808,7 +1804,7 @@ for other players to download?</value>
     <value>Fill in the details to create a multiplayer game...</value>
   </data>
   <data name="Screen_MultiplayerLobby_GameName" xml:space="preserve">
-    <value>Game Name</value>
+    <value>ルーム名</value>
   </data>
   <data name="Screen_MultiplayerLobby_ChooseGameNamePlaceholder" xml:space="preserve">
     <value>Choose a name for the game...</value>
@@ -1817,16 +1813,16 @@ for other players to download?</value>
     <value>You cannot create a game without having a map selected!</value>
   </data>
   <data name="Screen_MultiplayerLobby_MaxPlayersLabel" xml:space="preserve">
-    <value>MAX PLAYERS: </value>
+    <value>定員： </value>
   </data>
   <data name="Screen_MultiplayerLobby_LoseALifeUponFailing" xml:space="preserve">
     <value>Lose A Life Upon Failing</value>
   </data>
   <data name="Screen_MultiplayerLobby_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>はい</value>
   </data>
   <data name="Screen_MultiplayerLobby_No" xml:space="preserve">
-    <value>No</value>
+    <value>いいえ</value>
   </data>
   <data name="Screen_MultiplayerLobby_FreeMod" xml:space="preserve">
     <value>フリーMOD</value>
@@ -1838,13 +1834,13 @@ for other players to download?</value>
     <value>Difficulty Range</value>
   </data>
   <data name="Screen_MultiplayerLobby_AnyDifficultyRange" xml:space="preserve">
-    <value>Any</value>
+    <value>指定なし</value>
   </data>
   <data name="Screen_MultiplayerLobby_AnyMaximumSongLength" xml:space="preserve">
-    <value>Any</value>
+    <value>指定なし</value>
   </data>
   <data name="Screen_MultiplayerLobby_AnyLongNotePercentageRange" xml:space="preserve">
-    <value>Any</value>
+    <value>指定なし</value>
   </data>
   <data name="Screen_MultiplayerLobby_LongNotePercentageRange" xml:space="preserve">
     <value>Long Note % Range</value>
@@ -1859,7 +1855,7 @@ for other players to download?</value>
     <value>Ruleset</value>
   </data>
   <data name="Screen_MultiplayerLobby_MaxPlayers" xml:space="preserve">
-    <value>Max Players</value>
+    <value>定員</value>
   </data>
   <data name="Screen_MultiplayerLobby_Players" xml:space="preserve">
     <value>Players</value>
@@ -1877,10 +1873,10 @@ for other players to download?</value>
     <value>Host Rotation</value>
   </data>
   <data name="Screen_MultiplayerLobby_LifeCount" xml:space="preserve">
-    <value>Life Count</value>
+    <value>残機数</value>
   </data>
   <data name="Screen_MultiplayerLobby_MaximumSongLength" xml:space="preserve">
-    <value>Maximum Song Length</value>
+    <value>最大曲の長さ</value>
   </data>
   <data name="Screen_Editor_File" xml:space="preserve">
     <value>File</value>
@@ -1910,7 +1906,7 @@ for other players to download?</value>
     <value>Refresh File Cache</value>
   </data>
   <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve">
-    <value>Refresh Editor from .qua File</value>
+    <value>.quaファイルからエディターを再読み込み</value>
   </data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
     <value>Upload</value>
@@ -2150,7 +2146,7 @@ for other players to download?</value>
     <value>Minimum Frequency</value>
   </data>
   <data name="Screen_Editor_MaximumFrequency" xml:space="preserve">
-    <value>Maximum Frequency</value>
+    <value>最大周波数</value>
   </data>
   <data name="Screen_Editor_LongNoteOpacity" xml:space="preserve">
     <value>Long Note Opacity</value>
@@ -2183,7 +2179,7 @@ for other players to download?</value>
     <value>Plugins</value>
   </data>
   <data name="Screen_Editor_Local" xml:space="preserve">
-    <value>Local</value>
+    <value>ローカル</value>
   </data>
   <data name="Screen_Editor_Enabled" xml:space="preserve">
     <value>Enabled</value>
@@ -2192,7 +2188,7 @@ for other players to download?</value>
     <value>Upload To Workshop</value>
   </data>
   <data name="Screen_Editor_UploadingPluginToWorkshop" xml:space="preserve">
-    <value>Steam ワークショップにプラグインをアップロード中...</value>
+    <value>Steam ワークショップにプラグインをアップロード中…</value>
   </data>
   <data name="Screen_Editor_PluginUploadedToWorkshop" xml:space="preserve">
     <value>Successfully uploaded plugin to the workshop!</value>
@@ -2303,10 +2299,10 @@ for other players to download?</value>
     <value>SAVE CHANGES</value>
   </data>
   <data name="Screen_Editor_UnsavedChanges" xml:space="preserve">
-    <value>UNSAVED CHANGES</value>
+    <value>未保存の変更</value>
   </data>
   <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve">
-    <value>This map hasn't been saved.&#xA;Refreshing from .qua will discard unsaved changes. Continue?</value>
+    <value>この譜面は保存されていません。&#xA;.quaから再読み込みすると、未保存の変更は破棄されます。続行しますか？</value>
   </data>
   <data name="Screen_Editor_SaveBeforeCreatingDifficulty" xml:space="preserve">
     <value>You have unsaved changes. Would you like to save&#xA;before creating a new difficulty?</value>
@@ -2450,10 +2446,10 @@ for other players to download?</value>
     <value>Edit the values to change the metadata...</value>
   </data>
   <data name="Screen_Editor_ArtistName" xml:space="preserve">
-    <value>Artist Name</value>
+    <value>アーティスト名</value>
   </data>
   <data name="Screen_Editor_ArtistNamePlaceholder" xml:space="preserve">
-    <value>Name of the artist</value>
+    <value>アーティスト名</value>
   </data>
   <data name="Screen_Editor_SongTitle" xml:space="preserve">
     <value>Song Title</value>
@@ -2462,10 +2458,10 @@ for other players to download?</value>
     <value>Title of the song</value>
   </data>
   <data name="Screen_Editor_DifficultyName" xml:space="preserve">
-    <value>Difficulty Name</value>
+    <value>難易度名</value>
   </data>
   <data name="Screen_Editor_DifficultyNamePlaceholder" xml:space="preserve">
-    <value>Name of the difficulty</value>
+    <value>難易度の名称</value>
   </data>
   <data name="Screen_Editor_Source" xml:space="preserve">
     <value>Source</value>
@@ -2570,7 +2566,7 @@ for other players to download?</value>
     <value>There was an issue while loading this map in the editor.</value>
   </data>
   <data name="Screen_Editor_CannotChangeAudioRateFurther" xml:space="preserve">
-    <value>You cannot change the audio rate this way any further!</value>
+    <value>これ以上音声再生速度を変更できません</value>
   </data>
   <data name="Screen_Editor_CacheUpdatedOnExit" xml:space="preserve">
     <value>The cached data for this file will be updated when you leave the editor.</value>
@@ -2930,7 +2926,7 @@ for other players to download?</value>
     <value>Object Count</value>
   </data>
   <data name="Screen_Editor_DifficultyRating" xml:space="preserve">
-    <value>Difficulty Rating</value>
+    <value>難易度</value>
   </data>
   <data name="Screen_Editor_SelectObjectsBeforeChangingHitsounds" xml:space="preserve">
     <value>You need to select objects before changing their hitsounds!</value>
@@ -3056,7 +3052,7 @@ for other players to download?</value>
     <value>Ready for rank!</value>
   </data>
   <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve">
-    <value>Potential error; ignore it if harmless.</value>
+    <value>潜在的な問題、ランクに影響する可能性があります</value>
   </data>
   <data name="Screen_Editor_AutoModCriticalTooltip" xml:space="preserve">
     <value>This is a critical error which affects the playability of your map.</value>
@@ -3074,7 +3070,7 @@ for other players to download?</value>
     <value>Are you sure you want to reset all keybinds?</value>
   </data>
   <data name="Screen_Editor_DifficultyLabel" xml:space="preserve">
-    <value>Difficulty:</value>
+    <value>難易度：</value>
   </data>
   <data name="Screen_Editor_ModeLabel" xml:space="preserve">
     <value>モード：</value>
@@ -3107,13 +3103,13 @@ for other players to download?</value>
     <value>Legacy</value>
   </data>
   <data name="Screen_Editor_WaveformAudioDirection_Both" xml:space="preserve">
-    <value>Both</value>
+    <value>両方</value>
   </data>
   <data name="Screen_Editor_WaveformAudioDirection_Left" xml:space="preserve">
-    <value>Left</value>
+    <value>左</value>
   </data>
   <data name="Screen_Editor_WaveformAudioDirection_Right" xml:space="preserve">
-    <value>Right</value>
+    <value>右</value>
   </data>
   <data name="Screen_Editor_WaveformFilter_None" xml:space="preserve">
     <value>None</value>

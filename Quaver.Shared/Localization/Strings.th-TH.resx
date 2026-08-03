@@ -121,13 +121,13 @@
     <value>ผู้เล่นหลายคน</value>
   </data>
   <data name="Screen_Main_Editor" xml:space="preserve">
-    <value>เครื่องมือแก้ไข</value>
+    <value>ตัวแก้ไข</value>
   </data>
   <data name="Screen_Main_Competitive" xml:space="preserve">
     <value>แข่งขัน</value>
   </data>
   <data name="Screen_Main_MapEditor" xml:space="preserve">
-    <value>เครื่องมือแก้ไขแมพ</value>
+    <value>ตัวแก้ไขแมพ</value>
   </data>
   <data name="Screen_Main_DownloadMaps" xml:space="preserve">
     <value>ดาวน์โหลดแมพ</value>
@@ -562,7 +562,7 @@
     <value>Song Selection</value>
   </data>
   <data name="Screen_Options_Editor" xml:space="preserve">
-    <value>เครื่องมือแก้ไข</value>
+    <value>ตัวแก้ไข</value>
   </data>
   <data name="Screen_Options_Misc" xml:space="preserve">
     <value>อื่น ๆ</value>
@@ -1058,7 +1058,7 @@
     <value>Toggle Playtest Autoplay</value>
   </data>
   <data name="Screen_Options_InvertEditorScrolling" xml:space="preserve">
-    <value>Invert Editor Scrolling</value>
+    <value>สลับทิศทางการเลื่อนในตัวแก้ไข</value>
   </data>
   <data name="Screen_Options_InvertScrolling" xml:space="preserve">
     <value>Invert Scrolling</value>
@@ -1106,7 +1106,7 @@
     <value>Prefer macOS Input Handling</value>
   </data>
   <data name="Screen_Options_EditorImGuiScale" xml:space="preserve">
-    <value>Editor ImGui Scale</value>
+    <value>ขนาดของ ImGui ในตัวแก้ไข</value>
   </data>
   <data name="Screen_Options_OPTIONSMENU" xml:space="preserve">
     <value>OPTIONS MENU</value>
@@ -1878,124 +1878,124 @@ sure you would like to start without all players ready?</value>
     <value>ความยาวเพลงสูงสุด</value>
   </data>
   <data name="Screen_Editor_File" xml:space="preserve">
-    <value>File</value>
+    <value>ไฟล์</value>
   </data>
   <data name="Screen_Editor_NewSong" xml:space="preserve">
-    <value>New Song</value>
+    <value>เพลงใหม่</value>
   </data>
   <data name="Screen_Editor_SwitchDifficulty" xml:space="preserve">
-    <value>Switch Difficulty</value>
+    <value>เปลี่ยนระดับความยาก</value>
   </data>
   <data name="Screen_Editor_CreateNewDifficulty" xml:space="preserve">
-    <value>Create New Difficulty</value>
+    <value>สร้างระดับความยากใหม่</value>
   </data>
   <data name="Screen_Editor_NewMap" xml:space="preserve">
-    <value>New Map</value>
+    <value>แมพใหม่</value>
   </data>
   <data name="Screen_Editor_CopyCurrentMap" xml:space="preserve">
-    <value>Copy Current Map</value>
+    <value>คัดลอกแมพปัจจุบัน</value>
   </data>
   <data name="Screen_Editor_FromQuaFile" xml:space="preserve">
-    <value>From .qua File</value>
+    <value>จากไฟล์ .qua</value>
   </data>
   <data name="Screen_Editor_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>บันทึก</value>
   </data>
   <data name="Screen_Editor_RefreshFileCache" xml:space="preserve">
-    <value>Refresh File Cache</value>
+    <value>รีเฟรชแคชไฟล์</value>
   </data>
   <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve">
     <value>Refresh Editor from .qua File</value>
   </data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
-    <value>Upload</value>
+    <value>อัปโหลด</value>
   </data>
   <data name="Screen_Editor_SubmitForRank" xml:space="preserve">
     <value>Submit For Rank</value>
   </data>
   <data name="Screen_Editor_Export" xml:space="preserve">
-    <value>Export</value>
+    <value>นำออก</value>
   </data>
   <data name="Screen_Editor_OpenSongFolder" xml:space="preserve">
-    <value>Open Song Folder</value>
+    <value>เปิดโฟลเดอร์เพลง</value>
   </data>
   <data name="Screen_Editor_OpenQuaFile" xml:space="preserve">
-    <value>Open .qua File</value>
+    <value>เปิดไฟล์ .qua</value>
   </data>
   <data name="Screen_Editor_Exit" xml:space="preserve">
-    <value>Exit</value>
+    <value>ออก</value>
   </data>
   <data name="Screen_Editor_Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>แก้ไข</value>
   </data>
   <data name="Screen_Editor_Undo" xml:space="preserve">
-    <value>Undo</value>
+    <value>เลิกทำ</value>
   </data>
   <data name="Screen_Editor_Redo" xml:space="preserve">
-    <value>Redo</value>
+    <value>ทำซ้ำ</value>
   </data>
   <data name="Screen_Editor_Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>คัดลอก</value>
   </data>
   <data name="Screen_Editor_Cut" xml:space="preserve">
-    <value>Cut</value>
+    <value>ตัด</value>
   </data>
   <data name="Screen_Editor_PasteSnapped" xml:space="preserve">
-    <value>Paste (snapped)</value>
+    <value>วาง (ตรงเส้น)</value>
   </data>
   <data name="Screen_Editor_PasteUnsnapped" xml:space="preserve">
-    <value>Paste (unsnapped)</value>
+    <value>วาง (ไม่ตรงเส้น)</value>
   </data>
   <data name="Screen_Editor_Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>ลบ</value>
   </data>
   <data name="Screen_Editor_SelectAll" xml:space="preserve">
-    <value>Select All</value>
+    <value>เลือกทั้งหมด </value>
   </data>
   <data name="Screen_Editor_SelectAllInLayer" xml:space="preserve">
-    <value>Select All In Layer</value>
+    <value>เลือกทั้งหมดในเลเยอร์</value>
   </data>
   <data name="Screen_Editor_FlipObjects" xml:space="preserve">
-    <value>Flip Objects</value>
+    <value>พลิกวัตถุ</value>
   </data>
   <data name="Screen_Editor_SwapLanesOfObjects" xml:space="preserve">
-    <value>Swap Lanes of Objects</value>
+    <value>สลับแถวของวัตถุ</value>
   </data>
   <data name="Screen_Editor_Lane" xml:space="preserve">
-    <value>Lane {0}</value>
+    <value>แถวที่ {0}</value>
   </data>
   <data name="Screen_Editor_MoveObjectsToLayer" xml:space="preserve">
-    <value>Move Objects To Layer</value>
+    <value>ย้ายวัตถุไปยังเลเยอร์</value>
   </data>
   <data name="Screen_Editor_DefaultLayer" xml:space="preserve">
-    <value>Default Layer</value>
+    <value>เลเยอร์เริ่มต้น</value>
   </data>
   <data name="Screen_Editor_MoveObjectsToTimingGroup" xml:space="preserve">
-    <value>Move Objects To Timing Group</value>
+    <value>ย้ายวัตถุไปยังกลุ่มกำหนดจังหวะเวลา</value>
   </data>
   <data name="Screen_Editor_DefaultTimingGroup" xml:space="preserve">
-    <value>Default Timing Group</value>
+    <value>กลุ่มกำหนดจังหวะเวลาเริ่มต้น</value>
   </data>
   <data name="Screen_Editor_EditMetadata" xml:space="preserve">
-    <value>Edit Metadata</value>
+    <value>แก้ไข Metadata</value>
   </data>
   <data name="Screen_Editor_EditTimingPoints" xml:space="preserve">
-    <value>Edit Timing Points</value>
+    <value>แก้ไขจุดกำหนดจังหวะเวลา</value>
   </data>
   <data name="Screen_Editor_EditScrollVelocities" xml:space="preserve">
-    <value>Edit Scroll Velocities</value>
+    <value>แก้ไข Scroll Velocity</value>
   </data>
   <data name="Screen_Editor_EditScrollSpeedFactors" xml:space="preserve">
-    <value>Edit Scroll Speed Factors</value>
+    <value>แก้ไข Scroll Speed Factor</value>
   </data>
   <data name="Screen_Editor_AddBackgroundImage" xml:space="preserve">
     <value>Add Background Image</value>
   </data>
   <data name="Screen_Editor_SetSongSelectPreviewTime" xml:space="preserve">
-    <value>Set Song Select Preview Time</value>
+    <value>ตั้งเวลาตัวอย่างหน้าเลือกเพลง</value>
   </data>
   <data name="Screen_Editor_EnableAutoMod" xml:space="preserve">
-    <value>Enable AutoMod</value>
+    <value>เปิดใช้งาน AutoMod</value>
   </data>
   <data name="Screen_Editor_ApplyOffsetToMap" xml:space="preserve">
     <value>Apply Offset To Map</value>
@@ -2034,7 +2034,7 @@ sure you would like to start without all players ready?</value>
     <value>Inverse</value>
   </data>
   <data name="Screen_Editor_View" xml:space="preserve">
-    <value>View</value>
+    <value>มุมมอง</value>
   </data>
   <data name="Screen_Editor_Panels" xml:space="preserve">
     <value>Panels</value>
@@ -2058,7 +2058,7 @@ sure you would like to start without all players ready?</value>
     <value>Reference Difficulty</value>
   </data>
   <data name="Screen_Editor_None" xml:space="preserve">
-    <value>None</value>
+    <value>ไม่มี</value>
   </data>
   <data name="Screen_Editor_EditorNoteSkin" xml:space="preserve">
     <value>Editor NoteSkin</value>
@@ -2121,7 +2121,7 @@ sure you would like to start without all players ready?</value>
     <value>Filter</value>
   </data>
   <data name="Screen_Editor_Color" xml:space="preserve">
-    <value>Color</value>
+    <value>สี</value>
   </data>
   <data name="Screen_Editor_Spectrogram" xml:space="preserve">
     <value>Spectrogram</value>
@@ -2166,7 +2166,7 @@ sure you would like to start without all players ready?</value>
     <value>Test Play Modifiers</value>
   </data>
   <data name="Screen_Editor_Tools" xml:space="preserve">
-    <value>Tools</value>
+    <value>เครื่องมือ</value>
   </data>
   <data name="Screen_Editor_ResetWindowLayout" xml:space="preserve">
     <value>Reset Window Layout</value>
@@ -2175,7 +2175,7 @@ sure you would like to start without all players ready?</value>
     <value>The window layout will be reset the next time you open the editor!</value>
   </data>
   <data name="Screen_Editor_Plugins" xml:space="preserve">
-    <value>Plugins</value>
+    <value>ปลั๊กอิน</value>
   </data>
   <data name="Screen_Editor_Local" xml:space="preserve">
     <value>Local</value>
@@ -2199,13 +2199,13 @@ sure you would like to start without all players ready?</value>
     <value>No Plugins Installed</value>
   </data>
   <data name="Screen_Editor_SteamWorkshop" xml:space="preserve">
-    <value>Steam Workshop</value>
+    <value>เวิร์กชอป Steam</value>
   </data>
   <data name="Screen_Editor_Help" xml:space="preserve">
-    <value>Help</value>
+    <value>ช่วยเหลือ</value>
   </data>
   <data name="Screen_Editor_Wiki" xml:space="preserve">
-    <value>Wiki</value>
+    <value>วิกิ</value>
   </data>
   <data name="Screen_Editor_GettingStarted" xml:space="preserve">
     <value>Getting Started</value>
@@ -2220,7 +2220,7 @@ sure you would like to start without all players ready?</value>
     <value>Ranking Process</value>
   </data>
   <data name="Screen_Editor_Web" xml:space="preserve">
-    <value>Web</value>
+    <value>เว็บ</value>
   </data>
   <data name="Screen_Editor_ViewOnlineListing" xml:space="preserve">
     <value>View Online Listing</value>
@@ -2241,7 +2241,7 @@ sure you would like to start without all players ready?</value>
     <value>Volume</value>
   </data>
   <data name="Screen_Editor_DefaultPercentage" xml:space="preserve">
-    <value>Default ({0}%)</value>
+    <value>ค่าเริ่มต้น ({0}%)</value>
   </data>
   <data name="Screen_Editor_Metronome" xml:space="preserve">
     <value>Metronome</value>
@@ -2298,7 +2298,7 @@ sure you would like to start without all players ready?</value>
     <value>SAVE CHANGES</value>
   </data>
   <data name="Screen_Editor_UnsavedChanges" xml:space="preserve">
-    <value>UNSAVED CHANGES</value>
+    <value>การเปลี่ยนแปลงที่ยังไม่ได้บันทึก</value>
   </data>
   <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve">
     <value>This map hasn't been saved.&#xA;Refreshing from .qua will discard unsaved changes. Continue?</value>
@@ -2313,13 +2313,13 @@ sure you would like to start without all players ready?</value>
     <value>Your map has been successfully saved!</value>
   </data>
   <data name="Screen_Editor_ExitEditor" xml:space="preserve">
-    <value>EXIT EDITOR</value>
+    <value>ออกจากตัวแก้ไข</value>
   </data>
   <data name="Screen_Editor_SaveBeforeExit" xml:space="preserve">
-    <value>You have unsaved changes. Would you like to save?</value>
+    <value>คุณยังไม่ได้บันทึกการเปลี่ยนแปลง ต้องการบันทึกหรือไม่?</value>
   </data>
   <data name="Screen_Editor_No" xml:space="preserve">
-    <value>NO</value>
+    <value>ไม่</value>
   </data>
   <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve">
     <value>Submit this mapset for rank?&#xA;It must meet the ranking criteria.</value>
@@ -2373,7 +2373,7 @@ sure you would like to start without all players ready?</value>
     <value>There was an issue while creating a new difficulty.</value>
   </data>
   <data name="Screen_Editor_UploadMapset" xml:space="preserve">
-    <value>UPLOAD MAPSET</value>
+    <value>อัปโหลดแมพเซต</value>
   </data>
   <data name="Screen_Editor_UploadMapsetConfirmation" xml:space="preserve">
     <value>Are you sure you would like to upload your mapset to the server?&#xA;Note: You must own the rights to all files you upload.</value>
@@ -2397,31 +2397,31 @@ sure you would like to start without all players ready?</value>
     <value>Would you like to change the background or the banner?</value>
   </data>
   <data name="Screen_Editor_Background" xml:space="preserve">
-    <value>BACKGROUND</value>
+    <value>พื้นหลัง</value>
   </data>
   <data name="Screen_Editor_Banner" xml:space="preserve">
-    <value>BANNER</value>
+    <value>แบนเนอร์</value>
   </data>
   <data name="Screen_Editor_BackgroundChangedSuccessfully" xml:space="preserve">
-    <value>Your background has been successfully changed!</value>
+    <value>เปลี่ยนพื้นหลังสำเร็จ!</value>
   </data>
   <data name="Screen_Editor_ChangeBackgroundError" xml:space="preserve">
     <value>There was an issue changing your background!</value>
   </data>
   <data name="Screen_Editor_ChangingBanner" xml:space="preserve">
-    <value>CHANGING BANNER</value>
+    <value>กำลังเปลี่ยนแบนเนอร์</value>
   </data>
   <data name="Screen_Editor_ChangingBannerMessage" xml:space="preserve">
-    <value>Please wait while your banner is being changed...</value>
+    <value>โปรดรอสักครู่ขณะกำลังเปลี่ยนแบนเนอร์...</value>
   </data>
   <data name="Screen_Editor_BannerChangedSuccessfully" xml:space="preserve">
-    <value>Your banner has successfully changed!</value>
+    <value>เปลี่ยนแบนเนอร์สำเร็จ!</value>
   </data>
   <data name="Screen_Editor_ChangeBannerError" xml:space="preserve">
     <value>There was an issue changing your banner!</value>
   </data>
   <data name="Screen_Editor_SelectColor" xml:space="preserve">
-    <value>SELECT COLOR</value>
+    <value>เลือกสี</value>
   </data>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve">
     <value>Please wait while your map is being submitted for rank...</value>
@@ -2445,43 +2445,43 @@ sure you would like to start without all players ready?</value>
     <value>Edit the values to change the metadata...</value>
   </data>
   <data name="Screen_Editor_ArtistName" xml:space="preserve">
-    <value>Artist Name</value>
+    <value>ชื่อศิลปิน</value>
   </data>
   <data name="Screen_Editor_ArtistNamePlaceholder" xml:space="preserve">
-    <value>Name of the artist</value>
+    <value>ชื่อของศิลปิน</value>
   </data>
   <data name="Screen_Editor_SongTitle" xml:space="preserve">
-    <value>Song Title</value>
+    <value>ชื่อเพลง</value>
   </data>
   <data name="Screen_Editor_SongTitlePlaceholder" xml:space="preserve">
-    <value>Title of the song</value>
+    <value>ชื่อของเพลง</value>
   </data>
   <data name="Screen_Editor_DifficultyName" xml:space="preserve">
-    <value>Difficulty Name</value>
+    <value>ชื่อระดับความยาก</value>
   </data>
   <data name="Screen_Editor_DifficultyNamePlaceholder" xml:space="preserve">
-    <value>Name of the difficulty</value>
+    <value>ชื่อของระดับความยาก</value>
   </data>
   <data name="Screen_Editor_Source" xml:space="preserve">
-    <value>Source</value>
+    <value>แหล่งที่มา</value>
   </data>
   <data name="Screen_Editor_SourcePlaceholder" xml:space="preserve">
-    <value>Source of the song (album, mixtape, etc)</value>
+    <value>แหล่งที่มาของเพลง (อัลบั้ม มิกซ์เทป ฯลฯ)</value>
   </data>
   <data name="Screen_Editor_Tags" xml:space="preserve">
-    <value>Tags</value>
+    <value>แท็ก</value>
   </data>
   <data name="Screen_Editor_TagsPlaceholder" xml:space="preserve">
-    <value>Comma-separated tags to help players find your map</value>
+    <value>แท็กที่แยกด้วยเครื่องหมายจุลภาคเพื่อช่วยให้ผู้เล่นหาแมพเจอ</value>
   </data>
   <data name="Screen_Editor_CreatorUsername" xml:space="preserve">
-    <value>Creator Username</value>
+    <value>ชื่อผู้ใช้ของผู้สร้าง</value>
   </data>
   <data name="Screen_Editor_CreatorUsernamePlaceholder" xml:space="preserve">
-    <value>Your username</value>
+    <value>ชื่อผู้ใช้ของคุณ</value>
   </data>
   <data name="Screen_Editor_KeyCount" xml:space="preserve">
-    <value>Key Count</value>
+    <value>จำนวนคีย์</value>
   </data>
   <data name="Screen_Editor_BpmAffectsSv" xml:space="preserve">
     <value>BPM AFFECTS SV:</value>
@@ -2508,10 +2508,10 @@ sure you would like to start without all players ready?</value>
     <value>Deleted layer '{0}'</value>
   </data>
   <data name="Screen_Editor_CannotRenameDefaultLayer" xml:space="preserve">
-    <value>You cannot rename the default layer!</value>
+    <value>เปลี่ยนชื่อเลเยอร์เริ่มต้นไม่ได้!</value>
   </data>
   <data name="Screen_Editor_CannotRecolorDefaultLayer" xml:space="preserve">
-    <value>You cannot recolor the default layer!</value>
+    <value>เปลี่ยนสีเลเยอร์เริ่มต้นไม่ได้!</value>
   </data>
   <data name="Screen_Editor_CannotDeleteDefaultTimingGroups" xml:space="preserve">
     <value>You cannot delete the default timing groups!</value>
@@ -2649,7 +2649,7 @@ sure you would like to start without all players ready?</value>
     <value>Hide Lines</value>
   </data>
   <data name="Screen_Editor_ScrollVelocityEditor" xml:space="preserve">
-    <value>Scroll Velocity Editor</value>
+    <value>ตัวแก้ไข Scroll Velocity</value>
   </data>
   <data name="Screen_Editor_ScrollVelocityHelp" xml:space="preserve">
     <value>Scroll Velocities (SV) allow you to dynamically change the speed and direction at which the objects fall.</value>
