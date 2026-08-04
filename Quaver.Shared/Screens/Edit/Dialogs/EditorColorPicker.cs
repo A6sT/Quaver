@@ -13,6 +13,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
     {
         private const ImGuiColorEditFlags PickerFlags =
             ImGuiColorEditFlags.DisplayRGB |
+            ImGuiColorEditFlags.DisplayHex |
             ImGuiColorEditFlags.InputRGB |
             ImGuiColorEditFlags.Uint8;
 
@@ -23,6 +24,7 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
         private NumericsVector3 color;
         private Color? pendingColor;
         private bool positionWindow = true;
+        private bool outsideClickReady;
 
         public bool IsOpen { get; private set; } = true;
 
@@ -70,8 +72,11 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
                 new NumericsVector2(300, 0),
                 new NumericsVector2(float.MaxValue, float.MaxValue));
 
-            if (ImGui.Begin(title + "###EditorColorPicker", ref open,
-                    ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoSavedSettings))
+            var contentsVisible = ImGui.Begin(title + "###EditorColorPicker", ref open,
+                ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoSavedSettings);
+            var windowHovered = ImGui.IsWindowHovered(ImGuiHoveredFlags.AnyWindow);
+
+            if (contentsVisible)
             {
                 if (ImGui.ColorPicker3("##EditorColor", ref color, PickerFlags))
                     pendingColor = ToColor(color);
@@ -86,6 +91,18 @@ namespace Quaver.Shared.Screens.Edit.Dialogs
             ImGui.End();
 
             if (!open)
+            {
+                closeRequested?.Invoke();
+                return;
+            }
+
+            if (!outsideClickReady)
+            {
+                outsideClickReady = !ImGui.IsMouseDown(ImGuiMouseButton.Left);
+                return;
+            }
+
+            if (ImGui.IsMouseClicked(ImGuiMouseButton.Left) && !windowHovered)
                 closeRequested?.Invoke();
         }
 
