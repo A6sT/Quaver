@@ -553,7 +553,7 @@
     <value>Contrôles du Gameplay</value>
   </data>
   <data name="Screen_Options_ModKeybindTooltip" xml:space="preserve">
-    <value>Mod allows a keybind to trigger while additional modifier keys (Ctrl, Alt, or Shift) are held.</value>
+    <value>Mod permet aux raccourcis de se déclencher alors que d'autres touches de modification (Ctrl, Alt ou Shift) sont maintenues.</value>
   </data>
   <data name="Screen_Options_GameplayUserInterface" xml:space="preserve">
     <value>Interface Utilisateur du Gameplay</value>
@@ -797,7 +797,7 @@ Si la map n'a pas été terminée, le graphique affiche également la performanc
     <value>Une erreur s'est produite lors de l'exportation du replay!</value>
   </data>
   <data name="Screen_Results_YouhavealreadyfixedyourlocaloffsetforthismapTheresnoneedtodoitagain" xml:space="preserve">
-    <value>This map's local offset is already fixed.</value>
+    <value>Le décalage local de cette map est déjà fixé.</value>
   </data>
   <data name="Screen_Results_Thereisnodatatobeabletofixyourlocaloffset" xml:space="preserve">
     <value>Aucune donnée n'est disponible pour corriger votre décalage local!</value>
@@ -1982,7 +1982,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Modifier les Points de Tempo</value>
   </data>
   <data name="Screen_Editor_EditScrollVelocities" xml:space="preserve">
-    <value>Modifier les Vitesses de Défilement</value>
+    <value>Modifier les Vélocités de Défilement</value>
   </data>
   <data name="Screen_Editor_EditScrollSpeedFactors" xml:space="preserve">
     <value>Modifier les facteurs de vitesse de défilement</value>
@@ -2102,7 +2102,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Placer des Notes Longues lors du Mapping en Direct</value>
   </data>
   <data name="Screen_Editor_SetLiveMappingLongNoteMinimumLength" xml:space="preserve">
-    <value>Set Minimum Length Of Long Notes Placed During Live Mapping</value>
+    <value>Définir la Longueur Minimale des Notes Longues Placées Pendant le Mapping en Direct</value>
   </data>
   <data name="Screen_Editor_Waveform" xml:space="preserve">
     <value>Spectre audio</value>
@@ -2252,7 +2252,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Raccourcis clavier</value>
   </data>
   <data name="Screen_Editor_InvertBeatSnapScroll" xml:space="preserve">
-    <value>Invert Beat Snap Scroll</value>
+    <value>Inverser le défilement de Calage Rythmique</value>
   </data>
   <data name="Screen_Editor_InvertScrolling" xml:space="preserve">
     <value>Inverser le sens du défilement</value>
@@ -2270,16 +2270,16 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Tous les raccourcis ont été réinitialisés !</value>
   </data>
   <data name="Screen_Editor_AddBookmark" xml:space="preserve">
-    <value>AJOUTER UN MARQUE-PAGE</value>
+    <value>AJOUTER UN SIGNET</value>
   </data>
   <data name="Screen_Editor_EditBookmark" xml:space="preserve">
-    <value>MODIFIER LE MARQUE-PAGE</value>
+    <value>MODIFIER LE SIGNET</value>
   </data>
   <data name="Screen_Editor_BookmarkDialogMessage" xml:space="preserve">
-    <value>Ajouter une note personnalisée pour votre marque-page...</value>
+    <value>Ajouter une note personnalisée pour votre signet...</value>
   </data>
   <data name="Screen_Editor_BookmarkNotePlaceholder" xml:space="preserve">
-    <value>Ajouter une note de marque-page...</value>
+    <value>Ajouter une note de signet...</value>
   </data>
   <data name="Screen_Editor_CreateNewMapset" xml:space="preserve">
     <value>CREER UNE NOUVELLE COLLECTION</value>
@@ -2288,7 +2288,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Pour Créer une Nouvelle Collection, Glissez un Fichier .mp3 dans la Fenêtre du Jeu</value>
   </data>
   <data name="Screen_Editor_ApplyOffsetToMapMessage" xml:space="preserve">
-    <value>Entrez une valeur pour appliquer un décalage à tous les objets, les points de timing et les vitesses de défilement de votre map...</value>
+    <value>Entrez une valeur pour appliquer un décalage à tous les objets, les points de timing,&#xA; et les vélocités de défilement de votre map...</value>
   </data>
   <data name="Screen_Editor_ApplyOffsetPlaceholder" xml:space="preserve">
     <value>Entrez un décalage à appliquer à votre carte...</value>
@@ -2324,13 +2324,13 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Soumettez cette collection de map pour le classement?&#xA;Elle doit remplir les critères de classement.</value>
   </data>
   <data name="Screen_Editor_CustomBeatSnap" xml:space="preserve">
-    <value>CUSTOM BEAT SNAP</value>
+    <value>CALAGE RYTHMIQUE PERSONNALISÉ</value>
   </data>
   <data name="Screen_Editor_CustomBeatSnapMessage" xml:space="preserve">
-    <value>Enter a value or range of values for the custom beat snap divisor (1/?)...</value>
+    <value>Entrez une valeur ou une plage de valeurs pour le diviseur de calage rythmique personnalisé (1/?)...</value>
   </data>
   <data name="Screen_Editor_CustomBeatSnapPlaceholder" xml:space="preserve">
-    <value>Enter a beat snap value or range (max 48, e.g. "7" or "5-9")</value>
+    <value>Entrez une valeur ou une plage de calage rythmique (maximum 48, par exemple "7" ou "5-9")</value>
   </data>
   <data name="Screen_Editor_SetLiveMapOffset" xml:space="preserve">
     <value>CHANGER LE DÉCALAGE DU MAPPING EN DIRECT</value>
@@ -2342,25 +2342,25 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Entrez un décalage pour le mapping en direct...</value>
   </data>
   <data name="Screen_Editor_SetLiveMapLongNoteThreshold" xml:space="preserve">
-    <value>SET LIVEMAP LN THRESHOLD</value>
+    <value>DÉFINIR LE SEUIL DE LN EN LIVEMAP</value>
   </data>
   <data name="Screen_Editor_SetLiveMapLongNoteThresholdMessage" xml:space="preserve">
-    <value>Enter the minimum length of a long note during live-mapping...</value>
+    <value>Entrez la longueur minimale d'une note longue pendant le mappage en direct...</value>
   </data>
   <data name="Screen_Editor_SetLiveMapLongNoteThresholdPlaceholder" xml:space="preserve">
-    <value>Enter a threshold of LNs during livemapping...</value>
+    <value>Entrez un seuil de LNs pendant le livemapping...</value>
   </data>
   <data name="Screen_Editor_InvalidValue" xml:space="preserve">
     <value>Valeur incorrecte: '{0}'</value>
   </data>
   <data name="Screen_Editor_ChangeTimingGroupColor" xml:space="preserve">
-    <value>CHANGE TIMING GROUP COLOR</value>
+    <value>CHANGER LA COULEUR DU GROUPE DE TIMING</value>
   </data>
   <data name="Screen_Editor_ChangeWaveformColor" xml:space="preserve">
     <value>CHANGER LA COULEUR DU SPECTRE AUDIO</value>
   </data>
   <data name="Screen_Editor_AddDifficultyFromFile" xml:space="preserve">
-    <value>ADD DIFFICULTY FROM FILE</value>
+    <value>AJOUTER LA DIFFICULTÉ DU FICHIER</value>
   </data>
   <data name="Screen_Editor_AddDifficultyFromFileMessage" xml:space="preserve">
     <value>Faites glisser un fichier .qua dans la fenêtre pour l'ajouter à la collection de map.</value>
@@ -2375,7 +2375,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>PUBLIER LA COLLECTION DE MAP</value>
   </data>
   <data name="Screen_Editor_UploadMapsetConfirmation" xml:space="preserve">
-    <value>Are you sure you would like to upload your mapset to the server?&#xA;Note: You must own the rights to all files you upload.</value>
+    <value>Êtes-vous sûr de vouloir publier votre collection de map sur le serveur?&#xA;Note : Vous devez posséder les droits sur tous les fichiers que vous publiez.</value>
   </data>
   <data name="Screen_Editor_CannotSubmitRankedMapset" xml:space="preserve">
     <value>Vous ne pouvez pas soumettre une collection de maps qui est déjà classée !</value>
@@ -2390,7 +2390,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Voulez-vous appliquer le modificateur: "{0}" sur votre map?&#xA;&#xA;Cette action n'est PAS réversible! Choisissez judicieusement.</value>
   </data>
   <data name="Screen_Editor_ChangeBackgroundOrBanner" xml:space="preserve">
-    <value>CHANGE BACKGROUND / BANNER</value>
+    <value>CHANGER L'ARRIERE-PLAN / LA BANNIERE</value>
   </data>
   <data name="Screen_Editor_ChangeBackgroundOrBannerMessage" xml:space="preserve">
     <value>Voulez-vous changer l'arrière-plan ou la bannière ?</value>
@@ -2429,7 +2429,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>AutoMod a trouvé des éléments bloquant le classement. Examinez chaque difficulté et réessayez.</value>
   </data>
   <data name="Screen_Editor_SubmitForRankError" xml:space="preserve">
-    <value>An error occurred while submitting your mapset for rank.</value>
+    <value>Une erreur est survenue lors de l'envoi de votre map pour le classement.</value>
   </data>
   <data name="Screen_Editor_BpmAffectsSvTooltip" xml:space="preserve">
     <value>Quand activé, un changement de BPM changera aussi la Vélocité de Défilement. Exemple : passer de 120 à 240BPM crée un multiplicateur de Vélocité de Défilement implicite de 2x du début de ce changement de BPM jusqu'au prochain. Les Vélocités de Défilement sont quand mêmes appliqués.</value>
@@ -2483,10 +2483,10 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Nombre de touches</value>
   </data>
   <data name="Screen_Editor_BpmAffectsSv" xml:space="preserve">
-    <value>BPM AFFECTS SV:</value>
+    <value>BPM AFFECTANT LE SV:</value>
   </data>
   <data name="Screen_Editor_ScratchKey" xml:space="preserve">
-    <value>SCRATCH KEY:</value>
+    <value>TOUCHE DE SCRATCH:</value>
   </data>
   <data name="Screen_Editor_LegacyLnRendering" xml:space="preserve">
     <value>ANCIEN MOTEUR DE RENDU DES LN :</value>
@@ -2546,10 +2546,10 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>La collection de map a été exportée avec succès !</value>
   </data>
   <data name="Screen_Editor_CannotImportCurrentKeymap" xml:space="preserve">
-    <value>You cannot import the keymap you are already using!</value>
+    <value>Vous ne pouvez pas importer des raccourcis que vous utilisez déjà!</value>
   </data>
   <data name="Screen_Editor_KeymapApplied" xml:space="preserve">
-    <value>The keymap has been applied!</value>
+    <value>Les raccourcis ont été appliquées!</value>
   </data>
   <data name="Screen_Editor_EnabledSetting" xml:space="preserve">
     <value>Activé {0}</value>
@@ -2564,16 +2564,16 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Il y a eu un problème lors du chargement de cette carte dans l'éditeur.</value>
   </data>
   <data name="Screen_Editor_CannotChangeAudioRateFurther" xml:space="preserve">
-    <value>You cannot change the audio rate this way any further!</value>
+    <value>Vous ne pouvez pas changer le débit audio de cette façon encore!</value>
   </data>
   <data name="Screen_Editor_CacheUpdatedOnExit" xml:space="preserve">
     <value>Les données mises en cache pour ce fichier seront mises à jour lorsque vous quitterez l'éditeur.</value>
   </data>
   <data name="Screen_Editor_NoHitObjectsPastThisPoint" xml:space="preserve">
-    <value>There aren't any hitobjects to play past this point!</value>
+    <value>Il n'y a aucune note à jouer après ce point!</value>
   </data>
   <data name="Screen_Editor_TimingPointRequiredForTestPlay" xml:space="preserve">
-    <value>A timing point must be added to your map before test playing!</value>
+    <value>Un point de timing doit être ajouté avant de tester votre map!</value>
   </data>
   <data name="Screen_Editor_CannotCreateDifficultyForImportedMap" xml:space="preserve">
     <value>Vous ne pouvez pas créer de nouvelles difficultés pour les maps venant d'autres jeux. Créez une collection!</value>
@@ -2594,25 +2594,25 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Coloration {0} désactivée</value>
   </data>
   <data name="Screen_Editor_AddBookmarkTooltip" xml:space="preserve">
-    <value>Adds a bookmark at the current position the timeline.&#xA;- Hover over a bookmark tick to view the note associated with it.&#xA;- Left click a bookmark tick to edit it.&#xA;- Right click a bookmark tick to delete it.&#xA;Hotkey: {0}</value>
+    <value>Ajoute un signet à la position actuelle de la timeline.&#xA;- Survolez un signet pour voir la note qui lui est associée. #xA;- Clic gauche sur un signet pour l'éditer.&#xA;- Clic droit sur un signet pour le supprimer.&#xA;Raccourci : {0}</value>
   </data>
   <data name="Screen_Editor_BeatSnap" xml:space="preserve">
-    <value>Beat Snap</value>
+    <value>Calage Rythmique</value>
   </data>
   <data name="Screen_Editor_BeatSnapTooltip" xml:space="preserve">
-    <value>Change the current beat snap divisor.&#xA;Hotkeys: {0} / {1}</value>
+    <value>Change le diviseur de calage rythmique actuel.&#xA;Raccourcis : {0} / {1}</value>
   </data>
   <data name="Screen_Editor_PlaybackSpeedTooltip" xml:space="preserve">
-    <value>Change the audio playback rate.&#xA;Hotkeys: {0} / {1}</value>
+    <value>Changer la vitesse de lecture audio.&#xA;Raccourcis clés : {0} / {1}</value>
   </data>
   <data name="Screen_Editor_TestPlay" xml:space="preserve">
     <value>Essai</value>
   </data>
   <data name="Screen_Editor_TestPlayTooltip" xml:space="preserve">
-    <value>Save and test play your map.&#xA;Right-clicking will allow you to select modifers to use while test playing.&#xA;Hotkey: {0}</value>
+    <value>Enregistrer et tester la map.&#xA;Faire un clic droit vous permettra de sélectionner les modificateurs à utiliser lors du test.&#xA;Raccourci : {0}</value>
   </data>
   <data name="Screen_Editor_TimingPointEditor" xml:space="preserve">
-    <value>Timing Point Editor</value>
+    <value>Éditeur de Point de Timing</value>
   </data>
   <data name="Screen_Editor_TimingPointHelp" xml:space="preserve">
     <value>Les Points de Timing sont des sections individuelles de BPM dans votre map, ce qui vous permet de placer les objets avec précision sur la musique.</value>
@@ -2627,16 +2627,16 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Retirer</value>
   </data>
   <data name="Screen_Editor_SelectCurrentTimingPoint" xml:space="preserve">
-    <value>Select current timing point</value>
+    <value>Sélectionnez le point de timing actuel</value>
   </data>
   <data name="Screen_Editor_SelectCurrentTimingPointTooltip" xml:space="preserve">
-    <value>This will select the timing point at the current editor timestamp. If Ctrl is held, it will add it to your selection instead. If Shift is held, it will select all timing points up to that range, if one is selected already.</value>
+    <value>Ceci sélectionnera le point de timing actuel de l'éditeur. Si Ctrl est maintenu, il l'ajoutera à votre sélection à la place. Si Shift est maintenu, il sélectionnera tous les points de timing jusqu'à cette plage, si un est déjà sélectionné.</value>
   </data>
   <data name="Screen_Editor_Time" xml:space="preserve">
-    <value>Time</value>
+    <value>Temps</value>
   </data>
   <data name="Screen_Editor_MoveTimesBy" xml:space="preserve">
-    <value>Move Times By</value>
+    <value>Déplacement du Temps de</value>
   </data>
   <data name="Screen_Editor_Bpm" xml:space="preserve">
     <value>BPM</value>
@@ -2657,7 +2657,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Vous pouvez cliquer sur un point {0} en particulier pour le modifier et double-cliquer pour aller à sa position dans le temps.</value>
   </data>
   <data name="Screen_Editor_DifferenceFromSf" xml:space="preserve">
-    <value>(Difference from SF)</value>
+    <value>(Différence avec SF)</value>
   </data>
   <data name="Screen_Editor_Sv" xml:space="preserve">
     <value>SV</value>
@@ -2684,37 +2684,37 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Éditeur de groupes de timings</value>
   </data>
   <data name="Screen_Editor_ColorObjectsByTimingGroup" xml:space="preserve">
-    <value>Color Objects By Timing Group</value>
+    <value>Colorer les Objets Par Groupe de Timing</value>
   </data>
   <data name="Screen_Editor_MoveSelectedObjectsToGroup" xml:space="preserve">
-    <value>Move Selected Objects To Group</value>
+    <value>Déplacer les Objets Sélectionnés vers un Groupe</value>
   </data>
   <data name="Screen_Editor_SelectTimingGroupOfSelectedNotes" xml:space="preserve">
-    <value>Select Timing Group Of Selected Notes</value>
+    <value>Sélectionnez le Groupe de Timing des Notes Sélectionnées</value>
   </data>
   <data name="Screen_Editor_NoNotesSelected" xml:space="preserve">
     <value>Aucune note sélectionnée</value>
   </data>
   <data name="Screen_Editor_SelectedTimingGroup" xml:space="preserve">
-    <value>Selected timing group: {0}</value>
+    <value>Groupe de timing sélectionné : {0}</value>
   </data>
   <data name="Screen_Editor_SelectNotes" xml:space="preserve">
-    <value>Select Notes</value>
+    <value>Sélection des Notes</value>
   </data>
   <data name="Screen_Editor_SelectNotesInTimingGroupsTooltip" xml:space="preserve">
-    <value>Selects all notes in the selected timing group(s).</value>
+    <value>Sélectionne toutes les notes des groupes de timing sélectionnés.</value>
   </data>
   <data name="Screen_Editor_FilterSelection" xml:space="preserve">
-    <value>Filter Selection</value>
+    <value>Sélection des Filtres</value>
   </data>
   <data name="Screen_Editor_FilterSelectionTooltip" xml:space="preserve">
-    <value>Deselect any note that is not in any of the selected timing group(s).</value>
+    <value>Désélectionner chaque note qui ne se trouve dans aucun des groupes de timing sélectionnés.</value>
   </data>
   <data name="Screen_Editor_WhatIsThis" xml:space="preserve">
     <value>(Qu'est-ce que c'est?)</value>
   </data>
   <data name="Screen_Editor_TimingGroupHelp" xml:space="preserve">
-    <value>Timing Groups allow you to change the visuals of a group of notes.</value>
+    <value>Les groupes de timing vous permettent de changer les visuels d'un groupe de notes.</value>
   </data>
   <data name="Screen_Editor_TimingGroupInteractionHelp" xml:space="preserve">
     <value>Vous pouvez cliquer sur un groupe de timings en particulier pour le modifier et double-cliquer pour aller à la première note du groupe.</value>
@@ -2732,10 +2732,10 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Les caractères alphanumériques ou les underscores sont autorisés</value>
   </data>
   <data name="Screen_Editor_TimingGroupCannotBeRenamed" xml:space="preserve">
-    <value>This timing group cannot be renamed!</value>
+    <value>Ce groupe de timing ne peut pas être renommé!</value>
   </data>
   <data name="Screen_Editor_TimingGroupsSelected" xml:space="preserve">
-    <value>{0} timing groups selected</value>
+    <value>{0} groupes de timing sélectionnés</value>
   </data>
   <data name="Screen_Editor_Id" xml:space="preserve">
     <value>ID</value>
@@ -2744,19 +2744,19 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Éditeur de raccourcis clavier</value>
   </data>
   <data name="Screen_Editor_KeybindEditorDescription" xml:space="preserve">
-    <value>Change the keymap of the editor</value>
+    <value>Change les raccourcis de l'éditeur</value>
   </data>
   <data name="Screen_Editor_ShowKeybindFile" xml:space="preserve">
-    <value>Show Keybind File</value>
+    <value>Afficher le fichier de raccourcis</value>
   </data>
   <data name="Screen_Editor_KeybindEditorHelpSelectAction" xml:space="preserve">
-    <value>To change the keybind of an action, first click on the action.</value>
+    <value>Pour modifier le raccourci d'une action, cliquez sur l'action.</value>
   </data>
   <data name="Screen_Editor_KeybindEditorHelpChangeOrRemove" xml:space="preserve">
-    <value>You can then choose to change or remove any keys from the action.</value>
+    <value>Vous pouvez ensuite choisir de modifier ou de supprimer toutes les touches de l'action.</value>
   </data>
   <data name="Screen_Editor_KeybindEditorHelpAdd" xml:space="preserve">
-    <value>You can also add a key by clicking on the '+' button.</value>
+    <value>Vous pouvez également ajouter une touche en cliquant sur le bouton '+'.</value>
   </data>
   <data name="Screen_Editor_SelectedKeybind" xml:space="preserve">
     <value>Raccourci sélectionné: {0}</value>
@@ -2765,37 +2765,37 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Réinitialiser par défaut</value>
   </data>
   <data name="Screen_Editor_Keys" xml:space="preserve">
-    <value>Keys</value>
+    <value>Touches</value>
   </data>
   <data name="Screen_Editor_EnterNewKeybind" xml:space="preserve">
     <value>Veuillez entrer un nouveau raccourci clavier...</value>
   </data>
   <data name="Screen_Editor_Change" xml:space="preserve">
-    <value>Change</value>
+    <value>Modifier</value>
   </data>
   <data name="Screen_Editor_Free" xml:space="preserve">
     <value>Mod</value>
   </data>
   <data name="Screen_Editor_FreeKeybindTooltip" xml:space="preserve">
-    <value>Turning on Mod means that pressing the key with additional modifiers (ctrl, alt, ...) will also trigger the action.</value>
+    <value>Activer Mod signifie qu'appuyer sur la touche avec des modificateurs supplémentaires (ctrl, alt, ...) déclenchera également l'action.</value>
   </data>
   <data name="Screen_Editor_SearchActions" xml:space="preserve">
-    <value>Search Actions</value>
+    <value>Rechercher des Actions</value>
   </data>
   <data name="Screen_Editor_Keybind" xml:space="preserve">
     <value>Raccourci clavier</value>
   </data>
   <data name="Screen_Editor_InputKeybindToSearch" xml:space="preserve">
-    <value>Input a keybind to search...</value>
+    <value>Entrez un raccourci à rechercher ...</value>
   </data>
   <data name="Screen_Editor_SearchKeybind" xml:space="preserve">
-    <value>Search Keybind</value>
+    <value>Rechercher des Raccourcis</value>
   </data>
   <data name="Screen_Editor_Input" xml:space="preserve">
-    <value>Input</value>
+    <value>Entrées</value>
   </data>
   <data name="Screen_Editor_Clear" xml:space="preserve">
-    <value>Clear</value>
+    <value>Effacer</value>
   </data>
   <data name="Screen_Editor_SvVsSfTooltip" xml:space="preserve">
     <value>Les SV ne bougeront pas les notes et changent seulement leur vitesse, tandis que les SSF changeront directement à la fois leur position et leur vitesse</value>
@@ -2807,7 +2807,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Le SSF est un multiplicateur de votre vitesse de défilement actuel. Les saisies que vous ajoutez changeront de façon linéaire d'un point à un autre, comme des images clés. </value>
   </data>
   <data name="Screen_Editor_SvVsSsfTooltip" xml:space="preserve">
-    <value>SV will not move the notes but only change its speed, whereas SSF will directly change both their position and speed</value>
+    <value>SV ne bougera pas les notes, mais ne changera que sa vitesse, tandis que SSF changera directement à la fois leur position et leur vitesse</value>
   </data>
   <data name="Screen_Editor_UploadErrorInternalServer" xml:space="preserve">
     <value>Une erreur interne du serveur s'est produite. Veuillez réessayer!</value>
@@ -2861,7 +2861,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Vous ne pouvez pas mettre à jour une collection de map déjà classé!</value>
   </data>
   <data name="Screen_Editor_UploadErrorContainsNonUploadedNotNewMapId" xml:space="preserve">
-    <value>One or more of your maps contains a non-uploaded map id!</value>
+    <value>Une ou plusieurs de vos maps contiennent un identifiant de map non-publié!</value>
   </data>
   <data name="Screen_Editor_UploadSuccessUploaded" xml:space="preserve">
     <value>Succès! Votre collection de map a été publiée!</value>
@@ -2873,7 +2873,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Vous avez dépassé la quantité de map que vous pouvez publier pour le moment!</value>
   </data>
   <data name="Screen_Editor_UploadingMapset" xml:space="preserve">
-    <value>UPLOADING MAPSET</value>
+    <value>PUBLICATION DE COLLECTION DE MAP</value>
   </data>
   <data name="Screen_Editor_UploadingMapsetMessage" xml:space="preserve">
     <value>Veuillez patienter pendant la publication de votre collection de map...</value>
@@ -2885,7 +2885,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Votre collection de map a été publiée avec succès!</value>
   </data>
   <data name="Screen_Editor_UploadMapsetErrorWithReason" xml:space="preserve">
-    <value>Error uploading mapset: {0}</value>
+    <value>Erreur lors de la publication de la collection de  map: {0}</value>
   </data>
   <data name="Screen_Editor_UploadMapsetError" xml:space="preserve">
     <value>Il y a eu un problème lors de la publication de votre collection de map</value>
@@ -2894,28 +2894,28 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Pour ajouter une image d'arrière-plan, faites glisser un .png ou .jpg dans la fenêtre.</value>
   </data>
   <data name="Screen_Editor_FilterLabel" xml:space="preserve">
-    <value>FILTER:</value>
+    <value>FILTRE:</value>
   </data>
   <data name="Screen_Editor_All" xml:space="preserve">
-    <value>All</value>
+    <value>Tout</value>
   </data>
   <data name="Screen_Editor_Files" xml:space="preserve">
     <value>Fichiers</value>
   </data>
   <data name="Screen_Editor_HitObjects" xml:space="preserve">
-    <value>HitObjects</value>
+    <value>Note</value>
   </data>
   <data name="Screen_Editor_Mapset" xml:space="preserve">
-    <value>Mapset</value>
+    <value>Collection de map</value>
   </data>
   <data name="Screen_Editor_Metadata" xml:space="preserve">
     <value>Métadonnées</value>
   </data>
   <data name="Screen_Editor_ScrollVelocities" xml:space="preserve">
-    <value>Scroll Velocities</value>
+    <value>Vélocité de Défilement</value>
   </data>
   <data name="Screen_Editor_TimingPoints" xml:space="preserve">
-    <value>Timing Points</value>
+    <value>Points de Timing</value>
   </data>
   <data name="Screen_Editor_AutoMod" xml:space="preserve">
     <value>AutoMod</value>
@@ -2927,7 +2927,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Note de difficulté</value>
   </data>
   <data name="Screen_Editor_SelectObjectsBeforeChangingHitsounds" xml:space="preserve">
-    <value>You need to select objects before changing their hitsounds!</value>
+    <value>Vous devez sélectionner des objets avant de changer leurs sons de frappe!</value>
   </data>
   <data name="Screen_Editor_SelectTool" xml:space="preserve">
     <value>Sélection</value>
@@ -2942,40 +2942,40 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Mine</value>
   </data>
   <data name="Screen_Editor_Layer" xml:space="preserve">
-    <value>Layer {0}</value>
+    <value>Couche {0}</value>
   </data>
   <data name="Screen_Editor_RenameLayer" xml:space="preserve">
-    <value>RENAME LAYER</value>
+    <value>RENOMMER UNE COUCHE</value>
   </data>
   <data name="Screen_Editor_RenameLayerMessage" xml:space="preserve">
-    <value>Enter a new name for your layer...</value>
+    <value>Entrez un nouveau nom pour votre couche...</value>
   </data>
   <data name="Screen_Editor_EnterNamePlaceholder" xml:space="preserve">
-    <value>Enter name...</value>
+    <value>Saisir un nom...</value>
   </data>
   <data name="Screen_Editor_ChangeLayerColor" xml:space="preserve">
-    <value>CHANGE LAYER COLOR</value>
+    <value>CHANGER LA COULEUR DE LA COUCHE</value>
   </data>
   <data name="Screen_Editor_EditName" xml:space="preserve">
-    <value>Edit Name</value>
+    <value>Éditer le nom</value>
   </data>
   <data name="Screen_Editor_ChangeColor" xml:space="preserve">
     <value>Changer la couleur</value>
   </data>
   <data name="Screen_Editor_MoveLayerUp" xml:space="preserve">
-    <value>Move Layer Up</value>
+    <value>Déplacer la Couche vers le Haut</value>
   </data>
   <data name="Screen_Editor_MoveLayerDown" xml:space="preserve">
-    <value>Move Layer Down</value>
+    <value>Déplacer la Couche vers le Bas</value>
   </data>
   <data name="Screen_Editor_CannotMoveLayerPastDefault" xml:space="preserve">
-    <value>Cannot move layer past the default layer!</value>
+    <value>Impossible de déplacer la couche au-delà de la couche par défaut !</value>
   </data>
   <data name="Screen_Editor_LayerAlreadyAtTop" xml:space="preserve">
-    <value>Layer is already at the top!</value>
+    <value>La couche est déjà au sommet!</value>
   </data>
   <data name="Screen_Editor_CannotEditDefaultLayer" xml:space="preserve">
-    <value>You cannot edit the default layer!</value>
+    <value>Vous ne pouvez pas modifier la couche par défaut !</value>
   </data>
   <data name="Screen_Editor_DetectBpmAndOffsetError" xml:space="preserve">
     <value>Échec de la détection du BPM et du décalage !</value>
@@ -2984,16 +2984,16 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Pas de note recalée</value>
   </data>
   <data name="Screen_Editor_PreviewTimeChanged" xml:space="preserve">
-    <value>Preview time changed to: {0}</value>
+    <value>Le temps de prévisualisation a été déplacé vers : {0}</value>
   </data>
   <data name="Screen_Editor_ZoomInTooltip" xml:space="preserve">
-    <value>Zoom In ({0})</value>
+    <value>Zoom Avant ({0})</value>
   </data>
   <data name="Screen_Editor_ZoomOutTooltip" xml:space="preserve">
-    <value>Zoom Out ({0})</value>
+    <value>Zoom Arrière ({0})</value>
   </data>
   <data name="Screen_Editor_DenseLinesDetected" xml:space="preserve">
-    <value>Dense lines detected. Lines will be drawn less frequently.</value>
+    <value>Lignes denses détectées. Les lignes seront tracées moins fréquemment.</value>
   </data>
   <data name="Screen_Editor_LoadingWaveform" xml:space="preserve">
     <value>Chargement du spectre audio...</value>
@@ -3002,28 +3002,28 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Chargement du Spectrogramme...</value>
   </data>
   <data name="Screen_Editor_NextBookmarkTooltip" xml:space="preserve">
-    <value>Seek to the next bookmark in the timeline.&#xA;Hotkey: {0}</value>
+    <value>Rechercher le prochain signet dans la timeline.&#xA;Raccourci : {0}</value>
   </data>
   <data name="Screen_Editor_PreviousBookmarkTooltip" xml:space="preserve">
-    <value>Seek to the previous bookmark in the timeline.&#xA;Hotkey: {0}</value>
+    <value>Chercher le signet précédent dans la timeline.&#xA;Raccourci : {0}</value>
   </data>
   <data name="Screen_Editor_TimingPointsSelected" xml:space="preserve">
-    <value>{0} timing points selected</value>
+    <value>{0} points de timing sélectionnés</value>
   </data>
   <data name="Screen_Editor_DefaultTimingGroupTooltip" xml:space="preserve">
-    <value>Applied to all notes that are not in a timing group.</value>
+    <value>Appliqué à toutes les notes qui ne sont pas dans un groupe de timing.</value>
   </data>
   <data name="Screen_Editor_GlobalTimingGroupTooltip" xml:space="preserve">
     <value>Les SV dans ce groupe sont entrelacés avec tous les autres groupes.</value>
   </data>
   <data name="Screen_Editor_SelectCurrentScrollPointTooltip" xml:space="preserve">
-    <value>This will select the {0} at the current editor timestamp. If Ctrl is held, it will add it to your selection instead. If Shift is held, it will select all {0}s up to that range, if one is selected already.</value>
+    <value>Ceci sélectionnera le {0} actuel de l'éditeur. Si Ctrl est maintenu, il l'ajoutera à votre sélection à la place. Si Shift est maintenu, il sélectionnera tous les {0}s jusqu'à cette plage, si un est déjà sélectionné.</value>
   </data>
   <data name="Screen_Editor_ScrollSpeedFactorsSelected" xml:space="preserve">
     <value>{0} facteur(s) de vitesse de défilement sélectionné(s)</value>
   </data>
   <data name="Screen_Editor_ScrollVelocitiesSelected" xml:space="preserve">
-    <value>{0} scroll velocities selected</value>
+    <value>{0} vélocités de défilement sélectionnées</value>
   </data>
   <data name="Screen_Editor_BpmCalculator" xml:space="preserve">
     <value>Calculateur de BPM</value>
@@ -3032,13 +3032,13 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Détecteur de BPM</value>
   </data>
   <data name="Screen_Editor_GoToObjects" xml:space="preserve">
-    <value>Go To Objects</value>
+    <value>Aller aux objets</value>
   </data>
   <data name="Screen_Editor_ApplyKeymap" xml:space="preserve">
-    <value>APPLY KEYMAP</value>
+    <value>APPLIQUER RACCOURCIS</value>
   </data>
   <data name="Screen_Editor_ApplyKeymapConfirmation" xml:space="preserve">
-    <value>Are you sure you want to overwrite your keymap?&#xA;You might want to back up your keymap first.</value>
+    <value>Êtes-vous sûr de vouloir écraser vos raccourcis?&#xA;Vous devriez d'abord sauvegarder vos raccourcis.</value>
   </data>
   <data name="Screen_Editor_IssueCountLabel" xml:space="preserve">
     <value>Nombre de Problèmes:</value>
@@ -3059,7 +3059,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Ceci est une erreur de critère de classement. Sans correction, votre carte ne peut pas être classée.</value>
   </data>
   <data name="Screen_Editor_NoSnapDivisionsSelected" xml:space="preserve">
-    <value>You have not selected any divisions to snap!</value>
+    <value>Vous n'avez sélectionné aucune division sur laquelle recaler!</value>
   </data>
   <data name="Screen_Editor_ResetAllKeybindsTitle" xml:space="preserve">
     <value>RÉINITIALISER TOUS LES RACCOURCIS</value>
@@ -3086,10 +3086,10 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>{0} notes recalées</value>
   </data>
   <data name="Screen_Editor_UnsnappedNote" xml:space="preserve">
-    <value>Unsnapped {0} note</value>
+    <value>{0} note décalée</value>
   </data>
   <data name="Screen_Editor_UnsnappedNotes" xml:space="preserve">
-    <value>Unsnapped {0} notes</value>
+    <value>{0} notes décalées</value>
   </data>
   <data name="Screen_Editor_BeatSnapColor_Default" xml:space="preserve">
     <value>Défaut</value>
@@ -3146,7 +3146,7 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Sifflet</value>
   </data>
   <data name="Screen_Editor_Hitsound_Finish" xml:space="preserve">
-    <value>Finish</value>
+    <value>Fin</value>
   </data>
   <data name="Screen_Editor_Hitsound_Clap" xml:space="preserve">
     <value>Clap</value>
@@ -3155,10 +3155,10 @@ Utilisez les filtres pour affiner votre recherche.</value>
     <value>Aucun</value>
   </data>
   <data name="Screen_Editor_HitObjectColoring_Layer" xml:space="preserve">
-    <value>Layer</value>
+    <value>Couche</value>
   </data>
   <data name="Screen_Editor_HitObjectColoring_TimingGroup" xml:space="preserve">
-    <value>TimingGroup</value>
+    <value>GroupeDeTiming</value>
   </data>
   <data name="Screen_Editor_Modifier_Mirror" xml:space="preserve">
     <value>Miroir</value>
