@@ -148,7 +148,7 @@
     <value>ВЫЙТИ ИЗ QUAVER</value>
   </data>
   <data name="Screen_Main_QuitDialogMessage" xml:space="preserve">
-    <value>Quit the game?</value>
+    <value>Выйти из игры?</value>
   </data>
   <data name="Screen_Main_SinglePlayerDescription" xml:space="preserve">
     <value>Соревнуйтесь за места в таблице лидеров</value>
@@ -797,7 +797,7 @@
     <value>Произошло ошибка при экспорте реплея!</value>
   </data>
   <data name="Screen_Results_YouhavealreadyfixedyourlocaloffsetforthismapTheresnoneedtodoitagain" xml:space="preserve">
-    <value>This map's local offset is already fixed.</value>
+    <value>Локальная задержка для этой карты уже исправлена.</value>
   </data>
   <data name="Screen_Results_Thereisnodatatobeabletofixyourlocaloffset" xml:space="preserve">
     <value>Недостаточно данных для настройки локальной задержки!</value>
@@ -1119,10 +1119,10 @@
     <value>{0}K Gameplay Layout</value>
   </data>
   <data name="Screen_Options_KeyCountScrollSpeed" xml:space="preserve">
-    <value>{0}K Scroll Speed</value>
+    <value>Скорость прокрутки {0}К</value>
   </data>
   <data name="Screen_Options_KeyCountScrollDirection" xml:space="preserve">
-    <value>{0}K Scroll Direction</value>
+    <value>Направление прокрутки {0}К</value>
   </data>
   <data name="Screen_Options_KeyCountScratchLayout" xml:space="preserve">
     <value>{0}K Scratch Layout</value>
@@ -1131,10 +1131,10 @@
     <value>Place {0}K Scratch Lane On Left</value>
   </data>
   <data name="Screen_Options_KeyCountCoopLayout" xml:space="preserve">
-    <value>{0}K Co-op Layout</value>
+    <value>Раскладка {0}К для кооперативной игры</value>
   </data>
   <data name="Screen_Options_KeyCountPrioritizedDifficulty" xml:space="preserve">
-    <value>Prioritized {0}K Difficulty</value>
+    <value>Приоритетная сложность {0}К</value>
   </data>
   <data name="Screen_Options_1Keys" xml:space="preserve">
     <value>1 Клавиша</value>
@@ -1329,9 +1329,9 @@
     <value>Песня Не Выбрана:</value>
   </data>
   <data name="Screen_Download_NoSongSelectedDescription" xml:space="preserve">
-    <value>Double-click a song to download it.
-Click once to preview it.
-Use the filters to narrow your search.</value>
+    <value>Кликни дважды по песне, чтобы скачать. 
+Кликни один раз, чтобы открыть превью.
+Используй фильтры, чтобы сузить поиск.</value>
   </data>
   <data name="Screen_Download_EndDate" xml:space="preserve">
     <value>Дата Окончания</value>
@@ -1445,7 +1445,7 @@ Use the filters to narrow your search.</value>
     <value>ВЫЙТИ В ЛОББИ</value>
   </data>
   <data name="Screen_Multi_ExitToLobbyMessage" xml:space="preserve">
-    <value>Exit to the lobby?</value>
+    <value>Выйти в лобби?</value>
   </data>
   <data name="Screen_Multi_Leave" xml:space="preserve">
     <value>Покинуть</value>
@@ -1903,7 +1903,9 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_RefreshFileCache" xml:space="preserve">
     <value>Обновить Кеш Файлов</value>
   </data>
-  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve"><value>Refresh Editor from .qua File</value></data>
+  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve">
+    <value>Обновить редактор от файла .qua</value>
+  </data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
     <value>Опубликовать</value>
   </data>
@@ -2294,8 +2296,12 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_SaveChanges" xml:space="preserve">
     <value>SAVE CHANGES</value>
   </data>
-  <data name="Screen_Editor_UnsavedChanges" xml:space="preserve"><value>UNSAVED CHANGES</value></data>
-  <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve"><value>This map hasn't been saved.&#xA;Refreshing from .qua will discard unsaved changes. Continue?</value></data>
+  <data name="Screen_Editor_UnsavedChanges" xml:space="preserve">
+    <value>НЕСОХРАНЁННЫЕ ИЗМЕНЕНИЯ</value>
+  </data>
+  <data name="Screen_Editor_RefreshFromQuaUnsavedWarning" xml:space="preserve">
+    <value>В этой карте есть несохранённые изменения.&#xA;Открытие файла .qua их сотрёт. Продолжить?</value>
+  </data>
   <data name="Screen_Editor_SaveBeforeCreatingDifficulty" xml:space="preserve">
     <value>You have unsaved changes. Would you like to save&#xA;before creating a new difficulty?</value>
   </data>
@@ -2314,7 +2320,9 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_No" xml:space="preserve">
     <value>NO</value>
   </data>
-  <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve"><value>Submit this mapset for rank?&#xA;It must meet the ranking criteria.</value></data>
+  <data name="Screen_Editor_SubmitForRankConfirmation" xml:space="preserve">
+    <value>Отправить эту карту на рассмотрение для ранговой системы?&#xA;Она обязана соответствовать критериям.</value>
+  </data>
   <data name="Screen_Editor_CustomBeatSnap" xml:space="preserve">
     <value>CUSTOM BEAT SNAP</value>
   </data>
@@ -2417,7 +2425,9 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_SubmittingForRankMessage" xml:space="preserve">
     <value>Please wait while your map is being submitted for rank...</value>
   </data>
-  <data name="Screen_Editor_RankingIssuesFound" xml:space="preserve"><value>AutoMod found ranking blockers. Review each difficulty and try again.</value></data>
+  <data name="Screen_Editor_RankingIssuesFound" xml:space="preserve">
+    <value>AutoMod нашёл проблемы с подсчётом ранга. Проверь каждую сложность и попробуй ещё раз.</value>
+  </data>
   <data name="Screen_Editor_SubmitForRankError" xml:space="preserve">
     <value>An error occurred while submitting your mapset for rank.</value>
   </data>
@@ -3039,7 +3049,9 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_ReadyForRank" xml:space="preserve">
     <value>Ready for rank!</value>
   </data>
-  <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve"><value>Potential error; ignore it if harmless.</value></data>
+  <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve">
+    <value>Возможная ошибка; если некритично — не обращай внимания.</value>
+  </data>
   <data name="Screen_Editor_AutoModCriticalTooltip" xml:space="preserve">
     <value>This is a critical error which affects the playability of your map.</value>
   </data>
