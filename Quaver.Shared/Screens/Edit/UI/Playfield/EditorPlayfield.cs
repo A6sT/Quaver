@@ -1332,7 +1332,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Playfield
                 return;
 
             var view = (EditScreenView)ActionManager.EditScreen.View;
-            if (view.IsImGuiHovered)
+            if (view.IsImGuiMouseCaptured)
                 return;
 
             if (!Button.IsHeld)
