@@ -250,6 +250,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 UpdateAvatar();
                 UpdateCantBeatAlert();
                 UpdateRequiredAccuracyAlert();
+                UpdateRequiredAccuracyTooltip();
                 UpdateUsernameWidth();
                 UpdateTimePosition();
                 UpdateFlag();
