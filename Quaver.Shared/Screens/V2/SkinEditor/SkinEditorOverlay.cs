@@ -920,8 +920,9 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     var button = new RoundedButton((sender, args) => SelectTarget(captured))
                     {
                         Parent = selectionRoot,
-                        Tint = target.Id == selectedTarget?.Id ? AccentColor : Color.Transparent,
-                        Alpha = target.Id == selectedTarget?.Id ? 0.13f : 0,
+                        // Keep selection hit areas invisible so the editor never tints the preview.
+                        Tint = Color.Transparent,
+                        Alpha = 0,
                         PerformHoverFade = false,
                         CornerRadius = 3
                     };
