@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ using Quaver.Shared.Graphics.Form;
 using Quaver.Shared.Skinning;
 using Quaver.Shared.Skinning.V2;
 using Wobble;
+using Wobble.Assets;
 using Wobble.Bindables;
 using Wobble.Graphics;
 using Wobble.Graphics.Buttons;
@@ -33,6 +36,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         private static readonly Color FieldColor = new Color(32, 44, 58);
         private static readonly Color AccentColor = new Color(31, 187, 255);
         private static readonly Color MutedColor = new Color(160, 175, 193);
+        private const double PreviewDebounceMilliseconds = 100;
         private static readonly HashSet<string> LocalizedPropertyNames = new HashSet<string>(
             new[]
             {
@@ -58,6 +62,10 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             new Dictionary<RoundedButton, Drawable>();
         private readonly Queue<SkinEditorAssetButton> thumbnailLoadQueue =
             new Queue<SkinEditorAssetButton>();
+        private readonly ConcurrentQueue<SkinEditorAssetButton> thumbnailReadyQueue =
+            new ConcurrentQueue<SkinEditorAssetButton>();
+        private readonly Dictionary<int, SkinEditorAssetButton> assetButtons =
+            new Dictionary<int, SkinEditorAssetButton>();
         private readonly SkinEditorColorPicker colorPicker = new SkinEditorColorPicker();
 
         private Sprite leftPanel;
@@ -79,8 +87,11 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         private SkinEditorTarget selectedTarget;
         private IReadOnlyList<SkinEditorAsset> assets;
         private SkinEditorAsset[] pendingAssetButtons = Array.Empty<SkinEditorAsset>();
-        private int nextAssetButtonIndex;
         private int assetButtonColumns = 1;
+        private int visibleAssetFirstIndex = -1;
+        private int visibleAssetLastIndex = -1;
+        private int thumbnailGeneration;
+        private int thumbnailReadInFlight;
         private Task<IReadOnlyList<SkinEditorAsset>> assetScanTask;
         private CancellationTokenSource assetScanCancellation;
         private List<string> folderValues = new List<string>();
@@ -89,7 +100,13 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         private float lastWidth = -1;
         private float lastHeight = -1;
         private float inspectorOffset;
+        private Container lastInspectorVisibilityContent;
+        private float lastInspectorVisibilityOffset = float.NaN;
+        private float lastInspectorVisibilityViewportHeight = float.NaN;
+        private float lastInspectorVisibilityContentHeight = float.NaN;
+        private bool? lastSaveEnabled;
         private bool previewPending;
+        private double previewDelay;
         private bool? clickabilityBeforeColorPicker;
 
         public SkinEditorOverlay(ISkinV2EditorHost host, SkinEditorSession session,
@@ -108,12 +125,12 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             BuildChrome();
             BeginAssetRefresh();
             SelectTarget(GetEditableTargets().FirstOrDefault());
+            RefreshSaveState();
         }
 
         public override void Update(GameTime gameTime)
         {
             UpdateColorPickerInputCapture();
-            colorPicker.Update(gameTime);
             CompleteAssetRefresh();
             Resize();
             BuildNextAssetButtons();
@@ -127,13 +144,16 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             if (assetScroll != null)
                 assetScroll.InputEnabled = !folderMenuOpen && assetScroll.IsHovered();
             UpdateSelectionHitAreas();
-            RefreshSaveState();
             base.Update(gameTime);
 
             if (previewPending)
             {
-                previewPending = false;
-                ApplyPreview();
+                previewDelay -= gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (previewDelay <= 0)
+                {
+                    previewPending = false;
+                    ApplyPreview();
+                }
             }
 
             LoadNextAssetThumbnail();
@@ -142,7 +162,8 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            colorPicker.Draw(gameTime);
+            if (colorPicker.IsOpen)
+                colorPicker.Draw(gameTime);
         }
 
         public override void Destroy()
@@ -151,7 +172,12 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             assetScanCancellation?.Dispose();
             assetScanCancellation = null;
             assetScanTask = null;
+            thumbnailGeneration++;
+            Interlocked.Exchange(ref thumbnailReadInFlight, 0);
             thumbnailLoadQueue.Clear();
+            while (thumbnailReadyQueue.TryDequeue(out _))
+            {
+            }
             RestoreButtonClickability();
             colorPicker.Destroy();
             skin.Dispose();
@@ -193,7 +219,12 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             if (saveButton == null)
                 return;
 
-            saveButton.IsClickable = !readOnly && session.IsDirty && !session.HasInvalidInput;
+            var enabled = !readOnly && session.IsDirty && !session.HasInvalidInput;
+            if (lastSaveEnabled == enabled)
+                return;
+
+            lastSaveEnabled = enabled;
+            saveButton.IsClickable = enabled;
             saveButton.PerformHoverFade = saveButton.IsClickable;
             saveButton.Alpha = saveButton.IsClickable ? 1 : 0.45f;
         }
@@ -410,11 +441,34 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             if (inspectorViewport == null || inspectorContent == null)
                 return;
 
+            if (ReferenceEquals(lastInspectorVisibilityContent, inspectorContent) &&
+                lastInspectorVisibilityOffset == inspectorContent.Y &&
+                lastInspectorVisibilityViewportHeight == inspectorViewport.Height &&
+                lastInspectorVisibilityContentHeight == inspectorContent.Height)
+                return;
+
+            lastInspectorVisibilityContent = inspectorContent;
+            lastInspectorVisibilityOffset = inspectorContent.Y;
+            lastInspectorVisibilityViewportHeight = inspectorViewport.Height;
+            lastInspectorVisibilityContentHeight = inspectorContent.Height;
+
             foreach (var drawable in inspectorDrawables)
             {
                 var top = drawable.Y + inspectorContent.Y;
-                drawable.Visible = top >= 0 && top + drawable.Height <= inspectorViewport.Height;
+                var visible = top >= 0 && top + drawable.Height <= inspectorViewport.Height;
+                drawable.Visible = visible;
+
+                if (drawable is SkinEditorTextbox textbox)
+                    textbox.Button.IsInteractionEnabled = visible && !readOnly;
+                else if (drawable is Wobble.Graphics.UI.Buttons.Button button)
+                    button.IsInteractionEnabled = visible;
             }
+        }
+
+        private void AddInspectorDrawable(Drawable drawable)
+        {
+            drawable.UpdateWhenInvisible = false;
+            inspectorDrawables.Add(drawable);
         }
 
         private IReadOnlyList<SkinEditorProperty> GetVisibleProperties(
@@ -468,7 +522,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     if (!readOnly)
                         CommitValue(property, args.Value);
                 };
-                inspectorDrawables.Add(checkbox);
+                AddInspectorDrawable(checkbox);
                 CreateInspectorResetButton(controlY, () => ResetProperty(property));
                 return controlY + 42;
             }
@@ -543,7 +597,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     textbox.Tint = AccentColor;
                     BuildAssetButtons();
                 };
-            inspectorDrawables.Add(textbox);
+            AddInspectorDrawable(textbox);
 
             if (property.IsColor)
             {
@@ -618,7 +672,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     Tint = FieldColor
                 };
                 position.Button.IsInteractionEnabled = !readOnly;
-                inspectorDrawables.Add(position);
+                AddInspectorDrawable(position);
 
                 var color = new SkinEditorTextbox(new ScalableVector2(150, 34),
                     FontManager.GetWobbleFont(Fonts.InterMedium), 13,
@@ -636,7 +690,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     Tint = FieldColor
                 };
                 color.Button.IsInteractionEnabled = !readOnly;
-                inspectorDrawables.Add(color);
+                AddInspectorDrawable(color);
 
                 var colorSwatch = CreateColorSwatch(color, SkinV2Color.Parse(stop.Color), picked =>
                 {
@@ -760,6 +814,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 invalidText.Remove(property.Path);
                 if (errorText != null)
                     errorText.Text = string.Empty;
+                session.RefreshDirtyState();
                 QueuePreview();
             }
             else
@@ -771,6 +826,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             }
 
             session.HasInvalidInput = invalidPaths.Count > 0;
+            RefreshSaveState();
         }
 
         private bool CommitValue(SkinEditorProperty property, object value)
@@ -780,8 +836,10 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
             invalidPaths.Remove(property.Path);
             invalidText.Remove(property.Path);
+            session.RefreshDirtyState();
             session.HasInvalidInput = invalidPaths.Count > 0;
             QueuePreview();
+            RefreshSaveState();
             return true;
         }
 
@@ -804,8 +862,10 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     x.StartsWith(property.Path + "[", StringComparison.Ordinal))
                 ? LocalizationManager.Get("SkinEditor_InvalidGradientStop")
                 : string.Empty;
+            session.RefreshDirtyState();
             session.HasInvalidInput = invalidPaths.Count > 0;
             QueuePreview();
+            RefreshSaveState();
         }
 
         private void MarkInvalid(string inputPath, string rawText, SpriteTextPlus errorText, string message)
@@ -814,6 +874,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             invalidText[inputPath] = rawText ?? string.Empty;
             errorText.Text = message;
             session.HasInvalidInput = true;
+            RefreshSaveState();
         }
 
         private void ClearInvalidPrefix(string prefix)
@@ -825,9 +886,14 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             }
 
             session.HasInvalidInput = invalidPaths.Count > 0;
+            RefreshSaveState();
         }
 
-        private void QueuePreview() => previewPending = true;
+        private void QueuePreview()
+        {
+            previewPending = true;
+            previewDelay = PreviewDebounceMilliseconds;
+        }
 
         private void ApplyPreview()
         {
@@ -882,13 +948,23 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 var target = pair.Value;
                 if (target.IsDisposed || !target.Visible)
                 {
-                    button.Visible = false;
+                    if (button.Visible)
+                        button.Visible = false;
                     continue;
                 }
 
-                button.Visible = true;
-                button.Position = new ScalableVector2(target.ScreenRectangle.X, target.ScreenRectangle.Y);
-                button.Size = new ScalableVector2(target.ScreenRectangle.Width, target.ScreenRectangle.Height);
+                if (!button.Visible)
+                    button.Visible = true;
+
+                var rectangle = target.ScreenRectangle;
+                if (button.ScreenRectangle.X == rectangle.X &&
+                    button.ScreenRectangle.Y == rectangle.Y &&
+                    button.ScreenRectangle.Width == rectangle.Width &&
+                    button.ScreenRectangle.Height == rectangle.Height)
+                    continue;
+
+                button.Position = new ScalableVector2(rectangle.X, rectangle.Y);
+                button.Size = new ScalableVector2(rectangle.Width, rectangle.Height);
             }
         }
 
@@ -1012,7 +1088,15 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         private void BuildAssetButtons()
         {
             assetScroll?.Destroy();
+            thumbnailGeneration++;
+            Interlocked.Exchange(ref thumbnailReadInFlight, 0);
             thumbnailLoadQueue.Clear();
+            while (thumbnailReadyQueue.TryDequeue(out _))
+            {
+            }
+            assetButtons.Clear();
+            visibleAssetFirstIndex = -1;
+            visibleAssetLastIndex = -1;
             var width = Math.Max(1, WindowManager.Width - 24);
             assetScroll = new ScrollContainer(new ScalableVector2(width, 166),
                 new ScalableVector2(width, 166))
@@ -1034,7 +1118,6 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             const float cellWidth = 122;
             const float cellHeight = 80;
             assetButtonColumns = Math.Max(1, (int) ((width - 8) / cellWidth));
-            nextAssetButtonIndex = 0;
             var rows = (int) Math.Ceiling(pendingAssetButtons.Length / (double) assetButtonColumns);
             assetScroll.ContentContainer.Height = Math.Max(166, rows * cellHeight);
 
@@ -1046,15 +1129,34 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
         private void BuildNextAssetButtons()
         {
-            const int buttonsPerFrame = 8;
             const float cellWidth = 122;
             const float cellHeight = 80;
 
-            for (var count = 0;
-                 count < buttonsPerFrame && nextAssetButtonIndex < pendingAssetButtons.Length;
-                 count++, nextAssetButtonIndex++)
+            if (assetScroll == null)
+                return;
+
+            var scrollY = Math.Max(0, -assetScroll.ContentContainer.Y);
+            var firstRow = Math.Max(0, (int) Math.Floor(scrollY / cellHeight) - 1);
+            var rows = (int) Math.Ceiling(assetScroll.Height / cellHeight) + 2;
+            var firstIndex = Math.Min(pendingAssetButtons.Length, firstRow * assetButtonColumns);
+            var lastIndex = Math.Min(pendingAssetButtons.Length,
+                (firstRow + rows) * assetButtonColumns);
+
+            if (firstIndex == visibleAssetFirstIndex && lastIndex == visibleAssetLastIndex)
+                return;
+
+            foreach (var index in assetButtons.Keys
+                         .Where(x => x < firstIndex || x >= lastIndex).ToArray())
             {
-                var index = nextAssetButtonIndex;
+                assetButtons[index].Destroy();
+                assetButtons.Remove(index);
+            }
+
+            for (var index = firstIndex; index < lastIndex; index++)
+            {
+                if (assetButtons.ContainsKey(index))
+                    continue;
+
                 var asset = pendingAssetButtons[index];
                 var selected = session.FocusedAssetProperty != null &&
                                string.Equals(Convert.ToString(
@@ -1077,7 +1179,11 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     Y = index / assetButtonColumns * cellHeight
                 };
                 assetScroll.AddContainedDrawable(button);
+                assetButtons[index] = button;
             }
+
+            visibleAssetFirstIndex = firstIndex;
+            visibleAssetLastIndex = lastIndex;
         }
 
         private void QueueAssetThumbnailLoad(SkinEditorAssetButton button) =>
@@ -1085,15 +1191,41 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
         private void LoadNextAssetThumbnail()
         {
+            if (thumbnailReadyQueue.TryDequeue(out var readyButton))
+            {
+                if (!readyButton.IsDisposed)
+                    readyButton.CompleteThumbnailLoad();
+                return;
+            }
+
+            if (Volatile.Read(ref thumbnailReadInFlight) != 0)
+                return;
+
             while (thumbnailLoadQueue.Count > 0)
             {
                 var button = thumbnailLoadQueue.Dequeue();
                 if (button.IsDisposed)
                     continue;
 
-                button.LoadThumbnail();
-                break;
+                if (Interlocked.CompareExchange(ref thumbnailReadInFlight, 1, 0) != 0)
+                    return;
+
+                var generation = thumbnailGeneration;
+                if (button.BeginThumbnailRead(completedButton =>
+                        QueueThumbnailReadCompleted(completedButton, generation)))
+                    return;
+
+                Interlocked.Exchange(ref thumbnailReadInFlight, 0);
             }
+        }
+
+        private void QueueThumbnailReadCompleted(SkinEditorAssetButton button, int generation)
+        {
+            if (generation != thumbnailGeneration)
+                return;
+
+            Interlocked.Exchange(ref thumbnailReadInFlight, 0);
+            thumbnailReadyQueue.Enqueue(button);
         }
 
         private RoundedButton CreateInspectorButton(string label, float y, Action action,
@@ -1109,7 +1241,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             };
             button.SetLabel(FontManager.GetWobbleFont(Fonts.InterSemiBold), label, 14, Color.White);
             button.Parent = inspectorContent;
-            inspectorDrawables.Add(button);
+            AddInspectorDrawable(button);
             return button;
         }
 
@@ -1131,7 +1263,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 Anchor = TooltipAnchor.TopCenter,
                 MaximumWidth = 220
             });
-            inspectorDrawables.Add(button);
+            AddInspectorDrawable(button);
             return button;
         }
 
@@ -1144,7 +1276,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 Y = y,
                 Tint = color
             };
-            inspectorDrawables.Add(label);
+            AddInspectorDrawable(label);
             return label;
         }
 
@@ -1249,6 +1381,9 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
             public override void Update(GameTime gameTime)
             {
+                if (!Visible && !UpdateWhenInvisible)
+                    return;
+
                 var submit = Focused && KeyboardManager.IsUniqueKeyPress(Keys.Enter);
                 base.Update(gameTime);
 
@@ -1285,6 +1420,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             private readonly SkinEditorAsset asset;
             private readonly Action<SkinEditorAssetButton> requestThumbnailLoad;
             private readonly Sprite thumbnail;
+            private Task<byte[]> thumbnailReadTask;
             private bool loadRequested;
             private bool loaded;
 
@@ -1300,6 +1436,8 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 Size = new ScalableVector2(116, 76);
                 Tint = selected ? AccentColor : FieldColor;
                 CornerRadius = 5;
+                SetChildrenVisibility = true;
+                UpdateWhenInvisible = false;
 
                 thumbnail = new Sprite
                 {
@@ -1323,7 +1461,13 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
             public override void Update(GameTime gameTime)
             {
-                if (!loadRequested && !loaded && IsInsideViewport())
+                var insideViewport = IsInsideViewport();
+                if (Visible != insideViewport)
+                    Visible = insideViewport;
+
+                IsInteractionEnabled = insideViewport;
+
+                if (insideViewport && !loadRequested && !loaded)
                 {
                     loadRequested = true;
                     requestThumbnailLoad(this);
@@ -1334,7 +1478,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
             public override void Draw(GameTime gameTime)
             {
-                if (IsInsideViewport())
+                if (Visible && IsInsideViewport())
                     base.Draw(gameTime);
             }
 
@@ -1342,19 +1486,56 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 !viewport.IsDisposed && viewport.Visible &&
                 viewport.ScreenRectangle.Intersects(ScreenRectangle);
 
-            public void LoadThumbnail()
+            public bool BeginThumbnailRead(Action<SkinEditorAssetButton> completed)
             {
-                if (loaded || IsDisposed)
+                if (loaded || IsDisposed || thumbnailReadTask != null)
+                    return false;
+
+                thumbnailReadTask = Task.Run(() =>
+                {
+                    try
+                    {
+                        return File.ReadAllBytes(asset.FullPath);
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                });
+                thumbnailReadTask.ContinueWith(_ => completed(this),
+                    CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously,
+                    TaskScheduler.Default);
+                return true;
+            }
+
+            public void CompleteThumbnailLoad()
+            {
+                if (loaded || IsDisposed || thumbnailReadTask == null)
                     return;
 
+                var task = thumbnailReadTask;
+                thumbnailReadTask = null;
                 loaded = true;
-                var texture = skin.LoadTexture(asset.RelativePath, UserInterface.NoPreviewImage);
-                var scale = Math.Min(50f / Math.Max(1, texture.Width),
-                    42f / Math.Max(1, texture.Height));
-                thumbnail.Size = new ScalableVector2(
-                    Math.Max(1, texture.Width * scale),
-                    Math.Max(1, texture.Height * scale));
-                thumbnail.Image = texture;
+
+                var bytes = task.GetAwaiter().GetResult();
+                if (bytes == null || bytes.Length == 0)
+                    return;
+
+                try
+                {
+                    var texture = skin.LoadTextureFromBytes(asset.RelativePath, bytes,
+                        UserInterface.NoPreviewImage);
+                    var scale = Math.Min(50f / Math.Max(1, texture.Width),
+                        42f / Math.Max(1, texture.Height));
+                    thumbnail.Size = new ScalableVector2(
+                        Math.Max(1, texture.Width * scale),
+                        Math.Max(1, texture.Height * scale));
+                    thumbnail.Image = texture;
+                }
+                catch
+                {
+                    thumbnail.Image = UserInterface.NoPreviewImage;
+                }
             }
         }
     }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Quaver.Shared.Config;
 using Quaver.Shared.Graphics.Notifications;
+using Quaver.Shared.Input.Global;
 using Quaver.Shared.Skinning;
 using Quaver.Shared.Skinning.V2;
 using Wobble;
@@ -24,13 +25,32 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         private SkinEditorOverlay overlay;
         private SkinEditorFileFingerprint fingerprint;
         private bool watcherWasActive;
+        private readonly GlobalInputScopeToken globalInputToken;
+
+        private sealed class Token(SkinEditorController controller) : GlobalInputScopeToken
+        {
+            public override GlobalInputScope Scope => GlobalInputScope.SkinEditor;
+
+            public override GlobalInputHandleResult Handle(GlobalKeybindActions action,
+                bool isKeyPress = true, bool isRelease = false)
+            {
+                if (action != GlobalKeybindActions.ReloadSkin || !controller.IsOpen)
+                    return GlobalInputHandleResult.Pass;
+
+                controller.Save();
+                return GlobalInputHandleResult.Consumed;
+            }
+        }
 
         public bool IsOpen => overlay != null;
 
         public static bool ReopenAfterSkinReload { get; set; }
 
-        public SkinEditorController(ISkinV2EditorHost host) =>
+        public SkinEditorController(ISkinV2EditorHost host)
+        {
             this.host = host ?? throw new ArgumentNullException(nameof(host));
+            globalInputToken = new Token(this);
+        }
 
         public void Open()
         {
@@ -89,13 +109,15 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
         public void Destroy()
         {
-            if (!IsOpen)
-                return;
+            if (IsOpen)
+            {
+                overlay.Destroy();
+                overlay = null;
+                session = null;
+                watcherWasActive = false;
+            }
 
-            overlay.Destroy();
-            overlay = null;
-            session = null;
-            watcherWasActive = false;
+            globalInputToken.Dispose();
         }
 
         private bool Save()
@@ -187,6 +209,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     session.Working.Metadata.Version = version;
                     if (!string.IsNullOrWhiteSpace(previewPath))
                         session.StagedWorkshopPreviewPath = previewPath;
+                    session.RefreshDirtyState();
                     overlay?.RefreshSaveState();
                 }));
         }
