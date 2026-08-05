@@ -721,8 +721,12 @@ namespace Quaver.Shared
             if (Fps == null)
                 return;
 
+#if DEBUG
+            Fps.Visible = true;
+#else
             Fps.Visible = ConfigManager.FpsCounter.Value &&
                           !(CurrentScreen is NewMainMenuScreen);
+#endif
         }
 
         /// <summary>
