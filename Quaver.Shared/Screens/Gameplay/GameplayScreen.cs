@@ -595,10 +595,11 @@ namespace Quaver.Shared.Screens.Gameplay
         }
 
         public override void Exit(Func<QuaverScreen> screen, int delay = 0,
-            QuaverScreenChangeType type = QuaverScreenChangeType.CompleteChange)
+            QuaverScreenChangeType type = QuaverScreenChangeType.CompleteChange,
+            ScreenTransitionMode transitionMode = ScreenTransitionMode.Auto)
         {
             Utils.NativeUtils.EnableWindowsKey();
-            base.Exit(screen, delay, type);
+            base.Exit(screen, delay, type, transitionMode);
         }
 
         /// <inheritdoc />

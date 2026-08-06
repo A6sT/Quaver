@@ -455,10 +455,10 @@ namespace Quaver.Shared
 
 #if VISUAL_TESTS
             Window.Title = $"Quaver Visual Test Runner";
-            new InitializationScreen().OnFirstUpdate();
+            QuaverScreenFactory.CreateInitialization().OnFirstUpdate();
 #else
             Window.Title = !IsDeployedBuild ? $"Quaver - {Version}" : $"Quaver v{Version}";
-            QuaverScreenManager.ScheduleScreenChange(() => new InitializationScreen(), true);
+            QuaverScreenManager.ScheduleScreenChange(() => QuaverScreenFactory.CreateInitialization(), true);
 #endif
         }
 
@@ -553,7 +553,8 @@ namespace Quaver.Shared
             if (!IsReadyToUpdate)
                 return;
 
-            base.Draw(gameTime);
+            using (Transitioner.SuppressForegroundElements())
+                base.Draw(gameTime);
 
             // Draw dialogs
             DialogManager.Draw(gameTime);
@@ -568,6 +569,7 @@ namespace Quaver.Shared
                 TooltipManager.Draw(gameTime);
 
             Transitioner.Draw(gameTime);
+            Transitioner.DrawForegroundElements(gameTime);
 
             ClearAlphaChannel(gameTime);
         }
@@ -719,8 +721,12 @@ namespace Quaver.Shared
             if (Fps == null)
                 return;
 
+#if DEBUG
+            Fps.Visible = true;
+#else
             Fps.Visible = ConfigManager.FpsCounter.Value &&
                           !(CurrentScreen is NewMainMenuScreen);
+#endif
         }
 
         /// <summary>
@@ -1235,9 +1241,9 @@ namespace Quaver.Shared
                     CurrentScreen?.Exit(() => QuaverScreenFactory.CreateMultiplayerLobby());
                     break;
                 case QuaverScreenType.Multiplayer:
-                    var screen = (MultiplayerGameScreen)CurrentScreen;
-                    screen.DontLeaveGameUponScreenSwitch = true;
-                    CurrentScreen?.Exit(() => new MultiplayerGameScreen());
+                    if (CurrentScreen is IMultiplayerGameScreenState multiplayerState)
+                        multiplayerState.DontLeaveGameUponScreenSwitch = true;
+                    CurrentScreen?.Exit(() => QuaverScreenFactory.CreateMultiplayerGame());
                     break;
                 case QuaverScreenType.Music:
                     CurrentScreen?.Exit(() => QuaverScreenFactory.CreateMusicPlayer());

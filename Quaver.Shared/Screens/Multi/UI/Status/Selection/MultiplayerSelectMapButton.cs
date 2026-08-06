@@ -30,10 +30,11 @@ namespace Quaver.Shared.Screens.Multi.UI.Status.Selection
             {
                 var quaver = GameBase.Game as QuaverGame;
 
-                if (quaver?.CurrentScreen is MultiplayerGameScreen multi)
+                if (quaver?.CurrentScreen is QuaverScreen screen &&
+                    screen is IMultiplayerGameScreenState multi)
                 {
                     multi.DontLeaveGameUponScreenSwitch = true;
-                    multi.Exit(() => QuaverScreenFactory.CreateSelection());
+                    screen.Exit(() => QuaverScreenFactory.CreateSelection());
                 }
             };
         }

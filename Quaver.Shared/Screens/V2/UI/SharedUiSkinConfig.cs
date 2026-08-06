@@ -34,6 +34,9 @@ namespace Quaver.Shared.Screens.V2.UI
         public SkinV2NavigationButtonConfig Button { get; set; } = new SkinV2NavigationButtonConfig();
 
         [Required]
+        public SkinV2NavigationLogoConfig Logo { get; set; } = new SkinV2NavigationLogoConfig();
+
+        [Required]
         public SkinV2ProfileConfig Profile { get; set; } = new SkinV2ProfileConfig();
 
         [Required]
@@ -59,6 +62,9 @@ namespace Quaver.Shared.Screens.V2.UI
         [Range(1, 8192)]
         public float IconSize { get; set; } = 40;
 
+        [Range(0, 2048)]
+        public float ExpandedLabelRightPadding { get; set; } = SkinV2MarginsConfig.Sm;
+
         [ConfigEditable]
         [SkinColor]
         public string BackgroundColor { get; set; } = "#1F88FF26";
@@ -66,6 +72,15 @@ namespace Quaver.Shared.Screens.V2.UI
         [ConfigEditable]
         [SkinColor]
         public string ForegroundColor { get; set; } = "#D9E3F4";
+    }
+
+    public sealed class SkinV2NavigationLogoConfig
+    {
+        [SkinAssetPath]
+        public string Image { get; set; } = "";
+
+        [Range(1, 8192)]
+        public float Height { get; set; } = 40;
     }
 
     public sealed class SkinV2ProfileConfig

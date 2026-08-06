@@ -1902,7 +1902,6 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Editor_RefreshFileCache" xml:space="preserve">
     <value>Opdater fil-cache</value>
   </data>
-  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve"><value>Refresh Editor from .qua File</value></data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
     <value>Upload</value>
   </data>
@@ -2554,9 +2553,6 @@ Use the filters to narrow your search.</value>
   </data>
   <data name="Screen_Editor_CannotChangeAudioRateFurther" xml:space="preserve">
     <value>You cannot change the audio rate this way any further!</value>
-  </data>
-  <data name="Screen_Editor_CacheUpdatedOnExit" xml:space="preserve">
-    <value>The cached data for this file will be updated when you leave the editor.</value>
   </data>
   <data name="Screen_Editor_NoHitObjectsPastThisPoint" xml:space="preserve">
     <value>There aren't any hitobjects to play past this point!</value>

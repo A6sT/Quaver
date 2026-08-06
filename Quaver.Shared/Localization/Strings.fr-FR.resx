@@ -1903,9 +1903,6 @@ Utilisez les filtres pour affiner votre recherche.</value>
   <data name="Screen_Editor_RefreshFileCache" xml:space="preserve">
     <value>Rafraichir le Cache du Fichier</value>
   </data>
-  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve">
-    <value>Rafraîchir l'éditeur depuis un fichier .qua</value>
-  </data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
     <value>Publier</value>
   </data>
@@ -2565,9 +2562,6 @@ Utilisez les filtres pour affiner votre recherche.</value>
   </data>
   <data name="Screen_Editor_CannotChangeAudioRateFurther" xml:space="preserve">
     <value>Vous ne pouvez pas changer le débit audio de cette façon encore!</value>
-  </data>
-  <data name="Screen_Editor_CacheUpdatedOnExit" xml:space="preserve">
-    <value>Les données mises en cache pour ce fichier seront mises à jour lorsque vous quitterez l'éditeur.</value>
   </data>
   <data name="Screen_Editor_NoHitObjectsPastThisPoint" xml:space="preserve">
     <value>Il n'y a aucune note à jouer après ce point!</value>

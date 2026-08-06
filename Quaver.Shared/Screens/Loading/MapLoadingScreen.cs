@@ -145,7 +145,7 @@ namespace Quaver.Shared.Screens.Loading
 
                 if (MapManager.Selected.Value == null)
                 {
-                    Exit(() => new MultiplayerGameScreen());
+                    Exit(() => QuaverScreenFactory.CreateMultiplayerGame());
                     return;
                 }
             }

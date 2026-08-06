@@ -140,7 +140,7 @@ namespace Quaver.Shared.Screens.Selection
             if (MapsetImporter.Queue.Count > 0 || QuaverSettingsDatabaseCache.OutdatedMaps.Count != 0
                                                || MapDatabaseCache.MapsToUpdate.Count != 0)
             {
-                Exit(() => new ImportingScreen(null, true));
+                Exit(() => QuaverScreenFactory.CreateImporting(null, true));
                 return;
             }
 
@@ -657,7 +657,7 @@ namespace Quaver.Shared.Screens.Selection
                 Exit(() => new TournamentScreen(2));
                 return;
             }
-            Exit(() => new MapLoadingScreen(new List<Score>()));
+            Exit(() => QuaverScreenFactory.CreateMapLoading(new List<Score>()));
         }
 
         /// <summary>
@@ -670,7 +670,7 @@ namespace Quaver.Shared.Screens.Selection
                 if (IsMultiplayer)
                 {
                     OnlineManager.Client?.SetGameCurrentlySelectingMap(false);
-                    return new MultiplayerGameScreen();
+                    return QuaverScreenFactory.CreateMultiplayerGame();
                 }
 
                 return QuaverScreenFactory.CreateMainMenu();
@@ -750,7 +750,7 @@ namespace Quaver.Shared.Screens.Selection
 
                 OnlineManager.Client.SetGameCurrentlySelectingMap(false);
 
-                Exit(() => new MultiplayerGameScreen());
+                Exit(() => QuaverScreenFactory.CreateMultiplayerGame());
             });
         }
 
@@ -1003,7 +1003,7 @@ namespace Quaver.Shared.Screens.Selection
         /// <param name="e"></param>
         /// <exception cref="NotImplementedException"></exception>
         private void OnAutoLoadOsuBeatmapsChanged(object sender, BindableValueChangedEventArgs<bool> e)
-            => Exit(() => new ImportingScreen(null, true));
+            => Exit(() => QuaverScreenFactory.CreateImporting(null, true));
 
         /// <inheritdoc />
         /// <summary>

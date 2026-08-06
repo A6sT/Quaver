@@ -304,9 +304,9 @@ namespace Quaver.Shared.IPC
                 dialog?.Close();
 
                 if (isMap)
-                    game.CurrentScreen.Exit(() => new ImportingScreen(null, true, false, id));
+                    game.CurrentScreen.Exit(() => QuaverScreenFactory.CreateImporting(null, true, false, id));
                 else
-                    game.CurrentScreen.Exit(() => new ImportingScreen(null, true, false));
+                    game.CurrentScreen.Exit(() => QuaverScreenFactory.CreateImporting(null, true, false));
             };
         }
     }
