@@ -1902,9 +1902,6 @@ Bruk filtrene til å begrense søket.</value>
   <data name="Screen_Editor_RefreshFileCache" xml:space="preserve">
     <value>Oppdater filbuffer</value>
   </data>
-  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve">
-    <value>Oppdater editor fra .qua fil</value>
-  </data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
     <value>Last opp</value>
   </data>
@@ -2564,9 +2561,6 @@ Bruk filtrene til å begrense søket.</value>
   </data>
   <data name="Screen_Editor_CannotChangeAudioRateFurther" xml:space="preserve">
     <value>Du kan ikke endre lydhastigheten på denne måten!</value>
-  </data>
-  <data name="Screen_Editor_CacheUpdatedOnExit" xml:space="preserve">
-    <value>Den bufrede dataen for denne filen vil bli oppdatert når du forlater editoren.</value>
   </data>
   <data name="Screen_Editor_NoHitObjectsPastThisPoint" xml:space="preserve">
     <value>Det er ingen treff-objekter til å spille forbi dette punktet!</value>
