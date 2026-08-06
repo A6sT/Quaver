@@ -77,6 +77,8 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         private Container inspectorContent;
         private Sprite inspectorScrollbar;
         private readonly List<Drawable> inspectorDrawables = new List<Drawable>();
+        private readonly List<SpriteTextPlus> inspectorErrorTexts = new List<SpriteTextPlus>();
+        private IReadOnlyList<SkinEditorProperty> inspectorProperties = Array.Empty<SkinEditorProperty>();
         private Container selectionRoot;
         private ScrollContainer assetScroll;
         private Dropdown folderDropdown;
@@ -100,6 +102,9 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
         private float lastWidth = -1;
         private float lastHeight = -1;
         private float inspectorOffset;
+        private float inspectorViewportHeight;
+        private float inspectorBaseContentHeight;
+        private float inspectorErrorTop;
         private Container lastInspectorVisibilityContent;
         private float lastInspectorVisibilityOffset = float.NaN;
         private float lastInspectorVisibilityViewportHeight = float.NaN;
@@ -373,6 +378,8 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             };
 
             var y = 4f;
+            inspectorErrorTexts.Clear();
+            inspectorProperties = Array.Empty<SkinEditorProperty>();
             if (selectedTarget == null)
             {
                 AddInspectorText(LocalizationManager.Get("SkinEditor_SelectComponent"), y, MutedColor);
@@ -383,6 +390,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             AddInspectorText(selectedTarget.Label, y, Color.White, 16);
             y += 28;
             var properties = GetVisibleProperties(session.GetProperties(selectedTarget.ConfigPath));
+            inspectorProperties = properties;
             if (properties.Count == 0)
             {
                 AddInspectorText(LocalizationManager.Get("SkinEditor_NoEditableProperties"), y, MutedColor);
@@ -397,13 +405,54 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     : AddProperty(property, y);
             }
 
+            inspectorErrorTop = y + 4;
             FinalizeInspector(viewportHeight, y + 12);
         }
 
         private void FinalizeInspector(float viewportHeight, float contentHeight)
         {
-            inspectorContent.Height = Math.Max(viewportHeight, contentHeight);
+            inspectorViewportHeight = viewportHeight;
+            inspectorBaseContentHeight = contentHeight;
+            RefreshInspectorErrors();
+        }
+
+        private void RefreshInspectorErrors()
+        {
+            if (inspectorContent == null)
+                return;
+
+            foreach (var errorText in inspectorErrorTexts.ToArray())
+            {
+                inspectorDrawables.Remove(errorText);
+                errorText.Destroy();
+            }
+            inspectorErrorTexts.Clear();
+
+            var y = inspectorErrorTop;
+            foreach (var error in GetInspectorErrors())
+            {
+                var errorText = AddInspectorText(error, y, new Color(249, 100, 93), 11);
+                errorText.MaxWidth = SkinEditorController.RightPanelWidth - 24;
+                inspectorErrorTexts.Add(errorText);
+                y += errorText.Height + 4;
+            }
+
+            inspectorContent.Height = Math.Max(inspectorViewportHeight,
+                inspectorErrorTexts.Count == 0 ? inspectorBaseContentHeight : y + 8);
+            lastInspectorVisibilityContent = null;
             UpdateInspectorVisibility();
+        }
+
+        private IEnumerable<string> GetInspectorErrors()
+        {
+            foreach (var property in inspectorProperties)
+            {
+                var hasError = property.IsGradientStops
+                    ? invalidPaths.Any(x => x.StartsWith(property.Path + "[", StringComparison.Ordinal))
+                    : invalidPaths.Contains(property.Path);
+                if (hasError)
+                    yield return $"{LocalizeProperty(property)}: {LocalizeValidationError(property)}";
+            }
         }
 
         private void UpdateInspectorScrolling()
@@ -562,12 +611,9 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 return controlY + 42;
             }
 
-            var errorText = AddInspectorText(string.Empty, controlY + 38, new Color(249, 100, 93), 11);
             var displayedValue = invalidText.TryGetValue(property.Path, out var invalidValue)
                 ? invalidValue
                 : Convert.ToString(value, CultureInfo.InvariantCulture) ?? string.Empty;
-            if (invalidPaths.Contains(property.Path))
-                errorText.Text = LocalizeValidationError(property);
             RoundedButton swatch = null;
             var fieldWidth = property.IsAssetPath
                 ? SkinEditorController.RightPanelWidth - 190
@@ -578,7 +624,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 displayedValue,
                 onApply: text =>
                 {
-                    CommitText(property, text, errorText);
+                    CommitText(property, text);
                     if (swatch != null && !invalidPaths.Contains(property.Path))
                         SetColorSwatchValue(swatch, SkinV2Color.Parse(text));
                 })
@@ -606,7 +652,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     picked =>
                     {
                         textbox.SetAppliedText(picked);
-                        CommitText(property, picked, errorText);
+                        CommitText(property, picked);
                         if (!invalidPaths.Contains(property.Path))
                             SetColorSwatchValue(swatch, SkinV2Color.Parse(picked));
                     }, property.Path != "Shared.Brand.AccentColor");
@@ -634,14 +680,6 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             CreateInspectorResetButton(y, () => ResetProperty(property), 28);
             y += 34;
             var stops = ((IEnumerable<SkinV2GradientStopConfig>) property.GetValue(session.Working)).ToList();
-            var hasGradientError = invalidPaths.Any(x =>
-                x.StartsWith(property.Path + "[", StringComparison.Ordinal));
-            var gradientError = AddInspectorText(hasGradientError
-                    ? LocalizationManager.Get("SkinEditor_InvalidGradientStop")
-                    : string.Empty,
-                y, new Color(249, 100, 93), 11);
-            if (hasGradientError)
-                y += 16;
             for (var i = 0; i < stops.Count; i++)
             {
                 var index = i;
@@ -657,13 +695,12 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     {
                         if (!float.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out var parsed))
                         {
-                            MarkInvalid(positionPath, text, gradientError,
-                                LocalizationManager.Get("SkinEditor_InvalidGradientStop"));
+                            MarkInvalid(positionPath, text);
                             return;
                         }
                         var edited = CurrentStops(property);
                         edited[index].Position = parsed;
-                        CommitGradientValue(property, edited, positionPath, text, gradientError);
+                        CommitGradientValue(property, edited, positionPath, text);
                     })
                 {
                     Parent = inspectorContent,
@@ -681,7 +718,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     {
                         var edited = CurrentStops(property);
                         edited[index].Color = text;
-                        CommitGradientValue(property, edited, colorPath, text, gradientError);
+                        CommitGradientValue(property, edited, colorPath, text);
                     })
                 {
                     Parent = inspectorContent,
@@ -697,7 +734,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                     color.SetAppliedText(picked);
                     var edited = CurrentStops(property);
                     edited[index].Color = picked;
-                    CommitGradientValue(property, edited, colorPath, picked, gradientError);
+                    CommitGradientValue(property, edited, colorPath, picked);
                 });
                 colorSwatch.IsClickable = !readOnly;
 
@@ -803,7 +840,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 BuildAssetButtons();
         }
 
-        private void CommitText(SkinEditorProperty property, string text, SpriteTextPlus errorText)
+        private void CommitText(SkinEditorProperty property, string text)
         {
             if (readOnly)
                 return;
@@ -812,8 +849,6 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             {
                 invalidPaths.Remove(property.Path);
                 invalidText.Remove(property.Path);
-                if (errorText != null)
-                    errorText.Text = string.Empty;
                 session.RefreshDirtyState();
                 QueuePreview();
             }
@@ -821,12 +856,11 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             {
                 invalidPaths.Add(property.Path);
                 invalidText[property.Path] = text ?? string.Empty;
-                if (errorText != null)
-                    errorText.Text = LocalizeValidationError(property);
             }
 
             session.HasInvalidInput = invalidPaths.Count > 0;
             RefreshSaveState();
+            RefreshInspectorErrors();
         }
 
         private bool CommitValue(SkinEditorProperty property, object value)
@@ -840,41 +874,38 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             session.HasInvalidInput = invalidPaths.Count > 0;
             QueuePreview();
             RefreshSaveState();
+            RefreshInspectorErrors();
             return true;
         }
 
         private void CommitGradientValue(SkinEditorProperty property, object value, string inputPath,
-            string rawText, SpriteTextPlus errorText)
+            string rawText)
         {
             if (readOnly)
                 return;
 
             if (!property.TrySetValue(session.Working, value, out _))
             {
-                MarkInvalid(inputPath, rawText, errorText,
-                    LocalizationManager.Get("SkinEditor_InvalidGradientStop"));
+                MarkInvalid(inputPath, rawText);
                 return;
             }
 
             invalidPaths.Remove(inputPath);
             invalidText.Remove(inputPath);
-            errorText.Text = invalidPaths.Any(x =>
-                    x.StartsWith(property.Path + "[", StringComparison.Ordinal))
-                ? LocalizationManager.Get("SkinEditor_InvalidGradientStop")
-                : string.Empty;
             session.RefreshDirtyState();
             session.HasInvalidInput = invalidPaths.Count > 0;
             QueuePreview();
             RefreshSaveState();
+            RefreshInspectorErrors();
         }
 
-        private void MarkInvalid(string inputPath, string rawText, SpriteTextPlus errorText, string message)
+        private void MarkInvalid(string inputPath, string rawText)
         {
             invalidPaths.Add(inputPath);
             invalidText[inputPath] = rawText ?? string.Empty;
-            errorText.Text = message;
             session.HasInvalidInput = true;
             RefreshSaveState();
+            RefreshInspectorErrors();
         }
 
         private void ClearInvalidPrefix(string prefix)
@@ -887,6 +918,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
             session.HasInvalidInput = invalidPaths.Count > 0;
             RefreshSaveState();
+            RefreshInspectorErrors();
         }
 
         private void QueuePreview()
@@ -1000,6 +1032,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
                 X = 365,
                 Y = 10
             };
+            folderDropdown.ItemContainer.Scrollbar.Tint = Color.White;
             folderDropdown.ItemSelected += (sender, args) =>
             {
                 selectedFolder = folderValues[args.Index];
@@ -1081,9 +1114,7 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
             if (assetBreadcrumb == null)
                 return;
 
-            assetBreadcrumb.Text = string.IsNullOrEmpty(selectedFolder)
-                ? LocalizationManager.Get("SkinEditor_Assets")
-                : LocalizationManager.Get("SkinEditor_AssetBreadcrumb", selectedFolder);
+            assetBreadcrumb.Text = LocalizationManager.Get("SkinEditor_Assets");
         }
 
         private void BuildAssetButtons()
@@ -1345,6 +1376,8 @@ namespace Quaver.Shared.Screens.V2.SkinEditor
 
         private static string LocalizeValidationError(SkinEditorProperty property)
         {
+            if (property.IsGradientStops)
+                return LocalizationManager.Get("SkinEditor_InvalidGradientStop");
             if (property.Range != null)
                 return LocalizationManager.Get("SkinEditor_InvalidRange",
                     property.Range.Minimum, property.Range.Maximum);
