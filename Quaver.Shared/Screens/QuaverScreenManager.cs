@@ -26,6 +26,8 @@ namespace Quaver.Shared.Screens
 {
     public static class QuaverScreenManager
     {
+        private const int TransitionWaitTimeout = 5000;
+
         /// <summary>
         ///     The previous screen that the user was on.
         /// </summary>
@@ -34,12 +36,12 @@ namespace Quaver.Shared.Screens
         /// <summary>
         ///     Task that's ran when fetching for leaderboard scores
         /// </summary>
-        private static TaskHandler<Func<QuaverScreen>, QuaverScreen> ScreenLoadTask { get; set; }
+        private static TaskHandler<ScreenChangeRequest, QuaverScreen> ScreenLoadTask { get; set; }
 
         public static void Initialize()
         {
             QuaverScreenFactory.Initialize(ConfigManager.UseNewScreens.Value);
-            ScreenLoadTask = new TaskHandler<Func<QuaverScreen>, QuaverScreen>(LoadScreen);
+            ScreenLoadTask = new TaskHandler<ScreenChangeRequest, QuaverScreen>(LoadScreen);
             ScreenLoadTask.OnCompleted += OnCompleted;
         }
 
@@ -49,7 +51,9 @@ namespace Quaver.Shared.Screens
         /// <param name="newScreen"></param>
         /// <param name="switchImmediately"></param>
         /// <param name="delay"></param>
-        public static void ScheduleScreenChange(Func<QuaverScreen> newScreen, bool switchImmediately = false, int delay = 0)
+        /// <param name="transitionMode"></param>
+        public static void ScheduleScreenChange(Func<QuaverScreen> newScreen, bool switchImmediately = false,
+            int delay = 0, ScreenTransitionMode transitionMode = ScreenTransitionMode.Auto)
         {
             Logger.Important($"Scheduled Screen Change", LogType.Runtime);
 
@@ -60,23 +64,27 @@ namespace Quaver.Shared.Screens
 
             if (LastScreen == QuaverScreenType.None || switchImmediately)
             {
-                ChangeScreen(newScreen(), true);
+                var screen = newScreen();
+                var retainedElements = GetRetainedElements(game.CurrentScreen, screen);
+                Transitioner.SetForegroundElements(GetTransitionForegroundElements(transitionMode,
+                    retainedElements));
+                ChangeScreen(screen, retainedElements, true);
                 return;
             }
 
-            ScreenLoadTask.Run(newScreen, delay);
+            ScreenLoadTask.Run(new ScreenChangeRequest(newScreen, transitionMode), delay);
         }
 
         /// <summary>
         ///     Loads the new screen in a task.
         /// </summary>
-        /// <param name="newScreen"></param>
+        /// <param name="request"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        private static QuaverScreen LoadScreen(Func<QuaverScreen> newScreen, CancellationToken token)
+        private static QuaverScreen LoadScreen(ScreenChangeRequest request, CancellationToken token)
         {
-            Transitioner.FadeIn();
-            var screen = newScreen();
+            var screen = request.NewScreen();
+            token.ThrowIfCancellationRequested();
 
             Logger.Important($"Screen `{screen.Type}` has been loaded proceeding to switch.", LogType.Runtime);
             return screen;
@@ -87,51 +95,87 @@ namespace Quaver.Shared.Screens
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="screen"></param>
-        private static void OnCompleted(object sender, TaskCompleteEventArgs<Func<QuaverScreen>, QuaverScreen> e)
+        private static void OnCompleted(object sender, TaskCompleteEventArgs<ScreenChangeRequest, QuaverScreen> e)
         {
             var game = (QuaverGame)GameBase.Game;
+            var retainedElements = GetRetainedElements(game.CurrentScreen, e.Result);
+            var foregroundElements = GetTransitionForegroundElements(e.Input.TransitionMode, retainedElements);
+
+            Transitioner.FadeIn(foregroundElements);
 
             // Wait for the transitioner to fully fade to black.
-            while (Transitioner.Blackness?.Animations.Count != 0)
+            var waitStarted = Environment.TickCount64;
+            while (Transitioner.IsAnimating &&
+                   Environment.TickCount64 - waitStarted < TransitionWaitTimeout)
                 Thread.Sleep(16);
 
+            if (Transitioner.IsAnimating)
+                Logger.Warning("Screen transition fade-in timed out; forcing the screen switch and recovery fade.",
+                    LogType.Runtime);
+
             // Run this on the next game loop on the main thread.
-            game.ScheduleRenderTargetDraw(() => ChangeScreen(e.Result, false));
+            game.ScheduleRenderTargetDraw(() => ChangeScreen(e.Result, retainedElements, false));
         }
 
-        private static void ChangeScreen(QuaverScreen screen, bool switchImmediately)
+        private static IReadOnlyCollection<string> GetRetainedElements(QuaverScreen currentScreen,
+            QuaverScreen nextScreen)
         {
-            var game = (QuaverGame)GameBase.Game;
-
-            IReadOnlyCollection<string> retainedElements = Array.Empty<string>();
-
-            if (game.CurrentScreen is IPersistentScreen currentPersistent &&
-                screen is IPersistentScreen nextPersistent)
-            {
-                retainedElements = currentPersistent.PersistentElementKeys
+            if (currentScreen is IPersistentScreen currentPersistent &&
+                nextScreen is IPersistentScreen nextPersistent)
+                return currentPersistent.PersistentElementKeys
                     .Intersect(nextPersistent.PersistentElementKeys, StringComparer.Ordinal)
                     .ToArray();
+
+            return Array.Empty<string>();
+        }
+
+        private static IReadOnlyCollection<string> GetTransitionForegroundElements(
+            ScreenTransitionMode transitionMode, IReadOnlyCollection<string> retainedElements) =>
+            transitionMode == ScreenTransitionMode.FullScreen
+                ? Array.Empty<string>()
+                : retainedElements;
+
+        private static void ChangeScreen(QuaverScreen screen, IReadOnlyCollection<string> retainedElements,
+            bool switchImmediately)
+        {
+            var game = (QuaverGame)GameBase.Game;
+            try
+            {
+                ScreenManager.ChangeScreen(screen, retainedElements, switchImmediately);
+                game.CurrentScreen = screen;
+                game.RefreshFpsCounterVisibility();
+
+                // Update client status on the server.
+                var status = screen.GetClientStatus();
+
+                if (status != null)
+                    OnlineManager.Client?.UpdateClientStatus(status);
+
+                OtherGameMapDatabaseCache.RunThread();
+
+                Logger.Important($"Screen has been switched to type: `{screen.Type}`", LogType.Runtime);
             }
-
-            ScreenManager.ChangeScreen(screen, retainedElements, switchImmediately);
-            game.CurrentScreen = screen;
-            game.RefreshFpsCounterVisibility();
-
-            // Update client status on the server.
-            var status = screen.GetClientStatus();
-
-            if (status != null)
-                OnlineManager.Client?.UpdateClientStatus(status);
-
-            OtherGameMapDatabaseCache.RunThread();
-
-            if (switchImmediately)
+            finally
+            {
+                // The screen is fully covered at this point, so starting the fade immediately
+                // still preserves the black transition frame. Keeping this in the finally block
+                // prevents an exception or a lost follow-up draw callback from orphaning blackness.
                 Transitioner.FadeOut();
-            else
-                game.ScheduleRenderTargetDraw(Transitioner.FadeOut);
+                Button.IsGloballyClickable = true;
+            }
+        }
 
-            Logger.Important($"Screen has been switched to type: `{screen.Type}`", LogType.Runtime);
-            Button.IsGloballyClickable = true;
+        private sealed class ScreenChangeRequest
+        {
+            public Func<QuaverScreen> NewScreen { get; }
+
+            public ScreenTransitionMode TransitionMode { get; }
+
+            public ScreenChangeRequest(Func<QuaverScreen> newScreen, ScreenTransitionMode transitionMode)
+            {
+                NewScreen = newScreen;
+                TransitionMode = transitionMode;
+            }
         }
     }
 }

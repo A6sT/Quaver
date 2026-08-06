@@ -6,6 +6,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using IniFileParser;
 using Quaver.Shared.Config;
@@ -104,6 +105,38 @@ namespace Quaver.Shared.Skinning
                 SkinV2 = new SkinStoreV2(Skin?.Dir ?? ConfigManager.SkinDirectory.Value);
 
             return SkinV2.Acquire();
+        }
+
+        /// <summary>
+        ///     Saves and publishes a new V2-only skin generation without reloading legacy skin assets or
+        ///     replacing the active screen.
+        /// </summary>
+        public static bool TryPublishV2Config(SkinV2Config editedConfig,
+            out IReadOnlyList<string> errors)
+        {
+            if (SkinV2 == null)
+            {
+                errors = new[] { "The selected skin's V2 configuration is not loaded." };
+                return false;
+            }
+
+            var current = SkinV2;
+            if (!current.TrySaveEditableConfig(editedConfig, out errors))
+                return false;
+
+            try
+            {
+                var replacement = new SkinStoreV2(current.RootDirectory);
+                SkinV2 = replacement;
+                current.Retire();
+                errors = replacement.Warnings;
+                return true;
+            }
+            catch (Exception e)
+            {
+                errors = new[] { "The saved V2 configuration could not be published: " + e.Message };
+                return false;
+            }
         }
 
         public static void LoadEditorSkin()

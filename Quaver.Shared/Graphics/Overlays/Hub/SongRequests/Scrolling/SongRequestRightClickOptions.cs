@@ -146,7 +146,7 @@ namespace Quaver.Shared.Graphics.Overlays.Hub.SongRequests.Scrolling
                                 return;
                             if (game.CurrentScreen.Type == QuaverScreenType.Select)
                             {
-                                game.CurrentScreen.Exit(() => new ImportingScreen(null, true));
+                                game.CurrentScreen.Exit(() => QuaverScreenFactory.CreateImporting(null, true));
 
                                 var dialog = DialogManager.Dialogs.Find(x => x is OnlineHubDialog) as OnlineHubDialog;
                                 dialog?.Close();

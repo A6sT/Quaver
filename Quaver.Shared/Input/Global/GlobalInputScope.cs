@@ -10,6 +10,7 @@ public enum GlobalInputScope
     Multiplayer,
     Results,
     Menu,
+    SkinEditor,
     Jukebox,
     Download,
     VolumeControl,
