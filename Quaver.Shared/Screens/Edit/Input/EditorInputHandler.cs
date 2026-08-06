@@ -593,7 +593,7 @@ public class EditorInputHandler : IInputHandler<EditorKeybindActions>
     }
 
     /// <inheritdoc />
-    public bool InFocus => DialogManager.Dialogs.Count != 0 || View.IsImGuiHovered;
+    public bool InFocus => DialogManager.Dialogs.Count != 0 || View.IsImGuiKeyboardCaptured;
 
     private EditScreenView View { get; set; }
 

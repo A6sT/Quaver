@@ -64,6 +64,7 @@ using Quaver.Shared.Screens.Edit.Actions.TimingGroups.MoveObjectsToTimingGroup;
 using Quaver.Shared.Screens.Edit.Actions.TimingGroups.Remove;
 using Quaver.Shared.Screens.Edit.Actions.TimingGroups.Rename;
 using Wobble.Input;
+using Wobble.Graphics.ImGUI;
 
 namespace Quaver.Shared.Screens.Edit.Plugins
 {
@@ -562,13 +563,21 @@ namespace Quaver.Shared.Screens.Edit.Plugins
         /// <returns></returns>
         public static string MillisecondsToTime(float time) => TimeSpan.FromMilliseconds(time).ToString(@"mm\:ss\.fff");
 
-        public static bool IsKeyPressed(Keys k) => KeyboardManager.IsUniqueKeyPress(k);
+        private static bool IsPluginTextInputActive =>
+            EditScreen?.Plugins.Any(plugin =>
+                plugin.IsActive && plugin is SpriteImGui { WantsTextInput: true }) == true;
 
-        public static bool IsKeyReleased(Keys k) => KeyboardManager.IsUniqueKeyRelease(k);
+        public static bool IsKeyPressed(Keys k) =>
+            !IsPluginTextInputActive && KeyboardManager.IsUniqueKeyPress(k);
 
-        public static bool IsKeyDown(Keys k) => KeyboardManager.CurrentState.IsKeyDown(k);
+        public static bool IsKeyReleased(Keys k) =>
+            !IsPluginTextInputActive && KeyboardManager.IsUniqueKeyRelease(k);
 
-        public static bool IsKeyUp(Keys k) => KeyboardManager.CurrentState.IsKeyUp(k);
+        public static bool IsKeyDown(Keys k) =>
+            !IsPluginTextInputActive && KeyboardManager.CurrentState.IsKeyDown(k);
+
+        public static bool IsKeyUp(Keys k) =>
+            !IsPluginTextInputActive && KeyboardManager.CurrentState.IsKeyUp(k);
 
         /// <summary>
         ///     Casts the value to a <see cref="Half"/>.

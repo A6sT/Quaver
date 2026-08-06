@@ -56,6 +56,9 @@ namespace Quaver.Shared.Online
 {
     public static class OnlineManager
     {
+        static OnlineManager() =>
+            ApiRequestExecutor.FailureLogger = message => Logger.Error(message, LogType.Network);
+
         /// <summary>
         ///    The online client that connects to the Quaver servers.
         /// </summary>

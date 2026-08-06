@@ -36,7 +36,7 @@ namespace Quaver.Shared.Online.API.News
                 var request = new RestRequest(URL, Method.GET);
                 var client = new RestClient("https://blog.quavergame.com") { UserAgent = "Quaver" };
 
-                var response = client.Execute(request);
+                var response = ExecuteApiRequest(client, request);
 
                 var json = JObject.Parse(response.Content);
 
