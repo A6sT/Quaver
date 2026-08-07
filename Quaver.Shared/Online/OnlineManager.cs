@@ -56,6 +56,9 @@ namespace Quaver.Shared.Online
 {
     public static class OnlineManager
     {
+        static OnlineManager() =>
+            ApiRequestExecutor.FailureLogger = message => Logger.Error(message, LogType.Network);
+
         /// <summary>
         ///    The online client that connects to the Quaver servers.
         /// </summary>
@@ -763,7 +766,7 @@ namespace Quaver.Shared.Online
                 if (CurrentGame is not null)
                     Logger.Important($"Successfully joined game: {CurrentGame.Id} | {CurrentGame.Name} | {CurrentGame.HasPassword}", LogType.Network);
 
-                return new MultiplayerGameScreen();
+                return QuaverScreenFactory.CreateMultiplayerGame();
             });
         }
 
@@ -788,7 +791,7 @@ namespace Quaver.Shared.Online
             game.CurrentScreen.Exit(() =>
             {
                 Logger.Important($"Successfully joined game to spectate: {CurrentGame.Id} | {CurrentGame.Name} | {CurrentGame.HasPassword}", LogType.Network);
-                return new MultiplayerGameScreen();
+                return QuaverScreenFactory.CreateMultiplayerGame();
             });
         }
 
@@ -1232,7 +1235,7 @@ namespace Quaver.Shared.Online
             {
                 if (tournamentScreen.GameplayScreens.Any(s => s.SpectatorClient.Player.OnlineUser.Id == e.UserId))
                 {
-                    currentScreen.Exit(() => new MultiplayerGameScreen());
+                    currentScreen.Exit(() => QuaverScreenFactory.CreateMultiplayerGame());
                 }
             }
         }
@@ -1274,7 +1277,7 @@ namespace Quaver.Shared.Online
 
             var game = (QuaverGame)GameBase.Game;
 
-            if (game.CurrentScreen is MultiplayerGameScreen screen)
+            if (game.CurrentScreen is IMultiplayerGameScreenState screen)
                 screen.DontLeaveGameUponScreenSwitch = true;
 
             if (CurrentGame.IsSpectating || CurrentGame.RefereeUserId == Self.OnlineUser.Id)
@@ -1298,7 +1301,7 @@ namespace Quaver.Shared.Online
                 return;
             }
 
-            game.CurrentScreen.Exit(() => new MapLoadingScreen(GetScoresFromMultiplayerUsers()));
+            game.CurrentScreen.Exit(() => QuaverScreenFactory.CreateMapLoading(GetScoresFromMultiplayerUsers()));
         }
 
         /// <summary>

@@ -71,27 +71,24 @@ namespace Quaver.Shared.Skinning.V2
         public bool TrySaveEditableConfig(out IReadOnlyList<string> errors) =>
             Source.TrySaveMain(Config, out errors);
 
+        /// <summary>
+        ///     Returns a detached configuration suitable for an in-game editing session.
+        /// </summary>
+        public SkinV2Config CreateEditableSnapshot() => Source.GetSnapshot();
+
+        /// <summary>
+        ///     Validates and writes an edited snapshot using the restricted Skin V2 YAML contract.
+        /// </summary>
+        public bool TrySaveEditableConfig(SkinV2Config editedConfig, out IReadOnlyList<string> errors) =>
+            Source.TrySaveMain(editedConfig, out errors);
+
         internal Texture2D LoadTexture(string relativePath, Texture2D fallback)
         {
             if (string.IsNullOrWhiteSpace(relativePath))
                 return fallback;
 
-            string fullPath;
-            try
-            {
-                if (Path.IsPathRooted(relativePath) || Uri.TryCreate(relativePath, UriKind.Absolute, out _))
-                    return WarnAndFallback(relativePath, "absolute paths and URLs are not allowed", fallback);
-
-                fullPath = Path.GetFullPath(Path.Combine(RootDirectory, relativePath));
-                var rootWithSeparator = RootDirectory.TrimEnd(Path.DirectorySeparatorChar,
-                    Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
-                if (!fullPath.StartsWith(rootWithSeparator, StringComparison.OrdinalIgnoreCase))
-                    return WarnAndFallback(relativePath, "the path leaves the skin directory", fallback);
-            }
-            catch (Exception e)
-            {
-                return WarnAndFallback(relativePath, e.Message, fallback);
-            }
+            if (!TryResolveTexturePath(relativePath, out var fullPath, out var reason))
+                return WarnAndFallback(relativePath, reason, fallback);
 
             lock (sync)
             {
@@ -123,6 +120,75 @@ namespace Quaver.Shared.Skinning.V2
             catch (Exception e)
             {
                 return WarnAndFallback(relativePath, e.Message, fallback);
+            }
+        }
+
+        internal Texture2D LoadTextureFromBytes(string relativePath, byte[] bytes, Texture2D fallback)
+        {
+            if (string.IsNullOrWhiteSpace(relativePath) || bytes == null || bytes.Length == 0)
+                return fallback;
+
+            if (!TryResolveTexturePath(relativePath, out var fullPath, out var reason))
+                return WarnAndFallback(relativePath, reason, fallback);
+
+            lock (sync)
+            {
+                if (disposed)
+                    return fallback;
+                if (textures.TryGetValue(fullPath, out var cached) && !cached.IsDisposed)
+                    return cached;
+            }
+
+            try
+            {
+                using var stream = new MemoryStream(bytes);
+                var texture = AssetLoader.LoadTexture2D(stream);
+                lock (sync)
+                {
+                    if (disposed)
+                    {
+                        texture.Dispose();
+                        return fallback;
+                    }
+
+                    textures[fullPath] = texture;
+                }
+
+                return texture;
+            }
+            catch (Exception e)
+            {
+                return WarnAndFallback(relativePath, e.Message, fallback);
+            }
+        }
+
+        private bool TryResolveTexturePath(string relativePath, out string fullPath, out string reason)
+        {
+            fullPath = null;
+            reason = null;
+            try
+            {
+                if (Path.IsPathRooted(relativePath) || Uri.TryCreate(relativePath, UriKind.Absolute, out _))
+                {
+                    reason = "absolute paths and URLs are not allowed";
+                    return false;
+                }
+
+                fullPath = Path.GetFullPath(Path.Combine(RootDirectory, relativePath));
+                var rootWithSeparator = RootDirectory.TrimEnd(Path.DirectorySeparatorChar,
+                    Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
+                if (!fullPath.StartsWith(rootWithSeparator, StringComparison.OrdinalIgnoreCase))
+                {
+                    reason = "the path leaves the skin directory";
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                reason = e.Message;
+                return false;
             }
         }
 
@@ -201,6 +267,9 @@ namespace Quaver.Shared.Skinning.V2
 
         public Texture2D LoadTexture(string relativePath, Texture2D fallback) =>
             store?.LoadTexture(relativePath, fallback) ?? fallback;
+
+        internal Texture2D LoadTextureFromBytes(string relativePath, byte[] bytes, Texture2D fallback) =>
+            store?.LoadTextureFromBytes(relativePath, bytes, fallback) ?? fallback;
 
         public void Dispose()
         {

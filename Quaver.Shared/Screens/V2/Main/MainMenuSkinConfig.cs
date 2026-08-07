@@ -97,6 +97,10 @@ namespace Quaver.Shared.Screens.V2.Main
         [SkinAssetPath]
         public string Image { get; set; } = "";
 
+        [Range(0.8, 1)]
+        [ConfigEditable]
+        public float Scale { get; set; } = 1;
+
         [Range(1, 8192)]
         public float MinimumWidth { get; set; } = 320;
 
