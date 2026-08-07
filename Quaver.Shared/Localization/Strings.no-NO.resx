@@ -2974,10 +2974,10 @@ Bruk filtrene til å begrense søket.</value>
     <value>Velg</value>
   </data>
   <data name="Screen_Editor_NoteTool" xml:space="preserve">
-    <value>Notat</value>
+    <value>Note</value>
   </data>
   <data name="Screen_Editor_LongNoteTool" xml:space="preserve">
-    <value>Lang Notater</value>
+    <value>Lang Note</value>
   </data>
   <data name="Screen_Editor_MineTool" xml:space="preserve">
     <value>Bombe</value>
