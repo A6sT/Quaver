@@ -166,7 +166,7 @@ namespace Quaver.Shared.Screens.Selection
             MapManager.Selected.ValueChanged += OnSelectedMapChangedForStreamerFiles;
             ConfigManager.AutoLoadOsuBeatmaps.ValueChanged += OnAutoLoadOsuBeatmapsChanged;
 
-            MapLoadingScreen.QueueStreamerFilesWrite(MapManager.Selected.Value);
+            MapLoadingScreen.QueueStreamerFilesWrite();
 
             View = new SelectionScreenView(this);
             GlobalInputToken = new Token(this);
@@ -995,7 +995,7 @@ namespace Quaver.Shared.Screens.Selection
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnSelectedMapChangedForStreamerFiles(object sender, BindableValueChangedEventArgs<Map> e)
-            => MapLoadingScreen.QueueStreamerFilesWrite(e.Value, 250);
+            => MapLoadingScreen.QueueStreamerFilesWrite(250);
 
         /// <summary>
         /// </summary>
