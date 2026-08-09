@@ -31,10 +31,9 @@ namespace Quaver.Shared.Screens.Selection.UI.FilterPanel.MapInformation.Metadata
 
         private void SetText()
         {
-            var windows = JudgementWindowsDatabaseCache.Selected.Value == JudgementWindowsDatabaseCache.Standard
-                ? "" : $" ({JudgementWindowsDatabaseCache.Selected.Value.Name})";
+            var windows = JudgementWindowsDatabaseCache.Selected.Value == JudgementWindowsDatabaseCache.Standard ? "" : $" ({JudgementWindowsDatabaseCache.Selected.Value.Name})";
 
-            Value.Text = $"{ModHelper.GetModsString(ModManager.Mods)}{windows}";
+            ChangeValue($"{ModHelper.GetModsString(ModManager.Mods)}{windows}");
         }
 
         private void OnJudgementWindowsChanged(object sender, BindableValueChangedEventArgs<JudgementWindows> e) => ScheduleUpdate(SetText);

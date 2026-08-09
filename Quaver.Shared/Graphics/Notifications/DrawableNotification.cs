@@ -148,8 +148,10 @@ namespace Quaver.Shared.Graphics.Notifications
         /// </summary>
         private void ApplyContent()
         {
-            Border.Tint = GetColor();
+            var color = GetColor();
+            Border.Tint = color;
             Icon.Image = GetIconTexture();
+            Icon.Tint = color;
 
             Text.Text = Item.Text;
 

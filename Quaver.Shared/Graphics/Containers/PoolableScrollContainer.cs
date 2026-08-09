@@ -56,7 +56,7 @@ namespace Quaver.Shared.Graphics.Containers
         /// <summary>
         ///    Quick way to get the drawable's height.
         /// </summary>
-        private int DrawableHeight => Pool.Count > 0 ? Pool.First().HEIGHT : 0;
+        private int DrawableHeight => Pool?.Count > 0 ? Pool.First().HEIGHT : 0;
 
         /// <inheritdoc />
         /// <summary>
@@ -130,7 +130,7 @@ namespace Quaver.Shared.Graphics.Containers
         /// </summary>
         public virtual void RecalculateContainerHeight(bool usePoolCount = false)
         {
-            var count = usePoolCount ? Pool.Count : AvailableItems.Count;
+            var count = usePoolCount ? Pool?.Count ?? 0 : AvailableItems?.Count ?? 0;
 
             var totalUserHeight = DrawableHeight * count + PaddingTop + PaddingBottom;
 

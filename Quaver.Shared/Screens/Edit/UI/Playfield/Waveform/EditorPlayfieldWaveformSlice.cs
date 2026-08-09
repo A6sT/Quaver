@@ -29,6 +29,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Playfield.Waveform
             _sliceSprite = new Sprite
             {
                 Alpha = 0,
+                DrawIfOffScreen = true,
                 Image = _sliceTexture,
                 Width = textureWidth,
                 Height = (float)length

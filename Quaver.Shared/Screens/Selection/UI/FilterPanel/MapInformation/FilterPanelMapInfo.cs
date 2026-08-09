@@ -81,6 +81,7 @@ namespace Quaver.Shared.Screens.Selection.UI.FilterPanel.MapInformation
             MapManager.Selected.ValueChanged -= OnMapChanged;
             ModManager.ModsChanged -= OnModsChanged;
             JudgementWindowsDatabaseCache.Selected.ValueChanged -= OnSelectedWindowsChanged;
+            Mods.SizeChanged -= OnMetadataSizeChanged;
 
             base.Destroy();
         }
@@ -153,6 +154,19 @@ namespace Quaver.Shared.Screens.Selection.UI.FilterPanel.MapInformation
                 Y = GameMode.Y,
                 X = NotesPerSecond.X + NotesPerSecond.Width + spacing * 2
             };
+
+            Mods.SizeChanged += OnMetadataSizeChanged;
+            UpdateMetadataWidth();
+        }
+
+        private void OnMetadataSizeChanged(object sender, ScalableVector2 size) => UpdateMetadataWidth();
+
+        private void UpdateMetadataWidth()
+        {
+            const int spacing = 25;
+            var metadataWidth = Mods.X + Mods.Width + spacing;
+            Width = metadataWidth;
+            ContentContainer.Width = metadataWidth;
         }
 
         /// <summary>
