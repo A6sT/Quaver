@@ -153,5 +153,6 @@ namespace Quaver.Shared.Skinning.V2
 
         [Required]
         public SkinV2ResultsConfig Results { get; set; } = new SkinV2ResultsConfig();
+
     }
 }

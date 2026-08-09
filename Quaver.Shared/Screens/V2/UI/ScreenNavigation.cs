@@ -16,6 +16,7 @@ using Quaver.Shared.Online;
 using Quaver.Shared.Screens.Main.UI;
 using Quaver.Shared.Screens.Options;
 using Quaver.Shared.Screens.V2.SkinEditor;
+using Quaver.Shared.Screens.V2.UI.OnlineHub;
 using Quaver.Shared.Skinning;
 using Quaver.Shared.Skinning.V2;
 using Steamworks;
@@ -34,6 +35,7 @@ using Wobble.Input;
 using Wobble.Managers;
 using Wobble.Screens;
 using Wobble.Window;
+using LegacyOnlineHub = Quaver.Shared.Graphics.Overlays.Hub.OnlineHub;
 
 namespace Quaver.Shared.Screens.V2.UI
 {
@@ -66,6 +68,10 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private NavigationBar BottomBar { get; }
 
+        private Sprite OnlineHubHeaderBackground { get; }
+
+        private PlayerSummaryControl PlayerSummary { get; }
+
         private ProfileControl ProfileButton { get; }
 
         private RoundedButton DonateButton { get; }
@@ -76,7 +82,7 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private TextureRegion HubMenuIcon { get; }
 
-        private OnlineHub SubscribedOnlineHub { get; set; }
+        private LegacyOnlineHub SubscribedOnlineHub { get; set; }
 
         private List<Drawable> NavigationButtons { get; } = new List<Drawable>();
 
@@ -106,6 +112,10 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private QuaverScreenType CurrentActiveScreen { get; set; } = QuaverScreenType.None;
 
+        private float OnlineHubProfileProgress { get; set; }
+
+        private bool SharedRightControlsAttached { get; set; }
+
         private ScreenNavigation(SkinV2Config previewConfig = null)
         {
             Skin = SkinManager.AcquireV2();
@@ -115,8 +125,19 @@ namespace Quaver.Shared.Screens.V2.UI
             Size = new ScalableVector2(WindowManager.Width, WindowManager.Height);
 
             TopBar = CreateBar(Alignment.TopLeft, Config.Bar);
+            OnlineHubHeaderBackground = new Sprite
+            {
+                Parent = TopBar,
+                Alignment = Alignment.TopRight,
+                Size = new ScalableVector2(OnlineHubDesign.Default.Window.Width, TopBar.Height),
+                Image = UserInterface.BlankBox,
+                Tint = SkinV2Color.Parse(OnlineHubDesign.Default.Header.BackgroundColor),
+                Visible = false,
+                UsePreviousSpriteBatchOptions = true
+            };
             BottomBar = CreateBar(Alignment.BotLeft, Config.Footer);
 
+            PlayerSummary = new PlayerSummaryControl(Config.PlayerSummary, Config.Button.Size);
             ProfileButton = new ProfileControl(Config.Profile,
                 SkinV2Color.Parse(Config.Button.BackgroundColor),
                 UserInterface.OfflineAvatar,
@@ -156,7 +177,10 @@ namespace Quaver.Shared.Screens.V2.UI
 
             AttachOutgoingApplicationLogo();
             if (animateButtonsEntrance)
+            {
                 AnimateNavigationButtonsEntrance(buttons, LogoExitAnimationDuration);
+                PlayerSummary.AnimateEntrance(LogoExitAnimationDuration);
+            }
 
             CurrentTopLayout = TopLayout.Main;
             CurrentActiveScreen = QuaverScreenType.Menu;
@@ -195,6 +219,7 @@ namespace Quaver.Shared.Screens.V2.UI
             {
                 AnimateApplicationLogoEntrance();
                 AnimateNavigationButtonsEntrance(buttons, LogoEnterAnimationDuration);
+                PlayerSummary.AnimateEntrance(LogoEnterAnimationDuration);
             }
 
             CurrentTopLayout = TopLayout.Application;
@@ -308,6 +333,14 @@ namespace Quaver.Shared.Screens.V2.UI
             return EnsureAttached(parent, previewConfig);
         }
 
+        internal static void SetOnlineHubHeaderPosition(float offset, float width)
+        {
+            if (!ScreenManager.TryGetElement<ScreenNavigation>(ElementKey, out var navigation))
+                return;
+
+            navigation.ApplyOnlineHubHeaderPosition(offset, width);
+        }
+
         public IReadOnlyList<SkinEditorTarget> GetSkinEditorTargets()
         {
             var targets = new List<SkinEditorTarget>
@@ -343,6 +376,7 @@ namespace Quaver.Shared.Screens.V2.UI
             base.Update(gameTime);
             UpdateOutgoingApplicationLogo(gameTime);
             UpdateDelayedButtonReveals(gameTime);
+            UpdateOnlineHubProfilePosition();
         }
 
         public override void Destroy()
@@ -359,8 +393,8 @@ namespace Quaver.Shared.Screens.V2.UI
             Skin.Dispose();
         }
 
-        private NavigationBar CreateBar(Alignment alignment, SkinV2NavigationBarConfig config) => new NavigationBar(
-            WindowManager.Width, Config.Button.Size + Config.EdgePadding * 2, Color.Transparent)
+        private NavigationBar CreateBar(Alignment alignment, SkinV2NavigationBarConfig config) =>
+            new NavigationBar(WindowManager.Width, Config.Button.Size + Config.EdgePadding * 2, Color.Transparent)
         {
             Parent = this,
             Alignment = alignment,
@@ -590,14 +624,18 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private void AddSharedRightControls()
         {
+            TopBar.Add(NavigationBarRegion.Right, PlayerSummary);
             TopBar.Add(NavigationBarRegion.Right, ProfileButton);
             TopBar.Add(NavigationBarRegion.Right, DonateButton);
             TopBar.Add(NavigationBarRegion.Right, HubButton);
+            SharedRightControlsAttached = true;
+            UpdateOnlineHubProfilePosition();
         }
 
         private void ClearTopLayout()
         {
             TopBar.Clear(destroy: false);
+            SharedRightControlsAttached = false;
 
             foreach (var button in TopLayoutButtons)
             {
@@ -658,6 +696,53 @@ namespace Quaver.Shared.Screens.V2.UI
                 TopBar.Width = WindowManager.Width;
                 BottomBar.Width = WindowManager.Width;
             }
+        }
+
+        private void ApplyOnlineHubHeaderPosition(float offset, float width)
+        {
+            if (Math.Abs(OnlineHubHeaderBackground.Width - width) > 0.001f)
+                OnlineHubHeaderBackground.Width = width;
+            if (Math.Abs(OnlineHubHeaderBackground.X - offset) > 0.001f)
+                OnlineHubHeaderBackground.X = offset;
+
+            OnlineHubHeaderBackground.Visible = offset < width;
+            var revealedWidth = width - offset;
+            var donateSpace = DonateButton.Width + Config.ItemSpacing;
+            var donateRightInset = Config.EdgePadding + HubButton.Width + Config.ItemSpacing;
+            var donateProgress = MathHelper.Clamp((revealedWidth - donateRightInset) / Math.Max(1, donateSpace), 0, 1);
+            DonateButton.PerformHoverFade = donateProgress == 0;
+            DonateButton.IsInteractionEnabled = donateProgress == 0;
+            DonateButton.Visible = donateProgress < 1;
+            if (Math.Abs(DonateButton.Alpha - (1 - donateProgress)) > 0.001f)
+                DonateButton.Alpha = 1 - donateProgress;
+
+            var profileRightInset = donateRightInset + donateSpace;
+            var travelWidth = Math.Max(1, width - profileRightInset);
+            var progress = MathHelper.Clamp((revealedWidth - profileRightInset) / travelWidth, 0, 1);
+            if (Math.Abs(OnlineHubProfileProgress - progress) <= float.Epsilon)
+                return;
+
+            OnlineHubProfileProgress = progress;
+            var profileWidth = MathHelper.Lerp(Config.Profile.Width, OnlineHubDesign.Default.Header.ProfileWidth, progress);
+            ProfileButton.SetWidth(profileWidth, progress == 0 || progress == 1);
+            if (SharedRightControlsAttached)
+                TopBar.RefreshLayout();
+            UpdateOnlineHubProfilePosition();
+        }
+
+        private void UpdateOnlineHubProfilePosition()
+        {
+            if (!SharedRightControlsAttached || OnlineHubProfileProgress == 0)
+                return;
+
+            var donateSpace = DonateButton.Width + Config.ItemSpacing;
+            var rightInset = Config.EdgePadding + HubButton.Width + Config.ItemSpacing;
+            var profileX = -rightInset - donateSpace * (1 - OnlineHubProfileProgress);
+            var summaryX = profileX - ProfileButton.Width - Config.ItemSpacing;
+            if (Math.Abs(ProfileButton.X - profileX) > 0.001f)
+                ProfileButton.X = profileX;
+            if (Math.Abs(PlayerSummary.X - summaryX) > 0.001f)
+                PlayerSummary.X = summaryX;
         }
 
         private void ResetTransientState()
@@ -752,15 +837,8 @@ namespace Quaver.Shared.Screens.V2.UI
 
         private static void ToggleOnlineHub()
         {
-            if (DialogManager.Dialogs.Count == 0)
-            {
-                DialogManager.Show(new OnlineHubDialog());
-                return;
-            }
-
-            var topDialog = DialogManager.Dialogs[DialogManager.Dialogs.Count - 1];
-            if (topDialog is OnlineHubDialog dialog)
-                dialog.Close();
+            if (GameBase.Game is QuaverGame game)
+                game.ToggleOnlineHub();
         }
 
         private enum FooterLayout
@@ -850,10 +928,149 @@ namespace Quaver.Shared.Screens.V2.UI
             }
         }
 
-        /// <summary>
-        ///     Replacement-screen account control. This deliberately avoids the legacy menu-border drawable,
-        ///     whose transparent root sprite is styled by the legacy header.
-        /// </summary>
+        private sealed class PlayerSummaryControl : Container
+        {
+            private SkinV2PlayerSummaryConfig Config { get; }
+
+            private RoundedButton SessionPill { get; }
+
+            private RoundedButton FriendsPill { get; }
+
+            private SpriteTextPlus SessionTime { get; }
+
+            private SpriteTextPlus FriendsOnlineCount { get; }
+
+            private FlexContainer FriendsLayout { get; }
+
+            private double RefreshElapsed { get; set; }
+
+            private long LastSecond { get; set; } = -1;
+
+            private int LastFriendsOnline { get; set; } = -1;
+
+            public PlayerSummaryControl(SkinV2PlayerSummaryConfig config, float height)
+            {
+                Config = config;
+                Size = new ScalableVector2(Config.Width, height);
+
+                var contentHeight = Config.PillHeight * 2 + Config.Gap;
+                var startY = (height - contentHeight) / 2;
+                SessionPill = CreatePill(Config.SessionWidth, startY);
+                SessionTime = new SpriteTextPlus(FontManager.GetWobbleFont(Config.Font), "00:00:00", Config.FontSize)
+                {
+                    Parent = SessionPill,
+                    Alignment = Alignment.MidCenter,
+                    Tint = SkinV2Color.Parse(Config.TextColor),
+                    UsePreviousSpriteBatchOptions = true
+                };
+
+                FriendsPill = CreatePill(Config.FriendsWidth, startY + Config.PillHeight + Config.Gap);
+                FriendsLayout = new FlexContainer
+                {
+                    Parent = FriendsPill,
+                    Size = FriendsPill.Size,
+                    Direction = FlexDirection.Row,
+                    JustifyContent = FlexJustifyContent.Center,
+                    AlignItems = FlexAlignItems.Center,
+                    ColumnGap = Config.Gap,
+                    UsePreviousSpriteBatchOptions = true
+                };
+                FriendsOnlineCount = new SpriteTextPlus(FontManager.GetWobbleFont(Config.Font), "0", Config.FontSize)
+                {
+                    Parent = FriendsLayout,
+                    Tint = SkinV2Color.Parse(Config.AccentColor),
+                    UsePreviousSpriteBatchOptions = true
+                };
+                _ = new SpriteTextPlus(FontManager.GetWobbleFont(Config.Font),
+                    LocalizationManager.Get("Screen_OnlineHub_FriendsOnline"), Config.FontSize)
+                {
+                    Parent = FriendsLayout,
+                    Tint = SkinV2Color.Parse(Config.TextColor),
+                    UsePreviousSpriteBatchOptions = true
+                };
+
+                RefreshContent();
+            }
+
+            public void AnimateEntrance(int duration)
+            {
+                AnimatePillEntrance(SessionPill, duration);
+                AnimatePillEntrance(FriendsPill, duration);
+            }
+
+            public override void Update(GameTime gameTime)
+            {
+                RefreshElapsed += gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (RefreshElapsed >= 1000)
+                {
+                    RefreshElapsed %= 1000;
+                    RefreshContent();
+                }
+
+                base.Update(gameTime);
+            }
+
+            private RoundedButton CreatePill(float width, float y) => new RoundedButton
+            {
+                Parent = this,
+                Alignment = Alignment.TopRight,
+                Y = y,
+                Size = new ScalableVector2(width, Config.PillHeight),
+                CornerRadius = Config.PillHeight / 2,
+                Tint = SkinV2Color.Parse(Config.BackgroundColor),
+                IsClickable = false,
+                IsInteractionEnabled = false,
+                PerformHoverFade = false
+            };
+
+            private void AnimatePillEntrance(RoundedButton pill, int duration)
+            {
+                pill.ClearAnimations();
+                pill.X = Config.Width;
+                pill.MoveToX(0, Easing.OutCubic, duration);
+            }
+
+            private void RefreshContent()
+            {
+                var elapsed = TimeSpan.FromMilliseconds(GameBase.Game.TimeRunning);
+                var second = (long) elapsed.TotalSeconds;
+                if (LastSecond != second)
+                {
+                    LastSecond = second;
+                    SessionTime.Text = $"{(long) elapsed.TotalHours:00}:{elapsed.Minutes:00}:{elapsed.Seconds:00}";
+                }
+
+                var friendsOnline = CountFriendsOnline();
+                if (LastFriendsOnline == friendsOnline)
+                    return;
+
+                LastFriendsOnline = friendsOnline;
+                FriendsOnlineCount.Text = friendsOnline.ToString();
+                FriendsLayout.RefreshLayout();
+            }
+
+            private static int CountFriendsOnline()
+            {
+                if (!OnlineManager.Connected || OnlineManager.FriendsList == null ||
+                    OnlineManager.OnlineUsers == null)
+                    return 0;
+
+                var count = 0;
+                var friends = OnlineManager.FriendsList;
+                var onlineUsers = OnlineManager.OnlineUsers;
+                lock (friends)
+                {
+                    for (var index = 0; index < friends.Count; index++)
+                    {
+                        if (onlineUsers.ContainsKey(friends[index]))
+                            count++;
+                    }
+                }
+
+                return count;
+            }
+        }
+
         private sealed class ProfileControl : RoundedButton
         {
             private SkinV2ProfileConfig Config { get; }
@@ -979,6 +1196,20 @@ namespace Quaver.Shared.Screens.V2.UI
 
             public void ResetTransientState() => IsOpen = false;
 
+            public void SetWidth(float width, bool refreshProfile)
+            {
+                if (Math.Abs(Width - width) > 0.001f)
+                    Width = width;
+                if (refreshProfile)
+                    UpdateProfile();
+                else
+                {
+                    var textWidth = (int) Math.Max(40, Width - Username.X - Config.UsernameRightPadding);
+                    if (Username.Width > textWidth)
+                        Username.TruncateWithEllipsis(textWidth);
+                }
+            }
+
             private void ToggleAccountDropdown()
             {
                 if (!(GameBase.Game is QuaverGame game) || game.CurrentScreen == null)
@@ -1032,7 +1263,7 @@ namespace Quaver.Shared.Screens.V2.UI
                 Username.X = usernameX;
                 Username.Text = username;
                 Username.TruncateWithEllipsis((int) Math.Max(40,
-                    Config.Width - usernameX - Config.UsernameRightPadding));
+                    Width - usernameX - Config.UsernameRightPadding));
 
                 LastConnected = connected;
                 LastUser = user;

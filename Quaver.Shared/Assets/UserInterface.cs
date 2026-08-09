@@ -27,6 +27,9 @@ namespace Quaver.Shared.Assets
         public static Texture2D NotificationWarning => TextureManager.Load("Quaver.Resources/Textures/UI/Notifications/notif-warning.png");
         public static Texture2D NotificationInfo => TextureManager.Load("Quaver.Resources/Textures/UI/Notifications/notif-info.png");
         public static Texture2D NotificationSuccess => TextureManager.Load("Quaver.Resources/Textures/UI/Notifications/notif-success.png");
+        public static Texture2D ClearAllIcon => TextureManager.Load("Quaver.Resources/Textures/UI/Notifications/clear_all.png");
+        public static Texture2D SongRequestDifficulty => TextureManager.Load("Quaver.Resources/Textures/UI/Notifications/difficulty.png");
+        public static Texture2D SongRequestIcon => TextureManager.Load("Quaver.Resources/Textures/UI/Notifications/song_request.png");
         public static Texture2D LoadingWheel => TextureManager.Load("Quaver.Resources/Textures/UI/loading-wheel.png");
         public static Texture2D StatusRanked => TextureManager.Load("Quaver.Resources/Textures/UI/RankedStatus/status-ranked.png");
         public static Texture2D StatusUnranked => TextureManager.Load("Quaver.Resources/Textures/UI/RankedStatus/status-unranked.png");

@@ -46,6 +46,7 @@ using Quaver.Shared.Screens.MultiplayerLobby.UI.Dialogs;
 using Quaver.Shared.Screens.Music;
 using Quaver.Shared.Screens.Selection.UI.Leaderboard;
 using Quaver.Shared.Screens.Tournament;
+using Quaver.Shared.Screens.V2;
 using Steamworks;
 using Wobble;
 using Wobble.Bindables;
@@ -184,6 +185,57 @@ namespace Quaver.Shared.Online
         ///     List of currently available song requests
         /// </summary>
         public static List<SongRequest> SongRequests { get; } = new List<SongRequest>();
+
+        private static Dictionary<SongRequest, DateTimeOffset> SongRequestReceivedTimes { get; } =
+            new Dictionary<SongRequest, DateTimeOffset>();
+
+        internal static (SongRequest Request, DateTimeOffset ReceivedAt)[] GetSongRequestsSnapshot()
+        {
+            lock (SongRequests)
+            {
+                var snapshot = new (SongRequest Request, DateTimeOffset ReceivedAt)[SongRequests.Count];
+                for (var i = 0; i < SongRequests.Count; i++)
+                {
+                    var request = SongRequests[i];
+                    if (!SongRequestReceivedTimes.TryGetValue(request, out var receivedAt))
+                    {
+                        receivedAt = DateTimeOffset.Now;
+                        SongRequestReceivedTimes.Add(request, receivedAt);
+                    }
+
+                    snapshot[i] = (request, receivedAt);
+                }
+
+                return snapshot;
+            }
+        }
+
+        internal static void ClearSongRequests()
+        {
+            lock (SongRequests)
+            {
+                SongRequests.Clear();
+                SongRequestReceivedTimes.Clear();
+            }
+        }
+
+        internal static void RemoveSongRequest(SongRequest request)
+        {
+            lock (SongRequests)
+            {
+                SongRequests.Remove(request);
+                SongRequestReceivedTimes.Remove(request);
+            }
+        }
+
+        internal static void AddSongRequest(SongRequest request)
+        {
+            lock (SongRequests)
+            {
+                SongRequests.Add(request);
+                SongRequestReceivedTimes[request] = DateTimeOffset.Now;
+            }
+        }
 
         /// <summary>
         /// </summary>
@@ -992,7 +1044,9 @@ namespace Quaver.Shared.Online
             if (user != null && BlockedUsers.IsUserBlocked(user.OnlineUser.Id))
                 return;
 
-            NotificationManager.Show(NotificationLevel.Info, $"{e.Sender} invited you to a game. Click here to join!",
+            NotificationManager.ShowMultiplayerInvite($"multiplayer-invite:{e.MatchId}", e.Sender,
+                (ulong) (user?.OnlineUser.SteamId ?? 0), user?.OnlineUser.UserGroups ?? UserGroups.Normal,
+                user?.OnlineUser.ClanTag, user?.OnlineUser.ClanAccentColor,
                 (o, args) =>
                 {
                     if (CurrentGame != null)
@@ -1702,7 +1756,7 @@ namespace Quaver.Shared.Online
         /// <param name="e"></param>
         private static void OnSongRequestReceived(object sender, SongRequestEventArgs e)
         {
-            SongRequests.Add(e.Request);
+            AddSongRequest(e.Request);
 
             Logger.Important($"Received song request: {e.Request.TwitchUsername} ({e.Request.UserId}) | " +
                              $"{e.Request.Artist} - {e.Request.Title}", LogType.Runtime);
@@ -1720,7 +1774,7 @@ namespace Quaver.Shared.Online
                 return;
             }
 
-            NotificationManager.Show(NotificationLevel.Info, $"You have received a new song request. Click here to view it!",
+            NotificationManager.Show(NotificationLevel.Info, "You have received a new song request. Click here to view it!",
                 (o, args) =>
                 {
                     game.OnlineHub.SelectSection(OnlineHubSectionType.SongRequests);

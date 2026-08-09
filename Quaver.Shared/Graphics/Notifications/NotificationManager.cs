@@ -9,12 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Quaver.Shared.Assets;
+using Quaver.Server.Client.Enums;
 using Quaver.Shared.Config;
-using Quaver.Shared.Helpers;
-using Quaver.Shared.Screens;
 using Quaver.Shared.Screens.Gameplay;
+using Quaver.Shared.Screens.V2;
 using Wobble;
 using Wobble.Graphics;
 using Wobble.Logging;
@@ -54,6 +52,10 @@ namespace Quaver.Shared.Graphics.Notifications
         /// </summary>
         public static event EventHandler<NotificationMissedEventArgs> NotificationMissed;
 
+        internal static NotificationHistoryStore History { get; } = new NotificationHistoryStore();
+
+        private static volatile bool IsOnlineHubNotificationSectionOpen;
+
         /// <summary>
         ///     The initial/top level position for notifications
         /// </summary>
@@ -86,7 +88,13 @@ namespace Quaver.Shared.Graphics.Notifications
         internal static void Show(NotificationLevel level, string text, EventHandler onClick = null, bool forceShow = false)
         {
             var info = new NotificationInfo(level, text, true, onClick, forceShow);
-            var notification = new DrawableNotification(null, info, -1) { Alignment = Alignment.TopRight };
+            History.AddOrUpdate(null, info);
+            if (ShouldSuppressQuickNotification())
+                return;
+
+            var notification = new DrawableNotification(null, info, -1);
+            if (!notification.UsesOnlineHubStyle)
+                notification.Alignment = Alignment.TopRight;
 
             lock (QueuedNotifications)
             {
@@ -111,9 +119,30 @@ namespace Quaver.Shared.Graphics.Notifications
             }
 
             var info = new NotificationInfo(level, text, true, onClick, forceShow);
+            ShowOrUpdate(key, info);
+        }
+
+        internal static void ShowMultiplayerInvite(string key, string senderName, ulong senderSteamId,
+            UserGroups senderGroups, string senderClanTag, string senderClanAccentColor, EventHandler joinAction,
+            EventHandler declineAction = null)
+        {
+            var info = new MultiplayerInviteNotificationInfo(senderName, senderSteamId, senderGroups, senderClanTag,
+                senderClanAccentColor, joinAction, declineAction);
+            ShowOrUpdate(key, info);
+        }
+
+        private static void ShowOrUpdate(string key, NotificationInfo info)
+        {
+            History.AddOrUpdate(key, info);
 
             lock (QueuedNotifications)
             {
+                if (ShouldSuppressQuickNotification())
+                {
+                    DismissKeyedNotification(key);
+                    return;
+                }
+
                 if (KeyedNotifications.TryGetValue(key, out var existing))
                 {
                     if (QueuedNotifications.Contains(existing))
@@ -131,7 +160,9 @@ namespace Quaver.Shared.Graphics.Notifications
                     KeyedNotifications.Remove(key);
                 }
 
-                var notification = new DrawableNotification(null, info, -1) { Alignment = Alignment.TopRight };
+                var notification = new DrawableNotification(null, info, -1);
+                if (!notification.UsesOnlineHubStyle)
+                    notification.Alignment = Alignment.TopRight;
 
                 QueuedNotifications.Add(notification);
                 KeyedNotifications.Add(key, notification);
@@ -150,6 +181,13 @@ namespace Quaver.Shared.Graphics.Notifications
             {
                 foreach (var notification in QueuedNotifications)
                 {
+                    if (!notification.IsReadyToDisplay)
+                    {
+                        notification.PrepareForDisplay();
+                        if (!notification.IsReadyToDisplay)
+                            continue;
+                    }
+
                     // Prevent unimportant notifications from displaying during gameplay
                     if (game?.CurrentScreen is GameplayScreen screen && !screen.IsPaused && !notification.Item.ForceShow
                         && !ConfigManager.DisplayNotificationsInGameplay.Value)
@@ -157,7 +195,8 @@ namespace Quaver.Shared.Graphics.Notifications
 
                     notification.Parent = Container;
 
-                    if (ConfigManager.DisplayNotificationsBottomToTop?.Value ?? false)
+                    if (!notification.UsesOnlineHubStyle &&
+                        (ConfigManager.DisplayNotificationsBottomToTop?.Value ?? false))
                     {
                         notification.Alignment = Alignment.BotRight;
                         notification.Y = -InitialY;
@@ -200,7 +239,8 @@ namespace Quaver.Shared.Graphics.Notifications
                 {
                     var targetY = InitialY + (ActiveNotifications.Last().Height + 20) * iteration;
 
-                    if (ConfigManager.DisplayNotificationsBottomToTop?.Value ?? false)
+                    if (!notification.UsesOnlineHubStyle &&
+                        (ConfigManager.DisplayNotificationsBottomToTop?.Value ?? false))
                         targetY = -targetY;
 
                     notification.Y = MathHelper.Lerp(notification.Y, targetY, (float)Math.Min(dt / 60, 1));
@@ -209,11 +249,12 @@ namespace Quaver.Shared.Graphics.Notifications
                 if (!notification.Item.WasClicked && !notification.HasSlidOut)
                     continue;
 
+                var usedOnlineHubStyle = notification.UsesOnlineHubStyle;
                 notification.Destroy();
                 ActiveNotifications.Remove(notification);
                 RemoveKeyedNotification(notification);
 
-                if (notification.Item.WasClicked)
+                if (notification.Item.WasClicked || usedOnlineHubStyle)
                     continue;
 
                 // Consider a notification "missed" if it's an error OR it has a click action attached to it
@@ -242,6 +283,60 @@ namespace Quaver.Shared.Graphics.Notifications
                 return;
 
             KeyedNotifications.Remove(keyedNotification.Key);
+        }
+
+        internal static void SetOnlineHubNotificationSectionOpen(bool open)
+        {
+            if (IsOnlineHubNotificationSectionOpen == open)
+                return;
+
+            IsOnlineHubNotificationSectionOpen = open;
+            if (!open)
+                return;
+
+            lock (QueuedNotifications)
+            {
+                for (var i = QueuedNotifications.Count - 1; i >= 0; i--)
+                {
+                    var notification = QueuedNotifications[i];
+                    if (!notification.UsesOnlineHubStyle)
+                        continue;
+
+                    QueuedNotifications.RemoveAt(i);
+                    notification.Destroy();
+                }
+
+                foreach (var notification in ActiveNotifications)
+                {
+                    if (notification.UsesOnlineHubStyle)
+                        notification.DismissWithoutAction();
+                }
+
+                var keys = KeyedNotifications.Where(x => x.Value.UsesOnlineHubStyle).Select(x => x.Key).ToArray();
+                foreach (var key in keys)
+                    KeyedNotifications.Remove(key);
+            }
+        }
+
+        private static bool ShouldSuppressQuickNotification()
+        {
+            if (!IsOnlineHubNotificationSectionOpen)
+                return false;
+
+            return GameBase.Game is QuaverGame game && game.CurrentScreen is SkinV2Screen;
+        }
+
+        private static void DismissKeyedNotification(string key)
+        {
+            if (!KeyedNotifications.TryGetValue(key, out var notification) || !notification.UsesOnlineHubStyle)
+                return;
+
+            if (QueuedNotifications.Remove(notification))
+                notification.Destroy();
+            else
+                notification.DismissWithoutAction();
+
+            KeyedNotifications.Remove(key);
         }
     }
 }

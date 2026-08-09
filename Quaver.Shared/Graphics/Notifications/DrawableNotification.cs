@@ -5,7 +5,10 @@ using Quaver.Shared.Assets;
 using Quaver.Shared.Graphics.Containers;
 using Quaver.Shared.Graphics.Overlays.Hub;
 using Quaver.Shared.Graphics.Overlays.Hub.Notifications;
+using Quaver.Shared.Graphics.Notifications.V2;
 using Quaver.Shared.Helpers;
+using Quaver.Shared.Screens.V2;
+using Quaver.Shared.Screens.V2.UI.OnlineHub;
 using Wobble;
 using Wobble.Graphics;
 using Wobble.Graphics.Animations;
@@ -14,6 +17,7 @@ using Wobble.Graphics.Sprites.Text;
 using Wobble.Graphics.UI.Buttons;
 using Wobble.Logging;
 using Wobble.Managers;
+using Wobble.Window;
 
 namespace Quaver.Shared.Graphics.Notifications
 {
@@ -40,6 +44,16 @@ namespace Quaver.Shared.Graphics.Notifications
         /// </summary>
         private SpriteTextPlus Text { get; set; }
 
+        private NotificationCard Card { get; set; }
+
+        private float LastNotificationWindowWidth { get; set; } = -1;
+
+        internal bool UsesOnlineHubStyle { get; }
+
+        internal bool IsReadyToDisplay => !UsesOnlineHubStyle || Card.IsReadyToDisplay;
+
+        internal void PrepareForDisplay() => RunScheduledUpdates();
+
         /// <summary>
         ///     The amount of time the notification has been inactive (not hovered)
         /// </summary>
@@ -62,13 +76,12 @@ namespace Quaver.Shared.Graphics.Notifications
         /// <param name="index"></param>
         public DrawableNotification(PoolableScrollContainer<NotificationInfo> container, NotificationInfo item, int index) : base(container, item, index)
         {
-            Size = new ScalableVector2(408, 86);
-            Tint = ColorHelper.HexToColor("#242424");
-            AddBorder(Color.White, 2);
+            UsesOnlineHubStyle = container == null && GameBase.Game is QuaverGame game && game.CurrentScreen is SkinV2Screen;
 
-            CreateButton();
-            CreateIcon();
-            CreateText();
+            if (UsesOnlineHubStyle)
+                CreateNotificationCard(item);
+            else
+                CreateLegacyContent();
 
             // ReSharper disable once VirtualMemberCallInConstructor
             UpdateContent(Item, Index);
@@ -80,15 +93,21 @@ namespace Quaver.Shared.Graphics.Notifications
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            Button.Size = new ScalableVector2(Width - Border.Thickness * 2, Height - Border.Thickness * 2);
-            Button.Alpha = Button.IsHovered ? 0.35f : 0;
+            if (UsesOnlineHubStyle)
+                ResizeNotificationCard();
+            else
+            {
+                Button.Size = new ScalableVector2(Width - Border.Thickness * 2, Height - Border.Thickness * 2);
+                Button.Alpha = Button.IsHovered ? 0.35f : 0;
+            }
 
             var game = (QuaverGame)GameBase.Game;
 
             if (Container != null)
                 Button.IsClickable = game.OnlineHub.SelectedSection == game.OnlineHub.Sections[OnlineHubSectionType.Notifications];
 
-            if (Button.IsHovered)
+            var isHovered = UsesOnlineHubStyle ? Card.IsHovered : Button.IsHovered;
+            if (isHovered)
                 TimeInactive = 0;
             else
                 TimeInactive += gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -102,6 +121,22 @@ namespace Quaver.Shared.Graphics.Notifications
                 HasSlidOut = true;
 
             base.Update(gameTime);
+        }
+
+        public override void DrawToSpriteBatch()
+        {
+            if (UsesOnlineHubStyle)
+                return;
+
+            base.DrawToSpriteBatch();
+        }
+
+        public override void Destroy()
+        {
+            if (Card != null)
+                Card.PrimaryAction -= OnNotificationCardPrimaryAction;
+
+            base.Destroy();
         }
 
         /// <inheritdoc />
@@ -144,10 +179,20 @@ namespace Quaver.Shared.Graphics.Notifications
             });
         }
 
+        internal void DismissWithoutAction() => Item.WasClicked = true;
+
         /// <summary>
         /// </summary>
         private void ApplyContent()
         {
+            if (UsesOnlineHubStyle)
+            {
+                if (!Card.Supports(Item))
+                    ReplaceNotificationCard(Item);
+                Card.SetContent(Item, DateTimeOffset.Now);
+                return;
+            }
+
             Border.Tint = GetColor();
             Icon.Image = GetIconTexture();
 
@@ -199,6 +244,62 @@ namespace Quaver.Shared.Graphics.Notifications
         {
             IsSlidingOut = true;
             MoveToX(Width + 10, Easing.OutQuint, 450);
+        }
+
+        private void CreateLegacyContent()
+        {
+            Size = new ScalableVector2(408, 86);
+            Tint = ColorHelper.HexToColor("#242424");
+            AddBorder(Color.White, 2);
+            CreateButton();
+            CreateIcon();
+            CreateText();
+        }
+
+        private void CreateNotificationCard(NotificationInfo notification)
+        {
+            var config = OnlineHubDesign.Default.Notifications;
+            Card = NotificationCard.Create(config.Row, config.MultiplayerInvite, NotificationTextures.Shared,
+                NotificationCardDisplay.Quick, notification);
+            Card.Parent = this;
+            Card.Alignment = Alignment.TopLeft;
+            Card.AllowInputWhenDialogOpen = true;
+            Card.UsePreviousSpriteBatchOptions = true;
+            Card.PrimaryAction += OnNotificationCardPrimaryAction;
+            Alignment = Alignment.TopRight;
+            Tint = Color.Transparent;
+            ResizeNotificationCard(true);
+        }
+
+        private void ReplaceNotificationCard(NotificationInfo notification)
+        {
+            Card.PrimaryAction -= OnNotificationCardPrimaryAction;
+            Card.Destroy();
+            CreateNotificationCard(notification);
+        }
+
+        private void ResizeNotificationCard(bool force = false)
+        {
+            if (!force && Math.Abs(LastNotificationWindowWidth - WindowManager.Width) <= 0.001f)
+                return;
+
+            LastNotificationWindowWidth = WindowManager.Width;
+            var onlineHub = OnlineHubDesign.Default;
+            var panelWidth = Math.Min(onlineHub.Window.Width, WindowManager.Width);
+            var notifications = onlineHub.Notifications;
+            var width = panelWidth - onlineHub.Padding * 2 - onlineHub.Feed.ScrollbarWidth -
+                        onlineHub.Feed.RowGap;
+            Size = new ScalableVector2(Math.Max(0, width), notifications.Row.Height);
+            Card.Size = Size;
+        }
+
+        private void OnNotificationCardPrimaryAction(object sender, EventArgs args)
+        {
+            if (IsSlidingOut)
+                return;
+
+            Item.ClickAction?.Invoke(sender, args);
+            Item.WasClicked = true;
         }
 
         /// <summary>

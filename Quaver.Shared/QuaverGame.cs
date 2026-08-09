@@ -101,6 +101,8 @@ using Quaver.Shared.Screens.Tests.ResultsMulti;
 using Quaver.Shared.Screens.Tests.Tournaments;
 using Quaver.Shared.Screens.Tests.Volume;
 using Quaver.Shared.Screens.Theater;
+using Quaver.Shared.Screens.V2;
+using Quaver.Shared.Screens.V2.UI.OnlineHub;
 using Quaver.Shared.Skinning;
 using Quaver.Shared.Window;
 using Steamworks;
@@ -1178,30 +1180,45 @@ namespace Quaver.Shared
                 Fps.Y = -MenuBorder.HEIGHT - 50;
         }
 
-        /// <summary>
-        ///     Handles input when opening the online hub
-        /// </summary>
-        private void ToggleOnlineHub()
+        internal void ToggleOnlineHub()
         {
             if (CloseOnlineHubDialog())
                 return;
 
-            DialogManager.Show(new OnlineHubDialog());
+            if (CurrentScreen is SkinV2Screen)
+                DialogManager.Show(new OnlineHubOverlay());
+            else
+                DialogManager.Show(new OnlineHubDialog());
         }
 
-        /// <summary>
-        /// </summary>
-        /// <returns></returns>
+        internal void OpenSongRequestsHub()
+        {
+            if (CurrentScreen is SkinV2Screen)
+            {
+                var overlay = DialogManager.Dialogs.LastOrDefault(x => x is OnlineHubOverlay) as OnlineHubOverlay;
+                if (overlay != null)
+                    overlay.Open(OnlineHubTab.SongRequests);
+                else
+                    DialogManager.Show(new OnlineHubOverlay(OnlineHubTab.SongRequests));
+
+                return;
+            }
+
+            OnlineHub.SelectSection(OnlineHubSectionType.SongRequests);
+            if (!OnlineHub.IsOpen)
+                DialogManager.Show(new OnlineHubDialog());
+        }
+
         private bool CloseOnlineHubDialog()
         {
             if (DialogManager.Dialogs.Count == 0)
                 return false;
 
-            if (DialogManager.Dialogs.Last().GetType() != typeof(OnlineHubDialog))
-                return true;
-
-            var dialog = (OnlineHubDialog)DialogManager.Dialogs.Last();
-            dialog?.Close();
+            var dialog = DialogManager.Dialogs.Last();
+            if (dialog is OnlineHubOverlay overlay)
+                overlay.Close();
+            else if (dialog is OnlineHubDialog legacyOverlay)
+                legacyOverlay.Close();
 
             return true;
         }

@@ -339,7 +339,7 @@ namespace Quaver.Shared.Graphics.Overlays.Chatting.Channels.Scrolling
                 if (!OnlineChat.Instance.IsOpen)
                 {
                     NotificationManager.Show(NotificationLevel.Info, $"{e.Message.SenderName} has sent you a message. " +
-                                                                     $"Click here to read it!", (o, args) =>
+                                                                     "Click here to read it!", (o, args) =>
                     {
                         DialogManager.Show(new OnlineHubDialog());
 

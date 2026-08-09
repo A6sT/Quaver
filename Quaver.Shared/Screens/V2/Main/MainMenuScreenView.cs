@@ -91,8 +91,8 @@ namespace Quaver.Shared.Screens.V2.Main
             PreviewRoot = new Container
             {
                 Parent = Container,
-                Size = new ScalableVector2(WindowManager.Width, WindowManager.Height),
-                Pivot = Vector2.Zero
+                Pivot = Vector2.Zero,
+                Size = new ScalableVector2(WindowManager.Width, WindowManager.Height)
             };
             EditorRoot = new Container
             {

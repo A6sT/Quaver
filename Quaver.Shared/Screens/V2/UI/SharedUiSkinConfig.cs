@@ -40,6 +40,9 @@ namespace Quaver.Shared.Screens.V2.UI
         public SkinV2ProfileConfig Profile { get; set; } = new SkinV2ProfileConfig();
 
         [Required]
+        public SkinV2PlayerSummaryConfig PlayerSummary { get; set; } = new SkinV2PlayerSummaryConfig();
+
+        [Required]
         public SkinV2AccountDropdownConfig AccountDropdown { get; set; } = new SkinV2AccountDropdownConfig();
     }
 
@@ -125,6 +128,47 @@ namespace Quaver.Shared.Screens.V2.UI
         [SkinColor]
         [ConfigEditable]
         public string OfflineStatusColor { get; set; } = "#828E99FF";
+    }
+
+    /// <summary>
+    ///     Playtime and friends-online pills beside the profile in the shared navigation header.
+    ///     These settings apply with or without F8 open and are independent of the hub design.
+    /// </summary>
+    public sealed class SkinV2PlayerSummaryConfig
+    {
+        [Range(1, 8192)]
+        public float Width { get; set; } = 170;
+
+        [Range(1, 8192)]
+        public float SessionWidth { get; set; } = 92;
+
+        [Range(1, 8192)]
+        public float FriendsWidth { get; set; } = 160;
+
+        [Range(1, 8192)]
+        public float PillHeight { get; set; } = SkinV2Spacing.Spacing2Xl;
+
+        [Range(0, 2048)]
+        public float Gap { get; set; } = 4;
+
+        [Required]
+        [SkinFont]
+        public string Font { get; set; } = SkinV2FontWeightsConfig.Bold;
+
+        [Range(1, 256)]
+        public int FontSize { get; set; } = SkinV2FontSizesConfig.TextBase;
+
+        [Required]
+        [SkinColor]
+        public string BackgroundColor { get; set; } = "#283038FF";
+
+        [Required]
+        [SkinColor]
+        public string TextColor { get; set; } = "#FFFFFFFF";
+
+        [Required]
+        [SkinColor]
+        public string AccentColor { get; set; } = "#4889CFFF";
     }
 
     public sealed class SkinV2AccountDropdownConfig

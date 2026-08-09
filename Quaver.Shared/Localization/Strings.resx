@@ -579,6 +579,120 @@
   <data name="Screen_Options_Notifications" xml:space="preserve">
     <value>Notifications</value>
   </data>
+  <data name="Screen_OnlineHub_Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Screen_OnlineHub_SongRequests" xml:space="preserve">
+    <value>Song Requests</value>
+  </data>
+  <data name="Screen_OnlineHub_NoSongRequestsTitle" xml:space="preserve">
+    <value>No Song Requests</value>
+  </data>
+  <data name="Screen_OnlineHub_NoSongRequestsDescription" xml:space="preserve">
+    <value>New song requests will appear here.</value>
+  </data>
+  <data name="Screen_OnlineHub_SongRequestsOfflineTitle" xml:space="preserve">
+    <value>Song Requests Unavailable</value>
+  </data>
+  <data name="Screen_OnlineHub_SongRequestsOfflineDescription" xml:space="preserve">
+    <value>Connect to Quaver to receive song requests.</value>
+  </data>
+  <data name="Screen_OnlineHub_DisplayAlert" xml:space="preserve">
+    <value>Display Alert</value>
+  </data>
+  <data name="Screen_OnlineHub_Connect" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="Screen_OnlineHub_Unlink" xml:space="preserve">
+    <value>Unlink</value>
+  </data>
+  <data name="Screen_OnlineHub_RequestFrom" xml:space="preserve">
+    <value>Request from</value>
+  </data>
+  <data name="Screen_OnlineHub_RequesterProfile" xml:space="preserve">
+    <value>Requester Profile</value>
+  </data>
+  <data name="Screen_OnlineHub_SongRequestRequiresSelection" xml:space="preserve">
+    <value>You must be in the song select screen to play song requests!</value>
+  </data>
+  <data name="Screen_OnlineHub_TwitchUnlinkRequiresLogin" xml:space="preserve">
+    <value>You need to be logged in to unlink your Twitch account!</value>
+  </data>
+  <data name="Screen_OnlineHub_TwitchUnlinkTitle" xml:space="preserve">
+    <value>Unlink Twitch Account</value>
+  </data>
+  <data name="Screen_OnlineHub_TwitchUnlinkConfirmation" xml:space="preserve">
+    <value>Are you sure you would like to unlink your Twitch account?&#xA;Username: "{0}"</value>
+  </data>
+  <data name="Screen_OnlineHub_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Screen_OnlineHub_ClearAll" xml:space="preserve">
+    <value>Clear All</value>
+  </data>
+  <data name="Screen_OnlineHub_NoNotificationsTitle" xml:space="preserve">
+    <value>All Clear!</value>
+  </data>
+  <data name="Screen_OnlineHub_NoNotificationsDescription" xml:space="preserve">
+    <value>You do not have any missed Notifications.</value>
+  </data>
+  <data name="Screen_OnlineHub_Join" xml:space="preserve">
+    <value>Join</value>
+  </data>
+  <data name="Screen_OnlineHub_Decline" xml:space="preserve">
+    <value>Decline</value>
+  </data>
+  <data name="Screen_OnlineHub_MultiplayerInviteDescription" xml:space="preserve">
+    <value>Hey, you got an invitation to a multiplayer game.</value>
+  </data>
+  <data name="Screen_OnlineHub_SearchUsers" xml:space="preserve">
+    <value>Search for users...</value>
+  </data>
+  <data name="Screen_OnlineHub_FriendsOnline" xml:space="preserve">
+    <value>Friends Online</value>
+  </data>
+  <data name="Screen_OnlineHub_UserLoading" xml:space="preserve">
+    <value>Loading (#{0})</value>
+  </data>
+  <data name="Screen_OnlineHub_NoUsersTitle" xml:space="preserve">
+    <value>No Users Found</value>
+  </data>
+  <data name="Screen_OnlineHub_NoUsersDescription" xml:space="preserve">
+    <value>Try changing your search or filter.</value>
+  </data>
+  <data name="Screen_OnlineHub_UsersOfflineTitle" xml:space="preserve">
+    <value>You're Offline</value>
+  </data>
+  <data name="Screen_OnlineHub_UsersOfflineDescription" xml:space="preserve">
+    <value>Log in to view the online user list.</value>
+  </data>
+  <data name="Screen_OnlineHub_UserStatusIdle" xml:space="preserve">
+    <value>Idle</value>
+  </data>
+  <data name="Screen_OnlineHub_UserStatusSelecting" xml:space="preserve">
+    <value>Selecting a Song</value>
+  </data>
+  <data name="Screen_OnlineHub_UserStatusPlaying" xml:space="preserve">
+    <value>Playing {0}</value>
+  </data>
+  <data name="Screen_OnlineHub_UserStatusPaused" xml:space="preserve">
+    <value>Paused in Gameplay</value>
+  </data>
+  <data name="Screen_OnlineHub_UserStatusWatching" xml:space="preserve">
+    <value>Watching {0}</value>
+  </data>
+  <data name="Screen_OnlineHub_UserStatusEditing" xml:space="preserve">
+    <value>Editing {0}</value>
+  </data>
+  <data name="Screen_OnlineHub_UserStatusInLobby" xml:space="preserve">
+    <value>Finding a Multiplayer Game</value>
+  </data>
+  <data name="Screen_OnlineHub_UserStatusMultiplayer" xml:space="preserve">
+    <value>Playing Multiplayer</value>
+  </data>
+  <data name="Screen_OnlineHub_UserStatusListening" xml:space="preserve">
+    <value>Listening to {0}</value>
+  </data>
   <data name="Screen_Options_SongSelect" xml:space="preserve">
     <value>Song Select</value>
   </data>
