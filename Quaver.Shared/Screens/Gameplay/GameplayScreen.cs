@@ -787,7 +787,7 @@ namespace Quaver.Shared.Screens.Gameplay
 
             TimePauseKeyHeld = 0;
 
-            if (IsPaused)
+            if (IsPaused && SpectatorClient == null)
             {
                 Pause();
                 return;
@@ -890,7 +890,7 @@ namespace Quaver.Shared.Screens.Gameplay
             // If the pause key is not pressed...
             if (!IsPauseKeyHeld)
             {
-                if (Failed || IsPlayComplete || IsPaused)
+                if (Failed || IsPlayComplete || (IsPaused && SpectatorClient == null))
                     return;
 
                 // Remove the pause fade.
