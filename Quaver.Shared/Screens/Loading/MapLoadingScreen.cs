@@ -107,7 +107,7 @@ namespace Quaver.Shared.Screens.Loading
                 try
                 {
                     ParseAndLoadMap();
-                    QueueStreamerFilesWrite(MapManager.Selected.Value);
+                    QueueStreamerFilesWrite();
                     LoadGameplayScreen();
                 }
                 catch (Exception e)
@@ -182,14 +182,14 @@ namespace Quaver.Shared.Screens.Loading
         /// </summary>
         /// <param name="map"></param>
         /// <param name="delay"></param>
-        public static void QueueStreamerFilesWrite(Map map, int delay = 0)
-            => StreamerFilesWriteTask.Run(new StreamerFilesWriteRequest(map, ModManager.Mods), delay);
+        public static void QueueStreamerFilesWrite(int delay = 0)
+            => StreamerFilesWriteTask.Run(new StreamerFilesWriteRequest(MapManager.Selected.Value, ModManager.Mods), delay);
 
         /// <summary>
         ///    Queues files for livestreamers to be written.
         /// </summary>
         /// <param name="map"></param>
-        public static void WriteStreamerFiles(Map map) => QueueStreamerFilesWrite(map);
+        public static void WriteStreamerFiles(Map map) => QueueStreamerFilesWrite();
 
         /// <summary>
         ///    Writes files for livestreamers.
