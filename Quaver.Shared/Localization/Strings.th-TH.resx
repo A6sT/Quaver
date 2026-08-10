@@ -91,7 +91,7 @@
     <value>ตู้เพลง</value>
   </data>
   <data name="Screen_Main_Menu_Chat" xml:space="preserve">
-    <value>Chat</value>
+    <value>แชต</value>
   </data>
   <data name="Screen_Main_Menu_Skins" xml:space="preserve">
     <value>สกิน</value>
@@ -872,7 +872,7 @@
     <value>Display Judgement Counter</value>
   </data>
   <data name="Screen_Options_DisplayScoreboard" xml:space="preserve">
-    <value>Display Scoreboard</value>
+    <value>แสดงกระดานคะแนน</value>
   </data>
   <data name="Screen_Options_DisplaySongTimeProgressBar" xml:space="preserve">
     <value>Display Song Time Progress Bar</value>
@@ -884,13 +884,13 @@
     <value>เปิดตัวปิดแถวด้านบน</value>
   </data>
   <data name="Screen_Options_TopLaneCoverHeight" xml:space="preserve">
-    <value>Top Lane Cover Height</value>
+    <value>ความสูงของตัวปิดแถวด้านบน</value>
   </data>
   <data name="Screen_Options_EnableBottomLaneCover" xml:space="preserve">
     <value>เปิดตัวปิดแถวด้านล่าง</value>
   </data>
   <data name="Screen_Options_BottomLaneCoverHeight" xml:space="preserve">
-    <value>Bottom Lane Cover Height</value>
+    <value>ความสูงของตัวปิดแถวด้านล่าง</value>
   </data>
   <data name="Screen_Options_DisplayUIElementsOverLaneCovers" xml:space="preserve">
     <value>Display UI Elements Over Lane Covers</value>
@@ -914,7 +914,7 @@
     <value>นำออกสกิน</value>
   </data>
   <data name="Screen_Options_UploadSkinToSteamWorkshop" xml:space="preserve">
-    <value>Upload Skin To Steam Workshop</value>
+    <value>อัปโหลดสกินไปยังเวิร์กชอป Steam</value>
   </data>
   <data name="Screen_Options_NoteReceptorSizeScale" xml:space="preserve">
     <value>Note &amp; Receptor Size Scale</value>
@@ -938,10 +938,10 @@
     <value>Skip Song Intro</value>
   </data>
   <data name="Screen_Options_DecreaseScrollSpeed" xml:space="preserve">
-    <value>ลดอัตราเร็วในการเลื่อน</value>
+    <value>ลดความเร็วโน้ต</value>
   </data>
   <data name="Screen_Options_IncreaseScrollSpeed" xml:space="preserve">
-    <value>เพิ่มอัตราเร็วในการเลื่อน</value>
+    <value>เพิ่มความเร็วโน้ต</value>
   </data>
   <data name="Screen_Options_DecreaseMapOffset" xml:space="preserve">
     <value>ลดค่า Offset ของแมพ</value>
@@ -1266,7 +1266,7 @@ for the selected game mode?</value>
     <value>Expert</value>
   </data>
   <data name="Screen_Download_MODE" xml:space="preserve">
-    <value>MODE: </value>
+    <value>โหมด: </value>
   </data>
   <data name="Screen_Download_SORTBY" xml:space="preserve">
     <value>SORT BY: </value>
@@ -1439,7 +1439,7 @@ for the selected game mode?</value>
     <value>10 คีย์</value>
   </data>
   <data name="Screen_Download_SearchMaps" xml:space="preserve">
-    <value>Search maps...</value>
+    <value>ค้นหาแมพ...</value>
   </data>
   <data name="Screen_Download_SearchPlaylists" xml:space="preserve">
     <value>Search playlists...</value>
@@ -1451,7 +1451,7 @@ for the selected game mode?</value>
     <value>Owned Playlists</value>
   </data>
   <data name="Screen_Download_Mapsets" xml:space="preserve">
-    <value>Mapsets</value>
+    <value>แมพเซต</value>
   </data>
   <data name="Screen_Download_AllKeymodes" xml:space="preserve">
     <value>All Keymodes</value>
@@ -3114,7 +3114,7 @@ sure you would like to start without all players ready?</value>
     <value>Difficulty:</value>
   </data>
   <data name="Screen_Editor_ModeLabel" xml:space="preserve">
-    <value>Mode:</value>
+    <value>โหมด:</value>
   </data>
   <data name="Screen_Editor_StatusLabel" xml:space="preserve">
     <value>Status:</value>
@@ -3243,13 +3243,13 @@ sure you would like to start without all players ready?</value>
     <value>Screen Components</value>
   </data>
   <data name="SkinEditor_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>บันทึก</value>
   </data>
   <data name="SkinEditor_Close" xml:space="preserve">
-    <value>Close</value>
+    <value>ปิด</value>
   </data>
   <data name="SkinEditor_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>ยกเลิก</value>
   </data>
   <data name="SkinEditor_Discard" xml:space="preserve">
     <value>Discard</value>
@@ -3315,10 +3315,10 @@ sure you would like to start without all players ready?</value>
     <value>Off</value>
   </data>
   <data name="SkinEditor_Clear" xml:space="preserve">
-    <value>Clear</value>
+    <value>ล้าง</value>
   </data>
   <data name="SkinEditor_ResetDefault" xml:space="preserve">
-    <value>Reset to default</value>
+    <value>คืนค่าเริ่มต้น</value>
   </data>
   <data name="SkinEditor_AddStop" xml:space="preserve">
     <value>Add Gradient Stop</value>
@@ -3366,7 +3366,7 @@ sure you would like to start without all players ready?</value>
     <value>Background Effects</value>
   </data>
   <data name="SkinEditor_Component_Logo" xml:space="preserve">
-    <value>Logo</value>
+    <value>โลโก้</value>
   </data>
   <data name="SkinEditor_Component_LogoAccent" xml:space="preserve">
     <value>Logo Accent</value>
