@@ -91,7 +91,7 @@
     <value>주크박스</value>
   </data>
   <data name="Screen_Main_Menu_Chat" xml:space="preserve">
-    <value>Chat</value>
+    <value>채팅</value>
   </data>
   <data name="Screen_Main_Menu_Skins" xml:space="preserve">
     <value>스킨</value>
@@ -151,7 +151,7 @@
     <value>QUAVER 종료</value>
   </data>
   <data name="Screen_Main_QuitDialogMessage" xml:space="preserve">
-    <value>Quit the game?</value>
+    <value>게임을 종료하시겠습니까?</value>
   </data>
   <data name="Screen_Main_SinglePlayerDescription" xml:space="preserve">
     <value>리더보드 랭크를 위해 경쟁합니다.</value>
