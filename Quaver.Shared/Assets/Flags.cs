@@ -109,6 +109,7 @@ namespace Quaver.Shared.Assets
                 {
                     var sourceRectangle = CreateSourceRectangle(mapping.Value);
                     ValidateSourceRectangle(mapping.Key, sheet, sourceRectangle);
+                    Textures[mapping.Key] = Crop(sheet, sourceRectangle);
                 }
 
                 Sheet = sheet;
