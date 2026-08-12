@@ -91,7 +91,7 @@
     <value>音乐盒</value>
   </data>
   <data name="Screen_Main_Menu_Chat" xml:space="preserve">
-    <value>Chat</value>
+    <value>聊天</value>
   </data>
   <data name="Screen_Main_Menu_Skins" xml:space="preserve">
     <value>皮肤</value>
@@ -1438,49 +1438,49 @@
     <value>10K</value>
   </data>
   <data name="Screen_Download_SearchMaps" xml:space="preserve">
-    <value>Search maps...</value>
+    <value>搜索谱面...</value>
   </data>
   <data name="Screen_Download_SearchPlaylists" xml:space="preserve">
-    <value>Search playlists...</value>
+    <value>搜索合集</value>
   </data>
   <data name="Screen_Download_OwnedMaps" xml:space="preserve">
-    <value>Owned Maps</value>
+    <value>拥有的谱面</value>
   </data>
   <data name="Screen_Download_OwnedPlaylists" xml:space="preserve">
-    <value>Owned Playlists</value>
+    <value>拥有的合集</value>
   </data>
   <data name="Screen_Download_Mapsets" xml:space="preserve">
-    <value>Mapsets</value>
+    <value>谱面</value>
   </data>
   <data name="Screen_Download_AllKeymodes" xml:space="preserve">
-    <value>All Keymodes</value>
+    <value>所有键数</value>
   </data>
   <data name="Screen_Download_NPS" xml:space="preserve">
-    <value>NPS</value>
+    <value>物件每秒</value>
   </data>
   <data name="Screen_Download_MinPercent" xml:space="preserve">
-    <value>Min%</value>
+    <value>最小%</value>
   </data>
   <data name="Screen_Download_MaxPercent" xml:space="preserve">
-    <value>Max%</value>
+    <value>最大%</value>
   </data>
   <data name="Screen_Download_Min" xml:space="preserve">
-    <value>Min</value>
+    <value>最小</value>
   </data>
   <data name="Screen_Download_Max" xml:space="preserve">
-    <value>Max</value>
+    <value>最大</value>
   </data>
   <data name="Screen_Download_AnyLength" xml:space="preserve">
-    <value>Any Length</value>
+    <value>任意长度</value>
   </data>
   <data name="Screen_Download_AnyCombo" xml:space="preserve">
-    <value>Any Combo</value>
+    <value>任意连击</value>
   </data>
   <data name="Screen_Download_Artist" xml:space="preserve">
-    <value>Artist</value>
+    <value>曲师</value>
   </data>
   <data name="Screen_Download_AnyMapCount" xml:space="preserve">
-    <value>Any Map Count</value>
+    <value>任意难度数量</value>
   </data>
   <data name="Screen_Multi_ConfirmReadyTitle" xml:space="preserve">
     <value>确认准备</value>
@@ -3217,187 +3217,187 @@
     <value>于 {0} 创建</value>
   </data>
   <data name="SkinEditor_Title" xml:space="preserve">
-    <value>Skin Editor</value>
+    <value>皮肤编辑器</value>
   </data>
   <data name="SkinEditor_Components" xml:space="preserve">
-    <value>Components</value>
+    <value>组件</value>
   </data>
   <data name="SkinEditor_Assets" xml:space="preserve">
-    <value>Assets</value>
+    <value>资源文件</value>
   </data>
   <data name="SkinEditor_AssetBreadcrumb" xml:space="preserve">
-    <value>Assets / {0}</value>
+    <value>资源文件 / {0}</value>
   </data>
   <data name="SkinEditor_Group_MainMenu" xml:space="preserve">
-    <value>Main Menu</value>
+    <value>主菜单</value>
   </data>
   <data name="SkinEditor_Group_SharedNavigation" xml:space="preserve">
-    <value>Shared Navigation</value>
+    <value>共享导航</value>
   </data>
   <data name="SkinEditor_Group_SharedComponents" xml:space="preserve">
-    <value>Shared Components</value>
+    <value>共享组件</value>
   </data>
   <data name="SkinEditor_Group_Other" xml:space="preserve">
-    <value>Screen Components</value>
+    <value>屏幕组件</value>
   </data>
   <data name="SkinEditor_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>保存</value>
   </data>
   <data name="SkinEditor_Close" xml:space="preserve">
-    <value>Close</value>
+    <value>关闭</value>
   </data>
   <data name="SkinEditor_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>取消</value>
   </data>
   <data name="SkinEditor_Discard" xml:space="preserve">
-    <value>Discard</value>
+    <value>丢弃</value>
   </data>
   <data name="SkinEditor_Reload" xml:space="preserve">
-    <value>Reload</value>
+    <value>重载</value>
   </data>
   <data name="SkinEditor_Overwrite" xml:space="preserve">
-    <value>Overwrite</value>
+    <value>覆盖</value>
   </data>
   <data name="SkinEditor_Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>复制</value>
   </data>
   <data name="SkinEditor_CopyToLocal" xml:space="preserve">
-    <value>Copy to Local Skins</value>
+    <value>复制到本地皮肤</value>
   </data>
   <data name="SkinEditor_CopyTitle" xml:space="preserve">
-    <value>Name the local skin copy</value>
+    <value>为本地皮肤副本命名</value>
   </data>
   <data name="SkinEditor_CopyFailed" xml:space="preserve">
-    <value>Could not copy the Workshop skin: {0}</value>
+    <value>无法复制创意工坊皮肤：{0}</value>
   </data>
   <data name="SkinEditor_WorkshopReadOnly" xml:space="preserve">
-    <value>Workshop skins are read-only.</value>
+    <value>创意工坊皮肤是只读的。</value>
   </data>
   <data name="SkinEditor_UnsavedTitle" xml:space="preserve">
-    <value>Unsaved skin changes</value>
+    <value>为保存的皮肤更改</value>
   </data>
   <data name="SkinEditor_UnsavedMessage" xml:space="preserve">
-    <value>Save your staged skin changes before closing?</value>
+    <value>是否在关闭前保存皮肤更改？</value>
   </data>
   <data name="SkinEditor_ConflictTitle" xml:space="preserve">
-    <value>skin.yml changed externally</value>
+    <value>skin.yml 在外部变更了</value>
   </data>
   <data name="SkinEditor_ConflictMessage" xml:space="preserve">
-    <value>Reload the external file, overwrite it, or keep editing?</value>
+    <value>您希望重载、覆盖还是继续编辑外部文件？</value>
   </data>
   <data name="SkinEditor_SaveSuccess" xml:space="preserve">
-    <value>Skin V2 configuration saved.</value>
+    <value>已保存皮肤V2配置。</value>
   </data>
   <data name="SkinEditor_SaveFailed" xml:space="preserve">
-    <value>The Skin V2 configuration could not be saved.</value>
+    <value>无法保存皮肤V2配置。</value>
   </data>
   <data name="SkinEditor_OpenFailed" xml:space="preserve">
-    <value>The Skin Editor could not open: {0}</value>
+    <value>无法打开皮肤编辑器：{0}</value>
   </data>
   <data name="SkinEditor_FileCheckFailed" xml:space="preserve">
-    <value>Could not check skin.yml for external changes: {0}</value>
+    <value>无法检测 skin.yml 的外部变更：{0}</value>
   </data>
   <data name="SkinEditor_ReloadFailed" xml:space="preserve">
-    <value>Could not reload skin.yml: {0}</value>
+    <value>无法重载 skin.yml：{0}</value>
   </data>
   <data name="SkinEditor_SelectComponent" xml:space="preserve">
-    <value>Select a component to edit.</value>
+    <value>选择要编辑的组件。</value>
   </data>
   <data name="SkinEditor_NoEditableProperties" xml:space="preserve">
-    <value>This component has no editable properties.</value>
+    <value>此组件没有可编辑的属性。</value>
   </data>
   <data name="SkinEditor_On" xml:space="preserve">
-    <value>On</value>
+    <value>开</value>
   </data>
   <data name="SkinEditor_Off" xml:space="preserve">
-    <value>Off</value>
+    <value>关</value>
   </data>
   <data name="SkinEditor_Clear" xml:space="preserve">
-    <value>Clear</value>
+    <value>清空</value>
   </data>
   <data name="SkinEditor_ResetDefault" xml:space="preserve">
-    <value>Reset to default</value>
+    <value>重置为默认</value>
   </data>
   <data name="SkinEditor_AddStop" xml:space="preserve">
     <value>Add Gradient Stop</value>
   </data>
   <data name="SkinEditor_SearchAssets" xml:space="preserve">
-    <value>Search assets...</value>
+    <value>搜索资源文件</value>
   </data>
   <data name="SkinEditor_LoadingAssets" xml:space="preserve">
-    <value>Loading assets…</value>
+    <value>正在载入资源文件...</value>
   </data>
   <data name="SkinEditor_AssetScanFailed" xml:space="preserve">
-    <value>Could not scan skin assets.</value>
+    <value>无法扫描皮肤资源文件。</value>
   </data>
   <data name="SkinEditor_AllFolders" xml:space="preserve">
-    <value>All folders</value>
+    <value>所有文件夹</value>
   </data>
   <data name="SkinEditor_Refresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>刷新</value>
   </data>
   <data name="SkinEditor_OpenFolder" xml:space="preserve">
-    <value>Open Folder</value>
+    <value>打开文件夹</value>
   </data>
   <data name="SkinEditor_InvalidValue" xml:space="preserve">
-    <value>Enter a valid value.</value>
+    <value>请输入有效值。</value>
   </data>
   <data name="SkinEditor_InvalidRange" xml:space="preserve">
-    <value>Enter a value from {0} to {1}.</value>
+    <value>请输入从 {0} 到 {1} 的值。</value>
   </data>
   <data name="SkinEditor_InvalidColor" xml:space="preserve">
-    <value>Use #RRGGBB or #RRGGBBAA format.</value>
+    <value>请使用 #RRGGBB 或 #RRGGBBAA 格式。</value>
   </data>
   <data name="SkinEditor_InvalidAssetPath" xml:space="preserve">
-    <value>Choose a file inside this skin.</value>
+    <value>请选择皮肤内的文件。</value>
   </data>
   <data name="SkinEditor_InvalidGradientStop" xml:space="preserve">
     <value>Use unique positions from 0 to 1 and valid hex colors.</value>
   </data>
   <data name="SkinEditor_SelectorTooltip" xml:space="preserve">
-    <value>Click to select the next option.</value>
+    <value>点击以选择下一选项。</value>
   </data>
   <data name="SkinEditor_Component_Background" xml:space="preserve">
-    <value>Background</value>
+    <value>背景</value>
   </data>
   <data name="SkinEditor_Component_BackgroundEffects" xml:space="preserve">
-    <value>Background Effects</value>
+    <value>背景特效</value>
   </data>
   <data name="SkinEditor_Component_Logo" xml:space="preserve">
-    <value>Logo</value>
+    <value>图标</value>
   </data>
   <data name="SkinEditor_Component_LogoAccent" xml:space="preserve">
-    <value>Logo Accent</value>
+    <value>图标主题色</value>
   </data>
   <data name="SkinEditor_Component_Actions" xml:space="preserve">
-    <value>Action Buttons</value>
+    <value>动作按钮</value>
   </data>
   <data name="SkinEditor_Component_News" xml:space="preserve">
-    <value>News Card</value>
+    <value>新闻卡片</value>
   </data>
   <data name="SkinEditor_Component_TopNavigation" xml:space="preserve">
-    <value>Top Navigation</value>
+    <value>顶部导航</value>
   </data>
   <data name="SkinEditor_Component_BottomNavigation" xml:space="preserve">
-    <value>Bottom Navigation</value>
+    <value>底部导航</value>
   </data>
   <data name="SkinEditor_Component_NavigationButtons" xml:space="preserve">
-    <value>Navigation Buttons</value>
+    <value>导航按钮</value>
   </data>
   <data name="SkinEditor_Component_Profile" xml:space="preserve">
-    <value>Profile</value>
+    <value>个人资料</value>
   </data>
   <data name="SkinEditor_Component_ScreenTitle" xml:space="preserve">
-    <value>Screen Title</value>
+    <value>屏幕标题</value>
   </data>
   <data name="SkinEditor_Property_Type" xml:space="preserve">
-    <value>Type</value>
+    <value>类型</value>
   </data>
   <data name="SkinEditor_Property_SolidColor" xml:space="preserve">
-    <value>Solid Color</value>
+    <value>纯色</value>
   </data>
   <data name="SkinEditor_Property_Path" xml:space="preserve">
-    <value>Image Path</value>
+    <value>图像路径</value>
   </data>
   <data name="SkinEditor_Property_Fit" xml:space="preserve">
     <value>Image Fit</value>
@@ -3406,144 +3406,144 @@
     <value>Gradient Stops</value>
   </data>
   <data name="SkinEditor_Property_AngleDegrees" xml:space="preserve">
-    <value>Angle</value>
+    <value>角度</value>
   </data>
   <data name="SkinEditor_Property_X" xml:space="preserve">
-    <value>Origin X</value>
+    <value>原点 X</value>
   </data>
   <data name="SkinEditor_Property_Y" xml:space="preserve">
-    <value>Origin Y</value>
+    <value>原点 Y</value>
   </data>
   <data name="SkinEditor_Property_RadialRadius" xml:space="preserve">
-    <value>Radial Radius</value>
+    <value>半径</value>
   </data>
   <data name="SkinEditor_Property_Effect" xml:space="preserve">
-    <value>Effect</value>
+    <value>特效</value>
   </data>
   <data name="SkinEditor_Property_PrimaryColor" xml:space="preserve">
-    <value>Primary Color</value>
+    <value>主色</value>
   </data>
   <data name="SkinEditor_Property_SecondaryColor" xml:space="preserve">
-    <value>Secondary Color</value>
+    <value>辅色</value>
   </data>
   <data name="SkinEditor_Property_Primary" xml:space="preserve">
-    <value>Primary Image</value>
+    <value>主图像</value>
   </data>
   <data name="SkinEditor_Property_Secondary" xml:space="preserve">
-    <value>Secondary Image</value>
+    <value>二级图像</value>
   </data>
   <data name="SkinEditor_Property_Tertiary" xml:space="preserve">
-    <value>Tertiary Image</value>
+    <value>三级图像</value>
   </data>
   <data name="SkinEditor_Property_Image" xml:space="preserve">
-    <value>Image</value>
+    <value>图像</value>
   </data>
   <data name="SkinEditor_Property_Color" xml:space="preserve">
-    <value>Color</value>
+    <value>颜色</value>
   </data>
   <data name="SkinEditor_Property_HoverColor" xml:space="preserve">
-    <value>Hover Color</value>
+    <value>悬浮颜色</value>
   </data>
   <data name="SkinEditor_Property_AccentColor" xml:space="preserve">
-    <value>Accent Color</value>
+    <value>主题色</value>
   </data>
   <data name="SkinEditor_Property_TextColor" xml:space="preserve">
-    <value>Text Color</value>
+    <value>文字颜色</value>
   </data>
   <data name="SkinEditor_Property_BottomOffset" xml:space="preserve">
-    <value>Bottom Offset</value>
+    <value>底部偏移</value>
   </data>
   <data name="SkinEditor_Property_Scale" xml:space="preserve">
-    <value>Scale</value>
+    <value>缩放</value>
   </data>
   <data name="SkinEditor_Property_FallbackImage" xml:space="preserve">
-    <value>Fallback Image</value>
+    <value>默认图像</value>
   </data>
   <data name="SkinEditor_Group_Download" xml:space="preserve">
-    <value>Download</value>
+    <value>下载</value>
   </data>
   <data name="SkinEditor_Component_SearchArea" xml:space="preserve">
-    <value>Search Area</value>
+    <value>搜索区</value>
   </data>
   <data name="SkinEditor_Property_BackgroundColor" xml:space="preserve">
-    <value>Background Color</value>
+    <value>背景颜色</value>
   </data>
   <data name="SkinEditor_Property_ForegroundColor" xml:space="preserve">
-    <value>Foreground Color</value>
+    <value>前景颜色</value>
   </data>
   <data name="SkinEditor_Property_OfflineStatusColor" xml:space="preserve">
-    <value>Offline Status Color</value>
+    <value>离线状态颜色</value>
   </data>
   <data name="SkinEditor_Metadata" xml:space="preserve">
-    <value>Metadata</value>
+    <value>元信息</value>
   </data>
   <data name="SkinEditor_MetadataTitle" xml:space="preserve">
-    <value>Edit Skin Metadata</value>
+    <value>编辑皮肤元信息</value>
   </data>
   <data name="SkinEditor_MetadataName" xml:space="preserve">
-    <value>Skin Name</value>
+    <value>皮肤名</value>
   </data>
   <data name="SkinEditor_MetadataAuthor" xml:space="preserve">
-    <value>Author</value>
+    <value>作者</value>
   </data>
   <data name="SkinEditor_MetadataVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>版本</value>
   </data>
   <data name="SkinEditor_MetadataApply" xml:space="preserve">
-    <value>Apply</value>
+    <value>应用</value>
   </data>
   <data name="SkinEditor_MetadataRequired" xml:space="preserve">
-    <value>Name, author, and version are required.</value>
+    <value>必须填入名字、作者及版本。</value>
   </data>
   <data name="SkinEditor_PreviewDrop" xml:space="preserve">
-    <value>Drop an image here for the Workshop preview</value>
+    <value>将图像拖放到此处以设置创意工坊预览图片</value>
   </data>
   <data name="SkinEditor_PreviewDropHint" xml:space="preserve">
-    <value>PNG, JPG, or JPEG; saved as steam_workshop_preview.png</value>
+    <value>可以是 PNG、JPG 或 JPEG 文件，将存储于 steam_workshop_preview.png</value>
   </data>
   <data name="SkinEditor_PreviewInvalid" xml:space="preserve">
-    <value>Choose a valid PNG, JPG, or JPEG image.</value>
+    <value>请选择有效的 PNG、JPG 或 JPEG 图片。</value>
   </data>
   <data name="SkinEditor_PreviewFileMissing" xml:space="preserve">
-    <value>The selected preview image no longer exists.</value>
+    <value>选中的预览图片已不存在。</value>
   </data>
   <data name="SkinEditor_PreviewTooLarge" xml:space="preserve">
-    <value>The converted Workshop preview must be smaller than 1 MB.</value>
+    <value>转换后的创意工坊预览图必须小于 1 MB。</value>
   </data>
   <data name="SkinEditor_PreviewSaveFailed" xml:space="preserve">
-    <value>Could not save the Workshop preview: {0}</value>
+    <value>无法保存创意工坊预览图：{0}</value>
   </data>
   <data name="Screen_V2_InitializationScreen" xml:space="preserve">
-    <value>InitializationScreen</value>
+    <value>初始化界面</value>
   </data>
   <data name="Screen_V2_ImportingScreen" xml:space="preserve">
-    <value>ImportingScreen</value>
+    <value>导入界面</value>
   </data>
   <data name="Screen_V2_MapLoadingScreen" xml:space="preserve">
-    <value>MapLoadingScreen</value>
+    <value>谱面加载界面</value>
   </data>
   <data name="Screen_V2_SelectionScreen" xml:space="preserve">
-    <value>SelectionScreen</value>
+    <value>选歌界面</value>
   </data>
   <data name="Screen_V2_DownloadingScreen" xml:space="preserve">
-    <value>DownloadingScreen</value>
+    <value>下载界面</value>
   </data>
   <data name="Screen_V2_MultiplayerLobbyScreen" xml:space="preserve">
-    <value>MultiplayerLobbyScreen</value>
+    <value>多人游戏大厅界面</value>
   </data>
   <data name="Screen_V2_MultiplayerGameScreen" xml:space="preserve">
-    <value>MultiplayerGameScreen</value>
+    <value>多人游戏房间界面</value>
   </data>
   <data name="Screen_V2_MultiplayerScreen" xml:space="preserve">
-    <value>MultiplayerScreen</value>
+    <value>多人游戏界面</value>
   </data>
   <data name="Screen_V2_MusicPlayerScreen" xml:space="preserve">
-    <value>MusicPlayerScreen</value>
+    <value>音符盒界面</value>
   </data>
   <data name="Screen_V2_TheaterScreen" xml:space="preserve">
-    <value>TheaterScreen</value>
+    <value>影厅界面</value>
   </data>
   <data name="Screen_V2_ResultsScreen" xml:space="preserve">
-    <value>ResultsScreen</value>
+    <value>结算界面</value>
   </data>
 </root>
