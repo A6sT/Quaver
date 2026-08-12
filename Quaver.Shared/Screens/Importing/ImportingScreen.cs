@@ -134,7 +134,7 @@ namespace Quaver.Shared.Screens.Importing
                     if (ComingFromSelect)
                         return QuaverScreenFactory.CreateSelection();
 
-                    return new MultiplayerGameScreen();
+                    return QuaverScreenFactory.CreateMultiplayerGame();
                 });
             }
             else if (OnlineManager.ListeningParty != null)

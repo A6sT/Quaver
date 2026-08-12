@@ -1904,9 +1904,6 @@ sure you would like to start without all players ready?</value>
   <data name="Screen_Editor_RefreshFileCache" xml:space="preserve">
     <value>รีเฟรชแคชไฟล์</value>
   </data>
-  <data name="Screen_Editor_RefreshEditorFromQuaFile" xml:space="preserve">
-    <value>รีเฟรชตัวแก้ไขจากไฟล์ .qua</value>
-  </data>
   <data name="Screen_Editor_Upload" xml:space="preserve">
     <value>อัปโหลด</value>
   </data>
@@ -2566,9 +2563,6 @@ sure you would like to start without all players ready?</value>
   </data>
   <data name="Screen_Editor_CannotChangeAudioRateFurther" xml:space="preserve">
     <value>ไม่สามารถปรับความเร็วเสียงทางนี้ได้อีก!</value>
-  </data>
-  <data name="Screen_Editor_CacheUpdatedOnExit" xml:space="preserve">
-    <value>The cached data for this file will be updated when you leave the editor.</value>
   </data>
   <data name="Screen_Editor_NoHitObjectsPastThisPoint" xml:space="preserve">
     <value>There aren't any hitobjects to play past this point!</value>

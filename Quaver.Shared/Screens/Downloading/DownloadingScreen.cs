@@ -444,7 +444,7 @@ namespace Quaver.Shared.Screens.Downloading
                     break;
                 case QuaverScreenType.Multiplayer:
                     if (OnlineManager.CurrentGame != null)
-                        Exit(() => new MultiplayerGameScreen());
+                        Exit(() => QuaverScreenFactory.CreateMultiplayerGame());
                     else
                         Exit(() => QuaverScreenFactory.CreateMainMenu());
                     break;

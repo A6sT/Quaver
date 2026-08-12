@@ -44,7 +44,7 @@ namespace Quaver.Shared.Screens.Music
             if (MapsetImporter.Queue.Count > 0 || QuaverSettingsDatabaseCache.OutdatedMaps.Count != 0
                                                || MapDatabaseCache.MapsToUpdate.Count != 0)
             {
-                Exit(() => new ImportingScreen());
+                Exit(() => QuaverScreenFactory.CreateImporting());
                 return;
             }
 
@@ -160,6 +160,6 @@ namespace Quaver.Shared.Screens.Music
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnAutoLoadOsuBeatmapsChanged(object sender, BindableValueChangedEventArgs<bool> e)
-            => Exit(() => new ImportingScreen());
+            => Exit(() => QuaverScreenFactory.CreateImporting());
     }
 }

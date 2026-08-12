@@ -1534,21 +1534,9 @@ namespace Quaver.Shared.Screens.Edit
         }
 
         /// <summary>
-        ///     Schedule Refresh for an outdated .qua file
+        ///     Refreshes the file cache and reloads the editor from the current .qua file.
         /// </summary>
         public void RefreshFileCache()
-        {
-            if (!MapDatabaseCache.MapsToUpdate.Contains(MapManager.Selected.Value))
-                MapDatabaseCache.MapsToUpdate.Add(MapManager.Selected.Value);
-
-            NotificationManager.Show(NotificationLevel.Info,
-                LocalizationManager.Get("Screen_Editor_CacheUpdatedOnExit"));
-        }
-
-        /// <summary>
-        ///     Reloads the editor from the current .qua file.
-        /// </summary>
-        public void RefreshEditorFromQuaFile()
         {
             if (ActionManager.HasUnsavedChanges)
             {
@@ -1563,7 +1551,9 @@ namespace Quaver.Shared.Screens.Edit
 
         private void ReloadEditorFromQuaFile()
         {
-            RefreshFileCache();
+            if (!MapDatabaseCache.MapsToUpdate.Contains(MapManager.Selected.Value))
+                MapDatabaseCache.MapsToUpdate.Add(MapManager.Selected.Value);
+
             Exit(() => new EditScreen(Map, true));
         }
 
