@@ -503,6 +503,9 @@ namespace Quaver.Shared.Screens.Edit.UI.Menu
                 if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_Hitsounds"), "", view.Hitsounds.Visible))
                     view.Hitsounds.SetVisibility(!view.Hitsounds.Visible);
 
+                if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_ModdingDiscussion"), "", view.Modding.IsActive.Value, Screen.WorkingMap.MapId != -1))
+                    view.Modding.IsActive.Value = !view.Modding.IsActive.Value;
+
                 ImGui.EndMenu();
             }
 
@@ -542,7 +545,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Menu
 
                 ImGui.EndMenu();
             }
-            
+
             if (ImGui.BeginMenu(LocalizationManager.Get("Screen_Editor_EditorNoteSkin")))
             {
                 if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_CurrentSkin"), "", ConfigManager.EditorNoteSkin.Value == null))
@@ -562,7 +565,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Menu
 
                 ImGui.EndMenu();
             }
-            
+
             if (ImGui.BeginMenu(LocalizationManager.Get("Screen_Editor_EditorDefaultSkin")))
             {
                 if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_CurrentDefaultSkin"), "", ConfigManager.DefaultEditorSkin.Value == null))
@@ -612,7 +615,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Menu
                         ConfigManager.EditorPlayfieldAlpha.Value = value;
                     }
                 }
-                
+
                 ImGui.EndMenu();
             }
 
@@ -879,7 +882,7 @@ namespace Quaver.Shared.Screens.Edit.UI.Menu
                         plugin.Value.Initialize();
                 }
             }
-            
+
             ImGui.Separator();
 
             if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_ResetWindowLayout")))
@@ -1039,7 +1042,12 @@ namespace Quaver.Shared.Screens.Edit.UI.Menu
             if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_ViewOnlineListing"), Screen.WorkingMap.MapId != -1))
                 BrowserHelper.OpenURL($"https://quavergame.com/mapsets/map/{Screen.WorkingMap.MapId}");
 
-            if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_ModdingDiscussion"), Screen.WorkingMap.MapId != -1))
+            var view = (EditScreenView) Screen.View;
+
+            if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_ModdingDiscussion"), "", view.Modding.IsActive.Value, Screen.WorkingMap.MapId != -1))
+                view.Modding.IsActive.Value = !view.Modding.IsActive.Value;
+
+            if (ImGui.MenuItem(LocalizationManager.Get("Screen_Editor_ModdingOpenInBrowser"), Screen.WorkingMap.MapId != -1))
                 BrowserHelper.OpenURL($"https://quavergame.com/mapsets/map/{Screen.WorkingMap.MapId}/mods");
 
             ImGui.EndMenu();

@@ -18,6 +18,7 @@ using Quaver.Shared.Screens.Edit.Plugins;
 using Quaver.Shared.Screens.Edit.UI.AutoMods;
 using Quaver.Shared.Screens.Edit.UI.Footer;
 using Quaver.Shared.Screens.Edit.UI.Menu;
+using Quaver.Shared.Screens.Edit.UI.Modding;
 using Quaver.Shared.Screens.Edit.UI.Panels;
 using Quaver.Shared.Screens.Edit.UI.Panels.Layers;
 using Quaver.Shared.Screens.Edit.UI.Playfield;
@@ -97,6 +98,10 @@ namespace Quaver.Shared.Screens.Edit
 
         /// <summary>
         /// </summary>
+        public EditorModdingPanelContainer Modding { get; private set; }
+
+        /// <summary>
+        /// </summary>
         public Container PanelContainer { get; private set; }
 
         /// <summary>
@@ -154,6 +159,7 @@ namespace Quaver.Shared.Screens.Edit
             CreateHitsoundsPanel();
             CreateLayersPanel();
             CreateAutoMod();
+            CreateModding();
 
             if (EditScreen.DisplayGameplayPreview.Value)
                 CreateGameplayPreview();
@@ -223,6 +229,11 @@ namespace Quaver.Shared.Screens.Edit
 
             if (ConfigManager.FpsLimiterType.Value == FpsLimitType.Custom)
                 ((QuaverGame)GameBase.Game).SetFps(FpsLimitType.Custom, ConfigManager.CustomFpsLimit.Value);
+
+            if (AutoMod != null)
+                AutoMod.IsActive.ValueChanged -= OnAutoModActiveChanged;
+            if (Modding != null)
+                Modding.IsActive.ValueChanged -= OnModdingActiveChanged;
 
             Container?.Destroy();
 
@@ -511,6 +522,29 @@ namespace Quaver.Shared.Screens.Edit
             Parent = Container
         };
 
+        private void CreateModding()
+        {
+            Modding = new EditorModdingPanelContainer(EditScreen)
+            {
+                Parent = Container
+            };
+
+            AutoMod.IsActive.ValueChanged += OnAutoModActiveChanged;
+            Modding.IsActive.ValueChanged += OnModdingActiveChanged;
+        }
+
+        private void OnAutoModActiveChanged(object sender, BindableValueChangedEventArgs<bool> args)
+        {
+            if (args.Value && Modding != null)
+                Modding.IsActive.Value = false;
+        }
+
+        private void OnModdingActiveChanged(object sender, BindableValueChangedEventArgs<bool> args)
+        {
+            if (args.Value && AutoMod != null)
+                AutoMod.IsActive.Value = false;
+        }
+
         /// <summary>
         /// </summary>
         /// <param name="sender"></param>
@@ -540,6 +574,7 @@ namespace Quaver.Shared.Screens.Edit
         {
             PanelContainer.Parent = Container;
             AutoMod.Parent = Container;
+            Modding.Parent = Container;
             Footer.Parent = Container;
         }
     }

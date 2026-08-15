@@ -2046,6 +2046,37 @@ for other players to download?</value>
   <data name="Screen_Editor_Web" xml:space="preserve"><value>Web</value></data>
   <data name="Screen_Editor_ViewOnlineListing" xml:space="preserve"><value>View Online Listing</value></data>
   <data name="Screen_Editor_ModdingDiscussion" xml:space="preserve"><value>Modding Discussion</value></data>
+  <data name="Screen_Editor_ModdingOpenInBrowser" xml:space="preserve"><value>Open Modding Discussion in Browser</value></data>
+  <data name="Screen_Editor_ModdingNewMod" xml:space="preserve"><value>New Mod</value></data>
+  <data name="Screen_Editor_ModdingGeneral" xml:space="preserve"><value>General</value></data>
+  <data name="Screen_Editor_ModdingPending" xml:space="preserve"><value>Pending</value></data>
+  <data name="Screen_Editor_ModdingAccepted" xml:space="preserve"><value>Accepted</value></data>
+  <data name="Screen_Editor_ModdingDenied" xml:space="preserve"><value>Denied</value></data>
+  <data name="Screen_Editor_ModdingIgnored" xml:space="preserve"><value>Ignored</value></data>
+  <data name="Screen_Editor_ModdingIssue" xml:space="preserve"><value>Issue</value></data>
+  <data name="Screen_Editor_ModdingSuggestion" xml:space="preserve"><value>Suggestion</value></data>
+  <data name="Screen_Editor_ModdingTypeLabel" xml:space="preserve"><value>Type:</value></data>
+  <data name="Screen_Editor_ModdingAuthor" xml:space="preserve"><value>Author</value></data>
+  <data name="Screen_Editor_ModdingPreview" xml:space="preserve"><value>Preview</value></data>
+  <data name="Screen_Editor_ModdingUnknownAuthor" xml:space="preserve"><value>Unknown</value></data>
+  <data name="Screen_Editor_ModdingRefreshing" xml:space="preserve"><value>Refreshing...</value></data>
+  <data name="Screen_Editor_ModdingUnavailable" xml:space="preserve"><value>Modding discussion is unavailable.</value></data>
+  <data name="Screen_Editor_ModdingMustBeLoggedIn" xml:space="preserve"><value>You must be logged in to post a mod or reply.</value></data>
+  <data name="Screen_Editor_ModdingSelectMod" xml:space="preserve"><value>Select a mod from the timeline to view its discussion.</value></data>
+  <data name="Screen_Editor_ModdingReply" xml:space="preserve"><value>Reply</value></data>
+  <data name="Screen_Editor_ModdingReplyingTo" xml:space="preserve"><value>Replying to {0}</value></data>
+  <data name="Screen_Editor_ModdingLocationLabel" xml:space="preserve"><value>Location:</value></data>
+  <data name="Screen_Editor_ModdingUseCurrentSelection" xml:space="preserve"><value>Use Current Selection</value></data>
+  <data name="Screen_Editor_ModdingDescribePlaceholder" xml:space="preserve"><value>Describe the issue or suggestion...</value></data>
+  <data name="Screen_Editor_ModdingReplyPlaceholder" xml:space="preserve"><value>Write a reply...</value></data>
+  <data name="Screen_Editor_ModdingSubmit" xml:space="preserve"><value>Submit</value></data>
+  <data name="Screen_Editor_ModdingAccept" xml:space="preserve"><value>Accept</value></data>
+  <data name="Screen_Editor_ModdingDeny" xml:space="preserve"><value>Deny</value></data>
+  <data name="Screen_Editor_ModdingSubmitted" xml:space="preserve"><value>Your mod has been submitted.</value></data>
+  <data name="Screen_Editor_ModdingReplySubmitted" xml:space="preserve"><value>Your reply has been submitted.</value></data>
+  <data name="Screen_Editor_ModdingStatusUpdated" xml:space="preserve"><value>The mod status has been updated.</value></data>
+  <data name="Screen_Editor_ModdingDiscardDraftTitle" xml:space="preserve"><value>DISCARD MODDING DRAFT</value></data>
+  <data name="Screen_Editor_ModdingDiscardDraftMessage" xml:space="preserve"><value>Discard the current draft and open another discussion?</value></data>
   <data name="Screen_Editor_Audio" xml:space="preserve"><value>Audio</value></data>
   <data name="Screen_Editor_PlaybackSpeed" xml:space="preserve"><value>Playback Speed</value></data>
   <data name="Screen_Editor_Enable" xml:space="preserve"><value>Enable</value></data>

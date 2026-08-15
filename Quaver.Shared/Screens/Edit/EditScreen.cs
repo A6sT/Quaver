@@ -580,7 +580,7 @@ namespace Quaver.Shared.Screens.Edit
 
             SkinManager.SkinLoaded -= OnSkinLoaded;
             SkinManager.EditorSkinLoaded -= OnEditorSkinLoaded;
-            
+
             InputManager?.Destroy();
 
             base.Destroy();
@@ -902,16 +902,16 @@ namespace Quaver.Shared.Screens.Edit
             {
                 NotificationManager.Show(NotificationLevel.Warning, LocalizationManager.Get("Screen_Editor_CannotRecolorDefaultLayer"));
                 return;
-            }     
+            }
             DialogManager.Show(new DialogChangeLayerColor(SelectedLayer.Value, ActionManager, WorkingMap));
         }
 
         #region TIMING_GROUPS
 
-        public void MoveSelectedNotesToCurrentTimingGroup() => 
+        public void MoveSelectedNotesToCurrentTimingGroup() =>
             ActionManager.MoveObjectsToTimingGroup(SelectedHitObjects.Value, SelectedScrollGroupId);
 
-        
+
         public string AddNewTimingGroup()
         {
             var newGroupId = EditorPluginUtils.GenerateTimingGroupId();
@@ -929,7 +929,7 @@ namespace Quaver.Shared.Screens.Edit
                 ColorRgb = $"{rgb.R},{rgb.G},{rgb.B}"
             };
 
-            ActionManager.CreateTimingGroup(newGroupId, timingGroup, SelectedHitObjects.Value);                
+            ActionManager.CreateTimingGroup(newGroupId, timingGroup, SelectedHitObjects.Value);
             SelectedScrollGroupId = newGroupId;
 
             return newGroupId;
@@ -953,7 +953,7 @@ namespace Quaver.Shared.Screens.Edit
         public void RecolorTimingGroup() =>
             DialogManager.Show(new EditorChangeTimingGroupColorDialog(SelectedScrollGroupId, SelectedScrollGroup, ActionManager));
 
-        
+
         #endregion
 
         #endregion
@@ -1079,23 +1079,30 @@ namespace Quaver.Shared.Screens.Edit
             // If no objects are selected, just select the time in the track instead
             if (SelectedHitObjects.Value.Count == 0)
             {
-                cb.SetText($"{(int)Math.Round(Track.Time, MidpointRounding.AwayFromZero)}");
+                cb.SetText(GetSelectedObjectTimestamps());
                 return;
             }
-
-            var copyString = "";
 
             Clipboard.Clear();
 
             foreach (var h in SelectedHitObjects.Value.OrderBy(x => x.StartTime))
-            {
-                copyString += $"{h.StartTime}|{h.Lane},";
                 Clipboard.Add(h);
-            }
 
-            copyString = copyString.TrimEnd(',');
+            cb.SetText(GetSelectedObjectTimestamps());
+        }
 
-            cb.SetText(copyString);
+        /// <summary>
+        ///     Returns the current editor location using the same timestamp format accepted by
+        ///     <see cref="GoToObjects"/>, without modifying the clipboard.
+        /// </summary>
+        public string GetSelectedObjectTimestamps()
+        {
+            if (SelectedHitObjects.Value.Count == 0)
+                return $"{(int)Math.Round(Track.Time, MidpointRounding.AwayFromZero)}";
+
+            return string.Join(",", SelectedHitObjects.Value
+                .OrderBy(x => x.StartTime)
+                .Select(x => $"{x.StartTime}|{x.Lane}"));
         }
 
         /// <summary>
@@ -1296,7 +1303,7 @@ namespace Quaver.Shared.Screens.Edit
                         // Remove the notes covered by this LN
                         var lnsAtTime = WorkingMap.HitObjects.Where(h =>
                                 h != heldLivemapHitObjectInfos[lane]
-                                && h.Lane == lane 
+                                && h.Lane == lane
                                 && heldLivemapHitObjectStartTime <= h.StartTime
                                 && h.StartTime <= time)
                             .ToList();
