@@ -28,7 +28,7 @@ namespace Quaver.Shared.Screens.Edit.UI.AutoMods
             Panel = panel;
 
             Image = UserInterface.AutoModPanelHeader;
-            Size = new ScalableVector2(Panel.Width, Image.Height);
+            Size = new ScalableVector2(Panel.Width, ImageHeight);
 
             CreateGearIcon();
             CreateText();
