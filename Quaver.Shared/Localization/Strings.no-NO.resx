@@ -1139,34 +1139,34 @@ Hvis mappen ble ikke fullført, vil det i tillegg vise ytelsen dersom alle påf�
     <value>Prioritert {0}K Vanskelighetsgrad</value>
   </data>
   <data name="Screen_Options_1Keys" xml:space="preserve">
-    <value>1 Tast</value>
+    <value>1 Key</value>
   </data>
   <data name="Screen_Options_2Keys" xml:space="preserve">
-    <value>2 Taster</value>
+    <value>2 Keys</value>
   </data>
   <data name="Screen_Options_3Keys" xml:space="preserve">
-    <value>3 Taster</value>
+    <value>3 Keys</value>
   </data>
   <data name="Screen_Options_4Keys" xml:space="preserve">
-    <value>4 Taster</value>
+    <value>4 Keys</value>
   </data>
   <data name="Screen_Options_5Keys" xml:space="preserve">
-    <value>5 Taster</value>
+    <value>5 Keys</value>
   </data>
   <data name="Screen_Options_6Keys" xml:space="preserve">
-    <value>6 Taster</value>
+    <value>6 Keys</value>
   </data>
   <data name="Screen_Options_7Keys" xml:space="preserve">
-    <value>7 Taster</value>
+    <value>7 Keys</value>
   </data>
   <data name="Screen_Options_8Keys" xml:space="preserve">
-    <value>8 Taster</value>
+    <value>8 Keys</value>
   </data>
   <data name="Screen_Options_9Keys" xml:space="preserve">
-    <value>9 Taster</value>
+    <value>9 Keys</value>
   </data>
   <data name="Screen_Options_10Keys" xml:space="preserve">
-    <value>10 Taster</value>
+    <value>10 Keys</value>
   </data>
   <data name="Screen_Options_VideoSettings" xml:space="preserve">
     <value>Videoinnstillinger</value>
@@ -1408,34 +1408,34 @@ Bruk filtrene til å begrense søket.</value>
     <value>Online Oppføring</value>
   </data>
   <data name="Screen_Download_1Keys" xml:space="preserve">
-    <value>1 Tast</value>
+    <value>1 Key</value>
   </data>
   <data name="Screen_Download_2Keys" xml:space="preserve">
-    <value>2 Taster</value>
+    <value>2 Keys</value>
   </data>
   <data name="Screen_Download_3Keys" xml:space="preserve">
-    <value>3 Taster</value>
+    <value>3 Keys</value>
   </data>
   <data name="Screen_Download_4Keys" xml:space="preserve">
-    <value>4 Taster</value>
+    <value>4 Keys</value>
   </data>
   <data name="Screen_Download_5Keys" xml:space="preserve">
-    <value>5 Taster</value>
+    <value>5 Keys</value>
   </data>
   <data name="Screen_Download_6Keys" xml:space="preserve">
-    <value>6 Taster</value>
+    <value>6 Keys</value>
   </data>
   <data name="Screen_Download_7Keys" xml:space="preserve">
-    <value>7 Taster</value>
+    <value>7 Keys</value>
   </data>
   <data name="Screen_Download_8Keys" xml:space="preserve">
-    <value>8 Taster</value>
+    <value>8 Keys</value>
   </data>
   <data name="Screen_Download_9Keys" xml:space="preserve">
-    <value>9 Taster</value>
+    <value>9 Keys</value>
   </data>
   <data name="Screen_Download_10Keys" xml:space="preserve">
-    <value>10 Taster</value>
+    <value>10 Keys</value>
   </data>
   <data name="Screen_Download_SearchMaps" xml:space="preserve">
     <value>Search maps...</value>
@@ -1780,10 +1780,10 @@ Bruk filtrene til å begrense søket.</value>
     <value>MODUS: </value>
   </data>
   <data name="Screen_MultiplayerLobby_4Keys" xml:space="preserve">
-    <value>4 Taster</value>
+    <value>4 Keys</value>
   </data>
   <data name="Screen_MultiplayerLobby_7Keys" xml:space="preserve">
-    <value>7 Taster</value>
+    <value>7 Keys</value>
   </data>
   <data name="Screen_MultiplayerLobby_MapStatusLabel" xml:space="preserve">
     <value>MAPPE STATUS: </value>
