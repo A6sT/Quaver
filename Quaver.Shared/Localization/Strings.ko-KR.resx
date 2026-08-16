@@ -1482,7 +1482,7 @@ Use the filters to narrow your search.</value>
     <value>Any Combo</value>
   </data>
   <data name="Screen_Download_Artist" xml:space="preserve">
-    <value>Artist</value>
+    <value>아티스트</value>
   </data>
   <data name="Screen_Download_AnyMapCount" xml:space="preserve">
     <value>Any Map Count</value>
@@ -3266,7 +3266,7 @@ for other players to download?</value>
     <value>Overwrite</value>
   </data>
   <data name="SkinEditor_Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>복사</value>
   </data>
   <data name="SkinEditor_CopyToLocal" xml:space="preserve">
     <value>Copy to Local Skins</value>
