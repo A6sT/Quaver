@@ -12,13 +12,15 @@ public abstract class GlobalInputScopeToken : IDisposable
 
     protected GlobalInputScopeToken()
     {
-        GlobalInputManager.ScopeTokens.Add(this);
+        lock (GlobalInputManager.ScopeTokensLock)
+            GlobalInputManager.ScopeTokens.Add(this);
     }
 
     /// <inheritdoc />
     public void Dispose()
     {
-        GlobalInputManager.ScopeTokens.Remove(this);
+        lock (GlobalInputManager.ScopeTokensLock)
+            GlobalInputManager.ScopeTokens.Remove(this);
         GC.SuppressFinalize(this);
     }
 }

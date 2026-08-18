@@ -46,7 +46,11 @@ public class GlobalInputHandler : IInputHandler<GlobalKeybindActions>
     public void HandleAction(GlobalKeybindActions action, bool isKeyPress = true,
         bool isRelease = false)
     {
-        var scopes = GlobalInputManager.ScopeTokens.AsEnumerable().Reverse().ToList();
+        List<GlobalInputScopeToken> scopes;
+        lock (GlobalInputManager.ScopeTokensLock)
+            scopes = new List<GlobalInputScopeToken>(GlobalInputManager.ScopeTokens);
+        scopes.Reverse();
+
         var consumed = false;
         foreach (var scope in scopes)
         {
