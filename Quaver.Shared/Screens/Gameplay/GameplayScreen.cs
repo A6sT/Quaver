@@ -193,7 +193,7 @@ namespace Quaver.Shared.Screens.Gameplay
         /// <summary>
         ///     If the play is finished.
         /// </summary>
-        public bool IsPlayComplete => Ruleset.HitObjectManager.IsComplete;
+        public bool IsPlayComplete => Ruleset?.HitObjectManager?.IsComplete ?? false;
 
         /// <summary>
         ///     If the user quit the game themselves.
@@ -423,8 +423,6 @@ namespace Quaver.Shared.Screens.Gameplay
             bool isCalibratingOffset = false, SpectatorClient spectatorClient = null, TournamentPlayerOptions options = null, bool isSongSelectPreview = false,
             bool isTestPlayingInNewEditor = false, bool useExistingAudioTime = false, bool shouldShowEpilepsyWarning = true)
         {
-            GlobalInputToken = new Token(this);
-
             if (isPlayTesting && !isSongSelectPreview)
             {
                 var testingQua = map.DeepClone();
@@ -517,6 +515,8 @@ namespace Quaver.Shared.Screens.Gameplay
                 IsMultiplayerGameStarted = true;
                 HasStarted = true;
             }
+
+            GlobalInputToken = new Token(this);
         }
 
         /// <summary>

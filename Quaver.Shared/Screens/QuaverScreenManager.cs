@@ -74,13 +74,15 @@ namespace Quaver.Shared.Screens
             {
                 var screen = newScreen();
                 var retainedElements = GetRetainedElements(game.CurrentScreen, screen);
-                Transitioner.SetForegroundElements(GetTransitionForegroundElements(transitionMode,
-                    retainedElements));
+                Transitioner.SetForegroundElements(GetTransitionForegroundElements(transitionMode, retainedElements));
                 ChangeScreen(screen, retainedElements, true);
                 return;
             }
 
-            ScreenLoadTask.Run(new ScreenChangeRequest(newScreen, transitionMode, version), delay);
+            var currentKeys = game.CurrentScreen is IPersistentScreen persistent ? persistent.PersistentElementKeys : Array.Empty<string>();
+            var initialForegroundKeys = GetTransitionForegroundElements(transitionMode, currentKeys);
+
+            ScreenLoadTask.Run(new ScreenChangeRequest(newScreen, transitionMode, version, initialForegroundKeys), delay);
         }
 
         /// <summary>
@@ -91,6 +93,17 @@ namespace Quaver.Shared.Screens
         /// <returns></returns>
         private static QuaverScreen LoadScreen(ScreenChangeRequest request, CancellationToken token)
         {
+            Transitioner.FadeIn(request.ForegroundKeys);
+            // Wait for the transitioner to fully fade to black.
+            var waitStarted = Environment.TickCount64;
+            while (Transitioner.IsAnimating &&
+                   Environment.TickCount64 - waitStarted < TransitionWaitTimeout)
+                Thread.Sleep(16);
+
+            if (Transitioner.IsAnimating)
+                Logger.Warning("Screen transition fade-in timed out; forcing the screen switch and recovery fade.",
+                    LogType.Runtime);
+
             var screen = request.NewScreen();
 
             if (token.IsCancellationRequested)
@@ -130,18 +143,9 @@ namespace Quaver.Shared.Screens
 
             var retainedElements = GetRetainedElements(game.CurrentScreen, e.Result);
             var foregroundElements = GetTransitionForegroundElements(e.Input.TransitionMode, retainedElements);
-
-            Transitioner.FadeIn(foregroundElements);
-
-            // Wait for the transitioner to fully fade to black.
-            var waitStarted = Environment.TickCount64;
-            while (Transitioner.IsAnimating &&
-                   Environment.TickCount64 - waitStarted < TransitionWaitTimeout)
-                Thread.Sleep(16);
-
-            if (Transitioner.IsAnimating)
-                Logger.Warning("Screen transition fade-in timed out; forcing the screen switch and recovery fade.",
-                    LogType.Runtime);
+            
+            // Replace elements 
+            Transitioner.SetForegroundElements(foregroundElements);
 
             // Run this on the next game loop on the main thread.
             game.ScheduleRenderTargetDraw(() =>
@@ -215,11 +219,14 @@ namespace Quaver.Shared.Screens
 
             public long Version { get; }
 
-            public ScreenChangeRequest(Func<QuaverScreen> newScreen, ScreenTransitionMode transitionMode, long version)
+            public IReadOnlyCollection<string> ForegroundKeys {  get; }
+
+            public ScreenChangeRequest(Func<QuaverScreen> newScreen, ScreenTransitionMode transitionMode, long version, IReadOnlyCollection<string> foregroundKeys)
             {
                 NewScreen = newScreen;
                 TransitionMode = transitionMode;
                 Version = version;
+                ForegroundKeys = foregroundKeys;
             }
         }
     }
