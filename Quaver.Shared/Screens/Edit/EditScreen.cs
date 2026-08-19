@@ -368,20 +368,26 @@ namespace Quaver.Shared.Screens.Edit
         private PaulToulColorGenerator ColorGenerator { get; } = new();
 
         /// <summary>
+        ///     Initial note to be selected once the editor has loaded
         /// </summary>
-        public EditScreen(Map map, IAudioTrack track = null, EditorVisualTestBackground visualTestBackground = null) : this(map, track, visualTestBackground, false)
+        private string InitialSelection { get; }
+
+        /// <summary>
+        /// </summary>
+        public EditScreen(Map map, IAudioTrack track = null, EditorVisualTestBackground visualTestBackground = null, string initialSelection = null) : this(map, track, visualTestBackground, false, initialSelection)
         {
         }
 
-        private EditScreen(Map map, bool loadAudioTrackFromMapFile) : this(map, null, null, loadAudioTrackFromMapFile)
+        private EditScreen(Map map, bool loadAudioTrackFromMapFile) : this(map, null, null, loadAudioTrackFromMapFile, null)
         {
         }
 
-        private EditScreen(Map map, IAudioTrack track, EditorVisualTestBackground visualTestBackground, bool loadAudioTrackFromMapFile)
+        private EditScreen(Map map, IAudioTrack track, EditorVisualTestBackground visualTestBackground, bool loadAudioTrackFromMapFile, string initialSelection)
         {
             EditorPluginUtils.EditScreen = this;
             Map = map;
             BackgroundStore = visualTestBackground;
+            InitialSelection = initialSelection;
 
             try
             {
@@ -479,6 +485,9 @@ namespace Quaver.Shared.Screens.Edit
                 DialogManager.Show(new EditorMetadataDialog(this));
                 Map.NewlyCreated = false;
             }
+
+            if(!string.IsNullOrWhiteSpace(InitialSelection))
+                GoToObjects(InitialSelection);
 
             base.OnFirstUpdate();
         }
