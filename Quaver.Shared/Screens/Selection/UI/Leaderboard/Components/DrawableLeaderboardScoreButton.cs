@@ -32,5 +32,12 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
             var newRect = RectangleF.Intersection(ScreenRectangle, Container.ScreenRectangle);
             return GraphicsHelper.RectangleContains(newRect, MouseManager.CurrentState.Position);
         }
+
+        /// <summary>
+        ///     The row itself supplies the background; this button is only an input hitbox.
+        /// </summary>
+        public override void DrawToSpriteBatch()
+        {
+        }
     }
 }

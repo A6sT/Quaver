@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Quaver.API.Enums;
 using Quaver.API.Helpers;
 using Quaver.API.Maps.Processors.Rating;
@@ -25,6 +26,7 @@ using Wobble.Graphics.Sprites.Text;
 using Wobble.Graphics.UI.Tooltips;
 using Wobble.Logging;
 using Wobble.Managers;
+using Wobble.Window;
 
 namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
 {
@@ -155,6 +157,40 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
         /// </summary>
         private Sprite Flag { get; set; }
 
+        /// <summary>
+        ///     Stable row elements rendered into <see cref="CachedRowRenderTarget"/> without changing their parents.
+        /// </summary>
+        private List<Drawable> CacheableContent { get; } = new List<Drawable>();
+
+        private Sprite CachedRow { get; set; }
+
+        private RenderTarget2D CachedRowRenderTarget { get; set; }
+
+        private bool CachedRowDirty { get; set; } = true;
+
+        private bool CachedRowBuildScheduled { get; set; }
+
+        private int CachedRowVersion { get; set; }
+
+        private bool ContentUpdatePending { get; set; }
+
+        private Color CachedRowBackgroundColor { get; set; }
+
+        private bool CacheableContentVisible { get; set; } = true;
+
+        /// <summary>
+        ///     Matches normal non-premultiplied color blending while keeping the opaque cache's alpha at one.
+        /// </summary>
+        private static BlendState CachedRowBlendState { get; } = new BlendState
+        {
+            ColorSourceBlend = Blend.SourceAlpha,
+            ColorDestinationBlend = Blend.InverseSourceAlpha,
+            ColorBlendFunction = BlendFunction.Add,
+            AlphaSourceBlend = Blend.Zero,
+            AlphaDestinationBlend = Blend.One,
+            AlphaBlendFunction = BlendFunction.Add
+        };
+
         private bool IsScrollVisible { get; set; } = true;
 
         private bool CantBeatAlertShouldBeVisible { get; set; }
@@ -169,6 +205,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
             Score = score;
             Size = Score.Size;
 
+            CreateCachedRow();
             CreateButton();
             CreateGrade();
             CreateAvatar();
@@ -204,6 +241,20 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
             ContainAlertIconClickableStatus();
 
             base.Update(gameTime);
+
+            if (!CachedRowDirty && (CachedRowTargetSizeChanged() || CachedRowBackgroundColor != BackgroundColor))
+            {
+                InvalidateCachedRow();
+            }
+
+            UpdateCachedRowVisibility();
+
+            if (CachedRowDirty && !CachedRowBuildScheduled && !ContentUpdatePending &&
+                !Score.Item.IsEmptyScore && BackgroundColor.A == byte.MaxValue &&
+                Animations.Count == 0 && !HasCacheableAnimations())
+            {
+                ScheduleCachedRowBuild(gameTime);
+            }
         }
 
         /// <summary>
@@ -212,10 +263,14 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
         public void UpdateContent(DrawableLeaderboardScore score)
         {
             Score = score;
-            Button.IsClickable = IsScrollVisible && !Score.Item.IsEmptyScore;
+            ContentUpdatePending = true;
+            Button.IsClickable = false;
+            InvalidateCachedRow();
+            SetContentVisibility(false);
 
             AddScheduledUpdate(() =>
             {
+                ContentUpdatePending = false;
                 Tint = BackgroundColor;
 
                 // Empty scores don't need to update its state
@@ -225,6 +280,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                     return;
                 }
 
+                Button.IsClickable = IsScrollVisible;
                 SetContentVisibility(IsScrollVisible);
 
                 Tint = Button.IsHovered || CantBeatAlert.IsHovered || RequiredAccuracyAlert.IsHovered
@@ -257,6 +313,208 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
             });
         }
 
+        private void CreateCachedRow()
+        {
+            CachedRow = new Sprite
+            {
+                Parent = this,
+                Size = Size,
+                UsePreviousSpriteBatchOptions = true,
+                Visible = false
+            };
+        }
+
+        private void RegisterCacheableContent(Drawable drawable)
+        {
+            CacheableContent.Add(drawable);
+
+            if (!CacheableContentVisible)
+                drawable.Visible = false;
+        }
+
+        private void InvalidateCachedRow()
+        {
+            CachedRowVersion++;
+            CachedRowDirty = true;
+            UpdateCachedRowVisibility();
+        }
+
+        private void ScheduleCachedRowBuild(GameTime gameTime)
+        {
+            CachedRowBuildScheduled = true;
+            var version = CachedRowVersion;
+
+            // SpriteTextPlus lines schedule their own render targets during Update. Run this after those are ready.
+            GameBase.Game.ScheduleRenderTargetDrawAfterPending(() => BuildCachedRow(gameTime, version));
+        }
+
+        private void BuildCachedRow(GameTime gameTime, int version)
+        {
+            CachedRowBuildScheduled = false;
+
+            if (IsDisposed || version != CachedRowVersion || !CachedRowDirty || !IsScrollVisible ||
+                ContentUpdatePending || Score.Item.IsEmptyScore)
+            {
+                return;
+            }
+
+            try
+            {
+                EnsureCachedRowRenderTarget();
+
+                var game = GameBase.Game;
+                var graphicsDevice = game.GraphicsDevice;
+                var previousTargets = graphicsDevice.GetRenderTargets();
+                var previousScissorRectangle = graphicsDevice.ScissorRectangle;
+                var backgroundColor = BackgroundColor;
+
+                try
+                {
+                    _ = game.TryEndBatch();
+                    graphicsDevice.SetRenderTarget(CachedRowRenderTarget);
+                    graphicsDevice.ScissorRectangle = new Rectangle(0, 0,
+                        CachedRowRenderTarget.Width, CachedRowRenderTarget.Height);
+
+                    // Resolving text against the opaque row color here preserves the original glyph alpha and weight.
+                    graphicsDevice.Clear(backgroundColor);
+
+                    var transform = Matrix.CreateTranslation(-ScreenRectangle.X, -ScreenRectangle.Y, 0) *
+                                    WindowManager.Scale;
+
+                    game.BeginBatch(SpriteSortMode.Deferred, CachedRowBlendState, SamplerState.LinearClamp,
+                        null, RasterizerState.CullNone, null, transform);
+
+                    for (var i = 0; i < CacheableContent.Count; i++)
+                    {
+                        var drawable = CacheableContent[i];
+
+                        if (!drawable.IsDisposed)
+                            drawable.Draw(gameTime);
+                    }
+
+                    _ = game.TryEndBatch();
+                }
+                finally
+                {
+                    _ = game.TryEndBatch();
+                    graphicsDevice.SetRenderTargets(previousTargets);
+                    graphicsDevice.ScissorRectangle = previousScissorRectangle;
+                }
+
+                if (version != CachedRowVersion)
+                    return;
+
+                CachedRow.Image = CachedRowRenderTarget;
+                CachedRowBackgroundColor = backgroundColor;
+                CachedRowDirty = false;
+                UpdateCachedRowVisibility();
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, LogType.Runtime);
+            }
+        }
+
+        private void EnsureCachedRowRenderTarget()
+        {
+            var width = GetCachedRowTargetWidth();
+            var height = GetCachedRowTargetHeight();
+
+            if (CachedRowRenderTarget != null && !CachedRowRenderTarget.IsDisposed &&
+                CachedRowRenderTarget.GraphicsDevice == GameBase.Game.GraphicsDevice &&
+                CachedRowRenderTarget.Width == width && CachedRowRenderTarget.Height == height)
+            {
+                return;
+            }
+
+            CachedRowRenderTarget?.Dispose();
+            CachedRowRenderTarget = new RenderTarget2D(GameBase.Game.GraphicsDevice, width, height, false,
+                SurfaceFormat.Color, DepthFormat.None);
+        }
+
+        private bool CachedRowTargetSizeChanged() => CachedRowRenderTarget == null ||
+                                                     CachedRowRenderTarget.IsDisposed ||
+                                                     CachedRowRenderTarget.GraphicsDevice != GameBase.Game.GraphicsDevice ||
+                                                     CachedRowRenderTarget.Width != GetCachedRowTargetWidth() ||
+                                                     CachedRowRenderTarget.Height != GetCachedRowTargetHeight();
+
+        private int GetCachedRowTargetWidth() =>
+            Math.Max(1, (int)Math.Ceiling(ScreenRectangle.Width * WindowManager.ScreenScale.X));
+
+        private int GetCachedRowTargetHeight() =>
+            Math.Max(1, (int)Math.Ceiling(ScreenRectangle.Height * WindowManager.ScreenScale.Y));
+
+        private bool HasCacheableAnimations()
+        {
+            for (var i = 0; i < CacheableContent.Count; i++)
+            {
+                if (HasAnimations(CacheableContent[i]))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private static bool HasAnimations(Drawable drawable)
+        {
+            if (drawable.Animations.Count != 0)
+                return true;
+
+            for (var i = 0; i < drawable.Children.Count; i++)
+            {
+                if (HasAnimations(drawable.Children[i]))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool RequiresLiveRowRendering() => Button.IsHovered || CantBeatAlert.IsHovered ||
+                                                   RequiredAccuracyAlert.IsHovered || Tint != BackgroundColor;
+
+        private void UpdateCachedRowVisibility()
+        {
+            if (CachedRow == null)
+                return;
+
+            var visible = IsScrollVisible && !ContentUpdatePending && !Score.Item.IsEmptyScore;
+            var useCachedRow = visible && !CachedRowDirty && CachedRowRenderTarget != null &&
+                               !CachedRowRenderTarget.IsDisposed && !RequiresLiveRowRendering();
+
+            CachedRow.Visible = useCachedRow;
+            SetCacheableContentVisibility(visible && !useCachedRow);
+        }
+
+        private void SetCacheableContentVisibility(bool visible)
+        {
+            if (CacheableContentVisible != visible)
+            {
+                CacheableContentVisible = visible;
+
+                for (var i = 0; i < CacheableContent.Count; i++)
+                    CacheableContent[i].Visible = visible;
+            }
+
+            if (Rank != null)
+                Rank.Visible = visible;
+
+            if (Clan != null)
+                Clan.Visible = visible && Clan.HasClan;
+
+            if (Time != null)
+                Time.Visible = visible;
+        }
+
+        /// <inheritdoc />
+        public override void DrawToSpriteBatch()
+        {
+            // The opaque cache already contains the normal row background.
+            if (CachedRow?.Visible == true)
+                return;
+
+            base.DrawToSpriteBatch();
+        }
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -269,6 +527,10 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
             SteamManager.SteamUserAvatarLoaded -= OnSteamAvatarLoaded;
             ModManager.ModsChanged -= OnModsChanged;
             ConfigManager.LeaderboardRankedAccuracy.ValueChanged -= OnAccuracyDisplayChanged;
+
+            CachedRow.Visible = false;
+            CachedRowRenderTarget?.Dispose();
+            CachedRowRenderTarget = null;
 
             base.Destroy();
         }
@@ -324,6 +586,8 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 Alpha = 0,
                 Tint = SkinManager.Skin?.SongSelect?.LeaderboardScoreRankColor ?? Color.White
             };
+
+            RegisterCacheableContent(Rank);
         }
 
         /// <summary>
@@ -359,6 +623,8 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 X = Score.IsPersonalBest ? PaddingLeft : 60,
                 UsePreviousSpriteBatchOptions = true,
             };
+
+            RegisterCacheableContent(Grade);
         }
 
         /// <summary>
@@ -376,6 +642,8 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 Image = Flags.Get("XX")
             };
 
+            RegisterCacheableContent(Flag);
+
             if (ConfigManager.LeaderboardSection.Value == LeaderboardType.Clan)
                 Flag.Size = new ScalableVector2(0, 0);
         }
@@ -392,6 +660,8 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 Position = new ScalableVector2(Flag.X + Flag.Width + PaddingLeft / 4f, UsernameY + 4),
                 UsePreviousSpriteBatchOptions = true
             };
+
+            RegisterCacheableContent(Username);
             
         }
 
@@ -407,6 +677,8 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 Position = new ScalableVector2(Flag.X + Flag.Width + PaddingLeft / 4f, UsernameY + 4),
                 UsePreviousSpriteBatchOptions = true
             };
+
+            RegisterCacheableContent(Clan);
         }
 
         private void UpdateClanAndUsername(Quaver.Shared.Database.Scores.Score score)
@@ -452,6 +724,8 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 Tint = SkinManager.Skin?.SongSelect?.LeaderboardScoreRatingColor ?? ColorHelper.HexToColor("#E9B736"),
                 UsePreviousSpriteBatchOptions = true
             };
+
+            RegisterCacheableContent(PerformanceRating);
         }
 
         /// <summary>
@@ -468,6 +742,8 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 UsePreviousSpriteBatchOptions = true,
                 Tint = SkinManager.Skin?.SongSelect?.LeaderboardScoreAccuracyColor ?? Color.White
             };
+
+            RegisterCacheableContent(AccuracyMaxCombo);
         }
 
         /// <summary>
@@ -483,6 +759,8 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 Y = -PerformanceRating.Y,
                 UsePreviousSpriteBatchOptions = true
             };
+
+            RegisterCacheableContent(Mods);
         }
 
         /// <summary>
@@ -569,6 +847,8 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 Size = new ScalableVector2(12, 12),
             };
 
+            RegisterCacheableContent(Clock);
+
             Time = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), "", 14)
             {
                 Parent = Clock,
@@ -653,7 +933,11 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
         /// </summary>
         private void UpdateModifiers()
         {
-            Modifiers?.ForEach(x => x.Destroy());
+            Modifiers?.ForEach(x =>
+            {
+                CacheableContent.Remove(x);
+                x.Destroy();
+            });
             Modifiers?.Clear();
 
             Modifiers = new List<DrawableModifier>();
@@ -686,6 +970,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                         mod.X = Flag.X + width * 0.70f * i - 4;
                     }
 
+                    RegisterCacheableContent(mod);
                     Modifiers.Add(mod);
                 }
                 catch (Exception e)
@@ -831,6 +1116,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 UpdateUsernameWidth();
                 UpdateTimePosition();
                 UpdateRequiredAccuracyTooltip();
+                InvalidateCachedRow();
             });
         }
 
@@ -839,7 +1125,11 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnAccuracyDisplayChanged(object sender, BindableValueChangedEventArgs<bool> e) =>
-            AddScheduledUpdate(() => UpdateAccuracyMode(Score));
+            AddScheduledUpdate(() =>
+            {
+                UpdateAccuracyMode(Score);
+                InvalidateCachedRow();
+            });
 
         /// <summary>
         /// Called when <see cref="AccuracyMaxCombo"/> and <see cref="Grade"> might need to be updated
@@ -941,13 +1231,15 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
 
             IsScrollVisible = visible;
             Visible = visible;
-            Button.IsClickable = visible && !Score.Item.IsEmptyScore;
+            Button.IsClickable = visible && !ContentUpdatePending && !Score.Item.IsEmptyScore;
 
             if (Score.Item.IsEmptyScore)
                 return;
 
-            SetContentVisibility(visible);
-            ApplyAlertVisibility();
+            SetContentVisibility(visible && !ContentUpdatePending);
+
+            if (!ContentUpdatePending)
+                ApplyAlertVisibility();
 
             if (!visible)
             {
@@ -958,21 +1250,18 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
 
         private void SetContentVisibility(bool visible)
         {
-            if (!Score.IsPersonalBest)
-                Rank.Visible = visible;
+            visible &= !ContentUpdatePending;
 
             Button.Visible = visible;
-            Grade.Visible = visible;
             Avatar.Visible = visible;
-            Flag.Visible = visible;
-            Username.Visible = visible;
-            Clan.Visible = visible && Clan.HasClan;
-            PerformanceRating.Visible = visible;
-            AccuracyMaxCombo.Visible = visible;
-            Mods.Visible = visible;
-            Clock.Visible = visible;
-            Time.Visible = visible;
-            Modifiers?.ForEach(x => x.Visible = visible);
+
+            if (visible)
+                UpdateCachedRowVisibility();
+            else
+            {
+                CachedRow.Visible = false;
+                SetCacheableContentVisibility(false);
+            }
 
             if (!visible)
             {
