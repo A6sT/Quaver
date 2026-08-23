@@ -18,6 +18,13 @@ namespace Quaver.Shared.Screens.Edit.Plugins.Bookmarks;
 
 public class EditorBookmarkPanel : SpriteImGui, IEditorPlugin, IColoredImGuiTitle
 {
+    private enum BookmarkTableColumn
+    {
+        Time,
+        Note,
+        Color
+    }
+
     private EditScreen Screen { get; }
 
     public string Name { get; } = "Bookmark Editor";
@@ -278,16 +285,16 @@ public class EditorBookmarkPanel : SpriteImGui, IEditorPlugin, IColoredImGuiTitl
     private void DrawTable()
     {
         if (!ImGui.BeginTable("##BookmarkTable", 3,
-                ImGuiTableFlags.ScrollY | ImGuiTableFlags.SizingStretchSame))
+                ImGuiTableFlags.ScrollY | ImGuiTableFlags.SizingStretchSame | ImGuiTableFlags.Sortable))
         {
             IsWindowHovered = ImGui.IsWindowHovered() || ImGui.IsAnyItemFocused();
             return;
         }
 
         ImGui.TableSetupScrollFreeze(0, 1);
-        ImGui.TableSetupColumn("Time");
-        ImGui.TableSetupColumn("Note");
-        ImGui.TableSetupColumn("Color");
+        ImGui.TableSetupColumn("Time", ImGuiTableColumnFlags.DefaultSort | ImGuiTableColumnFlags.PreferSortAscending);
+        ImGui.TableSetupColumn("Note", ImGuiTableColumnFlags.NoSort);
+        ImGui.TableSetupColumn("Color", ImGuiTableColumnFlags.PreferSortAscending);
         ImGui.TableHeadersRow();
 
         if (Screen.WorkingMap.Bookmarks.Count == 0)
@@ -296,14 +303,13 @@ public class EditorBookmarkPanel : SpriteImGui, IEditorPlugin, IColoredImGuiTitl
             NeedsToScrollToLastSelectedBookmark = null;
         }
 
-        for (var i = 0; i < Screen.WorkingMap.Bookmarks.Count; i++)
+        foreach (var bookmark in GetSortedBookmarks())
         {
-            var bookmark = Screen.WorkingMap.Bookmarks[i];
             var isSelected = SelectedBookmarks.Contains(bookmark);
 
             ImGui.TableNextRow();
             ImGui.TableNextColumn();
-            ImGui.PushID(i);
+            ImGui.PushID(Screen.WorkingMap.Bookmarks.IndexOf(bookmark));
 
             ScrollToSelection(bookmark);
 
@@ -343,6 +349,35 @@ public class EditorBookmarkPanel : SpriteImGui, IEditorPlugin, IColoredImGuiTitl
         IsWindowHovered = ImGui.IsWindowHovered() || ImGui.IsAnyItemFocused();
         HandleInput();
         ImGui.EndTable();
+    }
+
+    private unsafe IEnumerable<BookmarkInfo> GetSortedBookmarks()
+    {
+        var bookmarks = Screen.WorkingMap.Bookmarks.AsEnumerable();
+        var sortSpecs = ImGui.TableGetSortSpecs();
+        if (sortSpecs.NativePtr == null || sortSpecs.SpecsCount == 0)
+            return bookmarks.OrderBy(x => x.StartTime);
+
+        var columnSortSpecs = sortSpecs.Specs;
+        var descending = columnSortSpecs.SortDirection == ImGuiSortDirection.Descending;
+        sortSpecs.SpecsDirty = false;
+
+        if (columnSortSpecs.ColumnIndex == (short)BookmarkTableColumn.Color)
+        {
+            return descending
+                ? bookmarks.OrderByDescending(GetBookmarkColorSortKey).ThenBy(x => x.StartTime)
+                : bookmarks.OrderBy(GetBookmarkColorSortKey).ThenBy(x => x.StartTime);
+        }
+
+        return descending
+            ? bookmarks.OrderByDescending(x => x.StartTime)
+            : bookmarks.OrderBy(x => x.StartTime);
+    }
+
+    private static int GetBookmarkColorSortKey(BookmarkInfo bookmark)
+    {
+        var color = bookmark.GetColor();
+        return color.R << 16 | color.G << 8 | color.B;
     }
 
     private void ScrollToSelection(BookmarkInfo bookmark)
