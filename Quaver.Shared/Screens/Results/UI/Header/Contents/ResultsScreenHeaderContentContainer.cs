@@ -188,7 +188,7 @@ namespace Quaver.Shared.Screens.Results.UI.Header.Contents
 
             const int width = 110;
             
-            GradeSprite.Size = new ScalableVector2(width, (float) GradeSprite.Image.Height / GradeSprite.Image.Width * width);
+            GradeSprite.Size = new ScalableVector2(width, (float) GradeSprite.ImageHeight / GradeSprite.ImageWidth * width);
             GradeSprite.Y = -TabSelector.Height - 22;
         }
 

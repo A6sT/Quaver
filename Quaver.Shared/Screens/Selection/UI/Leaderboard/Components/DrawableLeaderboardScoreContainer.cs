@@ -373,7 +373,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
                 Position = new ScalableVector2(Avatar.X + Avatar.Width + PaddingLeft / 2f, UsernameY + 4),
                 UsePreviousSpriteBatchOptions = true,
                 Size = new ScalableVector2(24, 24),
-                Image = Flags.Get("XX")
+                Region = Flags.GetRegion("XX")
             };
 
             if (ConfigManager.LeaderboardSection.Value == LeaderboardType.Clan)
@@ -781,17 +781,17 @@ namespace Quaver.Shared.Screens.Selection.UI.Leaderboard.Components
             // Get user's current country
             if (!Score.Item.IsOnline)
             {
-                Flag.Image = Flags.Get("XX");
+                Flag.Region = Flags.GetRegion("XX");
                 return;
             }
 
             try
             {
-                Flag.Image = Flags.Get(Score.Item.Country);
+                Flag.Region = Flags.GetRegion(Score.Item.Country);
             }
             catch (Exception)
             {
-                Flag.Image = Flags.Get("XX");
+                Flag.Region = Flags.GetRegion("XX");
             }
         }
 

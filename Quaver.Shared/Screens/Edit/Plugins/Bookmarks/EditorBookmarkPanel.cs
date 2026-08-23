@@ -18,6 +18,13 @@ namespace Quaver.Shared.Screens.Edit.Plugins.Bookmarks;
 
 public class EditorBookmarkPanel : SpriteImGui, IEditorPlugin, IColoredImGuiTitle
 {
+    private enum BookmarkTableColumn
+    {
+        Time,
+        Note,
+        Color
+    }
+
     private EditScreen Screen { get; }
 
     public string Name { get; } = "Bookmark Editor";
@@ -299,7 +306,7 @@ public class EditorBookmarkPanel : SpriteImGui, IEditorPlugin, IColoredImGuiTitl
             NeedsToScrollToLastSelectedBookmark = null;
         }
 
-        var bookmarks = Screen.WorkingMap.Bookmarks.Select((bookmark, originalIndex) => 
+        var bookmarks = Screen.WorkingMap.Bookmarks.Select((bookmark, originalIndex) =>
             (Bookmark: bookmark, OriginalIndex: originalIndex)).ToList();
         SortBookmarks(bookmarks);
 
@@ -358,17 +365,24 @@ public class EditorBookmarkPanel : SpriteImGui, IEditorPlugin, IColoredImGuiTitl
         var nativeSpecs = sortSpecs.Specs.NativePtr;
 
         if (nativeSpecs == null || sortSpecs.SpecsCount == 0)
+        {
+            bookmarks.Sort((left, right) =>
+            {
+                var comparison = left.Bookmark.StartTime.CompareTo(right.Bookmark.StartTime);
+                return comparison != 0 ? comparison : left.OriginalIndex.CompareTo(right.OriginalIndex);
+            });
             return;
+        }
 
         bookmarks.Sort((left, right) =>
         {
             for (var i = 0; i < sortSpecs.SpecsCount; i++)
             {
                 var sortSpec = nativeSpecs[i];
-                var comparison = sortSpec.ColumnIndex switch
+                var comparison = ((BookmarkTableColumn)sortSpec.ColumnIndex) switch
                 {
-                    0 => left.Bookmark.StartTime.CompareTo(right.Bookmark.StartTime),
-                    2 => CompareBookmarkColors(left.Bookmark, right.Bookmark),
+                    BookmarkTableColumn.Time => left.Bookmark.StartTime.CompareTo(right.Bookmark.StartTime),
+                    BookmarkTableColumn.Color => CompareBookmarkColors(left.Bookmark, right.Bookmark),
                     _ => 0
                 };
 
@@ -380,6 +394,8 @@ public class EditorBookmarkPanel : SpriteImGui, IEditorPlugin, IColoredImGuiTitl
 
             return left.OriginalIndex.CompareTo(right.OriginalIndex);
         });
+
+        sortSpecs.SpecsDirty = false;
     }
 
     private static int CompareBookmarkColors(BookmarkInfo left, BookmarkInfo right)

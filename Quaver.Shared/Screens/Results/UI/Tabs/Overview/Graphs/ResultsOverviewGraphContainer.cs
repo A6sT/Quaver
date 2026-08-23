@@ -124,7 +124,7 @@ namespace Quaver.Shared.Screens.Results.UI.Tabs.Overview.Graphs
             ScoreSubmissionStats = scoreSubmissionStats;
 
             Image = SkinManager.Skin?.Results?.ResultsGraphContainerPanel ?? UserInterface.ResultsGraphContainerPanel;
-            Size = new ScalableVector2(ResultsScreenView.CONTENT_WIDTH - ResultsTabContainer.PADDING_X, Image.Height);
+            Size = new ScalableVector2(ResultsScreenView.CONTENT_WIDTH - ResultsTabContainer.PADDING_X, ImageHeight);
 
             Statistics = Processor.Value.Stats != null ? Processor.Value.GetHitStatistics() : new HitStatistics();
 

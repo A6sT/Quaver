@@ -69,7 +69,7 @@ namespace Quaver.Shared.Screens.Edit.UI.AutoMods
 
             Icon.Image = GetIconImage();
             Icon.Tint = Item.Level == AutoModIssueLevel.Ranking ? Colors.MainBlue : Color.White;
-            Icon.Size = new ScalableVector2(Icon.Image.Width, Icon.Image.Height);
+            Icon.Size = new ScalableVector2(Icon.ImageWidth, Icon.ImageHeight);
         }
 
         private void CreateButton()
