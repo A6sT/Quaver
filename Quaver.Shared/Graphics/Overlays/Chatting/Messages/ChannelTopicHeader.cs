@@ -105,7 +105,7 @@ namespace Quaver.Shared.Graphics.Overlays.Chatting.Messages
             };
 
             const float scale = 0.75f;
-            CloseButton.Size = new ScalableVector2(CloseButton.Image.Width * scale, CloseButton.Image.Height * scale);
+            CloseButton.Size = new ScalableVector2(CloseButton.ImageWidth * scale, CloseButton.ImageHeight * scale);
         }
 
         /// <summary>

@@ -62,8 +62,8 @@ namespace Quaver.Shared.Screens.V2.UI
         {
             foreach (var layer in Layers)
             {
-                var widthRatio = (float) layer.Image.Width / Image.Width;
-                var heightRatio = (float) layer.Image.Height / Image.Height;
+                var widthRatio = (float) layer.ImageWidth / ImageWidth;
+                var heightRatio = (float) layer.ImageHeight / ImageHeight;
                 layer.Size = new ScalableVector2(
                     size.X.Value * widthRatio,
                     size.Y.Value * heightRatio,

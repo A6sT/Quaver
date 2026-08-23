@@ -158,7 +158,7 @@ namespace Quaver.Shared.Screens.V2.Main
                         TextureManager.Load(
                             "Quaver.Resources/Textures/UI/Screens/Main/Logos/logo-accent.png"),
                         accentColor);
-                Logo.Size = new ScalableVector2(Logo.Image.Width, Logo.Image.Height);
+                Logo.Size = new ScalableVector2(Logo.ImageWidth, Logo.ImageHeight);
             }
             else
             {
@@ -173,7 +173,7 @@ namespace Quaver.Shared.Screens.V2.Main
             }
 
             Logo.Parent = Content;
-            LogoOptions = new FlexItemOptions { Basis = Logo.Image.Height, Shrink = 1 };
+            LogoOptions = new FlexItemOptions { Basis = Logo.ImageHeight, Shrink = 1 };
             Content.SetItemOptions(Logo, LogoOptions);
 
             ActionRow = new FlexContainer
