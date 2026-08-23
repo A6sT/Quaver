@@ -402,7 +402,7 @@ namespace Quaver.Shared.Graphics.Online.Playercard
                 Visible = isVisible
             };
 
-            TextCountryRank = new IconedText(Flags.Get(User.OnlineUser.CountryFlag), "#9,999,999")
+            TextCountryRank = new IconedText(Flags.GetRegion(User.OnlineUser.CountryFlag), "#9,999,999")
             {
                 Parent = this,
                 UsePreviousSpriteBatchOptions = true,
@@ -492,7 +492,7 @@ namespace Quaver.Shared.Graphics.Online.Playercard
         {
             TextCountryRank.Icon.Animations.Clear();
             TextCountryRank.Icon.Animations.Add(new Animation(AnimationProperty.Alpha, Easing.Linear, 0, 1, 500));
-            TextCountryRank.Icon.Image = Flags.Get(countryName);
+            TextCountryRank.Icon.Region = Flags.GetRegion(countryName);
         }
 
         /// <summary>

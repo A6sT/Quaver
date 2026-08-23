@@ -173,7 +173,7 @@ namespace Quaver.Shared.Graphics.Overlays.Hub.OnlineUsers.Scrolling
                     Username.Text = $"Loading (#{OnlineUser.Id})...";
                     Username.Tint = Color.White;
                     Username.X = Flag.X + Flag.Width + 8;
-                    Flag.Image = Flags.Get("XX");
+                    Flag.Region = Flags.GetRegion("XX");
                     Status.Text = "Idle";
                 }
                 else
@@ -189,7 +189,7 @@ namespace Quaver.Shared.Graphics.Overlays.Hub.OnlineUsers.Scrolling
                     Username.Text = OnlineUser.Username;
                     Username.Tint = Colors.GetUserChatColor(OnlineUser.UserGroups);
                     Username.X = hasClan ? Clan.X + Clan.Width : Flag.X + Flag.Width + 8;
-                    Flag.Image = Flags.Get(OnlineUser.CountryFlag);
+                    Flag.Region = Flags.GetRegion(OnlineUser.CountryFlag);
                     UpdateUserStatus();
                 }
 
@@ -245,7 +245,7 @@ namespace Quaver.Shared.Graphics.Overlays.Hub.OnlineUsers.Scrolling
                 Size = new ScalableVector2(25, 25),
                 X = Avatar.X + Avatar.Width + 14,
                 Y = 8,
-                Image = Flags.Get("XX"),
+                Region = Flags.GetRegion("XX"),
                 UsePreviousSpriteBatchOptions = true
             };
         }

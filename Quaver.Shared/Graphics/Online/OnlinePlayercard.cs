@@ -100,7 +100,7 @@ namespace Quaver.Shared.Graphics.Online
                 Y = -12,
                 Size = new ScalableVector2(24, 24),
                 X = Avatar.X + Avatar.Width + 10,
-                Image = Flags.Get("XX")
+                Region = Flags.GetRegion("XX")
             };
 
             Username = new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterSemiBold), ConfigManager.Username.Value)
@@ -182,7 +182,7 @@ namespace Quaver.Shared.Graphics.Online
                     LoadingWheel.Visible = true;
                     break;
                 case ConnectionStatus.Connected:
-                    Flag.Image = Flags.Get(OnlineManager.Self.OnlineUser.CountryFlag);
+                    Flag.Region = Flags.GetRegion(OnlineManager.Self.OnlineUser.CountryFlag);
                     Username.Tint = Colors.GetUserChatColor(OnlineManager.Self.OnlineUser.UserGroups);
                     Avatar.Border.Tint = Username.Tint;
 
