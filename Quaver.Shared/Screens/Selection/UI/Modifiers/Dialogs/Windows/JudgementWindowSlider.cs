@@ -110,7 +110,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Modifiers.Dialogs.Windows
             {
                 Parent = this,
                 Alignment = Alignment.MidLeft,
-                Image = img,
+                Region = img,
                 Size = new ScalableVector2(110, 0),
             };
 

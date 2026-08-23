@@ -54,7 +54,7 @@ namespace Quaver.Shared.Screens.Edit.UI.AutoMods
             AutoMod = new Bindable<AutoModMapset>(new AutoModMapset(Mapset));
             AutoMod.Value.Run();
 
-            Size = new ScalableVector2(Image.Width, Image.Height);
+            Size = new ScalableVector2(ImageWidth, ImageHeight);
 
             CreateHeader();
             CreateDetails();

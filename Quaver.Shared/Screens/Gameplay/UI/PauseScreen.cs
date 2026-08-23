@@ -133,7 +133,7 @@ namespace Quaver.Shared.Screens.Gameplay.UI
                 UsePreviousSpriteBatchOptions = true
             };
             Buttons.Add(Continue);
-            Continue.Size = new ScalableVector2(Continue.Image.Width, Continue.Image.Height);
+            Continue.Size = new ScalableVector2(Continue.ImageWidth, Continue.ImageHeight);
             Continue.Hovered += (o, e) => HoverButton(0);
 
             // Retry Button
@@ -147,7 +147,7 @@ namespace Quaver.Shared.Screens.Gameplay.UI
                 UsePreviousSpriteBatchOptions = true
             };
             Buttons.Add(Retry);
-            Retry.Size = new ScalableVector2(Retry.Image.Width, Retry.Image.Height);
+            Retry.Size = new ScalableVector2(Retry.ImageWidth, Retry.ImageHeight);
             Retry.Hovered += (o, e) => HoverButton(1);
 
             // Quit Button
@@ -161,7 +161,7 @@ namespace Quaver.Shared.Screens.Gameplay.UI
                 UsePreviousSpriteBatchOptions = true
             };
             Buttons.Add(Quit);
-            Quit.Size = new ScalableVector2(Quit.Image.Width, Quit.Image.Height);
+            Quit.Size = new ScalableVector2(Quit.ImageWidth, Quit.ImageHeight);
             Quit.Hovered += (o, e) => HoverButton(2);
 
             // Select continue button on initialization
