@@ -21,6 +21,7 @@ using Quaver.Shared.Screens.Gameplay.Rulesets.Keys.Playfield;
 using Quaver.Shared.Screens.Gameplay.Rulesets.Keys.Playfield.Hits;
 using Quaver.Shared.Skinning;
 using Wobble.Graphics;
+using Wobble.Graphics.Animations;
 using Wobble.Graphics.Sprites;
 
 namespace Quaver.Shared.Screens.Gameplay.Rulesets.Keys.HitObjects
@@ -245,9 +246,9 @@ namespace Quaver.Shared.Screens.Gameplay.Rulesets.Keys.HitObjects
             tint.A = 255;
 
             // Cancel any leftover tint fade so it doesn't keep animating the Tint we're about to set below.
-            HitObjectSprite.ClearAnimations();
-            LongNoteBodySprite.ClearAnimations();
-            LongNoteEndSprite.ClearAnimations();
+            HitObjectSprite.ClearAnimations(AnimationProperty.Color);
+            LongNoteBodySprite.ClearAnimations(AnimationProperty.Color);
+            LongNoteEndSprite.ClearAnimations(AnimationProperty.Color);
 
             // Update hitobject sprites
             HitObjectSprite.Region = GetHitObjectTexture(info.Lane, manager.Ruleset.Mode);
@@ -572,12 +573,12 @@ namespace Quaver.Shared.Screens.Gameplay.Rulesets.Keys.HitObjects
             Tint = SkinManager.Skin.Keys[Ruleset.Mode].DeadNoteColor;
             var tint = Tint * (HitObjectManager.ShowHits ? HitObjectManagerKeys.SHOW_HITS_NOTE_ALPHA : 1);
             tint.A = 255;
-            HitObjectSprite.ClearAnimations();
+            HitObjectSprite.ClearAnimations(AnimationProperty.Color);
             HitObjectSprite.Tint = tint;
             if (Info.IsLongNote)
             {
-                LongNoteBodySprite.ClearAnimations();
-                LongNoteEndSprite.ClearAnimations();
+                LongNoteBodySprite.ClearAnimations(AnimationProperty.Color);
+                LongNoteEndSprite.ClearAnimations(AnimationProperty.Color);
                 LongNoteBodySprite.Tint = tint;
                 LongNoteEndSprite.Tint = tint;
             }
