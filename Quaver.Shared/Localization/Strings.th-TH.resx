@@ -1812,10 +1812,10 @@ sure you would like to start without all players ready?</value>
     <value>รหัสผ่าน</value>
   </data>
   <data name="Screen_MultiplayerLobby_GamesFound" xml:space="preserve">
-    <value>เกมที่ค้นเจอ</value>
+    <value>ห้องที่ค้นเจอ</value>
   </data>
   <data name="Screen_MultiplayerLobby_GameFound" xml:space="preserve">
-    <value>เกมที่ค้นเจอ</value>
+    <value>ห้องที่ค้นเจอ</value>
   </data>
   <data name="Screen_MultiplayerLobby_SearchForGames" xml:space="preserve">
     <value>ค้นหาห้อง...</value>
@@ -2091,7 +2091,7 @@ sure you would like to start without all players ready?</value>
     <value>Composition Tools</value>
   </data>
   <data name="Screen_Editor_Layers" xml:space="preserve">
-    <value>Layers</value>
+    <value>เลเยอร์</value>
   </data>
   <data name="Screen_Editor_Hitsounds" xml:space="preserve">
     <value>Hitsounds</value>
@@ -2151,7 +2151,7 @@ sure you would like to start without all players ready?</value>
     <value>Set Minimum Length Of Long Notes Placed During Live Mapping</value>
   </data>
   <data name="Screen_Editor_Waveform" xml:space="preserve">
-    <value>Waveform</value>
+    <value>รูปคลื่นเสียง</value>
   </data>
   <data name="Screen_Editor_Visible" xml:space="preserve">
     <value>มองเห็น</value>
@@ -2403,7 +2403,7 @@ sure you would like to start without all players ready?</value>
     <value>เปลี่ยนสีกลุ่มกำหนดจังหวะเวลา</value>
   </data>
   <data name="Screen_Editor_ChangeWaveformColor" xml:space="preserve">
-    <value>CHANGE WAVEFORM COLOR</value>
+    <value>เปลี่ยนสีรูปคลื่นเสียง</value>
   </data>
   <data name="Screen_Editor_AddDifficultyFromFile" xml:space="preserve">
     <value>ADD DIFFICULTY FROM FILE</value>
@@ -2550,7 +2550,7 @@ sure you would like to start without all players ready?</value>
     <value>You cannot delete the default layer!</value>
   </data>
   <data name="Screen_Editor_DeletedLayer" xml:space="preserve">
-    <value>Deleted layer '{0}'</value>
+    <value>ลบเลเยอร์ '{0}' แล้ว</value>
   </data>
   <data name="Screen_Editor_CannotRenameDefaultLayer" xml:space="preserve">
     <value>เปลี่ยนชื่อเลเยอร์เริ่มต้นไม่ได้!</value>
@@ -2871,22 +2871,22 @@ sure you would like to start without all players ready?</value>
     <value>File extension error. Please report this to a developer!</value>
   </data>
   <data name="Screen_Editor_UploadErrorMapsetNotZipFile" xml:space="preserve">
-    <value>Your mapset was not a zip file. Please report this to a developer!</value>
+    <value>แมพเซตนี้ไม่ใช่ไฟล์ zip โปรดรายงานไปยังผู้พัฒนา!</value>
   </data>
   <data name="Screen_Editor_UploadErrorInvalidFileType" xml:space="preserve">
     <value>Your mapset contains files of an invalid type!</value>
   </data>
   <data name="Screen_Editor_UploadErrorNoContainingQuaFiles" xml:space="preserve">
-    <value>Your mapset does not contain any .qua files!</value>
+    <value>แมพเซตนี้ไม่มีไฟล์ .qua!</value>
   </data>
   <data name="Screen_Editor_UploadErrorInvalidMapFile" xml:space="preserve">
-    <value>One or more of your map files are invalid! (No objects, timing points?)!</value>
+    <value>มีไฟล์แมพอย่างน้อยหนึ่งไฟล์ที่ไม่ถูกต้อง! (ไม่มีวัตถุหรือจุดกำหนดเวลา?)!</value>
   </data>
   <data name="Screen_Editor_UploadErrorInvalidMapMetadata" xml:space="preserve">
     <value>One or more of your map files do not have completed metadata!</value>
   </data>
   <data name="Screen_Editor_UploadErrorUserNotCreator" xml:space="preserve">
-    <value>You are not the creator of this mapset!</value>
+    <value>คุณไม่ใช่คนสร้างแมพเซตนี้!</value>
   </data>
   <data name="Screen_Editor_UploadErrorConflictingMapIds" xml:space="preserve">
     <value>One or more of your maps have conflicting map ids!</value>
@@ -2907,16 +2907,16 @@ sure you would like to start without all players ready?</value>
     <value>One or more of your maps contains a non-uploaded map id!</value>
   </data>
   <data name="Screen_Editor_UploadSuccessUploaded" xml:space="preserve">
-    <value>Success! Your mapset has been uploaded!</value>
+    <value>สำเร็จ! อัปโหลดแมพเซตแล้ว!</value>
   </data>
   <data name="Screen_Editor_UploadSuccessUpdated" xml:space="preserve">
-    <value>Success! Your mapset has been updated!</value>
+    <value>สำเร็จ! อัปเดตแมพเซตแล้ว!</value>
   </data>
   <data name="Screen_Editor_UploadErrorExceededLimit" xml:space="preserve">
     <value>You have exceeded the amount of maps you can upload at this time!</value>
   </data>
   <data name="Screen_Editor_UploadingMapset" xml:space="preserve">
-    <value>UPLOADING MAPSET</value>
+    <value>กำลังอัปโหลดแมพเซต</value>
   </data>
   <data name="Screen_Editor_UploadingMapsetMessage" xml:space="preserve">
     <value>Please wait while your mapset is being uploaded...</value>
@@ -2937,13 +2937,13 @@ sure you would like to start without all players ready?</value>
     <value>To add a background image, drag a .png or .jpg into the window.</value>
   </data>
   <data name="Screen_Editor_FilterLabel" xml:space="preserve">
-    <value>FILTER:</value>
+    <value>ตัวกรอง:</value>
   </data>
   <data name="Screen_Editor_All" xml:space="preserve">
-    <value>All</value>
+    <value>ทั้งหมด</value>
   </data>
   <data name="Screen_Editor_Files" xml:space="preserve">
-    <value>Files</value>
+    <value>ไฟล์</value>
   </data>
   <data name="Screen_Editor_HitObjects" xml:space="preserve">
     <value>HitObjects</value>
@@ -2955,7 +2955,7 @@ sure you would like to start without all players ready?</value>
     <value>Metadata</value>
   </data>
   <data name="Screen_Editor_ScrollVelocities" xml:space="preserve">
-    <value>Scroll Velocities</value>
+    <value>Scroll Velocity</value>
   </data>
   <data name="Screen_Editor_TimingPoints" xml:space="preserve">
     <value>จุดกำหนดจังหวะเวลา</value>
@@ -2964,40 +2964,40 @@ sure you would like to start without all players ready?</value>
     <value>AutoMod</value>
   </data>
   <data name="Screen_Editor_ObjectCount" xml:space="preserve">
-    <value>Object Count</value>
+    <value>จำนวนวัตถุ</value>
   </data>
   <data name="Screen_Editor_DifficultyRating" xml:space="preserve">
-    <value>Difficulty Rating</value>
+    <value>ระดับความยาก</value>
   </data>
   <data name="Screen_Editor_SelectObjectsBeforeChangingHitsounds" xml:space="preserve">
     <value>You need to select objects before changing their hitsounds!</value>
   </data>
   <data name="Screen_Editor_SelectTool" xml:space="preserve">
-    <value>Select</value>
+    <value>เลือก</value>
   </data>
   <data name="Screen_Editor_NoteTool" xml:space="preserve">
-    <value>Note</value>
+    <value>โน้ต</value>
   </data>
   <data name="Screen_Editor_LongNoteTool" xml:space="preserve">
-    <value>Long Note</value>
+    <value>โน้ตยาว</value>
   </data>
   <data name="Screen_Editor_MineTool" xml:space="preserve">
-    <value>Mine</value>
+    <value>ระเบิด</value>
   </data>
   <data name="Screen_Editor_Layer" xml:space="preserve">
     <value>Layer {0}</value>
   </data>
   <data name="Screen_Editor_RenameLayer" xml:space="preserve">
-    <value>RENAME LAYER</value>
+    <value>เปลี่ยนชื่อเลเยอร์</value>
   </data>
   <data name="Screen_Editor_RenameLayerMessage" xml:space="preserve">
-    <value>Enter a new name for your layer...</value>
+    <value>ใส่ชื่อใหม่ให้เลเยอร์นี้...</value>
   </data>
   <data name="Screen_Editor_EnterNamePlaceholder" xml:space="preserve">
     <value>Enter name...</value>
   </data>
   <data name="Screen_Editor_ChangeLayerColor" xml:space="preserve">
-    <value>CHANGE LAYER COLOR</value>
+    <value>เปลี่ยนสีเลเยอร์</value>
   </data>
   <data name="Screen_Editor_EditName" xml:space="preserve">
     <value>Edit Name</value>
@@ -3006,19 +3006,19 @@ sure you would like to start without all players ready?</value>
     <value>Change Color</value>
   </data>
   <data name="Screen_Editor_MoveLayerUp" xml:space="preserve">
-    <value>Move Layer Up</value>
+    <value>ย้ายเลเยอร์ขึ้น</value>
   </data>
   <data name="Screen_Editor_MoveLayerDown" xml:space="preserve">
-    <value>Move Layer Down</value>
+    <value>ย้ายเลเยอร์ลง</value>
   </data>
   <data name="Screen_Editor_CannotMoveLayerPastDefault" xml:space="preserve">
-    <value>Cannot move layer past the default layer!</value>
+    <value>ไม่สามารถย้ายเลเยอร์ผ่านเลเยอร์เริ่มต้นได้!</value>
   </data>
   <data name="Screen_Editor_LayerAlreadyAtTop" xml:space="preserve">
-    <value>Layer is already at the top!</value>
+    <value>เลเยอร์อยู่ด้านบนสุดอยู่แล้ว!</value>
   </data>
   <data name="Screen_Editor_CannotEditDefaultLayer" xml:space="preserve">
-    <value>You cannot edit the default layer!</value>
+    <value>แก้ไขเลเยอร์เริ่มต้นไม่ได้!</value>
   </data>
   <data name="Screen_Editor_DetectBpmAndOffsetError" xml:space="preserve">
     <value>ตรวจจับ BPM และ Offset ไม่สำเร็จ!</value>
@@ -3030,16 +3030,16 @@ sure you would like to start without all players ready?</value>
     <value>Preview time changed to: {0}</value>
   </data>
   <data name="Screen_Editor_ZoomInTooltip" xml:space="preserve">
-    <value>Zoom In ({0})</value>
+    <value>ซูมเข้า ({0})</value>
   </data>
   <data name="Screen_Editor_ZoomOutTooltip" xml:space="preserve">
-    <value>Zoom Out ({0})</value>
+    <value>ซูมออก ({0})</value>
   </data>
   <data name="Screen_Editor_DenseLinesDetected" xml:space="preserve">
     <value>Dense lines detected. Lines will be drawn less frequently.</value>
   </data>
   <data name="Screen_Editor_LoadingWaveform" xml:space="preserve">
-    <value>Loading Waveform...</value>
+    <value>กำลังโหลดรูปคลื่นเสียง...</value>
   </data>
   <data name="Screen_Editor_LoadingSpectrogram" xml:space="preserve">
     <value>Loading Spectrogram...</value>
@@ -3075,7 +3075,7 @@ sure you would like to start without all players ready?</value>
     <value>BPM Detector</value>
   </data>
   <data name="Screen_Editor_GoToObjects" xml:space="preserve">
-    <value>Go To Objects</value>
+    <value>ไปยังวัตถุ</value>
   </data>
   <data name="Screen_Editor_ApplyKeymap" xml:space="preserve">
     <value>APPLY KEYMAP</value>
@@ -3084,13 +3084,13 @@ sure you would like to start without all players ready?</value>
     <value>Are you sure you want to overwrite your keymap?&#xA;You might want to back up your keymap first.</value>
   </data>
   <data name="Screen_Editor_IssueCountLabel" xml:space="preserve">
-    <value>Issue Count:</value>
+    <value>จำนวนปัญหา:</value>
   </data>
   <data name="Screen_Editor_NotReadyForRank" xml:space="preserve">
-    <value>Not ready for rank!</value>
+    <value>ไม่พร้อมจัดอันดับ!</value>
   </data>
   <data name="Screen_Editor_ReadyForRank" xml:space="preserve">
-    <value>Ready for rank!</value>
+    <value>พร้อมจัดอันดับ!</value>
   </data>
   <data name="Screen_Editor_AutoModWarningTooltip" xml:space="preserve">
     <value>อาจจะเป็นข้อผิดพลาด เพิกเฉยได้ถ้าไม่เป็นปัญหา</value>
@@ -3117,7 +3117,7 @@ sure you would like to start without all players ready?</value>
     <value>โหมด:</value>
   </data>
   <data name="Screen_Editor_StatusLabel" xml:space="preserve">
-    <value>Status:</value>
+    <value>สถานะ:</value>
   </data>
   <data name="Screen_Editor_Custom" xml:space="preserve">
     <value>Custom</value>
@@ -3144,22 +3144,22 @@ sure you would like to start without all players ready?</value>
     <value>Legacy</value>
   </data>
   <data name="Screen_Editor_WaveformAudioDirection_Both" xml:space="preserve">
-    <value>Both</value>
+    <value>ทั้งสองด้าน</value>
   </data>
   <data name="Screen_Editor_WaveformAudioDirection_Left" xml:space="preserve">
-    <value>Left</value>
+    <value>ซ้าย</value>
   </data>
   <data name="Screen_Editor_WaveformAudioDirection_Right" xml:space="preserve">
-    <value>Right</value>
+    <value>ขวา</value>
   </data>
   <data name="Screen_Editor_WaveformFilter_None" xml:space="preserve">
-    <value>None</value>
+    <value>ไม่มี</value>
   </data>
   <data name="Screen_Editor_WaveformFilter_LowPass" xml:space="preserve">
-    <value>LowPass</value>
+    <value>ตัวกรองความถี่ต่ำ</value>
   </data>
   <data name="Screen_Editor_WaveformFilter_HighPass" xml:space="preserve">
-    <value>HighPass</value>
+    <value>ตัวกรองความถี่สูง</value>
   </data>
   <data name="Screen_Editor_SpectrogramFrequencyScale_Mel" xml:space="preserve">
     <value>Mel</value>
@@ -3174,13 +3174,13 @@ sure you would like to start without all players ready?</value>
     <value>Linear</value>
   </data>
   <data name="Screen_Editor_DefaultSkin_Arrow" xml:space="preserve">
-    <value>Arrow</value>
+    <value>ลูกศร</value>
   </data>
   <data name="Screen_Editor_DefaultSkin_Bar" xml:space="preserve">
-    <value>Bar</value>
+    <value>แท่ง</value>
   </data>
   <data name="Screen_Editor_DefaultSkin_Circle" xml:space="preserve">
-    <value>Circle</value>
+    <value>วงกลม</value>
   </data>
   <data name="Screen_Editor_Hitsound_Normal" xml:space="preserve">
     <value>Normal</value>
@@ -3198,7 +3198,7 @@ sure you would like to start without all players ready?</value>
     <value>None</value>
   </data>
   <data name="Screen_Editor_HitObjectColoring_Layer" xml:space="preserve">
-    <value>Layer</value>
+    <value>เลเยอร์</value>
   </data>
   <data name="Screen_Editor_HitObjectColoring_TimingGroup" xml:space="preserve">
     <value>กลุ่มกำหนดจังหวะเวลา</value>
@@ -3309,10 +3309,10 @@ sure you would like to start without all players ready?</value>
     <value>This component has no editable properties.</value>
   </data>
   <data name="SkinEditor_On" xml:space="preserve">
-    <value>On</value>
+    <value>เปิด</value>
   </data>
   <data name="SkinEditor_Off" xml:space="preserve">
-    <value>Off</value>
+    <value>ปิด</value>
   </data>
   <data name="SkinEditor_Clear" xml:space="preserve">
     <value>ล้าง</value>
