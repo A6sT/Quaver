@@ -194,7 +194,7 @@ namespace Quaver.Shared.Screens.Selection.UI.Mapsets
 
                     OnlineGrade.Visible = true;
                     OnlineGrade.Image = SkinManager.Skin.Grades[map.OnlineGrade];
-                    OnlineGrade.Size = new ScalableVector2(width, OnlineGrade.Image.Height / OnlineGrade.Image.Width * width);
+                    OnlineGrade.Size = new ScalableVector2(width, OnlineGrade.ImageHeight / OnlineGrade.ImageWidth * width);
 
                     Title.X = OnlineGrade.X + OnlineGrade.Width + 16;
                     Title.TruncateWithEllipsis(400 - (int)OnlineGrade.Width - 16);

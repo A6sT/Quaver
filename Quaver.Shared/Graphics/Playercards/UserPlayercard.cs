@@ -393,7 +393,7 @@ namespace Quaver.Shared.Graphics.Playercards
 
             Avatar.Border.Tint = Colors.GetUserChatColor(User?.OnlineUser?.UserGroups ?? UserGroups.Normal);
 
-            Flag.Image = User != null ? Flags.Get(User?.OnlineUser?.CountryFlag) : Flags.Get("XX");
+            Flag.Region = User != null ? Flags.GetRegion(User?.OnlineUser?.CountryFlag) : Flags.GetRegion("XX");
 
             Clan.UpdateFromUser(User?.OnlineUser);
             Clan.X = Flag.X + Flag.Width + 6;

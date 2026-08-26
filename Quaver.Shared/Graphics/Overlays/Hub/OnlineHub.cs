@@ -18,6 +18,7 @@ using Wobble;
 using Wobble.Graphics;
 using Wobble.Graphics.Animations;
 using Wobble.Graphics.Sprites;
+using Wobble.Graphics.UI.Buttons;
 using Wobble.Graphics.Sprites.Text;
 using Wobble.Managers;
 using Wobble.Window;
@@ -193,6 +194,18 @@ namespace Quaver.Shared.Graphics.Overlays.Hub
 
         /// <summary>
         /// </summary>
+        /// <param name="drawable"></param>
+        private static void ResetInteractionState(Drawable drawable)
+        {
+            if (drawable is Button button)
+                button.ResetInteractionState();
+
+            foreach (var child in drawable.Children)
+                ResetInteractionState(child);
+        }
+
+        /// <summary>
+        /// </summary>
         /// <param name="type"></param>
         public void SelectSection(OnlineHubSectionType type) => SelectSection(Sections[type]);
 
@@ -211,7 +224,10 @@ namespace Quaver.Shared.Graphics.Overlays.Hub
             section.Container.Parent = this;
 
             if (oldSection != null)
+            {
+                ResetInteractionState(oldSection.Container);
                 oldSection.Container.Parent = null;
+            }
 
             ScheduleUpdate(() => HeaderText.Text = section.Name);
         }

@@ -136,17 +136,14 @@ namespace Quaver.Shared.Screens.Selection.UI.Profile
                 X = Avatar.X + Avatar.Width + Avatar.Border.Thickness + 12,
                 Y = Avatar.Y + 4,
                 Size = new ScalableVector2(24, 24),
-                Image = Flags.Get("XX"),
+                Region = Flags.GetRegion("XX"),
                 Alpha = 0,
                 Visible = false
             };
 
             if (OnlineManager.Connected)
             {
-                var flag = Flags.Get(OnlineManager.Self?.OnlineUser?.CountryFlag);
-
-                if (flag != null)
-                    Flag.Image = flag;
+                Flag.Region = Flags.GetRegion(OnlineManager.Self?.OnlineUser?.CountryFlag);
             }
         }
 

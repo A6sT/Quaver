@@ -197,8 +197,8 @@ namespace Quaver.Shared.Screens.V2.Main.UI
 
             public float ApplyWidth(float width)
             {
-                var height = Content.Image?.Width > 0 && Content.Image.Height > 0
-                    ? width * Content.Image.Height / Content.Image.Width
+                var height = Content.Image?.Width > 0 && Content.ImageHeight > 0
+                    ? width * Content.ImageHeight / Content.ImageWidth
                     : HeightValue;
 
                 Size = new ScalableVector2(width, height);

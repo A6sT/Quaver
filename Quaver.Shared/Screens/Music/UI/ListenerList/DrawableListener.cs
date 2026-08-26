@@ -134,7 +134,7 @@ namespace Quaver.Shared.Screens.Music.UI.ListenerList
                     SteamManager.SendAvatarRetrievalRequest(steamId);
                 }
 
-                Flag.Image = Flags.Get(Item.CountryFlag ?? "XX");
+                Flag.Region = Flags.GetRegion(Item.CountryFlag ?? "XX");
 
                 Username.Text = Item.Username ?? "Loading...";
                 Username.Tint = Colors.GetUserChatColor(Item.UserGroups);
@@ -200,7 +200,7 @@ namespace Quaver.Shared.Screens.Music.UI.ListenerList
                 Alignment = Alignment.MidLeft,
                 Size = new ScalableVector2(25, 25),
                 X = Avatar.X + Avatar.Width + 10,
-                Image = Flags.Get("XX"),
+                Region = Flags.GetRegion("XX"),
                 UsePreviousSpriteBatchOptions = true
             };
         }

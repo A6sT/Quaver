@@ -3,7 +3,9 @@ using Quaver.API.Maps.Structures;
 using Quaver.Shared.Assets;
 using Quaver.Shared.Graphics;
 using Quaver.Shared.Helpers;
+using Quaver.Shared.Screens.Edit.Dialogs;
 using Wobble.Graphics.UI.Buttons;
+using Wobble.Graphics.UI.Dialogs;
 
 namespace Quaver.Shared.Screens.Edit.UI.Footer.Bookmarks
 {
@@ -30,6 +32,8 @@ namespace Quaver.Shared.Screens.Edit.UI.Footer.Bookmarks
                 DestroyIfParentIsNull = false
             };
 
+            Clicked += (sender, args) =>
+                DialogManager.Show(new EditorBookmarkDialog(Screen.ActionManager, Screen.Track, Bookmark));
             Hovered += (sender, args) =>
             {
                 if (string.IsNullOrEmpty(Bookmark.Note))

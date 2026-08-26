@@ -24,7 +24,7 @@ namespace Quaver.Shared.Screens.Multi.UI.Status.Selection
 
             const float scale = 0.85f;
 
-            Size = new ScalableVector2(Image.Width * scale, Image.Height * scale);
+            Size = new ScalableVector2(ImageWidth * scale, ImageHeight * scale);
 
             Clicked += (sender, args) =>
             {

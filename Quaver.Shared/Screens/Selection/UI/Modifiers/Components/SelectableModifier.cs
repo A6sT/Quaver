@@ -8,6 +8,7 @@ using Quaver.Shared.Helpers;
 using Quaver.Shared.Modifiers;
 using Quaver.Shared.Modifiers.Mods;
 using Quaver.Shared.Online;
+using Quaver.Shared.Screens.Loading;
 using Wobble;
 using Wobble.Graphics;
 using Wobble.Graphics.Sprites;
@@ -154,7 +155,10 @@ namespace Quaver.Shared.Screens.Selection.UI.Modifiers.Components
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnModsChanged(object sender, ModsChangedEventArgs e) => Icon.Image = GetTexture();
+        private void OnModsChanged(object sender, ModsChangedEventArgs e) {
+            Icon.Image = GetTexture();
+            MapLoadingScreen.QueueStreamerFilesWrite(250);
+        }
 
         private Texture2D GetTexture()
         {
