@@ -269,6 +269,11 @@ namespace Quaver.Shared.Screens.Results.UI.Tabs.Overview.Graphs
         private Bindable<DevianceHighlight> HighlightState { get; }
 
         /// <summary>
+        ///     The number of hits with this judgement
+        /// </summary>
+        private int Count { get; }
+
+        /// <summary>
         /// </summary>
         /// <param name="judgement"></param>
         /// <param name="processor"></param>
@@ -280,15 +285,19 @@ namespace Quaver.Shared.Screens.Results.UI.Tabs.Overview.Graphs
         {
             Judgement = judgement;
             HighlightState = highlightState;
+            Count = GetCount(judgement, processor);
 
             CreateHoverArea();
         }
 
         /// <summary>
-        ///     Invisible overlay used purely to detect hovering over this bar.
+        ///     Invisible overlay used purely to detect hovering over this bar. Skipped entirely when this judgement has no hits
         /// </summary>
         private void CreateHoverArea()
         {
+            if (Count <= 0)
+                return;
+
             var hoverArea = new ImageButton(UserInterface.BlankBox)
             {
                 Parent = this,

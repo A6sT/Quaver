@@ -57,7 +57,7 @@ namespace Quaver.Shared.Screens.Result.UI
         ///     The alpha applied to dots/miss-lines that don't match the current highlight. Unlike the
         ///     judgement window lines, dots already sit at full alpha at rest so they have no headroom to brighten.
         /// </summary>
-        private const float DimmedDotAlpha = 0.15f;
+        private const float DimmedDotAlpha = 0.25f;
 
         /// <summary>
         ///     The largest of the dot sizes. Used for things like minimum graph width and dot positioning.

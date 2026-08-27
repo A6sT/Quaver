@@ -235,9 +235,9 @@ namespace Quaver.Shared.Screens.Results.UI.Tabs.Overview.Graphs
         /// </summary>
         private void CreateMineHits()
         {
-            var mineHits = Processor.Value.CountMineHit.ToString();
+            var mineMissCount = Processor.Value.CountMineHit;
 
-            MineMiss = new TextKeyValue(ResultsLocalization.Get("Mine Miss:"), mineHits, 20, Color.White)
+            MineMiss = new TextKeyValue(ResultsLocalization.Get("Mine Miss:"), mineMissCount.ToString(), 20, Color.White)
             {
                 Parent = RightContainer,
                 X = -GraphDropdown.X,
@@ -247,7 +247,10 @@ namespace Quaver.Shared.Screens.Results.UI.Tabs.Overview.Graphs
             };
             MineMiss.Y -= MineMiss.Height / 2f;
 
-            CreateStatHoverArea(MineMiss, DevianceHighlight.MineMiss);
+            // Skip the hover highlight entirely when there are no mine misses so hovering it doesn't
+            // dim the rest of the graph for a category with nothing to show.
+            if (mineMissCount > 0)
+                CreateStatHoverArea(MineMiss, DevianceHighlight.MineMiss);
         }
 
         /// <summary>
