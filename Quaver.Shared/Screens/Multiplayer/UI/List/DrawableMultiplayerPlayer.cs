@@ -118,7 +118,7 @@ namespace Quaver.Shared.Screens.Multiplayer.UI.List
                 Parent = Button,
                 Alignment = Alignment.MidLeft,
                 X = Avatar.X + Avatar.Width + 16,
-                Image = item.CountryFlag == null ? Flags.Get("XX") : Flags.Get(item.CountryFlag),
+                Region = item.CountryFlag == null ? Flags.GetRegion("XX") : Flags.GetRegion(item.CountryFlag),
                 Size = new ScalableVector2(26, 26),
                 UsePreviousSpriteBatchOptions = true
             };
@@ -387,7 +387,7 @@ namespace Quaver.Shared.Screens.Multiplayer.UI.List
                 return;
 
             Item = user;
-            Flag.Image = Flags.Get(user.CountryFlag);
+            Flag.Region = Flags.GetRegion(user.CountryFlag);
 
             SteamManager.SendAvatarRetrievalRequest((ulong) user.SteamId);
             UpdateContent(Item, Index);

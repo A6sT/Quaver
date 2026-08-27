@@ -99,11 +99,11 @@ namespace Quaver.Shared.Screens.Results.UI.Tabs.Multiplayer.Table
                 case MultiplayerGameRuleset.Free_For_All:
                 case MultiplayerGameRuleset.Battle_Royale:
                     Image = SkinManager.Skin?.Results?.ResultsMultiplayerFFAPanel ?? UserInterface.ResultsMultiplayerFFAPanel;
-                    Height = Image.Height + 4;
+                    Height = ImageHeight + 4;
                     break;
                 case MultiplayerGameRuleset.Team:
                     Image = SkinManager.Skin?.Results?.ResultsMultiplayerTeamPanel ?? UserInterface.ResultsMultiplayerTeamPanel;
-                    Height = Image.Height;
+                    Height = ImageHeight;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

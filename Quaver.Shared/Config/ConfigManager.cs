@@ -449,6 +449,11 @@ namespace Quaver.Shared.Config
         internal static BindableInt EditorImGuiFontSize { get; private set; }
 
         /// <summary>
+        ///     User-created color presets displayed in the shared editor color picker.
+        /// </summary>
+        internal static Bindable<string> EditorColorPresets { get; private set; }
+
+        /// <summary>
         ///     The scroll speed used in the editor.
         /// </summary>
         internal static BindableInt EditorScrollSpeedKeys { get; private set; }
@@ -1187,6 +1192,7 @@ namespace Quaver.Shared.Config
             EditorScrollSpeedKeys = ReadInt(@"EditorScrollSpeedKeys", 16, 5, 100, data);
             EditorImGuiScalePercentage = ReadInt(@"EditorImGuiScalePercentage", 100, 25, 300, data);
             EditorImGuiFontSize = ReadInt(@"EditorImGuiFontSize", 16, 8, 32, data);
+            EditorColorPresets = ReadValue(@"EditorColorPresets", "", data);
             EditorPlayfieldAlpha = ReadInt(@"EditorPlayfieldAlpha", 100, 0, 100, data);
             KeyEditorPausePlay = ReadValue(@"KeyEditorPausePlay", Keys.Space, data);
             KeyEditorDecreaseAudioRate = ReadValue(@"KeyEditorDecreaseAudioRate", Keys.OemMinus, data);

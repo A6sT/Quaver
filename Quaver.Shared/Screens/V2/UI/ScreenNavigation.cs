@@ -432,7 +432,7 @@ namespace Quaver.Shared.Screens.V2.UI
                     : new Sprite { Image = texture };
             }
 
-            var aspectRatio = (float) ApplicationLogo.Image.Width / ApplicationLogo.Image.Height;
+            var aspectRatio = (float) ApplicationLogo.ImageWidth / ApplicationLogo.ImageHeight;
             var width = Config.Logo.Height * aspectRatio;
             ApplicationLogo.Size = new ScalableVector2(width, Config.Logo.Height);
             ApplicationLogo.Alignment = Alignment.MidLeft;
