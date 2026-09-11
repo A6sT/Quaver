@@ -312,52 +312,11 @@ namespace Quaver.Shared
         /// </summary>
         private Dictionary<string, Type> VisualTests { get; } = new Dictionary<string, Type>()
         {
-            {"AutoMod", typeof(AutoModTestScreen)},
             {"Flags", typeof(FlagsTestScreen)},
             {"Global Icons", typeof(GlobalIconsTestScreen)},
             {"Global Gameplay Assets", typeof(GlobalGameplayAssetsTestScreen)},
             {"User Groups", typeof(UserGroupsTestScreen)},
-            {"Main Menu", typeof(MainMenuScreen)},
-            {"ResultsScreen (Multi)", typeof(TestResultsMultiScreen)},
-            {"ResultsScreen", typeof(TestResultsScreen)},
-            {"TournamentOverlay", typeof(TestTournamentOverlayScreen)},
-            {"Editor", typeof(TestEditorScreen)},
-            {"LuaImGui", typeof(TestLuaScriptingScreen)},
-            {"LocalProfileContainer", typeof(TestUserProfileContainerScreen)},
-            {"DifficultyGraph", typeof(TestDifficultyGraphScreen)},
-            {"DownloadingScreen", typeof(DownloadingScreen)},
-            {"Dropdown", typeof(DropdownTestScreen)},
-            {"MenuBorder", typeof(MenuBorderTestScreen)},
-            {"OptionsMenu", typeof(OptionsTestScreen)},
-            {"VolumeController", typeof(TestVolumeControlScreen)},
-            {"ReplayController", typeof(TestReplayControllerScreen)},
-            {"SelectFilterPanel", typeof(FilterPanelTestScreen)},
-            {"SelectJukebox", typeof(TestSelectJukeboxScreen)},
-            {"DrawableMapset", typeof(TestMapsetScreen)},
-            {"DrawableMapset (Multiple)", typeof(TestMapsetsMultipleScreen)},
-            {"DifficultyBarDisplay", typeof(TestScreenDifficultyBar)},
-            {"MapsetScrollContainer", typeof(TestScreenMapsetScrollContainer)},
-            {"DrawableMap", typeof(TestDrawableMapScreen)},
-            {"MapScrollContainer", typeof(TestScreenMapScrollContainer)},
-            {"Leaderboard", typeof(TestLeaderboardScreen)},
-            {"Leaderboard + Maps", typeof(TestLeaderboardWithMapsScreen)},
-            {"DrawableLeaderboardScore", typeof(TestScreenDrawableLeaderboardScore)},
-            {"ModifierSelector", typeof(TestModifierSelectorScreen)},
-            {"CreatePlaylistDialog", typeof(TestScreenCreatePlaylist)},
-            {"SelectionScreen", typeof(SelectionScreen)},
-            {"YesNoDialog", typeof(TestYesNoDialogScreen)},
-            {"DrawablePlaylist", typeof(TestScreenDrawablePlaylist)},
-            {"MenuFooterJukebox", typeof(TestScreenMenuJukebox)},
-            {"MusicPlayerScreen", typeof(MusicPlayerScreen)},
-            {"DrawableListenerList", typeof(TestScreenListenerList)},
-            {"OnlineHub", typeof(TestScreenOnlineHub)},
-            {"OnlineHubDownloads", typeof(TestOnlineHubDownloadsScreen)},
-            {"Notifications", typeof(TestNotificationScreen)},
-            {"ChatOverlay", typeof(TestChatScreen)},
-            {"MultiplayerGameScreen", typeof(MultiplayerGameScreen)},
-            {"MultiplayerLobbyScreen", typeof(MultiplayerLobbyScreen)},
-            {"CheckboxContainer", typeof(TestCheckboxContainerScreen)},
-            {"ButtonPerformance", typeof(ButtonPerformanceTestScreen)},
+            {"V2 Dropdown", typeof(V2DropdownTestScreen)},
         };
 
         public QuaverGame(HotLoader hl) : base(hl, ConfigureSdlVideoBackend())
@@ -449,6 +408,7 @@ namespace Quaver.Shared
         {
             base.LoadContent();
             GlobalIcons.Load();
+            CapsuleIcons.Load();
             Flags.Load();
             GlobalGameplayAssets.Load();
             UserGroupAssets.Load();
@@ -480,6 +440,7 @@ namespace Quaver.Shared
             DiscordHelper.Shutdown();
             TooltipManager.TargetEligibilityFilter = null;
             GlobalIcons.Dispose();
+            CapsuleIcons.Dispose();
             Flags.Dispose();
             GlobalGameplayAssets.Dispose();
             UserGroupAssets.Dispose();
@@ -1235,6 +1196,12 @@ namespace Quaver.Shared
             else
                 WindowManager.ChangeVirtualScreenSize(new Vector2(WindowManager.BaseResolution.X, WindowManager.BaseResolution.X / ratio));
 
+            // The V2 Download screen resizes its layout in place. Recreating it for every native
+            // window-size event can queue repeated screen loads while the user is dragging the window.
+            // ToDO Probably could be removed once we merge the window resize PR
+            if (CurrentScreen is Screens.V2.Downloading.DownloadingScreen)
+                return;
+
             if (CurrentScreen == null)
                 return;
 
@@ -1325,6 +1292,7 @@ namespace Quaver.Shared
         private static void InitializeHotReloadAssembly(Assembly assembly)
         {
             InvokeHotReloadAssetMethod(assembly, typeof(GlobalIcons), nameof(GlobalIcons.Load));
+            InvokeHotReloadAssetMethod(assembly, typeof(CapsuleIcons), nameof(CapsuleIcons.Load));
             InvokeHotReloadAssetMethod(assembly, typeof(Flags), nameof(Flags.Load));
             InvokeHotReloadAssetMethod(assembly, typeof(GlobalGameplayAssets), nameof(GlobalGameplayAssets.Load));
             InvokeHotReloadAssetMethod(assembly, typeof(UserGroupAssets), nameof(UserGroupAssets.Load));
@@ -1333,6 +1301,7 @@ namespace Quaver.Shared
         private static void DisposeHotReloadAssembly(Assembly assembly)
         {
             InvokeHotReloadAssetMethod(assembly, typeof(GlobalIcons), nameof(GlobalIcons.Dispose));
+            InvokeHotReloadAssetMethod(assembly, typeof(CapsuleIcons), nameof(CapsuleIcons.Dispose));
             InvokeHotReloadAssetMethod(assembly, typeof(Flags), nameof(Flags.Dispose));
             InvokeHotReloadAssetMethod(assembly, typeof(GlobalGameplayAssets), nameof(GlobalGameplayAssets.Dispose));
             InvokeHotReloadAssetMethod(assembly, typeof(UserGroupAssets), nameof(UserGroupAssets.Dispose));

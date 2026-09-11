@@ -2,7 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Quaver.Server.Client.Enums;
 using Quaver.Server.Client.Objects;
+using Quaver.Shared.Config;
+using Quaver.Shared.Graphics;
 using Quaver.Shared.Online;
+using Quaver.Shared.Screens.Downloading;
 using Quaver.Shared.Screens.V2.SkinEditor;
 using Quaver.Shared.Skinning;
 using Wobble;
@@ -55,7 +58,7 @@ namespace Quaver.Shared.Screens.V2.Downloading
         public override UserClientStatus GetClientStatus() =>
             new UserClientStatus(ClientStatus.InMenus, -1, "", 1, "", 0);
 
-        private void ExitToPreviousScreen()
+        internal void ExitToPreviousScreen()
         {
             switch (PreviousScreen)
             {
@@ -82,6 +85,35 @@ namespace Quaver.Shared.Screens.V2.Downloading
                     Exit(() => QuaverScreenFactory.CreateMainMenu());
                     break;
             }
+        }
+
+        internal void ShowRecommendedDifficultyDialog()
+        {
+            DialogManager.Show(new YesNoDialog(
+                DownloadLocalization.Get("Recommended difficulty"),
+                DownloadLocalization.Get("Recommend Difficulty Description"), () =>
+                {
+                    if (!OnlineManager.Connected || OnlineManager.Self == null)
+                    {
+                        SearchState.MapsetQuery.Value = "Easy";
+                        return;
+                    }
+
+                    var rating = OnlineManager.Self.Stats[ConfigManager.SelectedGameMode.Value]
+                        .OverallPerformanceRating;
+                    var approximateLevel = rating / 20f;
+
+                    if (rating == 0 || approximateLevel < 5)
+                        SearchState.MapsetQuery.Value = "Easy";
+                    else if (approximateLevel < 10)
+                        SearchState.MapsetQuery.Value = "Normal";
+                    else if (approximateLevel < 20)
+                        SearchState.MapsetQuery.Value = "Hard";
+                    else if (approximateLevel < 28)
+                        SearchState.MapsetQuery.Value = "Insane";
+                    else
+                        SearchState.MapsetQuery.Value = string.Empty;
+                }));
         }
 
         private static void OnScreenExiting(object sender, ScreenExitingEventArgs args) =>

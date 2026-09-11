@@ -10,6 +10,7 @@ using Wobble.Managers;
 using Wobble.Screens;
 using Wobble.Window;
 using GlobalIconStore = Quaver.Shared.Assets.GlobalIcons;
+using CapsuleIconStore = Quaver.Shared.Assets.CapsuleIcons;
 
 namespace Quaver.Shared.Screens.Tests.GlobalIcons
 {
@@ -38,6 +39,9 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
         private const float CardGap = 14;
 
         private GlobalIcon[] Icons { get; } = (GlobalIcon[]) Enum.GetValues(typeof(GlobalIcon));
+
+        private CapsuleIcon[] CapsuleIcons { get; } =
+            (CapsuleIcon[]) Enum.GetValues(typeof(CapsuleIcon));
 
         private ScrollContainer ScreenScrollContainer { get; }
 
@@ -90,6 +94,17 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
                 });
             }
 
+            for (var i = 0; i < CapsuleIcons.Length; i++)
+            {
+                var card = CreateCapsuleIconCard(CapsuleIcons[i], i);
+                IconGrid.SetItemOptions(card, new FlexItemOptions
+                {
+                    Basis = CardWidth,
+                    Grow = 0,
+                    Shrink = 0
+                });
+            }
+
             ResizeToWindow();
         }
 
@@ -119,7 +134,7 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
             };
 
             new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterLight),
-                $"{Icons.Length} icons — labels are read directly from the GlobalIcon enum", 17)
+                $"{Icons.Length} global icons + {CapsuleIcons.Length} capsule icons", 17)
             {
                 Parent = ScreenScrollContainer.ContentContainer,
                 Alignment = Alignment.TopCenter,
@@ -182,6 +197,62 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
             return card;
         }
 
+        private Container CreateCapsuleIconCard(CapsuleIcon icon, int index)
+        {
+            var card = new Container
+            {
+                Parent = IconGrid,
+                Size = new ScalableVector2(CardWidth, CardHeight),
+                UsePreviousSpriteBatchOptions = true
+            };
+
+            new Sprite
+            {
+                Parent = card,
+                Alignment = Alignment.TopLeft,
+                Size = card.Size,
+                Image = WobbleAssets.WhiteBox,
+                Tint = PanelColor,
+                UsePreviousSpriteBatchOptions = true
+            }.AddBorder(BorderColor, 1);
+
+            var displaySize = CapsuleIconStore.GetDisplaySize(icon);
+
+            new Sprite
+            {
+                Parent = card,
+                Alignment = Alignment.MidLeft,
+                X = 20,
+                Size = new ScalableVector2(displaySize.X, displaySize.Y),
+                Region = CapsuleIconStore.Get(icon),
+                Tint = Color.White,
+                UsePreviousSpriteBatchOptions = true
+            };
+
+            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterMedium), icon.ToString(), 16)
+            {
+                Parent = card,
+                Alignment = Alignment.TopLeft,
+                X = 98,
+                Y = 23,
+                Tint = Color.White,
+                UsePreviousSpriteBatchOptions = true
+            };
+
+            new SpriteTextPlus(FontManager.GetWobbleFont(Fonts.InterLight),
+                $"Index {index} · {displaySize.X}x{displaySize.Y}", 14)
+            {
+                Parent = card,
+                Alignment = Alignment.TopLeft,
+                X = 98,
+                Y = 50,
+                Tint = MutedTextColor,
+                UsePreviousSpriteBatchOptions = true
+            };
+
+            return card;
+        }
+
         private void ResizeToWindow()
         {
             var width = WindowManager.Width;
@@ -196,7 +267,8 @@ namespace Quaver.Shared.Screens.Tests.GlobalIcons
 
             var gridWidth = Math.Max(CardWidth, width - OuterPadding * 2);
             var columns = Math.Max(1, (int) ((gridWidth + CardGap) / (CardWidth + CardGap)));
-            var rows = (int) Math.Ceiling(Icons.Length / (double) columns);
+            var totalIcons = Icons.Length + CapsuleIcons.Length;
+            var rows = (int) Math.Ceiling(totalIcons / (double) columns);
             var gridHeight = rows * CardHeight + Math.Max(0, rows - 1) * CardGap;
             var contentHeight = Math.Max(height + 1, HeaderHeight + gridHeight + BottomPadding);
 

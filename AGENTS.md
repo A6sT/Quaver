@@ -1,5 +1,13 @@
 # Repository Guidance
 
+## Planning and Implementation
+
+- Before implementing a feature, inspect adjacent screens and components, shared services, skin configurations, localization keys, input patterns, and relevant tests. Reuse established patterns and primitives before introducing new ones.
+- Begin with a focused plan that identifies the intended user-visible behavior, affected files, state and data flow, ownership and cleanup responsibilities, and validation approach. Update the plan when the scope or design changes.
+- Treat visibility and rendering, input behavior, loading/empty/error states, resizing, and cleanup as part of the feature's behavior—not as polish to add later.
+- Keep changes focused on the requested behavior. Inspect the worktree before editing, preserve unrelated user changes, and avoid opportunistic refactors unless they are required for the feature.
+- Validate in layers: use Rider diagnostics first when available, then targeted tests or builds, and finally runtime or visual checks for UI changes. Confirm that new event subscriptions, timers, textures, controllers, and other resources are released on every relevant teardown path.
+
 ## Wobble Component Reuse
 
 - Always use an existing component from Wobble when it provides the required UI behavior. Inspect Wobble's available components before creating a custom implementation.
@@ -8,6 +16,15 @@
 - Always use Wobble's `RoundedButton` when creating a button. Extend or compose `RoundedButton` when specialized button behavior is required instead of starting from a lower-level drawable or implementing button interaction manually.
 - Reuse Wobble's existing buttons, form controls, navigation, dialogs, and other UI primitives whenever they satisfy the requirement.
 - Create a custom component only when Wobble has no suitable component or the existing component cannot support the required behavior. Keep custom code focused on the missing behavior and build on Wobble primitives where possible.
+- When a component is not currently meant to be visible on screen, ensure it and every drawable it contains—including text, child components, and nested visual elements—are hidden or otherwise excluded from drawing at the component/drawable level. Do not rely on transparency, zero-sized layout, or moving it off-screen to make it appear invisible; none of the component's draw paths may run while it is hidden.
+
+## Rider MCP Validation
+
+- When Rider's MCP server is available for the project, use Rider diagnostics as the first validation pass after making code changes. Do not build the whole project merely to check for ordinary editor-level errors.
+- Use Rider MCP's `get_file_problems` for each changed project-relative file, passing the exact open project path as `rootFolder`. Start with `errorsOnly: true`; inspect warnings separately when they are relevant to the change. Use `get_project_problems` when a project-wide Problems View snapshot is needed.
+- Treat the diagnostics returned by `get_file_problems` as the primary fast feedback for syntax errors, unresolved symbols, type issues visible to Rider, and inspections. Report the file, line, severity, and message when a problem is found.
+- Use Rider MCP's `build_solution_start` followed by `build_solution_state` only when Rider MCP is unavailable or not ready, when the issue depends on generated/build-time behavior, when solution-wide compiler validation is required, or when the user explicitly requests a build or final build verification. Prefer targeted `filesToRebuild` when it is sufficient; use a full rebuild only when necessary.
+- Rider inspections do not replace all compiler and runtime validation. After a targeted or final build, report build errors separately from Rider inspections and do not describe warnings or typos as compilation failures.
 
 ## New V2 Screens and Skinning
 

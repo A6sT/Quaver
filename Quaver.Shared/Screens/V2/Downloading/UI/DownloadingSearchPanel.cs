@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Quaver.API.Helpers;
 using Quaver.Shared.Assets;
+using Quaver.Shared.Screens.Downloading;
+using Quaver.Shared.Screens.V2.UI;
 using Quaver.Shared.Skinning.V2;
 using Wobble;
 using Wobble.Bindables;
@@ -12,6 +15,7 @@ using Wobble.Graphics.Buttons;
 using Wobble.Graphics.Shaders;
 using Wobble.Graphics.Sprites;
 using Wobble.Graphics.Sprites.Text;
+using Wobble.Graphics.UI.Buttons;
 using Wobble.Managers;
 
 namespace Quaver.Shared.Screens.V2.Downloading.UI
@@ -29,6 +33,12 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
         private WobbleFontStore ButtonFont { get; }
 
+        private WobbleFontStore DropdownFont { get; }
+
+        private SkinV2DropdownConfig DropdownConfig { get; }
+
+        private Container OverlayHost { get; }
+
         private Container LayoutRoot { get; set; }
 
         private FlexContainer TopRow { get; set; }
@@ -36,6 +46,8 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
         private FlexContainer ExtraRow { get; set; }
 
         private RoundedButton ExpandButton { get; set; }
+
+        private RoundedButton SortOrderButton { get; set; }
 
         private bool LayoutDirty { get; set; }
 
@@ -56,12 +68,16 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
         private int ExtraRowLineCount { get; set; } = 1;
 
         public DownloadingSearchPanel(float width, DownloadingSearchState state,
-            SkinV2DownloadingConfig config)
+            SkinV2DownloadingConfig config, Container overlayHost,
+            SkinV2DropdownConfig dropdownConfig)
         {
             State = state;
             Config = config;
+            OverlayHost = overlayHost;
+            DropdownConfig = dropdownConfig;
             FieldFont = FontManager.GetWobbleFont(config.Field.Font);
             ButtonFont = FontManager.GetWobbleFont(config.Button.Font);
+            DropdownFont = FontManager.GetWobbleFont(dropdownConfig.Font);
             Size = new ScalableVector2(width, config.SearchArea.CompactHeight);
             Tint = SkinV2Color.Parse(config.SearchArea.BackgroundColor);
             ExpansionProgress = state.MapsetsExpanded.Value ? 1 : 0;
@@ -70,6 +86,7 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             State.MapsetsExpanded.ValueChanged += OnExpansionChanged;
             State.ShowOwnedMapsets.ValueChanged += OnOwnedChanged;
             State.ShowOwnedPlaylists.ValueChanged += OnOwnedChanged;
+            State.ReverseSort.ValueChanged += OnSortOrderChanged;
 
             RebuildLayout();
         }
@@ -81,10 +98,10 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
             UpdateResponsiveLayout();
             UpdateExpansion(gameTime);
-            base.Update(gameTime);
-
             if (ExtraRow != null)
                 ApplyAlpha(ExtraRow, ExpansionProgress);
+
+            base.Update(gameTime);
         }
 
         public override void Destroy()
@@ -93,6 +110,7 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             State.MapsetsExpanded.ValueChanged -= OnExpansionChanged;
             State.ShowOwnedMapsets.ValueChanged -= OnOwnedChanged;
             State.ShowOwnedPlaylists.ValueChanged -= OnOwnedChanged;
+            State.ReverseSort.ValueChanged -= OnSortOrderChanged;
             base.Destroy();
         }
 
@@ -169,7 +187,7 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
                 () => State.MapsetsExpanded.Value = !State.MapsetsExpanded.Value,
                 GlobalIcons.Get(State.MapsetsExpanded.Value
                     ? GlobalIcon.LessOptions
-                    : GlobalIcon.MoreOptions));
+                    : GlobalIcon.MoreOptions), Config.Button.ExpandIconSize);
             AddFixed(TopRow, ExpandButton, Config.Button.ExpandWidth);
         }
 
@@ -196,12 +214,11 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             ExtraRow.SetItemOptions(spacer, new FlexItemOptions { Basis = 1, Grow = 1, Shrink = 1 });
             ExtraRowItemBases.Add(1);
 
-            AddFixed(ExtraRow, CreateStaticSelector("Screen_Download_AnyLength",
-                Config.Button.StaticSelectorWidth));
-            AddFixed(ExtraRow, CreateStaticSelector("Screen_Download_AnyCombo",
-                Config.Button.StaticSelectorWidth));
-            AddFixed(ExtraRow, CreateStaticSelector("Screen_Download_Artist",
-                Config.Button.SortWidth, GlobalIcons.Get(GlobalIcon.ReverseSortDescending)));
+            AddFixed(ExtraRow, CreateLengthDropdown(), Config.Button.StaticSelectorWidth);
+            AddFixed(ExtraRow, CreateComboDropdown(), Config.Button.StaticSelectorWidth);
+            SortOrderButton = CreateSortOrderButton();
+            AddFixed(ExtraRow, SortOrderButton, Config.Button.ExpandWidth);
+            AddFixed(ExtraRow, CreateSortDropdown(), Config.Button.SortWidth);
         }
 
         private void BuildPlaylistTopRow()
@@ -216,8 +233,9 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             AddFixed(TopRow, CreateTabs());
             AddFixed(TopRow, CreateStaticSelector("Screen_Download_AnyMapCount",
                 Config.Button.StaticSelectorWidth));
-            AddFixed(TopRow, CreateStaticSelector("Screen_Download_Artist",
-                Config.Button.SortWidth, GlobalIcons.Get(GlobalIcon.ReverseSortDescending)));
+            SortOrderButton = CreateSortOrderButton();
+            AddFixed(TopRow, SortOrderButton, Config.Button.ExpandWidth);
+            AddFixed(TopRow, CreateSortDropdown(), Config.Button.SortWidth);
         }
 
         private void AddSearchBox(FlexContainer parent, Bindable<string> query, string placeholderKey)
@@ -248,7 +266,8 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             };
             var minimum = new DownloadingNumericTextbox(State.MinimumDifficulty,
                 string.Empty, FieldFont, Config.Field, Config.Field.NumericWidth,
-                "00.00", true, value => Math.Min(value, State.MaximumDifficulty.Value))
+                "00.00", true, value => Math.Min(value, State.MaximumDifficulty.Value),
+                value => value <= State.MinimumDifficulty.MinValue)
             {
                 Parent = group
             };
@@ -263,7 +282,8 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
             var maximum = new DownloadingNumericTextbox(State.MaximumDifficulty,
                 string.Empty, FieldFont, Config.Field, Config.Field.NumericWidth,
-                "00.00", true, value => Math.Max(value, State.MinimumDifficulty.Value))
+                "00.00", true, value => Math.Max(value, State.MinimumDifficulty.Value),
+                value => value >= State.MaximumDifficulty.MaxValue)
             {
                 Parent = group
             };
@@ -309,37 +329,64 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
         private FlexContainer CreateTabs()
         {
+            var mapsets = CreateButton("Screen_Download_Mapsets", Config.Button.MapsetsTabWidth,
+                State.ActiveTab.Value == DownloadSearchTab.Mapsets,
+                () => State.ActiveTab.Value = DownloadSearchTab.Mapsets,
+                tabCorners: TabCorners.Left);
+            var playlists = CreateButton("Screen_Selection_Playlists",
+                Config.Button.PlaylistsTabWidth,
+                State.ActiveTab.Value == DownloadSearchTab.Playlists,
+                () => State.ActiveTab.Value = DownloadSearchTab.Playlists,
+                tabCorners: TabCorners.Right);
+            var tabsWidth = mapsets.Width + playlists.Width;
+
             var tabs = new FlexContainer
             {
-                Size = new ScalableVector2(GetTabsWidth(), Config.Button.Height),
+                Size = new ScalableVector2(tabsWidth, Config.Button.Height),
                 Direction = FlexDirection.Row,
                 AlignItems = FlexAlignItems.Center,
                 ColumnGap = 0
             };
-            var mapsets = CreateButton("Screen_Download_Mapsets", Config.Button.MapsetsTabWidth,
-                State.ActiveTab.Value == DownloadSearchTab.Mapsets,
-                () => State.ActiveTab.Value = DownloadSearchTab.Mapsets);
             mapsets.Parent = tabs;
             AddFixed(tabs, mapsets);
 
-            var playlists = CreateButton("Screen_Selection_Playlists",
-                Config.Button.PlaylistsTabWidth,
-                State.ActiveTab.Value == DownloadSearchTab.Playlists,
-                () => State.ActiveTab.Value = DownloadSearchTab.Playlists);
             playlists.Parent = tabs;
             AddFixed(tabs, playlists);
-            tabs.Width = mapsets.Width + playlists.Width;
+
             return tabs;
         }
 
-        private DownloadingSearchDropdown<int> CreateKeymodeDropdown() =>
-            new DownloadingSearchDropdown<int>(Config.Button.KeymodeWidth, State.Keymode,
-                GetKeymodeOptions(), ButtonFont, Config.Button, Config.Dropdown);
+        private V2Dropdown<int> CreateKeymodeDropdown() =>
+            CreateDropdown(Config.Button.KeymodeWidth, State.Keymode, GetKeymodeOptions());
 
-        private DownloadingSearchDropdown<DownloadSearchRankedStatus> CreateRankedDropdown() =>
-            new DownloadingSearchDropdown<DownloadSearchRankedStatus>(
-                Config.Button.RankedWidth, State.RankedStatus, GetRankedOptions(),
-                ButtonFont, Config.Button, Config.Dropdown);
+        private V2Dropdown<DownloadSearchRankedStatus> CreateRankedDropdown() =>
+            CreateDropdown(Config.Button.RankedWidth, State.RankedStatus, GetRankedOptions());
+
+        private V2Dropdown<DownloadSearchLengthFilter> CreateLengthDropdown() =>
+            CreateDropdown(Config.Button.StaticSelectorWidth, State.LengthFilter, GetLengthOptions());
+
+        private V2Dropdown<DownloadSearchComboFilter> CreateComboDropdown() =>
+            CreateDropdown(Config.Button.StaticSelectorWidth, State.ComboFilter, GetComboOptions());
+
+        private V2Dropdown<DownloadSearchSortBy> CreateSortDropdown() =>
+            CreateDropdown(Config.Button.SortWidth, State.SortBy, GetSortOptions());
+
+        private V2Dropdown<T> CreateDropdown<T>(float width, Bindable<T> value,
+            IReadOnlyList<KeyValuePair<T, string>> options)
+        {
+            var entries = new List<DropdownEntry<T>>();
+            foreach (var option in options)
+                entries.Add(new DropdownOption<T>(option.Key, option.Value));
+
+            return new V2Dropdown<T>(width, value, entries, DropdownFont, DropdownConfig, OverlayHost);
+        }
+
+        private RoundedButton CreateSortOrderButton() =>
+            CreateButton(string.Empty, Config.Button.ExpandWidth, false,
+                () => State.ReverseSort.Value = !State.ReverseSort.Value,
+                GlobalIcons.Get(State.ReverseSort.Value
+                    ? GlobalIcon.ReverseSortAscending
+                    : GlobalIcon.ReverseSortDescending));
 
         private RoundedButton CreateToggle(string localizationKey, float width, bool active,
             Action clicked) => CreateButton(localizationKey, width, active, clicked);
@@ -349,22 +396,28 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             CreateButton(localizationKey, width, false, null, icon);
 
         private RoundedButton CreateButton(string localizationKey, float width, bool active,
-            Action clicked, TextureRegion? icon = null)
+            Action clicked, TextureRegion? icon = null, float? iconSize = null,
+            TabCorners? tabCorners = null)
         {
-            var button = new RoundedButton(clicked == null
+            var clickAction = clicked == null
                 ? null
-                : (EventHandler) ((sender, args) => clicked()))
-            {
-                Size = new ScalableVector2(width, Config.Button.Height),
-                CornerRadius = Config.Button.CornerRadius,
-                Tint = SkinV2Color.Parse(active
+                : (EventHandler) ((sender, args) => clicked());
+            var button = tabCorners.HasValue
+                ? (RoundedButton) new SegmentedTabButton(tabCorners.Value, clickAction)
+                : new DownloadingSearchButton(clickAction);
+
+            button.Size = new ScalableVector2(width, Config.Button.Height);
+            button.CornerRadius = Config.Button.CornerRadius;
+            button.Tint = SkinV2Color.Parse(active
                     ? Config.Button.ActiveColor
-                    : Config.Button.BackgroundColor),
-                PerformHoverFade = true
-            };
+                    : Config.Button.BackgroundColor);
+            button.PerformHoverFade = true;
 
             if (icon.HasValue)
-                button.SetIcon(icon.Value, new Vector2(Config.Button.IconSize, Config.Button.IconSize));
+            {
+                var size = iconSize ?? Config.Button.IconSize;
+                button.SetIcon(icon.Value, new Vector2(size, size));
+            }
             if (!string.IsNullOrEmpty(localizationKey))
                 button.SetLabel(ButtonFont, LocalizationManager.Get(localizationKey),
                     Config.Button.FontSize, SkinV2Color.Parse(active
@@ -380,6 +433,119 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             }
 
             return button;
+        }
+
+        [Flags]
+        private enum TabCorners
+        {
+            TopLeft = 1,
+            TopRight = 2,
+            BottomLeft = 4,
+            BottomRight = 8,
+            Left = TopLeft | BottomLeft,
+            Right = TopRight | BottomRight
+        }
+
+        /// <summary>
+        ///     Keeps the standard RoundedButton interaction and hover behavior while only rounding
+        ///     the outside corners of a segmented control. Wobble does not clip child drawables to
+        ///     a rounded parent, so a single rounded group background cannot produce this result.
+        /// </summary>
+        private sealed class SegmentedTabButton : RoundedButton
+        {
+            private TabCorners Corners { get; }
+
+            private Texture2D BackgroundTexture { get; set; }
+
+            private bool UpdatingBackground { get; set; }
+
+            public SegmentedTabButton(TabCorners corners, EventHandler clickAction = null)
+                : base(clickAction)
+            {
+                Corners = corners;
+            }
+
+            protected override void OnRectangleRecalculated()
+            {
+                if (UpdatingBackground)
+                    return;
+
+                UpdatingBackground = true;
+                try
+                {
+                    base.OnRectangleRecalculated();
+
+                    if (Width <= 0 || Height <= 0)
+                        return;
+
+                    var width = Math.Max(1, (int) Math.Ceiling(Width));
+                    var height = Math.Max(1, (int) Math.Ceiling(Height));
+                    var radius = Math.Min(CornerRadius ?? Height / 2f,
+                        Math.Min(Width, Height) / 2f);
+                    var texture = CreateBackgroundTexture(width, height, radius);
+                    BackgroundTexture?.Dispose();
+                    BackgroundTexture = texture;
+                    Image = texture;
+                }
+                finally
+                {
+                    UpdatingBackground = false;
+                }
+            }
+
+            public override void Destroy()
+            {
+                var texture = BackgroundTexture;
+                BackgroundTexture = null;
+                base.Destroy();
+                texture?.Dispose();
+            }
+
+            private Texture2D CreateBackgroundTexture(int width, int height, float radius)
+            {
+                var texture = new Texture2D(GameBase.Game.GraphicsDevice, width, height,
+                    false, SurfaceFormat.Color);
+                var pixels = new Color[width * height];
+                var halfWidth = width / 2f;
+                var halfHeight = height / 2f;
+
+                for (var y = 0; y < height; y++)
+                {
+                    for (var x = 0; x < width; x++)
+                    {
+                        var corner = GetCorner(x, y, halfWidth, halfHeight);
+                        var cornerRadius = Corners.HasFlag(corner) ? radius : 0;
+                        var qx = Math.Abs(x + 0.5f - halfWidth) - (halfWidth - cornerRadius);
+                        var qy = Math.Abs(y + 0.5f - halfHeight) - (halfHeight - cornerRadius);
+                        var outsideDistance = (float) Math.Sqrt(Math.Max(qx, 0) * Math.Max(qx, 0) +
+                                                                Math.Max(qy, 0) * Math.Max(qy, 0));
+                        var distance = outsideDistance + Math.Min(Math.Max(qx, qy), 0) - cornerRadius;
+                        var coverage = 1 - SmoothStep(-1, 0, distance);
+                        pixels[y * width + x] = new Color((byte) 255, (byte) 255, (byte) 255,
+                            (byte) (Microsoft.Xna.Framework.MathHelper.Clamp(coverage, 0, 1) * 255));
+                    }
+                }
+
+                texture.SetData(pixels);
+                return texture;
+            }
+
+            private static TabCorners GetCorner(int x, int y, float halfWidth, float halfHeight)
+            {
+                var isLeft = x < halfWidth;
+                var isTop = y < halfHeight;
+
+                if (isTop)
+                    return isLeft ? TabCorners.TopLeft : TabCorners.TopRight;
+
+                return isLeft ? TabCorners.BottomLeft : TabCorners.BottomRight;
+            }
+
+            private static float SmoothStep(float min, float max, float value)
+            {
+                var amount = Microsoft.Xna.Framework.MathHelper.Clamp((value - min) / (max - min), 0, 1);
+                return amount * amount * (3 - 2 * amount);
+            }
         }
 
         private void UpdateResponsiveLayout(bool force = false)
@@ -444,17 +610,20 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
                 ExpansionProgress = target;
 
             if (ExtraRow != null)
-                ExtraRow.Visible = ExpansionProgress > 0.001f;
+                ExtraRow.Visible = State.MapsetsExpanded.Value && ExpansionProgress > 0.001f;
             UpdatePanelHeight();
         }
 
         private void UpdatePanelHeight()
         {
             var compact = GetCompactHeight();
-            var targetHeight = State.ActiveTab.Value == DownloadSearchTab.Playlists
+            // Keep the result grid out of the expansion animation. Interpolating this height
+            // moves every mapset card every frame, which recursively recalculates all of the
+            // card descendants while the filters are opening or closing.
+            var targetHeight = State.ActiveTab.Value == DownloadSearchTab.Playlists ||
+                               !State.MapsetsExpanded.Value
                 ? compact
-                : Microsoft.Xna.Framework.MathHelper.Lerp(compact, GetExpandedHeight(),
-                    ExpansionProgress);
+                : GetExpandedHeight();
             if (Math.Abs(Height - targetHeight) > 0.001f)
             {
                 Height = targetHeight;
@@ -506,9 +675,6 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             Config.Field.NumericWidth * 2 + Config.Range.Width +
             Config.SearchArea.ColumnGap * 2;
 
-        private float GetTabsWidth() =>
-            Config.Button.MapsetsTabWidth + Config.Button.PlaylistsTabWidth;
-
         private void UpdateExpandIcon()
         {
             if (ExpandButton == null)
@@ -517,7 +683,7 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             ExpandButton.SetIcon(GlobalIcons.Get(State.MapsetsExpanded.Value
                     ? GlobalIcon.LessOptions
                     : GlobalIcon.MoreOptions),
-                new Vector2(Config.Button.IconSize, Config.Button.IconSize));
+                new Vector2(Config.Button.ExpandIconSize, Config.Button.ExpandIconSize));
         }
 
         private void OnTabChanged(object sender, BindableValueChangedEventArgs<DownloadSearchTab> args) =>
@@ -528,6 +694,20 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
         private void OnOwnedChanged(object sender, BindableValueChangedEventArgs<bool> args) =>
             LayoutDirty = true;
+
+        private void OnSortOrderChanged(object sender, BindableValueChangedEventArgs<bool> args) =>
+            UpdateSortOrderIcon();
+
+        private void UpdateSortOrderIcon()
+        {
+            if (SortOrderButton == null)
+                return;
+
+            SortOrderButton.SetIcon(GlobalIcons.Get(State.ReverseSort.Value
+                    ? GlobalIcon.ReverseSortAscending
+                    : GlobalIcon.ReverseSortDescending),
+                new Vector2(Config.Button.IconSize, Config.Button.IconSize));
+        }
 
         private void AddFixed(FlexContainer parent, Drawable child, float basis)
         {
@@ -580,8 +760,112 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
                 LocalizationManager.Get("Screen_Download_ClanRanked"))
         };
 
+        private static IReadOnlyList<KeyValuePair<DownloadSearchLengthFilter, string>>
+            GetLengthOptions() => new[]
+        {
+            new KeyValuePair<DownloadSearchLengthFilter, string>(
+                DownloadSearchLengthFilter.Any,
+                LocalizationManager.Get("Screen_Download_AnyLength")),
+            new KeyValuePair<DownloadSearchLengthFilter, string>(
+                DownloadSearchLengthFilter.LessThan30Seconds,
+                LocalizationManager.Get("Screen_Download_LengthUnder30Seconds")),
+            new KeyValuePair<DownloadSearchLengthFilter, string>(
+                DownloadSearchLengthFilter.From30To90Seconds,
+                LocalizationManager.Get("Screen_Download_Length30To90Seconds")),
+            new KeyValuePair<DownloadSearchLengthFilter, string>(
+                DownloadSearchLengthFilter.From90To150Seconds,
+                LocalizationManager.Get("Screen_Download_Length90To150Seconds")),
+            new KeyValuePair<DownloadSearchLengthFilter, string>(
+                DownloadSearchLengthFilter.From150To210Seconds,
+                LocalizationManager.Get("Screen_Download_Length150To210Seconds")),
+            new KeyValuePair<DownloadSearchLengthFilter, string>(
+                DownloadSearchLengthFilter.From210To300Seconds,
+                LocalizationManager.Get("Screen_Download_Length210To300Seconds")),
+            new KeyValuePair<DownloadSearchLengthFilter, string>(
+                DownloadSearchLengthFilter.From300To600Seconds,
+                LocalizationManager.Get("Screen_Download_Length300To600Seconds")),
+            new KeyValuePair<DownloadSearchLengthFilter, string>(
+                DownloadSearchLengthFilter.GreaterThan600Seconds,
+                LocalizationManager.Get("Screen_Download_LengthOver600Seconds"))
+        };
+
+        private static IReadOnlyList<KeyValuePair<DownloadSearchComboFilter, string>>
+            GetComboOptions() => new[]
+        {
+            new KeyValuePair<DownloadSearchComboFilter, string>(
+                DownloadSearchComboFilter.Any,
+                LocalizationManager.Get("Screen_Download_AnyCombo")),
+            new KeyValuePair<DownloadSearchComboFilter, string>(
+                DownloadSearchComboFilter.LessThan150,
+                LocalizationManager.Get("Screen_Download_ComboUnder150")),
+            new KeyValuePair<DownloadSearchComboFilter, string>(
+                DownloadSearchComboFilter.From151To250,
+                LocalizationManager.Get("Screen_Download_Combo151To250")),
+            new KeyValuePair<DownloadSearchComboFilter, string>(
+                DownloadSearchComboFilter.From251To500,
+                LocalizationManager.Get("Screen_Download_Combo251To500")),
+            new KeyValuePair<DownloadSearchComboFilter, string>(
+                DownloadSearchComboFilter.From501To1000,
+                LocalizationManager.Get("Screen_Download_Combo501To1000")),
+            new KeyValuePair<DownloadSearchComboFilter, string>(
+                DownloadSearchComboFilter.From1001To1500,
+                LocalizationManager.Get("Screen_Download_Combo1001To1500")),
+            new KeyValuePair<DownloadSearchComboFilter, string>(
+                DownloadSearchComboFilter.From1501To2500,
+                LocalizationManager.Get("Screen_Download_Combo1501To2500")),
+            new KeyValuePair<DownloadSearchComboFilter, string>(
+                DownloadSearchComboFilter.GreaterThan2501,
+                LocalizationManager.Get("Screen_Download_ComboOver2501"))
+        };
+
+        private static IReadOnlyList<KeyValuePair<DownloadSearchSortBy, string>>
+            GetSortOptions() => new[]
+        {
+            new KeyValuePair<DownloadSearchSortBy, string>(
+                DownloadSearchSortBy.Newest,
+                DownloadLocalization.Get("Newest")),
+            new KeyValuePair<DownloadSearchSortBy, string>(
+                DownloadSearchSortBy.DateSubmitted,
+                DownloadLocalization.Get("Date Submitted")),
+            new KeyValuePair<DownloadSearchSortBy, string>(
+                DownloadSearchSortBy.Length,
+                DownloadLocalization.Get("Length")),
+            new KeyValuePair<DownloadSearchSortBy, string>(
+                DownloadSearchSortBy.Difficulty,
+                DownloadLocalization.Get("Difficulty")),
+            new KeyValuePair<DownloadSearchSortBy, string>(
+                DownloadSearchSortBy.MaxCombo,
+                DownloadLocalization.Get("Max Combo")),
+            new KeyValuePair<DownloadSearchSortBy, string>(
+                DownloadSearchSortBy.Bpm,
+                DownloadLocalization.Get("BPM")),
+            new KeyValuePair<DownloadSearchSortBy, string>(
+                DownloadSearchSortBy.LongNotePercentage,
+                DownloadLocalization.Get("LN %")),
+            new KeyValuePair<DownloadSearchSortBy, string>(
+                DownloadSearchSortBy.PlayCount,
+                DownloadLocalization.Get("Play Count"))
+        };
+
         private static void ApplyAlpha(Drawable drawable, float alpha)
         {
+            if (drawable is V2DropdownBase dropdown)
+            {
+                dropdown.SetExternalAlphaInternal(alpha);
+                return;
+            }
+
+            if (drawable is Button button)
+            {
+                button.IsInteractionEnabled = alpha > 0.001f;
+
+                if (button is DownloadingSearchButton downloadingButton)
+                {
+                    downloadingButton.SetExpansionAlpha(alpha);
+                    return;
+                }
+            }
+
             if (drawable is DownloadingSearchTextbox textbox)
             {
                 textbox.Alpha = alpha;

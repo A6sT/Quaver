@@ -1481,6 +1481,48 @@ Use the filters to narrow your search.</value>
   <data name="Screen_Download_AnyCombo" xml:space="preserve">
     <value>Any Combo</value>
   </data>
+  <data name="Screen_Download_LengthUnder30Seconds" xml:space="preserve">
+    <value>&lt; 0:30</value>
+  </data>
+  <data name="Screen_Download_Length30To90Seconds" xml:space="preserve">
+    <value>0:30 - 1:30</value>
+  </data>
+  <data name="Screen_Download_Length90To150Seconds" xml:space="preserve">
+    <value>1:30 - 2:30</value>
+  </data>
+  <data name="Screen_Download_Length150To210Seconds" xml:space="preserve">
+    <value>2:30 - 3:30</value>
+  </data>
+  <data name="Screen_Download_Length210To300Seconds" xml:space="preserve">
+    <value>3:30 - 5:00</value>
+  </data>
+  <data name="Screen_Download_Length300To600Seconds" xml:space="preserve">
+    <value>5:00 - 10:00</value>
+  </data>
+  <data name="Screen_Download_LengthOver600Seconds" xml:space="preserve">
+    <value>&gt; 10:00</value>
+  </data>
+  <data name="Screen_Download_ComboUnder150" xml:space="preserve">
+    <value>&lt; 150</value>
+  </data>
+  <data name="Screen_Download_Combo151To250" xml:space="preserve">
+    <value>151 - 250</value>
+  </data>
+  <data name="Screen_Download_Combo251To500" xml:space="preserve">
+    <value>251 - 500</value>
+  </data>
+  <data name="Screen_Download_Combo501To1000" xml:space="preserve">
+    <value>501 - 1000</value>
+  </data>
+  <data name="Screen_Download_Combo1001To1500" xml:space="preserve">
+    <value>1001 - 1500</value>
+  </data>
+  <data name="Screen_Download_Combo1501To2500" xml:space="preserve">
+    <value>1501 - 2500</value>
+  </data>
+  <data name="Screen_Download_ComboOver2501" xml:space="preserve">
+    <value>&gt; 2501</value>
+  </data>
   <data name="Screen_Download_Artist" xml:space="preserve">
     <value>Artist</value>
   </data>
@@ -2445,6 +2487,11 @@ for other players to download?</value>
   <data name="SkinEditor_Property_FallbackImage" xml:space="preserve"><value>Fallback Image</value></data>
   <data name="SkinEditor_Group_Download" xml:space="preserve"><value>Download</value></data>
   <data name="SkinEditor_Component_SearchArea" xml:space="preserve"><value>Search Area</value></data>
+  <data name="SkinEditor_Component_SearchFields" xml:space="preserve"><value>Search Fields</value></data>
+  <data name="SkinEditor_Component_SearchButtons" xml:space="preserve"><value>Search Buttons</value></data>
+  <data name="SkinEditor_Component_SearchDropdowns" xml:space="preserve"><value>Search Dropdowns</value></data>
+  <data name="SkinEditor_Component_SearchSliders" xml:space="preserve"><value>Search Sliders</value></data>
+  <data name="SkinEditor_Component_Mapset" xml:space="preserve"><value>Mapset</value></data>
   <data name="SkinEditor_Property_BackgroundColor" xml:space="preserve"><value>Background Color</value></data>
   <data name="SkinEditor_Property_ForegroundColor" xml:space="preserve"><value>Foreground Color</value></data>
   <data name="SkinEditor_Property_OfflineStatusColor" xml:space="preserve"><value>Offline Status Color</value></data>

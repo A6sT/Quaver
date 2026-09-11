@@ -13,6 +13,7 @@ using Quaver.Shared.Graphics.Notifications;
 using Quaver.Shared.Graphics.Overlays.Hub;
 using Quaver.Shared.Helpers;
 using Quaver.Shared.Online;
+using Quaver.Shared.Screens.Downloading;
 using Quaver.Shared.Screens.Main.UI;
 using Quaver.Shared.Screens.Options;
 using Quaver.Shared.Screens.V2.SkinEditor;
@@ -255,6 +256,29 @@ namespace Quaver.Shared.Screens.V2.UI
                 }));
 
             CurrentFooterLayout = FooterLayout.Selection;
+        }
+
+        public void ShowDownloadingFooter(Action backAction, Action recommendDifficultyAction)
+        {
+            if (CurrentFooterLayout == FooterLayout.Downloading)
+                return;
+
+            SetFooter(layout =>
+            {
+                layout.AddIconButton(NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Back),
+                    LocalizationManager.Get("Screen_Download_Back"), backAction);
+                layout.AddIconButton(NavigationBarRegion.Left, GlobalIcons.Get(GlobalIcon.Options),
+                    LocalizationManager.Get("Screen_Main_Options"),
+                    () => DialogManager.Show(new OptionsDialog()));
+
+                layout.AddIconButton(NavigationBarRegion.Right, GlobalIcons.Get(GlobalIcon.Volume),
+                    LocalizationManager.Get("Screen_Options_Volume"), ShowVolume);
+                layout.AddIconButton(NavigationBarRegion.Right, GlobalIcons.Get(GlobalIcon.Recommend),
+                    DownloadLocalization.Get("Recommend Difficulty"),
+                    recommendDifficultyAction);
+            });
+
+            CurrentFooterLayout = FooterLayout.Downloading;
         }
 
         /// <summary>
@@ -767,6 +791,7 @@ namespace Quaver.Shared.Screens.V2.UI
         {
             Default,
             Selection,
+            Downloading,
             Custom
         }
 

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Quaver.API.Enums;
+using Quaver.Shared.Online.API.MapsetSearch;
 using Quaver.Shared.Screens.V2.Downloading.UI;
 using Quaver.Shared.Screens.V2.SkinEditor;
 using Quaver.Shared.Screens.V2.UI;
@@ -8,6 +10,7 @@ using Quaver.Shared.Skinning;
 using Quaver.Shared.Skinning.V2;
 using Wobble;
 using Wobble.Graphics;
+using Wobble.Graphics.Sprites;
 using Wobble.Graphics.UI.Navigation;
 using Wobble.Managers;
 using Wobble.Screens;
@@ -32,6 +35,22 @@ namespace Quaver.Shared.Screens.V2.Downloading
         private DownloadingSearchPanel SearchPanel { get; set; }
 
         private Container ContentRoot { get; set; }
+
+        private FlexContainer ContentLayout { get; set; }
+
+        private FlexContainer BodyLayout { get; set; }
+
+        private ScrollContainer MapsetScrollContainer { get; set; }
+
+        private FlexContainer MapsetGrid { get; set; }
+
+        private List<FlexContainer> MapsetRows { get; set; }
+
+        private List<DownloadingMapsetContainer> MapsetContainers { get; set; }
+
+        private float LastMapsetViewportWidth { get; set; } = -1;
+
+        private float LastMapsetViewportHeight { get; set; } = -1;
 
         private float LastWindowWidth { get; set; } = -1;
 
@@ -84,7 +103,11 @@ namespace Quaver.Shared.Screens.V2.Downloading
         public override void Update(GameTime gameTime)
         {
             UpdateResponsiveLayout();
+            if (MapsetScrollContainer != null)
+                MapsetScrollContainer.InputEnabled = MapsetScrollContainer.IsHovered();
+
             Container.Update(gameTime);
+            RefreshMapsetViewportLayout();
         }
 
         public override void Draw(GameTime gameTime)
@@ -142,14 +165,142 @@ namespace Quaver.Shared.Screens.V2.Downloading
                 Parent = ContentRoot,
                 Background = SkinV2Background.Create(Skin, Config.Background)
             };
-            SearchPanel = new DownloadingSearchPanel(
-                Math.Max(1, WindowManager.Width - Config.Layout.HorizontalPadding * 2),
-                ((DownloadingScreen) Screen).SearchState, Config)
+
+            ContentLayout = new FlexContainer
             {
                 Parent = ContentRoot,
-                Position = new ScalableVector2(Config.Layout.HorizontalPadding,
-                    NavigationBarHeight + Config.Layout.TopPadding)
+                Size = new ScalableVector2(WindowManager.Width, WindowManager.Height),
+                Direction = FlexDirection.Column,
+                AlignItems = FlexAlignItems.Stretch,
+                UsePreviousSpriteBatchOptions = true
             };
+
+            var navigationSpacer = CreateSpacer(ContentLayout, 1,
+                NavigationBarHeight + Config.Layout.TopPadding);
+            ContentLayout.SetItemOptions(navigationSpacer, FixedBasis(
+                NavigationBarHeight + Config.Layout.TopPadding));
+
+            var contentRow = new FlexContainer
+            {
+                Parent = ContentLayout,
+                Direction = FlexDirection.Row,
+                AlignItems = FlexAlignItems.Stretch,
+                UsePreviousSpriteBatchOptions = true
+            };
+            ContentLayout.SetItemOptions(contentRow, new FlexItemOptions
+            {
+                Basis = 1,
+                Grow = 1,
+                Shrink = 1
+            });
+
+            var leftSpacer = CreateSpacer(contentRow, Config.Layout.HorizontalPadding, 1);
+            contentRow.SetItemOptions(leftSpacer, FixedBasis(Config.Layout.HorizontalPadding));
+
+            BodyLayout = new FlexContainer
+            {
+                Parent = contentRow,
+                Direction = FlexDirection.Column,
+                AlignItems = FlexAlignItems.Stretch,
+                RowGap = Config.Layout.ContentGap,
+                UsePreviousSpriteBatchOptions = true
+            };
+            contentRow.SetItemOptions(BodyLayout, new FlexItemOptions
+            {
+                Basis = 1,
+                Grow = 1,
+                Shrink = 1
+            });
+
+            var rightSpacer = CreateSpacer(contentRow, Config.Layout.HorizontalPadding, 1);
+            contentRow.SetItemOptions(rightSpacer, FixedBasis(Config.Layout.HorizontalPadding));
+
+            SearchPanel = new DownloadingSearchPanel(1,
+                ((DownloadingScreen) Screen).SearchState, Config, PreviewRoot,
+                RootConfig.Shared.Dropdown)
+            {
+                Parent = BodyLayout
+            };
+            BodyLayout.SetItemOptions(SearchPanel, new FlexItemOptions
+            {
+                Grow = 0,
+                Shrink = 0
+            });
+
+            MapsetScrollContainer = new ScrollContainer(new ScalableVector2(1, 1),
+                new ScalableVector2(1, 1))
+            {
+                Parent = BodyLayout,
+                // ScrollContainer derives from Sprite and draws its fallback texture when it has no image.
+                // Keep the viewport itself transparent; only its mapset children and scrollbar should render.
+                Tint = Color.Transparent,
+                InputEnabled = true,
+                AllowScrollbarDragging = true,
+                ScrollSpeed = Config.Mapset.ScrollSpeed,
+                UsePreviousSpriteBatchOptions = true
+            };
+            MapsetScrollContainer.Scrollbar.Width = Config.Mapset.ScrollbarWidth;
+            MapsetScrollContainer.Scrollbar.Tint = SkinV2Color.Parse(Config.Mapset.ScrollbarColor);
+            BodyLayout.SetItemOptions(MapsetScrollContainer, new FlexItemOptions
+            {
+                Basis = 1,
+                Grow = 1,
+                Shrink = 1
+            });
+
+            MapsetGrid = new FlexContainer
+            {
+                Parent = MapsetScrollContainer.ContentContainer,
+                Direction = FlexDirection.Column,
+                AlignItems = FlexAlignItems.Stretch,
+                AlignContent = FlexAlignContent.FlexStart,
+                RowGap = Config.Mapset.GridRowGap,
+                UsePreviousSpriteBatchOptions = true
+            };
+
+            var testMapsets = CreateTestMapsets();
+            MapsetRows = new List<FlexContainer>();
+            MapsetContainers = new List<DownloadingMapsetContainer>();
+            for (var i = 0; i < testMapsets.Count; i++)
+            {
+                if (i % Config.Mapset.GridColumns == 0)
+                {
+                    var mapsetRow = new FlexContainer
+                    {
+                        Parent = MapsetGrid,
+                        Direction = FlexDirection.Row,
+                        AlignItems = FlexAlignItems.Stretch,
+                        ColumnGap = Config.Mapset.GridColumnGap,
+                        UsePreviousSpriteBatchOptions = true
+                    };
+                    MapsetRows.Add(mapsetRow);
+                    MapsetGrid.SetItemOptions(mapsetRow, FixedBasis(Config.Mapset.Height));
+                }
+
+                var mapsetContainer = new DownloadingMapsetContainer(testMapsets[i], Config.Mapset,
+                    () => MapsetScrollContainer.ScreenRectangle)
+                {
+                    Parent = MapsetRows[MapsetRows.Count - 1]
+                };
+                MapsetContainers.Add(mapsetContainer);
+                MapsetRows[MapsetRows.Count - 1].SetItemOptions(mapsetContainer, new FlexItemOptions
+                {
+                    Basis = 1,
+                    Grow = 1,
+                    Shrink = 1
+                });
+            }
+
+            // The dropdown menus are children of SearchPanel. Keep the panel first in the
+            // flex layout, but move it after the mapset container in drawable child order so open menus
+            // render above mapsets instead of being covered by them.
+            SearchPanel.Parent = BodyLayout;
+            BodyLayout.SetItemOptions(SearchPanel, new FlexItemOptions
+            {
+                Order = -1,
+                Grow = 0,
+                Shrink = 0
+            });
 
             editorTargets = new List<SkinEditorTarget>
             {
@@ -158,18 +309,37 @@ namespace Quaver.Shared.Screens.V2.Downloading
                     "Screens.Downloading.Background", Background),
                 new SkinEditorTarget("downloading-search",
                     LocalizationManager.Get("SkinEditor_Component_SearchArea"),
-                    "Screens.Downloading.SearchArea", SearchPanel)
+                    "Screens.Downloading.SearchArea", SearchPanel),
+                new SkinEditorTarget("downloading-search-fields",
+                    LocalizationManager.Get("SkinEditor_Component_SearchFields"),
+                    "Screens.Downloading.Field", SearchPanel),
+                new SkinEditorTarget("downloading-search-buttons",
+                    LocalizationManager.Get("SkinEditor_Component_SearchButtons"),
+                    "Screens.Downloading.Button", SearchPanel),
+                new SkinEditorTarget("downloading-search-dropdowns",
+                    LocalizationManager.Get("SkinEditor_Component_SearchDropdowns"),
+                    "Shared.Dropdown", SearchPanel),
+                new SkinEditorTarget("downloading-search-sliders",
+                    LocalizationManager.Get("SkinEditor_Component_SearchSliders"),
+                    "Screens.Downloading.Range", SearchPanel),
+                new SkinEditorTarget("downloading-mapset",
+                    LocalizationManager.Get("SkinEditor_Component_Mapset"),
+                    "Screens.Downloading.Mapset", MapsetContainers.ToArray())
             };
 
             LastWindowWidth = -1;
             LastWindowHeight = -1;
+            LastMapsetViewportWidth = -1;
+            LastMapsetViewportHeight = -1;
             UpdateResponsiveLayout(true);
         }
 
-        private static void ConfigureNavigation(ScreenNavigation navigation)
+        private void ConfigureNavigation(ScreenNavigation navigation)
         {
+            var screen = (DownloadingScreen) Screen;
             navigation.ShowApplicationTopBar(QuaverScreenType.Download);
-            navigation.ShowDefaultFooter();
+            navigation.ShowDownloadingFooter(screen.ExitToPreviousScreen,
+                screen.ShowRecommendedDifficultyDialog);
         }
 
         private void AddNavigationTargets(ScreenNavigation navigation) =>
@@ -189,11 +359,102 @@ namespace Quaver.Shared.Screens.V2.Downloading
             PreviewRoot.Size = new ScalableVector2(width, height);
             ContentRoot.Size = new ScalableVector2(width, height);
             Background.Size = new ScalableVector2(width, height);
-            SearchPanel.Position = new ScalableVector2(Config.Layout.HorizontalPadding,
-                NavigationBarHeight + Config.Layout.TopPadding);
-            SearchPanel.Width = Math.Max(1, width - Config.Layout.HorizontalPadding * 2);
+            ContentLayout.Size = new ScalableVector2(width, height);
+            ContentLayout.RefreshLayout();
+            BodyLayout.RefreshLayout();
+            RefreshMapsetViewportLayout(true);
             UpdateEditorLayout();
         }
+
+        private void RefreshMapsetViewportLayout(bool force = false)
+        {
+            if (MapsetScrollContainer == null || MapsetGrid == null || MapsetRows == null ||
+                MapsetScrollContainer.Width <= 0 || MapsetScrollContainer.Height <= 0)
+                return;
+
+            var width = MapsetScrollContainer.Width;
+            var height = MapsetScrollContainer.Height;
+            if (!force && Math.Abs(width - LastMapsetViewportWidth) < 0.001f &&
+                Math.Abs(height - LastMapsetViewportHeight) < 0.001f)
+                return;
+
+            LastMapsetViewportWidth = width;
+            LastMapsetViewportHeight = height;
+            var rowCount = MapsetRows.Count;
+            var contentHeight = rowCount * Config.Mapset.Height +
+                                Math.Max(0, rowCount - 1) * Config.Mapset.GridRowGap;
+            var contentSize = new ScalableVector2(width, contentHeight);
+            MapsetScrollContainer.ContentContainer.Size = contentSize;
+            MapsetGrid.Size = contentSize;
+            MapsetGrid.RefreshLayout();
+            foreach (var mapsetRow in MapsetRows)
+                mapsetRow.RefreshLayout();
+        }
+
+        private static Container CreateSpacer(Drawable parent, float width, float height) => new Container
+        {
+            Parent = parent,
+            Size = new ScalableVector2(width, height),
+            UsePreviousSpriteBatchOptions = true
+        };
+
+        private static FlexItemOptions FixedBasis(float basis) => new FlexItemOptions
+        {
+            Basis = basis,
+            Grow = 0,
+            Shrink = 0
+        };
+
+        private static List<DownloadableMapset> CreateTestMapsets()
+        {
+            var result = new List<DownloadableMapset>();
+            for (var i = 0; i < 24; i++)
+                result.Add(CreateTestMapset(i));
+
+            return result;
+        }
+
+        private static DownloadableMapset CreateTestMapset(int index) => new DownloadableMapset
+        {
+            Id = index,
+            CreatorId = 0,
+            CreatorUsername = "Creator",
+            Artist = "Artist Lorem Ipsum",
+            Title = "Title Dolor Sit Amet Consectetur",
+            Maps = new List<DownloadableMap>
+            {
+                new DownloadableMap
+                {
+                    Id = index * 2 + 1,
+                    MapsetId = index,
+                    CreatorUsername = "Creator",
+                    GameMode = GameMode.Keys4,
+                    RankedStatus = RankedStatus.Ranked,
+                    Length = 659,
+                    Bpm = 1000,
+                    DifficultyRating = 0,
+                    CountHitObjectNormal = 65000,
+                    CountHitObjectLong = 241,
+                    LongNotePercentage = 99,
+                    MaxCombo = 1000
+                },
+                new DownloadableMap
+                {
+                    Id = index * 2 + 2,
+                    MapsetId = index,
+                    CreatorUsername = "Creator",
+                    GameMode = GameMode.Keys7,
+                    RankedStatus = RankedStatus.Ranked,
+                    Length = 659,
+                    Bpm = 1000,
+                    DifficultyRating = 99.99,
+                    CountHitObjectNormal = 65000,
+                    CountHitObjectLong = 241,
+                    LongNotePercentage = 100,
+                    MaxCombo = 1000
+                }
+            }
+        };
 
         private void UpdateEditorLayout()
         {

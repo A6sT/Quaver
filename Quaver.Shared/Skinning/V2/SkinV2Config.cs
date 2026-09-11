@@ -59,6 +59,10 @@ namespace Quaver.Shared.Skinning.V2
 
         [Required]
         public SkinV2NavigationConfig Navigation { get; set; } = new SkinV2NavigationConfig();
+
+        [Required]
+        [ConfigEditable]
+        public SkinV2DropdownConfig Dropdown { get; set; } = new SkinV2DropdownConfig();
     }
 
     public sealed class SkinV2BrandConfig
@@ -110,6 +114,7 @@ namespace Quaver.Shared.Skinning.V2
 
     public static class SkinV2BorderRadiusConfig
     {
+        public const int Small = 3;
         public const int Normal = 6;
     }
 

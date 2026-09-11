@@ -200,6 +200,7 @@ namespace Quaver.Shared.Screens
                 OtherGameMapDatabaseCache.RunThread();
 
                 Logger.Important($"Screen has been switched to type: `{screen.Type}`", LogType.Runtime);
+
             }
             finally
             {

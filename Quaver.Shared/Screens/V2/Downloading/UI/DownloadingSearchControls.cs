@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework;
@@ -56,11 +55,18 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
         private void ApplySize()
         {
+            Button.Size = Size;
+            ContentContainer.Size = Size;
+
+            // FlexContainer can briefly report an empty rectangle while the window is
+            // being resized. Avoid generating a rounded texture for that transient state.
+            if (Width <= 0 || Height <= 0 || float.IsNaN(Width) || float.IsNaN(Height) ||
+                float.IsInfinity(Width) || float.IsInfinity(Height))
+                return;
+
             var texture = RoundedRectTextureCache.Get(Width, Height, Config.CornerRadius);
             if (Image != texture)
                 Image = texture;
-            Button.Size = Size;
-            ContentContainer.Size = Size;
         }
     }
 
@@ -115,6 +121,8 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
     internal sealed class DownloadingNumericTextbox : DownloadingSearchTextbox
     {
+        private const string InfinitySymbol = "∞";
+
         private static readonly Regex NumericCharacters =
             new Regex(@"^(?!.*\..*\.)[.\d]*$", RegexOptions.Compiled);
 
@@ -124,25 +132,51 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
         private string Format { get; }
 
+        private Func<float, bool> ShowInfinity { get; }
+
         private bool HasValue { get; set; }
+
+        private bool WasFocused { get; set; }
 
         public DownloadingNumericTextbox(BindableFloat value, string placeholder,
             WobbleFontStore font, SkinV2DownloadingFieldConfig config, float width,
             string format = "0.##", bool showInitialValue = false,
-            Func<float, float> normalize = null)
+            Func<float, float> normalize = null, Func<float, bool> showInfinity = null)
             : base(new ScalableVector2(width, config.Height), font, config,
-                showInitialValue ? value.Value.ToString(format, CultureInfo.InvariantCulture) : string.Empty,
+                showInitialValue ? FormatValue(value.Value, format, showInfinity) : string.Empty,
                 placeholder)
         {
             Value = value;
             Normalize = normalize;
             Format = format;
+            ShowInfinity = showInfinity;
             HasValue = showInitialValue;
             AllowedCharacters = NumericCharacters;
             MaxCharacters = 8;
 
             OnStoppedTyping += OnTextChanged;
             Value.ValueChanged += OnBoundValueChanged;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            // Infinity is a display-only value. Clear it once the user focuses the field so
+            // normal numeric input can replace it without requiring an explicit selection.
+            if (Focused && !WasFocused && ShowInfinity?.Invoke(Value.Value) == true &&
+                RawText == InfinitySymbol)
+            {
+                RawText = string.Empty;
+                HasValue = false;
+            }
+            else if (!Focused && WasFocused && ShowInfinity != null &&
+                     (string.IsNullOrEmpty(RawText) || RawText == "."))
+            {
+                HasValue = true;
+                SetFormattedText(Value.Value);
+            }
+
+            WasFocused = Focused;
+            base.Update(gameTime);
         }
 
         public override void Destroy()
@@ -165,16 +199,21 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
         private void OnBoundValueChanged(object sender, BindableValueChangedEventArgs<float> args)
         {
-            if (HasValue)
+            if (HasValue || ShowInfinity != null)
                 SetFormattedText(args.Value);
         }
 
         private void SetFormattedText(float value)
         {
-            var formatted = value.ToString(Format, CultureInfo.InvariantCulture);
+            var formatted = FormatValue(value, Format, ShowInfinity);
             if (RawText != formatted)
                 RawText = formatted;
         }
+
+        private static string FormatValue(float value, string format, Func<float, bool> showInfinity) =>
+            showInfinity?.Invoke(value) == true
+                ? InfinitySymbol
+                : value.ToString(format, CultureInfo.InvariantCulture);
     }
 
     internal sealed class DownloadingRangeSlider : Container
@@ -310,171 +349,36 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
         }
     }
 
-    internal sealed class DownloadingSearchDropdown<T> : Container
+    /// <summary>
+    ///     Keeps the dropdown's expansion fade separate from RoundedButton's hover fade.
+    /// </summary>
+    internal sealed class DownloadingSearchButton : RoundedButton
     {
-        private Bindable<T> Value { get; }
+        private float HoverAlpha { get; set; } = 1;
 
-        private IReadOnlyList<KeyValuePair<T, string>> Options { get; }
+        private float ExpansionAlpha { get; set; } = 1;
 
-        private SkinV2DownloadingButtonConfig ButtonConfig { get; }
-
-        private SkinV2DownloadingDropdownConfig DropdownConfig { get; }
-
-        private WobbleFontStore Font { get; }
-
-        private RoundedButton Trigger { get; }
-
-        private Sprite Menu { get; set; }
-
-        public DownloadingSearchDropdown(float width, Bindable<T> value,
-            IReadOnlyList<KeyValuePair<T, string>> options, WobbleFontStore font,
-            SkinV2DownloadingButtonConfig buttonConfig,
-            SkinV2DownloadingDropdownConfig dropdownConfig)
+        public DownloadingSearchButton(EventHandler clickAction = null) : base(clickAction)
         {
-            Value = value;
-            Options = options;
-            Font = font;
-            ButtonConfig = buttonConfig;
-            DropdownConfig = dropdownConfig;
-            Size = new ScalableVector2(width, buttonConfig.Height);
+        }
 
-            Trigger = new RoundedButton((sender, args) => ToggleMenu())
-            {
-                Parent = this,
-                Size = Size,
-                CornerRadius = buttonConfig.CornerRadius,
-                Tint = SkinV2Color.Parse(buttonConfig.BackgroundColor),
-                PerformHoverFade = true,
-                Depth = 20
-            };
-            Trigger.SetIcon(FontAwesome.Get(FontAwesomeIcon.fa_chevron_arrow_down),
-                new Vector2(buttonConfig.IconSize, buttonConfig.IconSize));
-            Trigger.SetLabel(font, GetSelectedLabel(), buttonConfig.FontSize,
-                SkinV2Color.Parse(buttonConfig.TextColor));
-            LayoutTriggerContent();
-
-            Value.ValueChanged += OnValueChanged;
+        public void SetExpansionAlpha(float alpha)
+        {
+            ExpansionAlpha = MathHelper.Clamp(alpha, 0, 1);
+            ApplyCombinedAlpha();
         }
 
         public override void Update(GameTime gameTime)
         {
+            // RoundedButton uses Alpha as its hover animation state. Restore that state before
+            // the base update, then apply the expansion fade after the hover interpolation.
+            Alpha = HoverAlpha;
             base.Update(gameTime);
-            LayoutTriggerContent();
-
-            if (Menu != null && MouseManager.IsUniqueClick(MouseButton.Left) &&
-                !Contains(Trigger.ScreenRectangle, MouseManager.CurrentState.Position) &&
-                !Contains(Menu.ScreenRectangle, MouseManager.CurrentState.Position))
-                CloseMenu();
+            HoverAlpha = Alpha;
+            ApplyCombinedAlpha();
         }
 
-        public override void Destroy()
-        {
-            Value.ValueChanged -= OnValueChanged;
-            base.Destroy();
-        }
-
-        protected override void OnRectangleRecalculated()
-        {
-            base.OnRectangleRecalculated();
-            if (Trigger == null)
-                return;
-
-            Trigger.Size = Size;
-            LayoutTriggerContent();
-        }
-
-        private void ToggleMenu()
-        {
-            if (Menu != null)
-                CloseMenu();
-            else
-                OpenMenu();
-        }
-
-        private void OpenMenu()
-        {
-            var padding = DropdownConfig.MenuPadding;
-            var itemHeight = DropdownConfig.ItemHeight;
-            var spacing = DropdownConfig.ItemSpacing;
-            Menu = new Sprite
-            {
-                Parent = this,
-                Position = new ScalableVector2(0, Height + DropdownConfig.MenuGap),
-                Size = new ScalableVector2(Width,
-                    padding * 2 + Options.Count * itemHeight +
-                    Math.Max(0, Options.Count - 1) * spacing),
-                Tint = SkinV2Color.Parse(DropdownConfig.MenuColor),
-                DrawOrder = 100
-            };
-            Menu.Image = RoundedRectTextureCache.Get(Menu.Width, Menu.Height,
-                DropdownConfig.CornerRadius);
-
-            for (var index = 0; index < Options.Count; index++)
-            {
-                var option = Options[index];
-                var selected = EqualityComparer<T>.Default.Equals(option.Key, Value.Value);
-                var row = new RoundedButton((sender, args) =>
-                {
-                    Value.Value = option.Key;
-                    CloseMenu();
-                })
-                {
-                    Parent = Menu,
-                    Position = new ScalableVector2(padding, padding + index * (itemHeight + spacing)),
-                    Size = new ScalableVector2(Width - padding * 2, itemHeight),
-                    CornerRadius = DropdownConfig.CornerRadius,
-                    Tint = SkinV2Color.Parse(selected
-                        ? DropdownConfig.SelectedItemColor
-                        : DropdownConfig.ItemColor),
-                    PerformHoverFade = true,
-                    Depth = 100
-                };
-                row.SetLabel(Font, option.Value, ButtonConfig.FontSize,
-                    SkinV2Color.Parse(ButtonConfig.TextColor));
-            }
-        }
-
-        private void CloseMenu()
-        {
-            Menu?.Destroy();
-            Menu = null;
-        }
-
-        private void OnValueChanged(object sender, BindableValueChangedEventArgs<T> args)
-        {
-            Trigger.SetLabel(Font, GetSelectedLabel(), ButtonConfig.FontSize,
-                SkinV2Color.Parse(ButtonConfig.TextColor));
-            LayoutTriggerContent();
-        }
-
-        private string GetSelectedLabel()
-        {
-            foreach (var option in Options)
-            {
-                if (EqualityComparer<T>.Default.Equals(option.Key, Value.Value))
-                    return option.Value;
-            }
-
-            return Options.Count == 0 ? string.Empty : Options[0].Value;
-        }
-
-        private void LayoutTriggerContent()
-        {
-            if (Trigger.Label != null)
-            {
-                Trigger.Label.Alignment = Alignment.MidLeft;
-                Trigger.Label.X = ButtonConfig.HorizontalPadding;
-            }
-
-            if (Trigger.Icon != null)
-            {
-                Trigger.Icon.Alignment = Alignment.MidRight;
-                Trigger.Icon.X = -ButtonConfig.HorizontalPadding;
-            }
-        }
-
-        private static bool Contains(MonoGame.Extended.RectangleF rectangle, Vector2 point) =>
-            point.X >= rectangle.Left && point.X <= rectangle.Right &&
-            point.Y >= rectangle.Top && point.Y <= rectangle.Bottom;
+        private void ApplyCombinedAlpha() => Alpha = HoverAlpha * ExpansionAlpha;
     }
+
 }

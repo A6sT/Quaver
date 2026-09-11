@@ -17,6 +17,42 @@ namespace Quaver.Shared.Screens.V2.Downloading
         ClanRanked
     }
 
+    internal enum DownloadSearchLengthFilter
+    {
+        Any,
+        LessThan30Seconds,
+        From30To90Seconds,
+        From90To150Seconds,
+        From150To210Seconds,
+        From210To300Seconds,
+        From300To600Seconds,
+        GreaterThan600Seconds
+    }
+
+    internal enum DownloadSearchComboFilter
+    {
+        Any,
+        LessThan150,
+        From151To250,
+        From251To500,
+        From501To1000,
+        From1001To1500,
+        From1501To2500,
+        GreaterThan2501
+    }
+
+    internal enum DownloadSearchSortBy
+    {
+        Newest,
+        DateSubmitted,
+        Length,
+        Difficulty,
+        MaxCombo,
+        Bpm,
+        LongNotePercentage,
+        PlayCount
+    }
+
     /// <summary>
     ///     Local-only state for the first V2 Download search-header slice.
     /// </summary>
@@ -42,6 +78,17 @@ namespace Quaver.Shared.Screens.V2.Downloading
 
         public Bindable<DownloadSearchRankedStatus> RankedStatus { get; } =
             new Bindable<DownloadSearchRankedStatus>(DownloadSearchRankedStatus.Ranked);
+
+        public Bindable<DownloadSearchLengthFilter> LengthFilter { get; } =
+            new Bindable<DownloadSearchLengthFilter>(DownloadSearchLengthFilter.Any);
+
+        public Bindable<DownloadSearchComboFilter> ComboFilter { get; } =
+            new Bindable<DownloadSearchComboFilter>(DownloadSearchComboFilter.Any);
+
+        public Bindable<DownloadSearchSortBy> SortBy { get; } =
+            new Bindable<DownloadSearchSortBy>(DownloadSearchSortBy.Newest);
+
+        public Bindable<bool> ReverseSort { get; } = new Bindable<bool>(false);
 
         public BindableFloat MinimumDifficulty { get; } = new BindableFloat(0, 0, 99.99f);
 
@@ -69,6 +116,10 @@ namespace Quaver.Shared.Screens.V2.Downloading
             ShowOwnedPlaylists.Dispose();
             Keymode.Dispose();
             RankedStatus.Dispose();
+            LengthFilter.Dispose();
+            ComboFilter.Dispose();
+            SortBy.Dispose();
+            ReverseSort.Dispose();
             MinimumDifficulty.Dispose();
             MaximumDifficulty.Dispose();
             MinimumLongNotePercentage.Dispose();
