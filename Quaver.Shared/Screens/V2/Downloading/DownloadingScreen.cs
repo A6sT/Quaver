@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Quaver.Server.Client.Enums;
@@ -5,12 +8,14 @@ using Quaver.Server.Client.Objects;
 using Quaver.Shared.Config;
 using Quaver.Shared.Graphics;
 using Quaver.Shared.Online;
+using Quaver.Shared.Online.API.MapsetSearch;
 using Quaver.Shared.Screens.Downloading;
 using Quaver.Shared.Screens.V2.SkinEditor;
 using Quaver.Shared.Skinning;
 using Wobble;
 using Wobble.Graphics.UI.Dialogs;
 using Wobble.Input;
+using Wobble.Scheduling;
 
 namespace Quaver.Shared.Screens.V2.Downloading
 {
@@ -20,6 +25,13 @@ namespace Quaver.Shared.Screens.V2.Downloading
 
         internal DownloadingSearchState SearchState { get; } = new DownloadingSearchState();
 
+        internal IReadOnlyList<DownloadableMapset> Mapsets { get; private set; } =
+            Array.Empty<DownloadableMapset>();
+
+        private TaskHandler<DownloadingMapsetSearchQuery, IReadOnlyList<DownloadableMapset>> SearchTask { get; }
+
+        private int SearchGeneration { get; set; }
+
         private QuaverScreenType PreviousScreen { get; }
 
         protected override ISkinV2EditorHost SkinEditorHost => (DownloadingScreenView) View;
@@ -27,7 +39,12 @@ namespace Quaver.Shared.Screens.V2.Downloading
         public DownloadingScreen(QuaverScreenType previousScreen = QuaverScreenType.Menu)
         {
             PreviousScreen = previousScreen;
+            SearchTask = new TaskHandler<DownloadingMapsetSearchQuery,
+                IReadOnlyList<DownloadableMapset>>(RunMapsetSearch);
+            SearchTask.OnCompleted += OnMapsetSearchCompleted;
+            SearchState.MapsetFiltersChanged += OnMapsetFiltersChanged;
             View = new DownloadingScreenView(this);
+            StartMapsetSearch(false);
         }
 
         public override void OnFirstUpdate()
@@ -51,8 +68,11 @@ namespace Quaver.Shared.Screens.V2.Downloading
         public override void Destroy()
         {
             ScreenExiting -= OnScreenExiting;
-            base.Destroy();
+            SearchState.MapsetFiltersChanged -= OnMapsetFiltersChanged;
+            SearchTask.OnCompleted -= OnMapsetSearchCompleted;
+            SearchTask.Dispose();
             SearchState.Dispose();
+            base.Destroy();
         }
 
         public override UserClientStatus GetClientStatus() =>
@@ -118,5 +138,33 @@ namespace Quaver.Shared.Screens.V2.Downloading
 
         private static void OnScreenExiting(object sender, ScreenExitingEventArgs args) =>
             SkinManager.StopWatching();
+
+        private void OnMapsetFiltersChanged(object sender, EventArgs args) =>
+            StartMapsetSearch(true);
+
+        private void StartMapsetSearch(bool debounce)
+        {
+            var showExplicit = ConfigManager.DownloadDisplayExplicitMapsets?.Value ?? false;
+            var query = new DownloadingMapsetSearchQuery(SearchState, ++SearchGeneration,
+                showExplicit);
+            SearchTask.Run(query, debounce ? 150 : 0);
+        }
+
+        private static IReadOnlyList<DownloadableMapset> RunMapsetSearch(
+            DownloadingMapsetSearchQuery query, CancellationToken token) => query.Execute(token);
+
+        private void OnMapsetSearchCompleted(object sender,
+            TaskCompleteEventArgs<DownloadingMapsetSearchQuery, IReadOnlyList<DownloadableMapset>> args)
+        {
+            var view = View as DownloadingScreenView;
+            view?.Container.ScheduleUpdate(() =>
+            {
+                if (Exiting || args.Input.Generation != SearchGeneration)
+                    return;
+
+                Mapsets = args.Result ?? Array.Empty<DownloadableMapset>();
+                view.SetMapsets(Mapsets);
+            });
+        }
     }
 }

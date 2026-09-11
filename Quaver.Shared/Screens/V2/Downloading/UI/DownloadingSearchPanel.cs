@@ -7,6 +7,7 @@ using Quaver.API.Helpers;
 using Quaver.Shared.Assets;
 using Quaver.Shared.Screens.Downloading;
 using Quaver.Shared.Screens.V2.UI;
+using Quaver.Shared.Screens.V2.UI.Filters;
 using Quaver.Shared.Skinning.V2;
 using Wobble;
 using Wobble.Bindables;
@@ -36,6 +37,10 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
         private WobbleFontStore DropdownFont { get; }
 
         private SkinV2DropdownConfig DropdownConfig { get; }
+
+        private V2FilterFieldStyle FieldStyle { get; }
+
+        private V2FilterRangeStyle RangeStyle { get; }
 
         private Container OverlayHost { get; }
 
@@ -75,6 +80,29 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             Config = config;
             OverlayHost = overlayHost;
             DropdownConfig = dropdownConfig;
+            FieldStyle = new V2FilterFieldStyle
+            {
+                Height = config.Field.Height,
+                SearchIconSize = config.Field.SearchIconSize,
+                SearchIconInset = config.Field.SearchIconInset,
+                CornerRadius = config.Field.CornerRadius,
+                BackgroundColor = SkinV2Color.Parse(config.Field.BackgroundColor),
+                TextColor = SkinV2Color.Parse(config.Field.TextColor),
+                PlaceholderColor = SkinV2Color.Parse(config.Field.PlaceholderColor),
+                CursorColor = SkinV2Color.Parse(config.Field.CursorColor)
+            };
+            RangeStyle = new V2FilterRangeStyle
+            {
+                Width = config.Range.Width,
+                TrackHeight = config.Range.TrackHeight,
+                ThumbWidth = config.Range.ThumbWidth,
+                ThumbHeight = config.Range.ThumbHeight,
+                TrackCornerRadius = config.Range.TrackCornerRadius,
+                ThumbCornerRadius = config.Range.ThumbCornerRadius,
+                TrackColor = SkinV2Color.Parse(config.Range.TrackColor),
+                SelectedTrackColor = SkinV2Color.Parse(config.Range.SelectedTrackColor),
+                ThumbColor = SkinV2Color.Parse(config.Range.ThumbColor)
+            };
             FieldFont = FontManager.GetWobbleFont(config.Field.Font);
             ButtonFont = FontManager.GetWobbleFont(config.Button.Font);
             DropdownFont = FontManager.GetWobbleFont(dropdownConfig.Font);
@@ -240,8 +268,9 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
         private void AddSearchBox(FlexContainer parent, Bindable<string> query, string placeholderKey)
         {
-            var textbox = new DownloadingSearchQueryTextbox(query,
-                LocalizationManager.Get(placeholderKey), FieldFont, Config.Field)
+            var textbox = new V2FilterSearchTextbox(query,
+                LocalizationManager.Get(placeholderKey), FieldFont, Config.Field.FontSize,
+                FieldStyle, Config.Field.SearchWidth)
             {
                 Parent = parent
             };
@@ -264,8 +293,9 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
                 AlignItems = FlexAlignItems.Center,
                 ColumnGap = Config.SearchArea.ColumnGap
             };
-            var minimum = new DownloadingNumericTextbox(State.MinimumDifficulty,
-                string.Empty, FieldFont, Config.Field, Config.Field.NumericWidth,
+            var minimum = new V2FilterNumericTextbox(State.MinimumDifficulty,
+                string.Empty, FieldFont, Config.Field.FontSize, FieldStyle,
+                Config.Field.NumericWidth,
                 "00.00", true, value => Math.Min(value, State.MaximumDifficulty.Value),
                 value => value <= State.MinimumDifficulty.MinValue)
             {
@@ -273,15 +303,16 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             };
             AddFixed(group, minimum, Config.Field.NumericWidth);
 
-            var slider = new DownloadingRangeSlider(State.MinimumDifficulty,
-                State.MaximumDifficulty, Config.Range)
+            var slider = new V2FilterRangeSlider(State.MinimumDifficulty,
+                State.MaximumDifficulty, RangeStyle)
             {
                 Parent = group
             };
             AddFixed(group, slider, Config.Range.Width);
 
-            var maximum = new DownloadingNumericTextbox(State.MaximumDifficulty,
-                string.Empty, FieldFont, Config.Field, Config.Field.NumericWidth,
+            var maximum = new V2FilterNumericTextbox(State.MaximumDifficulty,
+                string.Empty, FieldFont, Config.Field.FontSize, FieldStyle,
+                Config.Field.NumericWidth,
                 "00.00", true, value => Math.Max(value, State.MinimumDifficulty.Value),
                 value => value >= State.MaximumDifficulty.MaxValue)
             {
@@ -309,16 +340,18 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             };
             group.SetItemOptions(label, new FlexItemOptions { Shrink = 0 });
 
-            var minimumTextbox = new DownloadingNumericTextbox(minimum,
-                LocalizationManager.Get(minimumPlaceholderKey), FieldFont, Config.Field,
+            var minimumTextbox = new V2FilterNumericTextbox(minimum,
+                LocalizationManager.Get(minimumPlaceholderKey), FieldFont, Config.Field.FontSize,
+                FieldStyle,
                 Config.Field.NumericCompactWidth, normalize: value => Math.Min(value, maximum.Value))
             {
                 Parent = group
             };
             AddFixed(group, minimumTextbox, Config.Field.NumericCompactWidth);
 
-            var maximumTextbox = new DownloadingNumericTextbox(maximum,
-                LocalizationManager.Get(maximumPlaceholderKey), FieldFont, Config.Field,
+            var maximumTextbox = new V2FilterNumericTextbox(maximum,
+                LocalizationManager.Get(maximumPlaceholderKey), FieldFont, Config.Field.FontSize,
+                FieldStyle,
                 Config.Field.NumericCompactWidth, normalize: value => Math.Max(value, minimum.Value))
             {
                 Parent = group
@@ -404,7 +437,7 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
                 : (EventHandler) ((sender, args) => clicked());
             var button = tabCorners.HasValue
                 ? (RoundedButton) new SegmentedTabButton(tabCorners.Value, clickAction)
-                : new DownloadingSearchButton(clickAction);
+                : new V2FilterButton(clickAction);
 
             button.Size = new ScalableVector2(width, Config.Button.Height);
             button.CornerRadius = Config.Button.CornerRadius;
@@ -859,14 +892,14 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             {
                 button.IsInteractionEnabled = alpha > 0.001f;
 
-                if (button is DownloadingSearchButton downloadingButton)
+                if (button is V2FilterButton filterButton)
                 {
-                    downloadingButton.SetExpansionAlpha(alpha);
+                    filterButton.SetExpansionAlpha(alpha);
                     return;
                 }
             }
 
-            if (drawable is DownloadingSearchTextbox textbox)
+            if (drawable is V2FilterTextbox textbox)
             {
                 textbox.Alpha = alpha;
                 textbox.InputText.Alpha = alpha;

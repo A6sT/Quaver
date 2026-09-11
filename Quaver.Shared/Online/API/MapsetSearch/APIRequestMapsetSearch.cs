@@ -162,29 +162,27 @@ namespace Quaver.Shared.Online.API.MapsetSearch
 
             // Upload Date
             if (string.IsNullOrEmpty(startUploadDate))
-                startUploadDate = "01-01-0000";
+                startUploadDate = "01-01-1970";
 
             if (string.IsNullOrEmpty(endUploadDate))
                 endUploadDate = "12-31-9999";
 
-            DateTime.TryParse(startUploadDate, out var startDate);
-            DateTime.TryParse(endUploadDate, out var endDate);
-
-            UploadStartDate = (long) DateTimeToUnixTimestamp(startDate);
-            UploadEndDate = (long) DateTimeToUnixTimestamp(endDate);
+            UploadStartDate = ParseDateToUnixTimestamp(startUploadDate,
+                new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+            UploadEndDate = ParseDateToUnixTimestamp(endUploadDate,
+                new DateTime(9999, 12, 31, 0, 0, 0, DateTimeKind.Utc));
 
             // Update Date
             if (string.IsNullOrEmpty(startUpdateDate))
-                startUpdateDate = "01-01-0000";
+                startUpdateDate = "01-01-1970";
 
             if (string.IsNullOrEmpty(endUpdateDate))
                 endUpdateDate = "12-31-9999";
 
-            DateTime.TryParse(startUpdateDate, out var startLastUpdateDate);
-            DateTime.TryParse(endUpdateDate, out var endLastUpdateDate);
-
-            LastUpdatedStartDate = (long) DateTimeToUnixTimestamp(startLastUpdateDate);
-            LastUpdatedEndDate = (long) DateTimeToUnixTimestamp(endLastUpdateDate);
+            LastUpdatedStartDate = ParseDateToUnixTimestamp(startUpdateDate,
+                new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+            LastUpdatedEndDate = ParseDateToUnixTimestamp(endUpdateDate,
+                new DateTime(9999, 12, 31, 0, 0, 0, DateTimeKind.Utc));
         }
 
         /// <summary>
@@ -211,6 +209,8 @@ namespace Quaver.Shared.Online.API.MapsetSearch
                 request.AddQueryParameter("max_length", MaxLength.ToString(CultureInfo.InvariantCulture));
                 request.AddQueryParameter("min_long_note_percent", MinLongNotePercent.ToString(CultureInfo.InvariantCulture));
                 request.AddQueryParameter("max_long_note_percent", MaxLongNotePercent.ToString(CultureInfo.InvariantCulture));
+                request.AddQueryParameter("min_play_count", MinPlayCount.ToString(CultureInfo.InvariantCulture));
+                request.AddQueryParameter("max_play_count", MaxPlayCount.ToString(CultureInfo.InvariantCulture));
                 request.AddQueryParameter("min_date_submitted", UploadStartDate.ToString(CultureInfo.InvariantCulture));
                 request.AddQueryParameter("max_date_submitted", UploadEndDate.ToString(CultureInfo.InvariantCulture));
                 request.AddQueryParameter("min_last_updated",LastUpdatedStartDate.ToString(CultureInfo.InvariantCulture));
@@ -280,13 +280,10 @@ namespace Quaver.Shared.Online.API.MapsetSearch
             // Ranked Status Query Param
             if (Status == DownloadFilterRankedStatus.All)
             {
-                foreach (DownloadFilterRankedStatus status in Enum.GetValues(typeof(DownloadFilterRankedStatus)))
-                {
-                    if (status == DownloadFilterRankedStatus.All)
-                        continue;
-
-                    request.AddQueryParameter("ranked_status", ((int) status).ToString());
-                }
+                request.AddQueryParameter("ranked_status",
+                    ((int) DownloadFilterRankedStatus.Unranked).ToString());
+                request.AddQueryParameter("ranked_status",
+                    ((int) DownloadFilterRankedStatus.Ranked).ToString());
             }
             else
             {
@@ -298,12 +295,17 @@ namespace Quaver.Shared.Online.API.MapsetSearch
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
-        private static double DateTimeToUnixTimestamp(DateTime dateTime)
+        private static long ParseDateToUnixTimestamp(string value, DateTime fallback)
         {
+            if (!DateTime.TryParseExact(value, "MM-dd-yyyy", CultureInfo.InvariantCulture,
+                    DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                    out var dateTime))
+                dateTime = fallback;
+
             var unixStart = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             var unixTimeStampInTicks = (dateTime.ToUniversalTime() - unixStart).Ticks;
 
-            return (double) unixTimeStampInTicks / TimeSpan.TicksPerSecond * 1000;
+            return unixTimeStampInTicks / TimeSpan.TicksPerMillisecond;
         }
     }
 }

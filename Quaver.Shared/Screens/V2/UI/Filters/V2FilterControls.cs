@@ -13,25 +13,50 @@ using Wobble.Graphics.Sprites.Text;
 using Wobble.Graphics.UI.Form;
 using Wobble.Input;
 
-namespace Quaver.Shared.Screens.V2.Downloading.UI
+namespace Quaver.Shared.Screens.V2.UI.Filters
 {
-    internal abstract class DownloadingSearchTextbox : Textbox
+    /// <summary>
+    ///     Screen-supplied visual values for a reusable V2 filter text field.
+    /// </summary>
+    internal sealed class V2FilterFieldStyle
     {
-        private SkinV2DownloadingFieldConfig Config { get; }
+        public float Height { get; init; }
+        public float SearchIconSize { get; init; }
+        public float SearchIconInset { get; init; }
+        public float CornerRadius { get; init; }
+        public Color BackgroundColor { get; init; }
+        public Color TextColor { get; init; }
+        public Color PlaceholderColor { get; init; }
+        public Color CursorColor { get; init; }
+    }
 
-        private Color TextColor { get; }
+    /// <summary>
+    ///     Screen-supplied visual values for a reusable V2 range slider.
+    /// </summary>
+    internal sealed class V2FilterRangeStyle
+    {
+        public float Width { get; init; }
+        public float TrackHeight { get; init; }
+        public float ThumbWidth { get; init; }
+        public float ThumbHeight { get; init; }
+        public float TrackCornerRadius { get; init; }
+        public float ThumbCornerRadius { get; init; }
+        public Color TrackColor { get; init; }
+        public Color SelectedTrackColor { get; init; }
+        public Color ThumbColor { get; init; }
+    }
 
-        private Color PlaceholderColor { get; }
+    internal abstract class V2FilterTextbox : Textbox
+    {
+        private V2FilterFieldStyle Style { get; }
 
-        protected DownloadingSearchTextbox(ScalableVector2 size, WobbleFontStore font,
-            SkinV2DownloadingFieldConfig config, string initialText, string placeholder)
-            : base(size, font, config.FontSize, initialText, placeholder)
+        protected V2FilterTextbox(ScalableVector2 size, WobbleFontStore font,
+            V2FilterFieldStyle style, int fontSize, string initialText, string placeholder)
+            : base(size, font, fontSize, initialText, placeholder)
         {
-            Config = config;
-            TextColor = SkinV2Color.Parse(config.TextColor);
-            PlaceholderColor = SkinV2Color.Parse(config.PlaceholderColor);
-            Tint = SkinV2Color.Parse(config.BackgroundColor);
-            Cursor.Tint = SkinV2Color.Parse(config.CursorColor);
+            Style = style;
+            Tint = style.BackgroundColor;
+            Cursor.Tint = style.CursorColor;
             Scrollbar.Visible = false;
             InputEnabled = false;
             StoppedTypingActionCalltime = 250;
@@ -41,15 +66,16 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
-            InputText.Tint = string.IsNullOrEmpty(RawText) ? PlaceholderColor : TextColor;
+            InputText.Tint = string.IsNullOrEmpty(RawText)
+                ? Style.PlaceholderColor
+                : Style.TextColor;
             InputText.Alpha = 1;
         }
 
         protected override void OnRectangleRecalculated()
         {
             base.OnRectangleRecalculated();
-            if (Config != null)
+            if (Style != null)
                 ApplySize();
         }
 
@@ -58,39 +84,35 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             Button.Size = Size;
             ContentContainer.Size = Size;
 
-            // FlexContainer can briefly report an empty rectangle while the window is
-            // being resized. Avoid generating a rounded texture for that transient state.
             if (Width <= 0 || Height <= 0 || float.IsNaN(Width) || float.IsNaN(Height) ||
                 float.IsInfinity(Width) || float.IsInfinity(Height))
                 return;
 
-            var texture = RoundedRectTextureCache.Get(Width, Height, Config.CornerRadius);
+            var texture = RoundedRectTextureCache.Get(Width, Height, Style.CornerRadius);
             if (Image != texture)
                 Image = texture;
         }
     }
 
-    internal sealed class DownloadingSearchQueryTextbox : DownloadingSearchTextbox
+    internal sealed class V2FilterSearchTextbox : V2FilterTextbox
     {
         private Bindable<string> Query { get; }
 
-        private Sprite SearchIcon { get; }
-
-        public DownloadingSearchQueryTextbox(Bindable<string> query, string placeholder,
-            WobbleFontStore font, SkinV2DownloadingFieldConfig config)
-            : base(new ScalableVector2(config.SearchWidth, config.Height), font, config,
+        public V2FilterSearchTextbox(Bindable<string> query, string placeholder,
+            WobbleFontStore font, int fontSize, V2FilterFieldStyle style, float width)
+            : base(new ScalableVector2(width, style.Height), font, style, fontSize,
                 query.Value, placeholder)
         {
             Query = query;
-            InputText.X = config.SearchIconInset * 2 + config.SearchIconSize;
-            SearchIcon = new Sprite
+            InputText.X = style.SearchIconInset * 2 + style.SearchIconSize;
+            new Sprite
             {
                 Parent = this,
                 Alignment = Alignment.MidLeft,
-                X = config.SearchIconInset,
+                X = style.SearchIconInset,
                 Image = FontAwesome.Get(FontAwesomeIcon.fa_magnifying_glass),
-                Size = new ScalableVector2(config.SearchIconSize, config.SearchIconSize),
-                Tint = SkinV2Color.Parse(config.PlaceholderColor),
+                Size = new ScalableVector2(style.SearchIconSize, style.SearchIconSize),
+                Tint = style.PlaceholderColor,
                 UsePreviousSpriteBatchOptions = true
             };
 
@@ -119,7 +141,7 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
         }
     }
 
-    internal sealed class DownloadingNumericTextbox : DownloadingSearchTextbox
+    internal sealed class V2FilterNumericTextbox : V2FilterTextbox
     {
         private const string InfinitySymbol = "∞";
 
@@ -127,22 +149,17 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             new Regex(@"^(?!.*\..*\.)[.\d]*$", RegexOptions.Compiled);
 
         private BindableFloat Value { get; }
-
         private Func<float, float> Normalize { get; }
-
         private string Format { get; }
-
         private Func<float, bool> ShowInfinity { get; }
-
         private bool HasValue { get; set; }
-
         private bool WasFocused { get; set; }
 
-        public DownloadingNumericTextbox(BindableFloat value, string placeholder,
-            WobbleFontStore font, SkinV2DownloadingFieldConfig config, float width,
+        public V2FilterNumericTextbox(BindableFloat value, string placeholder,
+            WobbleFontStore font, int fontSize, V2FilterFieldStyle style, float width,
             string format = "0.##", bool showInitialValue = false,
             Func<float, float> normalize = null, Func<float, bool> showInfinity = null)
-            : base(new ScalableVector2(width, config.Height), font, config,
+            : base(new ScalableVector2(width, style.Height), font, style, fontSize,
                 showInitialValue ? FormatValue(value.Value, format, showInfinity) : string.Empty,
                 placeholder)
         {
@@ -160,8 +177,6 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
         public override void Update(GameTime gameTime)
         {
-            // Infinity is a display-only value. Clear it once the user focuses the field so
-            // normal numeric input can replace it without requiring an explicit selection.
             if (Focused && !WasFocused && ShowInfinity?.Invoke(Value.Value) == true &&
                 RawText == InfinitySymbol)
             {
@@ -216,47 +231,41 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
                 : value.ToString(format, CultureInfo.InvariantCulture);
     }
 
-    internal sealed class DownloadingRangeSlider : Container
+    internal sealed class V2FilterRangeSlider : Container
     {
         private BindableFloat Minimum { get; }
-
         private BindableFloat Maximum { get; }
-
-        private SkinV2DownloadingRangeConfig Config { get; }
-
+        private V2FilterRangeStyle Style { get; }
         private Sprite Track { get; }
-
         private Sprite SelectedTrack { get; }
-
         private RangeThumb MinimumThumb { get; }
-
         private RangeThumb MaximumThumb { get; }
 
-        public DownloadingRangeSlider(BindableFloat minimum, BindableFloat maximum,
-            SkinV2DownloadingRangeConfig config)
+        public V2FilterRangeSlider(BindableFloat minimum, BindableFloat maximum,
+            V2FilterRangeStyle style)
         {
             Minimum = minimum;
             Maximum = maximum;
-            Config = config;
-            Size = new ScalableVector2(config.Width, config.ThumbHeight);
+            Style = style;
+            Size = new ScalableVector2(style.Width, style.ThumbHeight);
 
             Track = new Sprite
             {
                 Parent = this,
                 Alignment = Alignment.MidLeft,
-                Size = new ScalableVector2(config.Width, config.TrackHeight),
-                Image = RoundedRectTextureCache.Get(config.Width, config.TrackHeight,
-                    config.TrackCornerRadius),
-                Tint = SkinV2Color.Parse(config.TrackColor)
+                Size = new ScalableVector2(style.Width, style.TrackHeight),
+                Image = RoundedRectTextureCache.Get(style.Width, style.TrackHeight,
+                    style.TrackCornerRadius),
+                Tint = style.TrackColor
             };
             SelectedTrack = new Sprite
             {
                 Parent = this,
                 Alignment = Alignment.MidLeft,
-                Height = config.TrackHeight,
-                Image = RoundedRectTextureCache.Get(config.Width, config.TrackHeight,
-                    config.TrackCornerRadius),
-                Tint = SkinV2Color.Parse(config.SelectedTrackColor)
+                Height = style.TrackHeight,
+                Image = RoundedRectTextureCache.Get(style.Width, style.TrackHeight,
+                    style.TrackCornerRadius),
+                Tint = style.SelectedTrackColor
             };
 
             MinimumThumb = CreateThumb(value => SetMinimum(value));
@@ -284,9 +293,9 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
         {
             Parent = this,
             Alignment = Alignment.MidLeft,
-            Size = new ScalableVector2(Config.ThumbWidth, Config.ThumbHeight),
-            CornerRadius = Config.ThumbCornerRadius,
-            Tint = SkinV2Color.Parse(Config.ThumbColor),
+            Size = new ScalableVector2(Style.ThumbWidth, Style.ThumbHeight),
+            CornerRadius = Style.ThumbCornerRadius,
+            Tint = Style.ThumbColor,
             PerformHoverFade = true,
             Depth = 50
         };
@@ -312,18 +321,18 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
                 return;
 
             Track.Width = Width;
-            Track.Image = RoundedRectTextureCache.Get(Width, Config.TrackHeight,
-                Config.TrackCornerRadius);
+            Track.Image = RoundedRectTextureCache.Get(Width, Style.TrackHeight,
+                Style.TrackCornerRadius);
 
-            var usableWidth = Math.Max(1, Width - Config.ThumbWidth);
+            var usableWidth = Math.Max(1, Width - Style.ThumbWidth);
             var minimumPosition = Normalize(Minimum.Value, Minimum.MinValue, Minimum.MaxValue) * usableWidth;
             var maximumPosition = Normalize(Maximum.Value, Maximum.MinValue, Maximum.MaxValue) * usableWidth;
             MinimumThumb.X = minimumPosition;
             MaximumThumb.X = maximumPosition;
-            SelectedTrack.X = minimumPosition + Config.ThumbWidth / 2f;
+            SelectedTrack.X = minimumPosition + Style.ThumbWidth / 2f;
             SelectedTrack.Width = Math.Max(1, maximumPosition - minimumPosition);
             SelectedTrack.Image = RoundedRectTextureCache.Get(SelectedTrack.Width,
-                Config.TrackHeight, Config.TrackCornerRadius);
+                Style.TrackHeight, Style.TrackCornerRadius);
         }
 
         private static float Normalize(float value, float minimum, float maximum) =>
@@ -350,15 +359,14 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
     }
 
     /// <summary>
-    ///     Keeps the dropdown's expansion fade separate from RoundedButton's hover fade.
+    ///     Keeps a filter panel's visibility fade separate from RoundedButton's hover fade.
     /// </summary>
-    internal sealed class DownloadingSearchButton : RoundedButton
+    internal sealed class V2FilterButton : RoundedButton
     {
         private float HoverAlpha { get; set; } = 1;
-
         private float ExpansionAlpha { get; set; } = 1;
 
-        public DownloadingSearchButton(EventHandler clickAction = null) : base(clickAction)
+        public V2FilterButton(EventHandler clickAction = null) : base(clickAction)
         {
         }
 
@@ -370,8 +378,6 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
         public override void Update(GameTime gameTime)
         {
-            // RoundedButton uses Alpha as its hover animation state. Restore that state before
-            // the base update, then apply the expansion fade after the hover interpolation.
             Alpha = HoverAlpha;
             base.Update(gameTime);
             HoverAlpha = Alpha;
@@ -380,5 +386,4 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
         private void ApplyCombinedAlpha() => Alpha = HoverAlpha * ExpansionAlpha;
     }
-
 }

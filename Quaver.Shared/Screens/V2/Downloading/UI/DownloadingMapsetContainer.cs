@@ -8,7 +8,9 @@ using MonoGame.Extended;
 using Quaver.API.Enums;
 using Quaver.API.Helpers;
 using Quaver.Shared.Assets;
+using Quaver.Shared.Graphics.Notifications;
 using Quaver.Shared.Online.API.MapsetSearch;
+using Quaver.Shared.Screens.Download;
 using Quaver.Shared.Screens.Downloading;
 using Quaver.Shared.Skinning.V2;
 using Wobble;
@@ -319,7 +321,7 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
                 Shrink = 1
             });
 
-            var downloadButton = new RoundedButton((sender, args) => { })
+            var downloadButton = new RoundedButton((sender, args) => DownloadMapset())
             {
                 Parent = StatisticsRow,
                 Size = new ScalableVector2(Config.DownloadButtonSize, Config.DownloadButtonSize),
@@ -331,6 +333,18 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             downloadButton.SetIcon(CapsuleIcons.Get(CapsuleIcon.Download),
                 new Vector2(Config.DownloadIconSize, Config.DownloadIconSize));
             StatisticsRow.SetItemOptions(downloadButton, FixedBasis(Config.DownloadButtonSize));
+        }
+
+        private void DownloadMapset()
+        {
+            if (MapsetDownloadManager.IsMapsetInQueue(Mapset.Id))
+            {
+                NotificationManager.Show(NotificationLevel.Warning,
+                    DownloadLocalization.Get("This mapset is already downloading!"));
+                return;
+            }
+
+            MapsetDownloadManager.Download(Mapset.Id, Mapset.Artist, Mapset.Title);
         }
 
         private void AddPill(FlexContainer parent, CapsuleIcon? icon, string text,
@@ -404,10 +418,10 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
 
         private static string FormatLength(DownloadableMapset mapset)
         {
-            var seconds = mapset.Maps == null || mapset.Maps.Count == 0
+            var milliseconds = mapset.Maps == null || mapset.Maps.Count == 0
                 ? 0
                 : mapset.Maps.Max(x => x.Length);
-            var duration = TimeSpan.FromSeconds(Math.Max(0, seconds));
+            var duration = TimeSpan.FromMilliseconds(Math.Max(0, milliseconds));
             return duration.TotalHours >= 1
                 ? duration.ToString(@"h\:mm\:ss", CultureInfo.InvariantCulture)
                 : duration.ToString(@"m\:ss", CultureInfo.InvariantCulture);
@@ -435,7 +449,7 @@ namespace Quaver.Shared.Screens.V2.Downloading.UI
             if (map == null || map.Length <= 0)
                 return 0;
 
-            return (map.CountHitObjectNormal + map.CountHitObjectLong) / (double) map.Length;
+            return (map.CountHitObjectNormal + map.CountHitObjectLong) * 1000d / map.Length;
         }
 
         private static string FormatBpm(DownloadableMapset mapset)

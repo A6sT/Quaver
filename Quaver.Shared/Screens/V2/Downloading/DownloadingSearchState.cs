@@ -58,6 +58,8 @@ namespace Quaver.Shared.Screens.V2.Downloading
     /// </summary>
     internal sealed class DownloadingSearchState : IDisposable
     {
+        public event EventHandler MapsetFiltersChanged;
+
         public Bindable<DownloadSearchTab> ActiveTab { get; } =
             new Bindable<DownloadSearchTab>(DownloadSearchTab.Mapsets);
 
@@ -106,8 +108,46 @@ namespace Quaver.Shared.Screens.V2.Downloading
 
         public BindableFloat MaximumBpm { get; } = new BindableFloat(9999, 0, 9999);
 
+        public DownloadingSearchState()
+        {
+            MapsetQuery.ValueChanged += OnStringFilterChanged;
+            ShowOwnedMapsets.ValueChanged += OnBoolFilterChanged;
+            Keymode.ValueChanged += OnIntFilterChanged;
+            RankedStatus.ValueChanged += OnRankedStatusChanged;
+            LengthFilter.ValueChanged += OnLengthFilterChanged;
+            ComboFilter.ValueChanged += OnComboFilterChanged;
+            SortBy.ValueChanged += OnSortByChanged;
+            ReverseSort.ValueChanged += OnBoolFilterChanged;
+            MinimumDifficulty.ValueChanged += OnFloatFilterChanged;
+            MaximumDifficulty.ValueChanged += OnFloatFilterChanged;
+            MinimumLongNotePercentage.ValueChanged += OnFloatFilterChanged;
+            MaximumLongNotePercentage.ValueChanged += OnFloatFilterChanged;
+            MinimumNotesPerSecond.ValueChanged += OnFloatFilterChanged;
+            MaximumNotesPerSecond.ValueChanged += OnFloatFilterChanged;
+            MinimumBpm.ValueChanged += OnFloatFilterChanged;
+            MaximumBpm.ValueChanged += OnFloatFilterChanged;
+        }
+
         public void Dispose()
         {
+            MapsetQuery.ValueChanged -= OnStringFilterChanged;
+            ShowOwnedMapsets.ValueChanged -= OnBoolFilterChanged;
+            Keymode.ValueChanged -= OnIntFilterChanged;
+            RankedStatus.ValueChanged -= OnRankedStatusChanged;
+            LengthFilter.ValueChanged -= OnLengthFilterChanged;
+            ComboFilter.ValueChanged -= OnComboFilterChanged;
+            SortBy.ValueChanged -= OnSortByChanged;
+            ReverseSort.ValueChanged -= OnBoolFilterChanged;
+            MinimumDifficulty.ValueChanged -= OnFloatFilterChanged;
+            MaximumDifficulty.ValueChanged -= OnFloatFilterChanged;
+            MinimumLongNotePercentage.ValueChanged -= OnFloatFilterChanged;
+            MaximumLongNotePercentage.ValueChanged -= OnFloatFilterChanged;
+            MinimumNotesPerSecond.ValueChanged -= OnFloatFilterChanged;
+            MaximumNotesPerSecond.ValueChanged -= OnFloatFilterChanged;
+            MinimumBpm.ValueChanged -= OnFloatFilterChanged;
+            MaximumBpm.ValueChanged -= OnFloatFilterChanged;
+            MapsetFiltersChanged = null;
+
             ActiveTab.Dispose();
             MapsetsExpanded.Dispose();
             MapsetQuery.Dispose();
@@ -129,5 +169,32 @@ namespace Quaver.Shared.Screens.V2.Downloading
             MinimumBpm.Dispose();
             MaximumBpm.Dispose();
         }
+
+        private void OnStringFilterChanged(object sender, BindableValueChangedEventArgs<string> args) =>
+            NotifyMapsetFiltersChanged();
+
+        private void OnBoolFilterChanged(object sender, BindableValueChangedEventArgs<bool> args) =>
+            NotifyMapsetFiltersChanged();
+
+        private void OnIntFilterChanged(object sender, BindableValueChangedEventArgs<int> args) =>
+            NotifyMapsetFiltersChanged();
+
+        private void OnFloatFilterChanged(object sender, BindableValueChangedEventArgs<float> args) =>
+            NotifyMapsetFiltersChanged();
+
+        private void OnRankedStatusChanged(object sender,
+            BindableValueChangedEventArgs<DownloadSearchRankedStatus> args) => NotifyMapsetFiltersChanged();
+
+        private void OnLengthFilterChanged(object sender,
+            BindableValueChangedEventArgs<DownloadSearchLengthFilter> args) => NotifyMapsetFiltersChanged();
+
+        private void OnComboFilterChanged(object sender,
+            BindableValueChangedEventArgs<DownloadSearchComboFilter> args) => NotifyMapsetFiltersChanged();
+
+        private void OnSortByChanged(object sender,
+            BindableValueChangedEventArgs<DownloadSearchSortBy> args) => NotifyMapsetFiltersChanged();
+
+        private void NotifyMapsetFiltersChanged() =>
+            MapsetFiltersChanged?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Quaver.API.Enums;
 using Quaver.Shared.Online.API.MapsetSearch;
 using Quaver.Shared.Screens.V2.Downloading.UI;
 using Quaver.Shared.Screens.V2.SkinEditor;
@@ -258,38 +257,7 @@ namespace Quaver.Shared.Screens.V2.Downloading
                 UsePreviousSpriteBatchOptions = true
             };
 
-            var testMapsets = CreateTestMapsets();
-            MapsetRows = new List<FlexContainer>();
-            MapsetContainers = new List<DownloadingMapsetContainer>();
-            for (var i = 0; i < testMapsets.Count; i++)
-            {
-                if (i % Config.Mapset.GridColumns == 0)
-                {
-                    var mapsetRow = new FlexContainer
-                    {
-                        Parent = MapsetGrid,
-                        Direction = FlexDirection.Row,
-                        AlignItems = FlexAlignItems.Stretch,
-                        ColumnGap = Config.Mapset.GridColumnGap,
-                        UsePreviousSpriteBatchOptions = true
-                    };
-                    MapsetRows.Add(mapsetRow);
-                    MapsetGrid.SetItemOptions(mapsetRow, FixedBasis(Config.Mapset.Height));
-                }
-
-                var mapsetContainer = new DownloadingMapsetContainer(testMapsets[i], Config.Mapset,
-                    () => MapsetScrollContainer.ScreenRectangle)
-                {
-                    Parent = MapsetRows[MapsetRows.Count - 1]
-                };
-                MapsetContainers.Add(mapsetContainer);
-                MapsetRows[MapsetRows.Count - 1].SetItemOptions(mapsetContainer, new FlexItemOptions
-                {
-                    Basis = 1,
-                    Grow = 1,
-                    Shrink = 1
-                });
-            }
+            BuildMapsetCards(((DownloadingScreen) Screen).Mapsets);
 
             // The dropdown menus are children of SearchPanel. Keep the panel first in the
             // flex layout, but move it after the mapset container in drawable child order so open menus
@@ -324,7 +292,7 @@ namespace Quaver.Shared.Screens.V2.Downloading
                     "Screens.Downloading.Range", SearchPanel),
                 new SkinEditorTarget("downloading-mapset",
                     LocalizationManager.Get("SkinEditor_Component_Mapset"),
-                    "Screens.Downloading.Mapset", MapsetContainers.ToArray())
+                    "Screens.Downloading.Mapset", MapsetGrid)
             };
 
             LastWindowWidth = -1;
@@ -405,56 +373,61 @@ namespace Quaver.Shared.Screens.V2.Downloading
             Shrink = 0
         };
 
-        private static List<DownloadableMapset> CreateTestMapsets()
+        internal void SetMapsets(IReadOnlyList<DownloadableMapset> mapsets)
         {
-            var result = new List<DownloadableMapset>();
-            for (var i = 0; i < 24; i++)
-                result.Add(CreateTestMapset(i));
-
-            return result;
+            BuildMapsetCards(mapsets ?? Array.Empty<DownloadableMapset>());
+            MapsetScrollContainer.TargetY = 0;
+            MapsetScrollContainer.PreviousTargetY = 0;
+            MapsetScrollContainer.ContentContainer.Y = 0;
+            LastMapsetViewportWidth = -1;
+            LastMapsetViewportHeight = -1;
+            RefreshMapsetViewportLayout(true);
         }
 
-        private static DownloadableMapset CreateTestMapset(int index) => new DownloadableMapset
+        private void BuildMapsetCards(IReadOnlyList<DownloadableMapset> mapsets)
         {
-            Id = index,
-            CreatorId = 0,
-            CreatorUsername = "Creator",
-            Artist = "Artist Lorem Ipsum",
-            Title = "Title Dolor Sit Amet Consectetur",
-            Maps = new List<DownloadableMap>
+            if (MapsetRows != null)
             {
-                new DownloadableMap
-                {
-                    Id = index * 2 + 1,
-                    MapsetId = index,
-                    CreatorUsername = "Creator",
-                    GameMode = GameMode.Keys4,
-                    RankedStatus = RankedStatus.Ranked,
-                    Length = 659,
-                    Bpm = 1000,
-                    DifficultyRating = 0,
-                    CountHitObjectNormal = 65000,
-                    CountHitObjectLong = 241,
-                    LongNotePercentage = 99,
-                    MaxCombo = 1000
-                },
-                new DownloadableMap
-                {
-                    Id = index * 2 + 2,
-                    MapsetId = index,
-                    CreatorUsername = "Creator",
-                    GameMode = GameMode.Keys7,
-                    RankedStatus = RankedStatus.Ranked,
-                    Length = 659,
-                    Bpm = 1000,
-                    DifficultyRating = 99.99,
-                    CountHitObjectNormal = 65000,
-                    CountHitObjectLong = 241,
-                    LongNotePercentage = 100,
-                    MaxCombo = 1000
-                }
+                foreach (var row in MapsetRows)
+                    row.Destroy();
             }
-        };
+
+            MapsetRows = new List<FlexContainer>();
+            MapsetContainers = new List<DownloadingMapsetContainer>();
+
+            for (var i = 0; i < mapsets.Count; i++)
+            {
+                if (i % Config.Mapset.GridColumns == 0)
+                {
+                    var mapsetRow = new FlexContainer
+                    {
+                        Parent = MapsetGrid,
+                        Direction = FlexDirection.Row,
+                        AlignItems = FlexAlignItems.Stretch,
+                        ColumnGap = Config.Mapset.GridColumnGap,
+                        UsePreviousSpriteBatchOptions = true
+                    };
+                    MapsetRows.Add(mapsetRow);
+                    MapsetGrid.SetItemOptions(mapsetRow, FixedBasis(Config.Mapset.Height));
+                }
+
+                var mapsetContainer = new DownloadingMapsetContainer(mapsets[i], Config.Mapset,
+                    () => MapsetScrollContainer.ScreenRectangle)
+                {
+                    Parent = MapsetRows[MapsetRows.Count - 1]
+                };
+                MapsetContainers.Add(mapsetContainer);
+                MapsetRows[MapsetRows.Count - 1].SetItemOptions(mapsetContainer,
+                    new FlexItemOptions
+                    {
+                        Basis = 1,
+                        Grow = 1,
+                        Shrink = 1
+                    });
+            }
+
+            MapsetGrid.RefreshLayout();
+        }
 
         private void UpdateEditorLayout()
         {
